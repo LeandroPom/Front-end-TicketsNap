@@ -1,0 +1,33 @@
+/* Estilos para el modal */
+.modal {
+  position: fixed; /* Fijar el modal en la pantalla */
+  top: 50%; /* Centrar verticalmente */
+  left: 50%; /* Centrar horizontalmente */
+  transform: translate(-50%, -50%); /* Ajuste preciso del centro */
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%; /* Asegura que el modal sea responsivo */
+  z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
+}
+
+/* Fondo del modal, para oscurecer la pantalla detrás */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  z-index: 999; /* Asegura que el fondo esté debajo del modal */
+}
+
+/* Asegurarse de que el contenido del modal sea responsivo */
+@media (max-width: 768px) {
+  .modal {
+    max-width: 90%; /* Limitar el tamaño en pantallas pequeñas */
+    padding: 15px;
+  }
+}
