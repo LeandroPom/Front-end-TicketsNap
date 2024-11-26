@@ -1,5 +1,5 @@
 // src/reducers/eventReducer.js
-//import { SET_EVENTS, ADD_EVENT } from '../actions/eventActions';
+import { SET_EVENTS, ADD_EVENT } from '../Actions/actions';
 
 // Estado inicial
 const initialState = {
@@ -7,23 +7,23 @@ const initialState = {
 };
 
 // Reducer para manejar las acciones
-const eventReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_EVENTS:
-      return {
-        ...state,
+     return {
+       ...state,
         events: action.payload,
       };
 
-    case ADD_EVENT:
+     case ADD_EVENT:
       return {
-        ...state,
+      ...state,
         events: [...state.events, action.payload],
-      };
+     };
 
     default:
       return state;
   }
 };
 
-export default eventReducer;
+export default rootReducer;

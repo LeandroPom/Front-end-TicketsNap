@@ -1,0 +1,91 @@
+/* General navbar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #222; /* Fondo oscuro */
+    color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: fixed; /* Fijo en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Siempre encima */
+}
+
+/* Logo */
+.navbar-logo a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Contenedor de los botones */
+.navbar-links {
+    display: flex;
+    gap: 10px;
+    margin-left: auto; /* Botones a la derecha */
+    margin-right: 25px; /* Mueve los botones 1cm hacia la izquierda */
+}
+
+/* Botones */
+.btn {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+/* Botón Login */
+.login-btn {
+    background-color: #FF5733; /* Naranja llamativo */
+}
+
+.login-btn:hover {
+    background-color: transparent;
+    border-color: #FF5733;
+    color: #FF5733;
+}
+
+/* Botón Register */
+.register-btn {
+    background-color: #28A745; /* Verde llamativo */
+}
+
+.register-btn:hover {
+    background-color: transparent;
+    border-color: #28A745;
+    color: #28A745;
+}
+
+/* Responsiveness: Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Navbar en columna */
+        align-items: flex-start; /* Alinear los elementos al inicio */
+        padding: 15px;
+    }
+
+    .navbar-logo {
+        margin-bottom: 10px; /* Espacio entre logo y botones */
+    }
+
+    .navbar-links {
+        flex-direction: column; /* Botones en columna */
+        width: 100%; /* Ocupan todo el ancho */
+        gap: 5px; /* Espaciado reducido */
+        margin-right: 0; /* Sin margen a la derecha en pantallas pequeñas */
+    }
+
+    .btn {
+        width: 100%; /* Botones ocupan todo el ancho */
+        text-align: center; /* Centrar texto */
+        font-size: 1em; /* Tamaño de texto más grande */
+    }
+}

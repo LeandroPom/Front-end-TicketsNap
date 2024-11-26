@@ -1,6 +1,6 @@
 // src/store/index.js
 import { createStore } from 'redux';
-import rootReducer from "../../Redux/Reducer/indexreducer";
+import rootReducer from "../../Redux/Reducer/reducer";
 
 const store = createStore(
   rootReducer, // rootReducer contiene todos los reducers
