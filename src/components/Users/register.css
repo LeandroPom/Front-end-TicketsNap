@@ -1,0 +1,127 @@
+/* Fondo oscuro del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo translúcido */
+  z-index: 1000;
+}
+
+/* Estilo del modal */
+.register-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333; /* Fondo oscuro */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  z-index: 1001; /* Asegura que esté por encima del overlay */
+  width: 100%;
+  max-width: 500px; /* Ancho máximo del modal */
+  text-align: center;
+}
+
+/* Título del formulario */
+.register-title {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #FF5733; /* Color naranja llamativo */
+}
+
+/* Estilos del formulario */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Mayor separación entre campos */
+}
+
+/* Grupo de cada campo */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Etiquetas */
+.form-group label {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+/* Campos de entrada */
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones del formulario */
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Botón de Crear Cuenta */
+.create-btn {
+  background-color: #28A745; /* Verde llamativo */
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-btn:hover {
+  background-color: transparent;
+  border: 2px solid #28A745;
+  color: #28A745;
+}
+
+/* Botón de Cancelar */
+.cancel-btn {
+  background-color: #FF5733; /* Naranja llamativo */
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background-color: transparent;
+  border: 2px solid #FF5733;
+  color: #FF5733;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .register-modal {
+    width: 90%; /* El modal ocupa más espacio en pantallas pequeñas */
+    margin: 0 10px;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%; /* Los botones ocupan todo el ancho */
+  }
+}

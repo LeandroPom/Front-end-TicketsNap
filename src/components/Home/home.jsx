@@ -5,28 +5,28 @@ import '../Home/home.css'; // Importar el CSS de Home
 const events = [
   { 
     id: 1, 
-    name: 'Concierto de Rock', 
+    name: 'Concert Rock', 
     date: '2024-12-15', 
     price: 50, 
     image: 'https://via.placeholder.com/500x300/FF5733/FFFFFF?text=Concierto+de+Rock' // URL de imagen ejemplo
   },
   { 
     id: 2, 
-    name: 'Teatro Musical', 
+    name: 'Musical', 
     date: '2024-12-20', 
     price: 40, 
     image: 'https://via.placeholder.com/500x300/33B5FF/FFFFFF?text=Teatro+Musical' // URL de imagen ejemplo
   },
   { 
     id: 3, 
-    name: 'Fútbol', 
+    name: 'Fotball', 
     date: '2024-12-10', 
     price: 30, 
     image: 'https://via.placeholder.com/500x300/FF5733/FFFFFF?text=Futbol' // URL de imagen ejemplo
   },
   { 
     id: 4, 
-    name: 'Festival de Jazz', 
+    name: 'Festival, Jazz', 
     date: '2024-12-25', 
     price: 60, 
     image: 'https://via.placeholder.com/500x300/FFBB33/FFFFFF?text=Festival+de+Jazz' // URL de imagen ejemplo
@@ -40,7 +40,7 @@ const events = [
   },
   { 
     id: 6, 
-    name: 'Exposición de Arte', 
+    name: 'Expositión, Art', 
     date: '2024-12-18', 
     price: 25, 
     image: 'https://via.placeholder.com/500x300/8E44AD/FFFFFF?text=Exposicion+de+Arte' // URL de imagen ejemplo
@@ -50,7 +50,7 @@ const events = [
 const Home = () => {
   return (
     <div className="home">
-      <h1>Eventos Disponibles</h1>
+      
       <ul>
         {events.map((event) => (
           <li key={event.id}>
@@ -58,7 +58,7 @@ const Home = () => {
               <img src={event.image} alt={event.name} className="event-image" /> {/* Imagen del evento */}
               <h2>{event.name}</h2>
               <p>{event.date}</p>
-              <p>Precio: ${event.price}</p>
+              <p>Price ${event.price}</p>
             </Link>
           </li>
         ))}

@@ -1,21 +1,24 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux'; // Importar Provider desde react-redux
-//import store from './components/Redux/Store/storeindex'; // Importar el store que creamos anteriormente
 import Home from './components/Home/home';
 import Detail from './components/Eventdetail/detail';
+import Navbar from './components/Navbar/navbar';
+import Register from './components/Users/register';
+import Login from './components/Users/login';
 
 function App() {
   return (
-    // Proveemos el store a toda la aplicación
-    //<Provider store={store}>
+    
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/event/:id" element={<Detail />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
-    //</Provider>
+    
   );
 }
 

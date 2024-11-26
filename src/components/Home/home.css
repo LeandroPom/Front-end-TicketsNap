@@ -3,6 +3,7 @@
     background-color: #f9f9f9;
     padding: 20px;
     font-family: 'Arial', sans-serif;
+    margin-top: 60px; /* Añadimos un margen superior para separar los eventos de la navbar */
 }
 
 .home h1 {
@@ -74,6 +75,7 @@ li p:last-child {
 @media (max-width: 768px) {
     .home {
         padding: 10px;
+        margin-top: 80px; /* Ajuste para pantallas pequeñas (más espacio arriba) */
     }
 
     li {

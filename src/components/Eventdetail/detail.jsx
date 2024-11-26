@@ -15,9 +15,9 @@ const Detail = () => {
 
   // Datos simulados del evento
   const eventDetails = {
-    1: { name: 'Concierto de Rock', date: '2024-12-15', price: 50, city: 'Madrid' },
-    2: { name: 'Teatro Musical', date: '2024-12-20', price: 40, city: 'Barcelona' },
-    3: { name: 'Fútbol', date: '2024-12-10', price: 30, city: 'Valencia' },
+    1: { name: 'Concert, Rock', date: '2024-12-15', price: 50, city: 'Madrid' },
+    2: { name: 'Musical', date: '2024-12-20', price: 40, city: 'Barcelona' },
+    3: { name: 'Fotball', date: '2024-12-10', price: 30, city: 'Valencia' },
   };
 
   useEffect(() => {
@@ -72,13 +72,13 @@ const Detail = () => {
     <div className="event-detail">
       <h1>{event ? event.name : 'Cargando evento...'}</h1>
       <p>{event && event.date}</p>
-      <p>Precio: ${event && event.price}</p>
-      <p>Ciudad: {event && event.city}</p>
+      <p>Price: ${event && event.price}</p>
+      <p>City: {event && event.city}</p>
 
       {/* Mostrar el mensaje de advertencia si showWarning es true */}
       {showWarning && (
         <div className="warning-message">
-          <p>Tienes 15 minutos para seleccionar tus asientos y finalizar la compra.</p>
+          <p>You have 15 minutes to select your seats and complete the purchase..</p>
           <button onClick={handleAcceptWarning}>Aceptar</button>
         </div>
       )}
@@ -90,7 +90,7 @@ const Detail = () => {
           <div className="modal-overlay" onClick={handleCloseModal}></div>
 
           <div className="modal">
-            <h2>Selecciona tus asientos</h2>
+            <h2>Select you place</h2>
             <div className="seating-chart">
               {['A', 'B', 'C', 'D', 'E'].map((row, rowIndex) => (
                 <div key={rowIndex} className="row">
@@ -111,14 +111,14 @@ const Detail = () => {
             </div>
 
             {/* Botón para aceptar los asientos seleccionados */}
-            <button onClick={handleAcceptSeats}>Aceptar</button>
-            <button onClick={handleCloseModal}>Cerrar</button>
+            <button onClick={handleAcceptSeats}>Acept</button>
+            <button onClick={handleCloseModal}>Close</button>
           </div>
         </>
       )}
 
       {/* Botón para volver al home */}
-      <button className="back-home-btn" onClick={handleGoHome}>Volver a Home</button>
+      <button className="back-home-btn" onClick={handleGoHome}>Return to Home</button>
     </div>
   );
 };
