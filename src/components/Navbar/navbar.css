@@ -88,4 +88,17 @@
         text-align: center; /* Centrar texto */
         font-size: 1em; /* Tamaño de texto más grande */
     }
+
+    .logout-btn {
+        background-color: #ff4c4c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      
+      .logout-btn:hover {
+        background-color: #ff0000;
+      }
 }
