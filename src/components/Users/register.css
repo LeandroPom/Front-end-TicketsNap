@@ -16,19 +16,20 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #333; /* Fondo oscuro */
-  padding: 30px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
   color: #fff;
   z-index: 1001; /* Asegura que esté por encima del overlay */
   width: 100%;
-  max-width: 500px; /* Ancho máximo del modal */
+  max-width: 400px; /* Reducido el ancho máximo del modal */
   text-align: center;
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
 
 /* Título del formulario */
 .register-title {
-  font-size: 1.8em;
+  font-size: 1.6em; /* Reducido tamaño del título */
   margin-bottom: 20px;
   color: #FF5733; /* Color naranja llamativo */
 }
@@ -37,7 +38,7 @@
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Mayor separación entre campos */
+  gap: 15px; /* Reducida la separación entre campos */
 }
 
 /* Grupo de cada campo */
@@ -45,7 +46,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px; /* Reducida la separación entre label y input */
 }
 
 /* Etiquetas */
@@ -57,11 +58,12 @@
 /* Campos de entrada */
 .form-group input {
   width: 100%;
-  padding: 12px;
+  padding: 10px; /* Reducida la altura de los campos */
   border: none;
   border-radius: 5px;
-  font-size: 1.1em;
+  font-size: 1em;
   box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
 }
 
 /* Botones del formulario */
@@ -75,7 +77,7 @@
 .create-btn {
   background-color: #28A745; /* Verde llamativo */
   color: #fff;
-  padding: 12px 20px;
+  padding: 10px 15px; /* Reducido padding */
   border: none;
   border-radius: 5px;
   font-size: 1.1em;
@@ -94,7 +96,7 @@
 .cancel-btn {
   background-color: #FF5733; /* Naranja llamativo */
   color: #fff;
-  padding: 12px 20px;
+  padding: 10px 15px; /* Reducido padding */
   border-radius: 5px;
   font-size: 1.1em;
   font-weight: bold;
