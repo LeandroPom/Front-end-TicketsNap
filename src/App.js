@@ -5,7 +5,7 @@ import Detail from './components/Eventdetail/detail';
 import Navbar from './components/Navbar/navbar';
 import Register from './components/Users/register';
 import Login from './components/Users/login';
-
+import CreateShowForm from './components/Shows/createshowform';
 function App() {
   return (
     
@@ -16,6 +16,7 @@ function App() {
           <Route path="/event/:id" element={<Detail />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/create-show" element={<CreateShowForm />} />
         </Routes>
       </Router>
     

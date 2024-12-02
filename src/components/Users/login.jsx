@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../Redux/Actions/actions'; // Acción para hacer login
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
@@ -15,23 +15,66 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state) => state.user); // Accedemos al usuario desde el estado global
+  // Accedemos al usuario desde el estado global para mostrar el nombre
+  const user = useSelector((state) => state?.user); // Cambié `state.user` a `state.user.user`
+
+  useEffect(() => {
+    if (user) {
+      // Si el login es exitoso, mostramos el mensaje de éxito y redirigimos
+      Swal.fire({
+        icon: 'success',
+        title: 'Login exitoso',
+        text: `Bienvenido, ${user.name}`, // Mostramos el nombre del usuario
+      }).then(() => {
+        navigate('/'); // Redirige a la página principal
+      });
+    }
+  }, [user, navigate]); // Dependemos de `user` para hacer la redirección
+
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      // Si hay un usuario guardado en localStorage, despachamos la acción para cargarlo en Redux
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: JSON.parse(savedUser),
+      });
+    }
+  }, [dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
       // Intentamos hacer login con los datos manuales
-      await dispatch(loginUser(email, password));
-      
-      // Si el login es exitoso
-      Swal.fire({
-        icon: 'success',
-        title: 'Login exitoso',
-        text: 'Bienvenido a tu cuenta.',
-      }).then(() => {
-        navigate('/'); // Redirige a la página principal
-      });
+      const response = await dispatch(loginUser(email, password));
+  
+      if (response) {
+        // Asegúrate de que el nombre del usuario esté bien formateado
+        const userData = {
+          name: response.name, // Nombre del usuario
+          email: response.email,
+          role: 'user',
+        };
+  
+        // Guardar el usuario en localStorage
+        localStorage.setItem('user', JSON.stringify(userData));
+  
+        // Despachar la acción de login
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: userData,
+        });
+  
+        Swal.fire({
+          icon: 'success',
+          title: 'Login exitoso',
+          text: `Bienvenido, ${response.name}`,
+        }).then(() => {
+          navigate('/'); // Redirige a la página principal
+        });
+      }
     } catch (error) {
       console.error('Error al hacer login manual', error.message);
       Swal.fire({
@@ -43,6 +86,8 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+  
+  
 
   const handleGoogleLogin = async (response) => {
     const provider = new GoogleAuthProvider();
@@ -50,23 +95,28 @@ const Login = () => {
       const credential = GoogleAuthProvider.credential(response.credential);
       const userCredential = await signInWithCredential(auth, credential);
       const user = userCredential.user;
-
+  
       // Al hacer login con Google, actualizamos el estado global
+      const userData = {
+        name: user.displayName,
+        email: user.email,
+        image: user.photoURL,
+        role: 'user',
+      };
+  
+      // Guardar el usuario en el localStorage
+      localStorage.setItem('user', JSON.stringify(userData));
+  
+      // Despachar la acción de login
       dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: {
-          name: user.displayName,
-          email: user.email,
-          image: user.photoURL,
-          role: 'user',
-        },
+        payload: userData,
       });
-
-      // Muestra mensaje de éxito con SweetAlert
+  
       Swal.fire({
         icon: 'success',
         title: 'Login exitoso',
-        text: 'Bienvenido a tu cuenta.',
+        text: `Bienvenido, ${user.displayName}`,
       }).then(() => {
         navigate('/'); // Redirige a la página principal
       });
@@ -74,9 +124,10 @@ const Login = () => {
       console.error('Error al hacer login con Google', error.message);
     }
   };
+  
 
   return (
-    <div className="login-modal"> {/* Contenedor que cubre toda la pantalla */}
+    <div className="login-modal">
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
           <h2>Login</h2>

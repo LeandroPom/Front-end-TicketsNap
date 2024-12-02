@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'; // Usamos Redux para obtener los shows
+import { getShows } from '../Redux/Actions/actions'; // Acción para obtener todos los eventos
 import '../Eventdetail/detail.css';
 
 const Detail = () => {
   const { id } = useParams(); // Obtener el ID del evento desde la URL
   const navigate = useNavigate(); // Usar el hook navigate para redirigir a otras rutas
+  const dispatch = useDispatch(); // Hook para despachar acciones
 
-  const [event, setEvent] = useState(null); // Almacenará los datos del evento
+  const { shows, loading, error } = useSelector((state) => state); // Accedemos al estado global
   const [selectedSeats, setSelectedSeats] = useState([]); // Asientos seleccionados
   const [isModalOpen, setIsModalOpen] = useState(false); // Si el modal está abierto
   const [showWarning, setShowWarning] = useState(true); // Para mostrar el mensaje de advertencia
   const [timerExpired, setTimerExpired] = useState(false); // Para manejar la expiración del temporizador
   const [timerStart, setTimerStart] = useState(false); // Para iniciar el temporizador
 
-  // Datos simulados del evento
-  const eventDetails = {
-    1: { name: 'Concert, Rock', date: '2024-12-15', price: 50, city: 'Madrid' },
-    2: { name: 'Musical', date: '2024-12-20', price: 40, city: 'Barcelona' },
-    3: { name: 'Fotball', date: '2024-12-10', price: 30, city: 'Valencia' },
-  };
+  // Filtramos el show usando el ID de la URL
+  const event = shows.find((show) => show.id === parseInt(id)); // Buscar evento por ID
 
   useEffect(() => {
-    // Cargar la información del evento seleccionado
-    setEvent(eventDetails[id]);
-  }, [id]);
+    // Despachar la acción para obtener todos los eventos solo si aún no están cargados
+    if (shows.length === 0) {
+      dispatch(getShows());
+    }
+  }, [shows.length, dispatch]);
 
   useEffect(() => {
     if (timerStart) {
@@ -68,12 +69,20 @@ const Detail = () => {
     // navigate('/carrito');
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="event-detail">
-      <h1>{event ? event.name : 'Cargando evento...'}</h1>
+      <h1>{event ? event.name : 'Evento no encontrado'}</h1>
       <p>{event && event.date}</p>
       <p>Price: ${event && event.price}</p>
-      <p>City: {event && event.city}</p>
+      <p>City: {event && event.location}</p>
 
       {/* Mostrar el mensaje de advertencia si showWarning es true */}
       {showWarning && (
@@ -90,7 +99,7 @@ const Detail = () => {
           <div className="modal-overlay" onClick={handleCloseModal}></div>
 
           <div className="modal">
-            <h2>Select you place</h2>
+            <h2>Select your place</h2>
             <div className="seating-chart">
               {['A', 'B', 'C', 'D', 'E'].map((row, rowIndex) => (
                 <div key={rowIndex} className="row">

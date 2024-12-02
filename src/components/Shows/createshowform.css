@@ -1,0 +1,78 @@
+/* Estilos generales del contenedor */
+.create-show-form {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Título */
+  .create-show-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.8rem;
+  }
+  
+  /* Estilos de los labels */
+  .create-show-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  /* Inputs de texto y textarea */
+  .create-show-form input[type="text"],
+  .create-show-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .create-show-form textarea {
+    resize: vertical; /* Permite cambiar el tamaño solo verticalmente */
+    min-height: 80px;
+  }
+  
+  /* Botón de envío */
+  .create-show-form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-show-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .create-show-form {
+      padding: 15px;
+    }
+  
+    .create-show-form h2 {
+      font-size: 1.5rem;
+    }
+  
+    .create-show-form button {
+      font-size: 1rem;
+    }
+  }
+  

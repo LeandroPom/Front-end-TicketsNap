@@ -6,10 +6,23 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  CREATE_SHOW_SUCCESS,
+  CREATE_SHOW_FAIL,
+  FETCH_SHOWS_SUCCESS,
+  FETCH_SHOWS_ERROR,
+  FETCH_SHOWS_LOADING,
+  CREATE_TAG_SUCCESS,
+  CREATE_TAG_FAIL,
+  FETCH_TAGS_SUCCESS,
+  FETCH_TAGS_ERROR,
+  FETCH_TAGS_LOADING
+
 } from '../Actions/actions'; // Importa las acciones
 
 // Estado inicial
 const initialState = {
+  tags: [],           // LISTA DE TAGS
+  shows: [],         // Lista de shows existentes
   user: null,        // Datos del usuario recién creado o autenticado
   loading: false,    // Indicador de carga
   error: null,       // Errores si los hay
@@ -67,12 +80,83 @@ const rootReducer = (state = initialState, action) => {
           loading: false,
           error: null,
         };
+
+        case CREATE_SHOW_SUCCESS:
+      return {
+        ...state,
+        shows: [...state.shows, action.payload], // Agrega el nuevo show al estado
+        error: null,
+      };
+
+    case CREATE_SHOW_FAIL:
+      return {
+        ...state,
+        error: action.payload, // Guarda el mensaje de error en el estado
+      };
+
+      case FETCH_SHOWS_SUCCESS:
+        console.log('Shows received in reducer:', action.payload);
+  return {
+    ...state,
+    shows: action.payload, // Asegúrate de que "action.payload" sea un array de shows
+    
+    loading: false,
+   
+  };
+    case FETCH_SHOWS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case FETCH_SHOWS_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+      case CREATE_TAG_SUCCESS:
+        return {
+          ...state,
+          tags: [...state.tags, action.payload],  // Agregar el nuevo tag a la lista de tags
+          loading: false,
+          error: null,
+        };
+  
+      case CREATE_TAG_FAIL:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,  // Manejamos el error al crear un tag
+        };
+  
+      // Caso para obtener los tags
+      case FETCH_TAGS_SUCCESS:
+        console.log('Tags received in reducer:', action.payload);  // Verifica los datos en el reducer
+        return {
+          ...state,
+          tags: action.payload,  // Aquí estamos actualizando el estado de tags con el payload recibido
+        };
+  
+      case FETCH_TAGS_ERROR:
+        return {
+          ...state,
+          error: action.payload,  // Manejamos el error al obtener los tags
+        };
+
+        case FETCH_TAGS_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
    
    
 
     default:
       return state;
   }
+
+
 };
 
 export default rootReducer;
