@@ -1,96 +1,157 @@
 /* Estilos para la página Home */
 .home {
-    background-color: #f9f9f9;
-    padding: 20px;
+    background-color: #f1f1f1;
+    padding: 30px 20px;
     font-family: 'Arial', sans-serif;
-    margin-top: 60px; /* Añadimos un margen superior para separar los eventos de la navbar */
+    margin-top: 60px;
+    text-align: center;
 }
 
-.home h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+/* Título de la sección */
+.home h2 {
+    color: #222;
+    font-size: 30px;
+    margin-bottom: 25px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Estilos de la barra de búsqueda y select */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.search-container input,
+.search-container select {
+    padding: 8px 15px;
+    margin: 0 10px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-container input:focus,
+.search-container select:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 91, 255, 0.6);
 }
 
 /* Contenedor de eventos en columnas */
 .home ul {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Disposición en columnas con un tamaño mínimo de 250px */
-    gap: 20px; /* Espacio entre los elementos */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
     list-style-type: none;
     padding: 0;
     margin: 0;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 30px;
+    margin-bottom: 50px;
 }
 
+/* Elementos individuales de eventos */
 li {
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 15px;
     transition: all 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    position: relative;
 }
 
 li:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
-li a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    text-align: center; /* Centrar texto e imagen */
-}
-
-li h2 {
+/* Títulos de los eventos */
+li h3 {
     color: #007bff;
     font-size: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
+/* Descripción de los eventos */
 li p {
     color: #555;
-    font-size: 16px;
-    margin: 5px 0;
+    font-size: 14px;
+    margin: 6px 0;
+    line-height: 1.4;
+    text-align: justify;
 }
 
-li p:last-child {
-    font-weight: bold;
-    color: #333;
-}
-
-/* Estilos para las imágenes de los eventos */
+/* Imagen de los eventos */
 .event-image {
     width: 100%;
-    height: 150px;
+    height: 160px;  /* Reducido el tamaño de la imagen */
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease-in-out;
 }
 
-/* Responsive styles */
+li:hover .event-image {
+    transform: scale(1.02); /* Reducido el zoom al 102% */
+}
+
+/* Botón de ver detalles */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px; /* Botón más pequeño */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;  /* Texto más pequeño */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.02); /* Reducido el zoom al 102% */
+}
+
+/* Estilo responsivo: Se adaptan las columnas en pantallas pequeñas */
 @media (max-width: 768px) {
-    .home {
-        padding: 10px;
-        margin-top: 80px; /* Ajuste para pantallas pequeñas (más espacio arriba) */
+    .home ul {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Más pequeño aún en móviles */
+        margin-top: 20px;
     }
 
     li {
-        padding: 10px;
+        padding: 12px;
     }
 
-    li h2 {
+    li h3 {
         font-size: 18px;
     }
 
     li p {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .event-image {
-        height: 120px; /* Ajustamos el tamaño de la imagen en pantallas más pequeñas */
+        height: 120px;  /* Ajuste de la imagen en pantallas pequeñas */
+    }
+
+    button {
+        font-size: 13px;
+        padding: 7px 10px;  /* Botón más pequeño en móviles */
     }
 }

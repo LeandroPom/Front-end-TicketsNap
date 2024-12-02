@@ -1,70 +1,91 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../Home/home.css'; // Importar el CSS de Home
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getShows } from '../Redux/Actions/actions';
+import '../Home/home.css';
 
-const events = [
-  { 
-    id: 1, 
-    name: 'Concert Rock', 
-    date: '2024-12-15', 
-    price: 50, 
-    image: 'https://via.placeholder.com/500x300/FF5733/FFFFFF?text=Concierto+de+Rock' // URL de imagen ejemplo
-  },
-  { 
-    id: 2, 
-    name: 'Musical', 
-    date: '2024-12-20', 
-    price: 40, 
-    image: 'https://via.placeholder.com/500x300/33B5FF/FFFFFF?text=Teatro+Musical' // URL de imagen ejemplo
-  },
-  { 
-    id: 3, 
-    name: 'Fotball', 
-    date: '2024-12-10', 
-    price: 30, 
-    image: 'https://via.placeholder.com/500x300/FF5733/FFFFFF?text=Futbol' // URL de imagen ejemplo
-  },
-  { 
-    id: 4, 
-    name: 'Festival, Jazz', 
-    date: '2024-12-25', 
-    price: 60, 
-    image: 'https://via.placeholder.com/500x300/FFBB33/FFFFFF?text=Festival+de+Jazz' // URL de imagen ejemplo
-  },
-  { 
-    id: 5, 
-    name: 'Stand-up Comedy', 
-    date: '2024-12-05', 
-    price: 35, 
-    image: 'https://via.placeholder.com/500x300/33FF57/FFFFFF?text=Stand-up+Comedy' // URL de imagen ejemplo
-  },
-  { 
-    id: 6, 
-    name: 'Expositión, Art', 
-    date: '2024-12-18', 
-    price: 25, 
-    image: 'https://via.placeholder.com/500x300/8E44AD/FFFFFF?text=Exposicion+de+Arte' // URL de imagen ejemplo
+const ShowsList = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const { shows, loading, error } = useSelector((state) => state);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+  const [filteredShows, setFilteredShows] = useState([]);
+
+  useEffect(() => {
+    dispatch(getShows());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const filtered = shows.filter((show) => {
+      const matchesSearch = show.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesGenre = selectedGenre ? show.genre.includes(selectedGenre) : true;
+      return matchesSearch && matchesGenre;
+    });
+    setFilteredShows(filtered);
+  }, [searchQuery, selectedGenre, shows]);
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
-];
 
-const Home = () => {
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const handleViewDetails = (showId) => {
+    navigate(`/event/${showId}`);
+  };
+
+  const genres = [...new Set(shows.flatMap((show) => show.genre))];
+
   return (
     <div className="home">
-      
+      <h2>Shows</h2>
+
+      {/* Barra de búsqueda y filtro */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <select
+          value={selectedGenre}
+          onChange={(e) => setSelectedGenre(e.target.value)}
+        >
+          <option value="">All Genres</option>
+          {genres.map((genre) => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Verificamos si hay shows filtrados y los mapeamos */}
       <ul>
-        {events.map((event) => (
-          <li key={event.id}>
-            <Link to={`/event/${event.id}`}>
-              <img src={event.image} alt={event.name} className="event-image" /> {/* Imagen del evento */}
-              <h2>{event.name}</h2>
-              <p>{event.date}</p>
-              <p>Price ${event.price}</p>
-            </Link>
-          </li>
-        ))}
+        {filteredShows && filteredShows.length > 0 ? (
+          filteredShows.map((show) => (
+            <li key={show.id}>
+              <h3>{show.name}</h3>
+              <p>{show.description}</p>
+              <p>Location: {show.location}</p>
+              <p>Genres: {show.genre.join(', ')}</p>
+              <p>Artists: {show.artists.join(', ')}</p>
+              <img className="event-image" src={show.coverImage} alt={show.name} />
+              <button onClick={() => handleViewDetails(show.id)}>View Details</button>
+            </li>
+          ))
+        ) : (
+          <div>No shows found</div>
+        )}
       </ul>
     </div>
   );
 };
 
-export default Home;
+export default ShowsList;
