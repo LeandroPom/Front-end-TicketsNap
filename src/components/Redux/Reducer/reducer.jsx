@@ -15,12 +15,18 @@ import {
   CREATE_TAG_FAIL,
   FETCH_TAGS_SUCCESS,
   FETCH_TAGS_ERROR,
-  FETCH_TAGS_LOADING
+  FETCH_TAGS_LOADING,
+  CREATE_PLACE_SUCCESS,
+  CREATE_PLACE_FAILURE,
+  GET_PLACES_FAILURE,
+  GET_PLACES_SUCCESS,
+  GET_PLACES_REQUEST,
 
 } from '../Actions/actions'; // Importa las acciones
 
 // Estado inicial
 const initialState = {
+  places: [],
   tags: [],           // LISTA DE TAGS
   shows: [],         // Lista de shows existentes
   user: null,        // Datos del usuario recién creado o autenticado
@@ -148,6 +154,35 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+      };
+
+      case CREATE_PLACE_SUCCESS:
+      return {
+        ...state,
+        places: [...state.places, action.payload], // Añadir el nuevo lugar a la lista de lugares
+      };
+    case CREATE_PLACE_FAILURE:
+      return {
+        ...state,
+        error: action.payload, // Almacenar el error si ocurrió uno
+      };
+
+      case GET_PLACES_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_PLACES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        places: action.payload,
+      };
+    case GET_PLACES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
    
    

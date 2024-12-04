@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createShow, getShows, createTag, getTags } from '../Redux/Actions/actions';
+import { createShow, getShows, createTag, getTags, getPlaces } from '../Redux/Actions/actions'; // Importar getPlaces
 import Swal from 'sweetalert2';
 import '../Shows/createshowform.css';
 
 const CreateShowForm = () => {
   const dispatch = useDispatch();
-  const { shows, loading, tags } = useSelector((state) => state);
+  const { shows, loading, tags, places } = useSelector((state) => state);
+  const [selectedLocation, setSelectedLocation] = useState(null); // Nuevo estado para el lugar
 
   const [formData, setFormData] = useState({
     name: '',
     artists: '',
-    locationName: '',
-    locationAddress: '',
+    locationId: '',
     presentationDate: '',
-    performance: '',
-    presentation: [],
+    performance: '', // Inicializa con 1 si es una presentación
+    presentation: [{ time: { start: '', end: '' } }], // Se usará para almacenar las presentaciones
     description: '',
     genre: [],
     price: '',
+    coverImage: '', // Nuevo campo
   });
 
   const [newTag, setNewTag] = useState('');
@@ -34,6 +35,7 @@ const CreateShowForm = () => {
 
     dispatch(getShows());
     dispatch(getTags());
+    dispatch(getPlaces()); // Obtener lugares
   }, [dispatch]);
 
   // Guardar el estado actual del formulario en el Local Storage cada vez que cambie
@@ -66,7 +68,7 @@ const CreateShowForm = () => {
             text: 'The new tag has been successfully created.',
             confirmButtonText: 'OK',
           }).then(() => {
-            dispatch(getTags); // Recargar la página
+            dispatch(getTags); // Recargar los tags
           });
         })
         .catch(() => {
@@ -101,78 +103,167 @@ const CreateShowForm = () => {
       [name]: value,
     });
   };
-
-  const handlePresentationChange = (e) => {
-    const { value } = e.target;
-
-    if (!formData.performance) {
-      setErrorMessage('Please select a performance before choosing a date.');
-      return;
+  const handlePresentationChange = (index, field, value) => {
+    const newPresentation = [...formData.presentation];
+  
+    // Si no existe la presentación en ese índice, inicializa el objeto
+    if (!newPresentation[index]) {
+      newPresentation[index] = { date: '', performance: formData.performance || 1, time: { start: '', end: '' } };
     }
-
-    if (value) {
-      const newPresentation = [...formData.presentation];
-      const presentationExists = newPresentation.some((item) => item.date === value);
-      if (!presentationExists) {
-        newPresentation.push({
-          date: value,
-          performance: formData.performance,
-        });
-
-        setFormData({
-          ...formData,
-          presentation: newPresentation,
-          presentationDate: value,
+  
+    // Si estamos modificando la fecha (solo para la primera presentación)
+    if (field === 'date') {
+      // Aplicar la misma fecha a todas las presentaciones si es la primera vez que se selecciona una fecha
+      if (!newPresentation.some((presentation) => presentation.date)) {
+        newPresentation.forEach((presentation) => {
+          presentation.date = value;
         });
       }
+    } else if (field === 'performance') {
+      newPresentation[index].performance = value || formData.performance || 1;  // Asignar el valor de performance
+    } else {
+      newPresentation[index].time = {
+        ...newPresentation[index].time,
+        [field]: value, // Actualiza el tiempo (start o end)
+      };
     }
+  
+    // Actualiza el estado de formData con las nuevas presentaciones
+    setFormData((prevState) => ({
+      ...prevState,
+      presentation: newPresentation,
+    }));
   };
 
+  const handlePerformanceChange = (e) => {
+    const newPerformance = parseInt(e.target.value, 10);
+  
+    // Si cambiamos la cantidad de presentaciones, re-inicializamos las fechas y tiempos
+    setFormData((prevState) => {
+      const newPresentation = Array.from({ length: newPerformance }).map((_, index) => ({
+        date: prevState.presentation[index]?.date || '', // Mantener la misma fecha si ya fue seleccionada
+        performance: newPerformance, // Asignar el mismo número de presentaciones a todas
+        time: { start: '', end: '' }, // Reiniciar los tiempos para todas las presentaciones
+      }));
+  
+      return {
+        ...prevState,
+        performance: newPerformance,
+        presentation: newPresentation,
+      };
+    });
+  };
+  
+  
+  const handleTimeDisplay = (index) => {
+    const presentation = formData.presentation[index];
+    return (
+      <div>
+        {presentation.time.start && (
+          <p>Start Time: <strong>{presentation.time.start}</strong></p>
+        )}
+        {presentation.time.end && (
+          <p>End Time: <strong>{presentation.time.end}</strong></p>
+        )}
+      </div>
+    );
+  };
+
+  const handleLocationSelect = (e) => {
+    const selectedId = e.target.value;
+  
+    // Buscar el lugar seleccionado y actualizar selectedLocation
+    const location = places.find((place) => String(place.id) === String(selectedId));
+    setSelectedLocation(location);
+  
+    setFormData((prevState) => ({
+      ...prevState,
+      locationId: selectedId,
+    }));
+  };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
+    // Validar que haya un lugar seleccionado
+    if (!selectedLocation || !selectedLocation.name) {
+      setErrorMessage('Please select a valid location.');
+      return;
+    }
+  
     if (!formData.genre || formData.genre.length === 0) {
       setErrorMessage('Please select or create at least one genre.');
       return;
     }
-
+  
     if (!Array.isArray(formData.presentation) || formData.presentation.length === 0) {
       setErrorMessage('Presentation must be a non-empty array of objects.');
       return;
     }
-
-    formData.presentation.forEach((item) => {
-      if (!item.date || !item.performance) {
-        setErrorMessage('Each presentation object must have a date and a performance value.');
+  
+    // Validar presentaciones antes de enviar
+    for (let i = 0; i < formData.presentation.length; i++) {
+      const item = formData.presentation[i];
+  
+      if (!item.date || !item.performance || !item.time || !item.time.start || !item.time.end) {
+        setErrorMessage(`Presentation ${i + 1} is missing required fields (date, performance, start time, end time).`);
         return;
       }
-    });
 
-    const locationData = `${formData.locationName}, ${formData.locationAddress}`;
+
+  
+      // Validar que las horas estén en el formato HH:mm
+      const timePattern = /^([0-9]{2}):([0-9]{2})$/;
+      if (!timePattern.test(item.time.start) || !timePattern.test(item.time.end)) {
+        setErrorMessage(`Presentation ${i + 1} has invalid time format. Please use HH:mm.`);
+        return;
+      }
+    }
+
+    const price = parseFloat(formData.price);
+if (isNaN(price) || price < 0) {
+    console.error('Precio inválido');
+    return; // O muestra un mensaje de error al usuario
+}
+  
+    // Formatear los datos para enviar al backend
     const formattedData = {
       name: formData.name,
       artists: formData.artists.split(',').map((artist) => artist.trim()),
       genre: formData.genre.map((genre) => genre.name),
-      location: locationData,
-      presentation: formData.presentation || [],
+      locationName: selectedLocation.name,
+      presentation: formData.presentation.map((item) => ({
+        date: item.date,
+        performance: item.performance || 1,
+        time: {
+          start: item.time.start,
+          end: item.time.end,
+        },
+      })),
       description: formData.description || null,
-      coverImage: formData.coverImage || null,
-      price: formData.price || 0,
+      coverImage: formData.coverImage || 'https://via.placeholder.com/300',
+      price: price  // Asegúrate de que price tenga un valor numérico
     };
+  
+    console.log('Final presentation data:', formattedData.presentation);
+    // Aquí podrías enviar los datos al backend
 
-    console.log('Formatted data being sent:', formattedData);
+    // Llamar a la acción de crear show
+  dispatch(createShow(formattedData))
+  .then(() => {
+    // Si el show se crea correctamente, mostrar un mensaje de éxito
+    Swal.fire({
+      icon: 'success',
+      title: 'Show Created!',
+      text: 'The new show has been successfully created.',
+    });
+  })
+  .catch((error) => {
+    // Si hay un error al crear el show, mostrar un mensaje de error
+    setErrorMessage('Error creating the show. Please try again.');
+  });
 
-    dispatch(createShow(formattedData))
-      .then(() => {
-        setErrorMessage('');
-        alert('Show created successfully!');
-      })
-      .catch((err) => {
-        setErrorMessage('Error creating the show.');
-        console.error(err);
-      });
-  };
-
+  }
   return (
     <div className="create-show-form">
       <h2>Create a New Show</h2>
@@ -241,49 +332,108 @@ const CreateShowForm = () => {
         </div>
 
         <label>
-          Location Name:
+  Location:
+  <select onChange={handleLocationSelect} value={formData.locationId || ''} required>
+    <option value="" disabled>Select a location</option>
+    {places.length > 0 ? (
+      places.map((place) => (
+        <option key={place.id} value={place.id}>
+          {place.name}
+        </option>
+      ))
+    ) : (
+      <option disabled>No locations available</option>
+    )}
+  </select>
+</label>
+
+<div>
+  {formData.locationId && (
+    <p>
+      Selected Location: <strong>{places.find((place) => String(place.id) === String(formData.locationId))?.name || 'Not found'}</strong>
+    </p>
+  )}
+</div>
+
+<div>
+  {selectedLocation && (
+    <p>
+      
+    </p>
+  )}
+</div>
+
+<label>
+  Performance:
+  <input
+    type="number"
+    name="performance"
+    value={formData.performance}
+    onChange={handlePerformanceChange}
+    required
+    min="1"
+  />
+</label>
+{formData.performance > 0 && (
+  <div>
+    {Array.from({ length: formData.performance }).map((_, index) => (
+      <div key={index}>
+        {index === 0 && (  // Solo mostrar el campo de fecha para la primera presentación
+          <label>
+            Date {index + 1}:
+            <input
+              type="date"
+              value={formData.presentation[0]?.date || ''}  // Asegurarse de que siempre se use el valor de la primera presentación
+              onChange={(e) => handlePresentationChange(index, 'date', e.target.value)}
+              required
+            />
+          </label>
+        )}
+
+        {/* Mostrar la fecha seleccionada debajo */}
+        {formData.presentation[0]?.date && (
+          <p>
+            {/* Selected Date: <strong>{formData.presentation[0].date}</strong> */}
+          </p>
+        )}
+
+        <label>
+          Start Time {index + 1}:
           <input
-            type="text"
-            name="locationName"
-            value={formData.locationName}
-            onChange={handleChange}
+            type="time"
+            value={formData.presentation[index]?.time?.start || ''}
+            onChange={(e) => handlePresentationChange(index, 'start', e.target.value)}
             required
           />
         </label>
 
+        {/* Mostrar el tiempo de inicio seleccionado debajo */}
+        {formData.presentation[index]?.time?.start && (
+          <p>
+            {/* Selected Start Time {index + 1}: <strong>{formData.presentation[index].time.start}</strong> */}
+          </p>
+        )}
+
         <label>
-          Location Address:
+          End Time {index + 1}:
           <input
-            type="text"
-            name="locationAddress"
-            value={formData.locationAddress}
-            onChange={handleChange}
+            type="time"
+            value={formData.presentation[index]?.time?.end || ''}
+            onChange={(e) => handlePresentationChange(index, 'end', e.target.value)}
             required
           />
         </label>
 
-        <label>
-          Performance:
-          <input
-            type="number"
-            name="performance"
-            value={formData.performance}
-            onChange={handleChange}
-            required
-          />
-        </label>
-
-        <label>
-          Presentation Date:
-          <input
-            type="date"
-            name="presentationDate"
-            value={formData.presentationDate}
-            onChange={handlePresentationChange}
-            required
-            disabled={!formData.performance}
-          />
-        </label>
+        {/* Mostrar el tiempo de fin seleccionado debajo */}
+        {formData.presentation[index]?.time?.end && (
+          <p>
+            {/* Selected End Time {index + 1}: <strong>{formData.presentation[index].time.end}</strong> */}
+          </p>
+        )}
+      </div>
+    ))}
+  </div>
+)}
 
         <label>
           Description:
@@ -293,6 +443,16 @@ const CreateShowForm = () => {
             onChange={handleChange}
           />
         </label>
+        <label>
+  Cover Image URL:
+  <input
+    type="text"
+    name="coverImage"
+    value={formData.coverImage}
+    onChange={handleChange}
+    placeholder="Enter cover image URL"
+  />
+</label>
 
         <label>
           Price:

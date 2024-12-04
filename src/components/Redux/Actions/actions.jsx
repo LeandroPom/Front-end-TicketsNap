@@ -19,6 +19,11 @@ export const CREATE_TAG_FAIL="CREATE_TAG_FAIL";
 export const FETCH_TAGS_SUCCESS="FETCH_TAGS_SUCCESS";
 export const FETCH_TAGS_ERROR="FETCH_TAGS_ERROR";
 export const FETCH_TAGS_LOADING="FETCH_TAGS_LOADING";
+export const CREATE_PLACE_SUCCESS="CREATE_PLACE_SUCCESS";
+export const CREATE_PLACE_FAILURE="CREATE_PLACE_FAILURE";
+export const GET_PLACES_SUCCESS="GET_PLACES_SUCCESS"
+export const GET_PLACES_REQUEST="GET_PLACES_REQUEST"
+export const GET_PLACES_FAILURE="GET_PLACES_FAILURE"
 
 const BASE_URL = 'http://localhost:3001';  // Asegúrate de que esta URL corresponda a tu backend
 
@@ -73,6 +78,8 @@ export const loginUser = (email, password) => async (dispatch) => {
       });
     }
 
+    
+
   } catch (error) {
     // Manejo de errores de la API
     dispatch({
@@ -81,6 +88,44 @@ export const loginUser = (email, password) => async (dispatch) => {
     });
   }
 };
+
+
+
+
+// Acción para el login con Google
+export const loginWithGoogle = (email) => async (dispatch) => {
+  dispatch({ type: LOGIN_REQUEST });
+
+  try {
+    // Realizamos una búsqueda en la base de datos local por email
+    const response = await axios.get('http://localhost:3001/users', {
+      params: { email }, // Filtramos por email
+    });
+
+    // Verificamos si existe un usuario con el email proporcionado
+    const user = response.data.find((user) => user.email === email);
+
+    if (user) {
+      // Si encontramos un usuario con el email correcto
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: user, // Guardamos el usuario encontrado en Redux
+      });
+
+      return user; // Retornamos el usuario encontrado
+    } else {
+      // Si no hay coincidencia de email
+      throw new Error('Usuario no registrado en la base de datos local');
+    }
+  } catch (error) {
+    dispatch({
+      type: LOGIN_FAILURE,
+      payload: error.message || 'Error al verificar usuario con Google',
+    });
+    throw error; // Re-lanzamos el error para manejarlo en el componente
+  }
+};
+
 
 
 export const logoutUser = () => (dispatch) => {
@@ -190,6 +235,46 @@ export const getTags = () => async (dispatch) => {
     dispatch({
       type: 'FETCH_TAGS_ERROR',
       payload: error.response?.data?.error || 'Error al obtener los géneros',  // Error en la solicitud
+    });
+  }
+};
+
+///CREAR UN LUGAR /////
+
+export const createPlace = (placeData) => async (dispatch) => {
+  try {
+    // Enviar la solicitud POST para crear el lugar
+    const response = await axios.post('http://localhost:3001/places', placeData);
+
+    dispatch({
+      type: 'CREATE_PLACE_SUCCESS',
+      payload: response.data, // Datos del lugar creado
+    });
+    
+    // Puedes mostrar un mensaje o redirigir según sea necesario
+  } catch (error) {
+    dispatch({
+      type: 'CREATE_PLACE_FAILURE',
+      payload: error.response ? error.response.data : error.message,
+    });
+  }
+};
+
+/// TRAER LUGARES ///
+
+export const getPlaces = () => async (dispatch) => {
+  dispatch({ type: 'GET_PLACES_REQUEST' });
+
+  try {
+    const response = await axios.get('http://localhost:3001/places');  // Cambia la URL a la correcta de tu backend
+    dispatch({
+      type: 'GET_PLACES_SUCCESS',
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: 'GET_PLACES_FAILURE',
+      payload: error.message,
     });
   }
 };
