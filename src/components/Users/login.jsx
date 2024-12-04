@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../Redux/Actions/actions'; // Acción para hacer login
+import { loginUser,loginWithGoogle } from '../Redux/Actions/actions'; // Acción para hacer login
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { auth } from '../Firebase/firebase.config';
@@ -91,39 +91,36 @@ const Login = () => {
 
   const handleGoogleLogin = async (response) => {
     const provider = new GoogleAuthProvider();
+  
     try {
+      // Obtener credenciales de Google
       const credential = GoogleAuthProvider.credential(response.credential);
       const userCredential = await signInWithCredential(auth, credential);
-      const user = userCredential.user;
+      const googleUser = userCredential.user;
   
-      // Al hacer login con Google, actualizamos el estado global
-      const userData = {
-        name: user.displayName,
-        email: user.email,
-        image: user.photoURL,
-        role: 'user',
-      };
+      // Llamar a la nueva acción para verificar en la base de datos local
+      const user = await dispatch(loginWithGoogle(googleUser.email));
   
-      // Guardar el usuario en el localStorage
-      localStorage.setItem('user', JSON.stringify(userData));
-  
-      // Despachar la acción de login
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: userData,
-      });
+      // Guardar en localStorage y estado global
+      localStorage.setItem('user', JSON.stringify(user));
   
       Swal.fire({
         icon: 'success',
         title: 'Login exitoso',
-        text: `Bienvenido, ${user.displayName}`,
+        text: `Bienvenido, ${user.name}`,
       }).then(() => {
-        navigate('/'); // Redirige a la página principal
+        navigate('/'); // Redirigir a la página principal
       });
     } catch (error) {
-      console.error('Error al hacer login con Google', error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al iniciar sesión',
+        text: error.message || 'No se pudo iniciar sesión con Google.',
+      });
     }
   };
+  
+  
   
 
   return (

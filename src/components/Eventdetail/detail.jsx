@@ -80,9 +80,25 @@ const Detail = () => {
   return (
     <div className="event-detail">
       <h1>{event ? event.name : 'Evento no encontrado'}</h1>
-      <p>{event && event.date}</p>
+      
+      {/* Mostrar género */}
+      <p>Genre: {event && event.genre.join(', ')}</p>
+
+      {/* Mostrar la ubicación */}
+      <p>City: {event && event.location.name}</p>
+      <p>Address: {event && event.location.address}</p>
+
+      {/* Mostrar las presentaciones */}
+      {event && event.presentation.map((presentation, index) => (
+        <div key={index}>
+          <p><strong>Date:</strong> {presentation.date}</p>
+          <p><strong>Performance:</strong> {presentation.performance}</p>
+          <p><strong>Time:</strong> {presentation.time.start} - {presentation.time.end}</p>
+        </div>
+      ))}
+
+      {/* Mostrar precio */}
       <p>Price: ${event && event.price}</p>
-      <p>City: {event && event.location}</p>
 
       {/* Mostrar el mensaje de advertencia si showWarning es true */}
       {showWarning && (

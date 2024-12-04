@@ -155,3 +155,90 @@ button:hover {
         padding: 7px 10px;  /* Botón más pequeño en móviles */
     }
 }
+
+
+/* Estilos para el contenedor del calendario y la barra de búsqueda */
+.search-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+    margin-left: 380px;
+  }
+  
+  /* Estilo para el botón del calendario */
+  .calendar-button-container {
+    margin-right: 10px; /* Espacio entre el ícono y la barra de búsqueda */
+  }
+  
+  .calendar-button {
+    background-color: transparent; /* Sin fondo */
+    color: #007bff; /* Color del ícono en azul */
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .calendar-popup {
+    position: absolute;
+    top: 60px; /* Ajusta según tu diseño */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background-color: white; /* Fondo blanco */
+    padding: 0; /* Sin padding */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
+  
+  /* Estilo para el calendario */
+  .react-calendar {
+    background: transparent; /* Sin fondo */
+    border: none; /* Sin borde */
+  }
+  
+  .react-calendar__navigation button {
+    color: black !important; /* Botones de navegación en color negro */
+  }
+  
+  .react-calendar__navigation__label {
+    color: black !important; /* Títulos de mes y año en negro */
+  }
+  
+  .react-calendar__tile {
+    color: rgb(255, 0, 0); /* Números en negro */
+  }
+  
+  .react-calendar__tile--now {
+    background: transparent; /* Resalta el día de hoy sin fondo */
+  }
+  
+  .react-calendar__tile--active {
+    background: transparent; /* Resalta la fecha seleccionada sin fondo */
+  }
+  
+  .react-calendar__tile--hasActive {
+    color: green; /* Pone en verde las fechas con eventos */
+    background: transparent;
+  }
+
+  .reset-button {
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px; /* Ajuste de padding para un tamaño adecuado */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+    width: auto;  /* Asegura que el ancho sea ajustable */
+    display: inline-block; /* Permite que el ancho se ajuste al contenido */
+  }
+  
+  .reset-button:hover {
+    background-color: #d32f2f; /* Color rojo más oscuro al pasar el mouse */
+  }
+  
+  

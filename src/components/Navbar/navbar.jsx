@@ -63,6 +63,7 @@ const Navbar = () => {
                   <a href="#" onClick={handleCreateShow} className="dropdown-item">
                     Create Show
                   </a>
+                    <a href="/createplace" className="dropdown-item">CreatePlace</a>
                   <a href="#" onClick={handleLogout} className="dropdown-item">
                     Logout
                   </a>
@@ -71,6 +72,7 @@ const Navbar = () => {
                 <>
                   <a href="/login" className="dropdown-item">Login</a>
                   <a href="/register" className="dropdown-item">Register</a>
+                  
                 </>
               )}
             </div>
