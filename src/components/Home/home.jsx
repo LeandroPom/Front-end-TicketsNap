@@ -136,7 +136,7 @@ const ShowsList = () => {
       <ul>
         {filteredShows && filteredShows.length > 0 ? (
           filteredShows.map((show) => (
-            <li key={show.id}>
+            <li className='button' key={show.id}>
               <h3>{show.name}</h3>
               {/* <p>{show.description}</p> */}
               <p>Location: {show.location.name}</p>
@@ -144,7 +144,7 @@ const ShowsList = () => {
               {/* <p>Artists: {show.artists.join(', ')}</p> */}
               <p>Dates: {show.presentation.map((p) => p.date).join(', ')}</p>
               <img className="event-image" src={show.coverImage} alt={show.name} />
-              <button onClick={() => handleViewDetails(show.id)}>View Details</button>
+              <button className='button' onClick={() => handleViewDetails(show.id)}>View Details</button>
             </li>
           ))
         ) : (

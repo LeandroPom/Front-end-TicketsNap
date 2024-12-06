@@ -4,17 +4,20 @@ import { logoutUser } from '../Redux/Actions/actions';
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase/firebase.config';
 import { useNavigate } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaSun, FaMoon } from 'react-icons/fa'; // Importamos los íconos
 import './navbar.css';
+import SeatManager from '../ManagerSeat/seatmanager';
+import { useTheme } from '../ThemeDark/themecontext'; // Importa el hook para el tema
 
 const Navbar = () => {
-  const user = useSelector((state) => state.user); // Accedemos al usuario desde el estado global
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [dropdownOpen, setDropdownOpen] = useState(false); // Estado para el menú desplegable
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isSeatManagerOpen, setIsSeatManagerOpen] = useState(false);
+  const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
-    // Al cargar la página, verificar si hay un usuario en localStorage
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       dispatch({
@@ -26,10 +29,10 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Cerrar sesión en Firebase
-      dispatch(logoutUser()); // Limpiar el estado global
-      localStorage.removeItem('user'); // Eliminar el usuario del localStorage
-      navigate('/login'); // Redirigir al login
+      await signOut(auth);
+      dispatch(logoutUser());
+      localStorage.removeItem('user');
+      navigate('/login');
     } catch (error) {
       console.error('Error al cerrar sesión', error);
     }
@@ -40,13 +43,33 @@ const Navbar = () => {
   };
 
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen); // Alternar estado del menú desplegable
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleOpenSeatManager = () => {
+    setIsSeatManagerOpen(true);
+  };
+
+  const handleCloseSeatManager = () => {
+    setIsSeatManagerOpen(false);
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isDarkMode ? 'dark' : 'light'}`}>
       <div className="navbar-logo">
         <a href="/">Return Home</a>
+         {/* Ícono compacto para cambiar el tema */}
+         {isDarkMode ? (
+          <FaSun
+            onClick={toggleTheme}
+            className="theme-toggle-icon"
+          />
+        ) : (
+          <FaMoon
+            onClick={toggleTheme}
+            className="theme-toggle-icon"
+          />
+        )}
       </div>
       <div className="navbar-links">
         {user && user.name && (
@@ -63,7 +86,12 @@ const Navbar = () => {
                   <a href="#" onClick={handleCreateShow} className="dropdown-item">
                     Create Show
                   </a>
-                    <a href="/createplace" className="dropdown-item">CreatePlace</a>
+                  <a href="#" onClick={handleOpenSeatManager} className="dropdown-item">
+                    Create Seats
+                  </a>
+                  <a href="/admin" className="dropdown-item">
+                    Admin Panel
+                  </a>
                   <a href="#" onClick={handleLogout} className="dropdown-item">
                     Logout
                   </a>
@@ -72,13 +100,28 @@ const Navbar = () => {
                 <>
                   <a href="/login" className="dropdown-item">Login</a>
                   <a href="/register" className="dropdown-item">Register</a>
-                  
                 </>
               )}
             </div>
           )}
         </div>
       </div>
+
+      {isSeatManagerOpen && (
+        <div className="modal">
+          <div className="modal-overlay" onClick={handleCloseSeatManager}></div>
+          <div className="modal-content">
+            <h2>Create Seats</h2>
+            <SeatManager
+              mapaUrl="/mapa.jpg"
+              onClose={handleCloseSeatManager}
+            />
+            <button className="close-modal-btn" onClick={handleCloseSeatManager}>
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

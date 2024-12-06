@@ -1,0 +1,115 @@
+/* Modal base */
+.modal {
+    position: fixed;
+    top: 50%; /* Mueve el modal a la mitad de la pantalla verticalmente */
+    left: 50%; /* Mueve el modal a la mitad de la pantalla horizontalmente */
+    margin-left: 25%; /* Ajusta para centrar el modal de acuerdo con su ancho */
+    
+    width: 45%;
+    max-width: 600px;
+    height: 50%;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos internos se apilen */
+    align-items: center;
+    justify-content: space-between; /* Acomoda botones y contenido */
+    /* background: white; */
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1001;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: black;
+  }
+
+/* Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    /* left: 0;  */
+    width: 75%;
+    height: 75%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+/* Botones */
+.select-seats-btn,
+.close-modal-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.select-seats-btn {
+    background: #007bff;
+    color: white;
+}
+
+.close-modal-btn {
+    background: #dc3545;
+    color: white;
+}
+
+/* Zona de los botones de control del mapa */
+.map-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Estilo de los asientos */
+.seating-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%; /* Asegura que ocupe el 100% del espacio disponible */
+    max-height: 60%; /* Limita la altura máxima de los asientos */
+    overflow-y: auto; /* Permite el desplazamiento si es necesario */
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.seat {
+    width: 40px;
+    height: 40px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.seat.selected {
+    background: #007bff;
+    color: white;
+    border: 1px solid #0056b3;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .modal {
+        width: 90%;
+        height: auto;
+        max-height: 80%;
+        margin-left: -45%; /* Ajuste para dispositivos móviles */
+    }
+
+    .map-controls {
+        flex-direction: column;
+    }
+}
