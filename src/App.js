@@ -7,9 +7,11 @@ import Register from './components/Users/register';
 import Login from './components/Users/login';
 import CreateShowForm from './components/Shows/createshowform';
 import CreatePlaceForm from './components/Shows/createplace';
+import AdminPanel from './components/AdminPanel/Pages/adminpanel';
 
 
 function App() {
+  
   return (
     
       <Router>
@@ -21,11 +23,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/create-show" element={<CreateShowForm />} />
           <Route path="/createplace" element={<CreatePlaceForm />} />
+          <Route path="*" element={<AdminPanel />} />
         </Routes>
       </Router>
-    
+      
   );
 }
 
 export default App;
-

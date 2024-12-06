@@ -1,244 +1,316 @@
 /* Estilos para la página Home */
 .home {
-    background-color: #f1f1f1;
-    padding: 30px 20px;
-    font-family: 'Arial', sans-serif;
-    margin-top: 60px;
-    text-align: center;
+  padding: 30px 20px;
+  font-family: 'Arial', sans-serif;
+  margin-top: 60px;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s; /* Animación */
+}
+
+.home.light {
+  background-color: #f1f1f1; /* Fondo claro para el modo claro */
+  color: black; /* Color de texto en modo claro */
+}
+
+.home.dark {
+  background-color: #2e2e2e; /* Fondo oscuro para el modo oscuro */
+  color: white; /* Color de texto en modo oscuro */
 }
 
 /* Título de la sección */
 .home h2 {
-    color: #222;
-    font-size: 30px;
-    margin-bottom: 25px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  font-size: 30px;
+  margin-bottom: 25px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s; /* Transición para el color */
+}
+
+.home.light h2 {
+  color: #222; /* Título en negro en modo claro */
+}
+
+.home.dark h2 {
+  color: #ddd; /* Título en gris claro en modo oscuro */
 }
 
 /* Estilos de la barra de búsqueda y select */
 .search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
 .search-container input,
 .search-container select {
-    padding: 8px 15px;
-    margin: 0 10px;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    font-size: 16px;
-    background-color: #fff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 8px 15px;
+  margin: 0 10px;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .search-container input:focus,
 .search-container select:focus {
-    border-color: #0056b3;
-    box-shadow: 0 0 8px rgba(0, 91, 255, 0.6);
+  border-color: #0056b3;
+  box-shadow: 0 0 8px rgba(0, 91, 255, 0.6);
+}
+
+.home.light .search-container input,
+.home.light .search-container select {
+  background-color: #fff;
+  color: black;
+}
+
+.home.dark .search-container input,
+.home.dark .search-container select {
+  background-color: #333;
+  color: white;
+  border-color: #555;
 }
 
 /* Contenedor de eventos en columnas */
 .home ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 25px;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    max-width: 1200px;
-    margin-top: 30px;
-    margin-bottom: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 30px;
+  margin-bottom: 50px;
 }
 
 /* Elementos individuales de eventos */
 li {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border: 1px solid #ddd;
-    overflow: hidden;
-    position: relative;
+  /* background-color: #b4a9a9; */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  position: relative;
 }
 
 li:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.home.light li {
+  background-color: #fff;
+  color: black;
+}
+
+.home.dark li {
+  background-color: #faf4f4;
+  color: rgb(8, 8, 8);
 }
 
 /* Títulos de los eventos */
 li h3 {
-    color: #007bff;
-    font-size: 20px;
-    margin-bottom: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+  color: #007bff;
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.home.light li h3 {
+  color: #007bff; /* Azul claro en modo claro */
+}
+
+.home.dark li h3 {
+  color: #bdd9ee; /* Azul más suave en modo oscuro */
+}
+
+.home.light li p {
+  color: #000000; /* Azul claro en modo claro */
+}
+
+.home.dark li p {
+  color: #ffffff; /* Azul más suave en modo oscuro */
 }
 
 /* Descripción de los eventos */
 li p {
-    color: #555;
-    font-size: 14px;
-    margin: 6px 0;
-    line-height: 1.4;
-    text-align: justify;
+  /* color: #555; */
+  font-size: 14px;
+  margin: 6px 0;
+  line-height: 1.4;
+  text-align: justify;
+}
+
+.home.light li p {
+  color: #555;
+}
+
+.home.dark li p {
+  color: #ccc;
 }
 
 /* Imagen de los eventos */
 .event-image {
-    width: 100%;
-    height: 160px;  /* Reducido el tamaño de la imagen */
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    transition: transform 0.3s ease-in-out;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease-in-out;
 }
 
 li:hover .event-image {
-    transform: scale(1.02); /* Reducido el zoom al 102% */
+  transform: scale(1.02);
 }
 
 /* Botón de ver detalles */
+
+
+
 button {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 12px; /* Botón más pequeño */
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;  /* Texto más pequeño */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100%;
+  /* background-color: #007bff; */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
 }
 
 button:hover {
-    background-color: #0056b3;
-    transform: scale(1.02); /* Reducido el zoom al 102% */
+  background-color: #0056b3;
+  transform: scale(1.02);
 }
 
-/* Estilo responsivo: Se adaptan las columnas en pantallas pequeñas */
+.light button {
+  background-color: #ffffff;
+}
+
+.dark button {
+  background-color: #acacac;
+}
+
+/* Estilo responsivo */
 @media (max-width: 768px) {
-    .home ul {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Más pequeño aún en móviles */
-        margin-top: 20px;
-    }
+  .home ul {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    margin-top: 20px;
+  }
 
-    li {
-        padding: 12px;
-    }
+  li {
+    padding: 12px;
+  }
 
-    li h3 {
-        font-size: 18px;
-    }
+  li h3 {
+    font-size: 18px;
+  }
 
-    li p {
-        font-size: 13px;
-    }
+  li p {
+    font-size: 13px;
+  }
 
-    .event-image {
-        height: 120px;  /* Ajuste de la imagen en pantallas pequeñas */
-    }
+  .event-image {
+    height: 120px;
+  }
 
-    button {
-        font-size: 13px;
-        padding: 7px 10px;  /* Botón más pequeño en móviles */
-    }
+  button {
+    font-size: 13px;
+    padding: 7px 10px;
+  }
 }
-
 
 /* Estilos para el contenedor del calendario y la barra de búsqueda */
 .search-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 25px;
-    margin-left: 380px;
-  }
-  
-  /* Estilo para el botón del calendario */
-  .calendar-button-container {
-    margin-right: 10px; /* Espacio entre el ícono y la barra de búsqueda */
-  }
-  
-  .calendar-button {
-    background-color: transparent; /* Sin fondo */
-    color: #007bff; /* Color del ícono en azul */
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .calendar-popup {
-    position: absolute;
-    top: 60px; /* Ajusta según tu diseño */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    background-color: white; /* Fondo blanco */
-    padding: 0; /* Sin padding */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-  }
-  
-  /* Estilo para el calendario */
-  .react-calendar {
-    background: transparent; /* Sin fondo */
-    border: none; /* Sin borde */
-  }
-  
-  .react-calendar__navigation button {
-    color: black !important; /* Botones de navegación en color negro */
-  }
-  
-  .react-calendar__navigation__label {
-    color: black !important; /* Títulos de mes y año en negro */
-  }
-  
-  .react-calendar__tile {
-    color: rgb(255, 0, 0); /* Números en negro */
-  }
-  
-  .react-calendar__tile--now {
-    background: transparent; /* Resalta el día de hoy sin fondo */
-  }
-  
-  .react-calendar__tile--active {
-    background: transparent; /* Resalta la fecha seleccionada sin fondo */
-  }
-  
-  .react-calendar__tile--hasActive {
-    color: green; /* Pone en verde las fechas con eventos */
-    background: transparent;
-  }
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 25px;
+  margin-left: 380px;
+}
 
-  .reset-button {
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px; /* Ajuste de padding para un tamaño adecuado */
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-left: 10px;
-    width: auto;  /* Asegura que el ancho sea ajustable */
-    display: inline-block; /* Permite que el ancho se ajuste al contenido */
-  }
-  
-  .reset-button:hover {
-    background-color: #d32f2f; /* Color rojo más oscuro al pasar el mouse */
-  }
-  
-  
+/* Estilo para el botón del calendario */
+.calendar-button-container {
+  margin-right: 10px;
+}
+
+.calendar-button {
+  background-color: transparent;
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.calendar-popup {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: white;
+  padding: 0;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.react-calendar {
+  background: transparent;
+  border: none;
+}
+
+.react-calendar__navigation button {
+  color: black !important;
+}
+
+.react-calendar__navigation__label {
+  color: black !important;
+}
+
+.react-calendar__tile {
+  color: rgb(255, 0, 0);
+}
+
+.react-calendar__tile--now {
+  background: transparent;
+}
+
+.react-calendar__tile--active {
+  background: transparent;
+}
+
+.react-calendar__tile--hasActive {
+  color: green;
+  background: transparent;
+}
+
+.reset-button {
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+  width: auto;
+  display: inline-block;
+}
+
+.reset-button:hover {
+  background-color: #d32f2f;
+}

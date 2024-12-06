@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './components/Redux/Store/storeindex'; // Importar el store que creamos anteriormente
 import { Provider } from 'react-redux';
+import { ThemeProvider } from './components/ThemeDark/themecontext'; // Importar el ThemeProvider
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
   <React.StrictMode>
-    <App />
+  <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
   </Provider>
 );

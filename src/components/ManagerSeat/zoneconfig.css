@@ -1,0 +1,165 @@
+/* Estilos generales para el formulario de configuración de zonas */
+.zone-config-form {
+    margin: 200px auto; /* Centrado automático */
+    padding: 20px; /* Ajuste del padding */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #000000;
+    width: 15cm; /* Ancho fijo en centímetros */
+    max-height: 80vh; /* Limita la altura máxima del formulario */
+    display: flex;
+    flex-direction: column; /* Alinear elementos en columna */
+    justify-content: flex-start; /* Asegurar que los elementos inicien desde arriba */
+    overflow: auto; /* Permite scroll cuando el contenido excede el tamaño del contenedor */
+  }
+  
+  /* Ajustar el contenedor de la imagen para hacerlo desplazable */
+  .zone-image-container {
+    overflow-y: auto; /* Añadir scroll vertical si el contenido es muy grande */
+    flex-grow: 1; /* Deja que la imagen y asientos crezcan para ocupar espacio */
+    margin-bottom: 20px; /* Espacio entre la imagen y los botones */
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Estilos para la imagen de la zona */
+  .zone-image {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+  }
+  
+  .zone-image img {
+    width: 100%;
+    max-width: 100%; /* Imagen toma el 100% del contenedor */
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para los marcadores de asiento */
+  .seat-marker {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: green;
+    cursor: pointer;
+  }
+  
+  /* Estilos para el formulario de precios */
+  .price-form {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .price-form h4 {
+    margin-bottom: 15px;
+  }
+  
+  .price-form p {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .price-form label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  
+  .price-form input[type="text"],
+  .price-form input[type="number"] {
+    margin-bottom: 15px;
+  }
+  
+  .price-form button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .price-form button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos para los asientos seleccionados */
+  .selected-seat {
+    position: absolute;
+    width: 15px; /* Aumentar el tamaño del punto */
+    height: 15px;
+    border-radius: 50%;
+    background-color: green; /* Color del punto */
+    border: 2px solid white; /* Borde para mejorar la visibilidad */
+    z-index: -999; /* Asegurarse de que el punto esté encima de la imagen */
+  }
+  
+  .selected-seats h4 {
+    margin-bottom: 15px;
+  }
+  
+  .selected-seats ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .selected-seats li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #0afd1e;
+  }
+  
+  .selected-seats li span {
+    font-weight: bold;
+  }
+  
+  /* Ajustes para las etiquetas, inputs, y otros campos */
+  .zone-config-form label {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  
+  .zone-config-form select,
+  .zone-config-form input[type="text"],
+  .zone-config-form input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .zone-config-form input[type="text"]:focus,
+  .zone-config-form input[type="number"]:focus,
+  .zone-config-form select:focus {
+    border-color: #4caf50;
+    outline: none;
+  }
+  
+  /* Ajustes para los botones */
+  .zone-config-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .zone-config-form button:hover {
+    background-color: #0056b3;
+  }
+  

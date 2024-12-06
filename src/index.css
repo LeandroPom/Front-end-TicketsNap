@@ -1,3 +1,5 @@
+/* Estilos globales */
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +7,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s, color 0.3s; /* Animación suave para el cambio de tema */
+  
 }
 
+body.light {
+  background-color: white !important;
+  color: black !important;
+}
+
+body.dark {
+  background-color: #333 !important;
+  color: white !important;
+}
+
+/* Estilos de componentes que usarán los colores heredados */
+
+a, .navbar, .dropdown-menu, .dropdown-item {
+  color: inherit; /* Hereda el color del body (usará blanco o negro dependiendo del tema) */
+}
+
+button {
+  background-color: inherit;
+  color: inherit; /* Hereda el color del texto según el tema */
+}
+
+.theme-toggle-btn {
+  background-color: inherit;
+  color: inherit;
+  border: 1px solid;
+}
+
+/* Otros estilos generales que puedes definir */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
