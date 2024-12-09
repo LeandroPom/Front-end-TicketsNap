@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <header className="admin-header">
       <div className="logo">
-        <h2>Panel de Administración</h2>
+        <h2>Panel Administration</h2>
       </div>
       <nav>
         <ul>
@@ -24,16 +24,16 @@ const Header = () => {
             <Link to="/admin/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to="/admin/events">Eventos</Link>
+            <Link to="/admin/events">Events</Link>
           </li>
           <li>
-            <Link to="/admin/users">Usuarios</Link>
+            <Link to="/admin/users">Users</Link>
           </li>
           <li>
-            <Link to="/admin/places">Lugares</Link>
+            <Link to="/admin/places">Places</Link>
           </li>
           <li>
-            <button onClick={handleLogout}>Cerrar sesión</button>
+            <button onClick={handleLogout}>Logout</button>
           </li>
         </ul>
       </nav>

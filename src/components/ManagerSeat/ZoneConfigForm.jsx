@@ -102,7 +102,7 @@ const ZoneConfigForm = () => {
     try {
       const selectedZoneData = zoneData.find(zone => zone.zoneName === selectedZone);
       if (!selectedZoneData) {
-        console.error("Zona seleccionada no encontrada");
+        console.error("Selected Zone not found");
         return;
       }
   
@@ -120,7 +120,7 @@ const ZoneConfigForm = () => {
         }
       });
   
-      console.log("Asientos a enviar al backend:", updatedSeats);
+      
   
       // Formato correcto para el backend
       const response = await axios.put("http://localhost:3001/zones/edit", {
@@ -132,7 +132,7 @@ const ZoneConfigForm = () => {
       });
   
       if (response.status === 200) {
-        console.log("Asientos guardados correctamente");
+       
         setSeatData(updatedSeats); // Actualizar estado de asientos
       } else {
         console.error("Error al guardar los asientos");
@@ -150,10 +150,10 @@ const ZoneConfigForm = () => {
 
   return (
     <div className="zone-config-form">
-      <h3>Configurar zona</h3>
+      <h3>Configurate Zone</h3>
 
       {/* Selección de la zona */}
-      <label>Seleccionar zona:</label>
+      <label>Select Zone:</label>
       <select
         value={selectedZone}
         onChange={(e) => setSelectedZone(e.target.value)}
@@ -200,12 +200,12 @@ const ZoneConfigForm = () => {
 
       {showPriceForm && (
         <div className="price-form">
-          <h4>Configurar asiento</h4>
+          <h4>Configurate Seat</h4>
           <p>
-            Coordenadas seleccionadas: ({selectedSeat.x}, {selectedSeat.y})
+            Coordinates Selected: ({selectedSeat.x}, {selectedSeat.y})
           </p>
           <label>
-            ID del asiento (e.g., A1, B2):
+            ID Seat (e.g., A1, B2):
             <input
               type="text"
               value={seatId}
@@ -213,7 +213,7 @@ const ZoneConfigForm = () => {
             />
           </label>
           <label>
-            Precio:
+            Price:
             <input
               type="number"
               value={price}
@@ -221,22 +221,22 @@ const ZoneConfigForm = () => {
               min="1"
             />
           </label>
-          <button onClick={handleAddSeat}>Aceptar</button>
+          <button onClick={handleAddSeat}>Acept</button>
         </div>
       )}
 
       <div className="selected-seats">
-        <h4>Asientos seleccionados</h4>
+        <h4>Seat Selected</h4>
         <ul>
           {seatData.map((seat, index) => (
             <li key={index}>
-              ID: {seat.id} - Coordenadas: ({seat.x}, {seat.y}) - Precio: ${seat.price}
+              ID: {seat.id} - Coordinates: ({seat.x}, {seat.y}) - Price: ${seat.price}
             </li>
           ))}
         </ul>
       </div>
 
-      <button onClick={handleSubmit}>Guardar asientos</button>
+      <button onClick={handleSubmit}>Saved Seats</button>
     </div>
   );
 };

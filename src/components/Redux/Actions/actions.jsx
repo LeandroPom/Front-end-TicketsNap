@@ -56,36 +56,41 @@ export const loginUser = (email, password) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
 
   try {
-    // Realizamos una búsqueda por email
     const response = await axios.get('http://localhost:3001/users', {
       params: { email }, // Filtramos por email
     });
 
-    // Verificamos si hay usuarios que coinciden con el email
     const user = response.data.find((user) => user.email === email && user.password === password);
 
     if (user) {
-      // Si encontramos un usuario con el email y la contraseña correctos
+      if (user.disabled) {
+        // Usuario bloqueado
+        dispatch({
+          type: LOGIN_FAILURE,
+          payload: 'Tu cuenta ha sido deshabilitada.',
+        });
+        return { error: 'Usuario bloqueado' }; // Retornar error explícito
+      }
+
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: user, // Guardamos el usuario encontrado
+        payload: user, // Usuario válido
       });
+
+      return user; // Retornar el usuario encontrado
     } else {
-      // Si no hay coincidencia de email o contraseña
       dispatch({
         type: LOGIN_FAILURE,
-        payload: 'Usuario o contraseña incorrectos',
+        payload: 'Usuario o contraseña incorrectos.',
       });
+      return { error: 'Credenciales incorrectas' }; // Retornar error explícito
     }
-
-    
-
   } catch (error) {
-    // Manejo de errores de la API
     dispatch({
       type: LOGIN_FAILURE,
-      payload: error.response?.data?.message || 'Error al iniciar sesión',
+      payload: 'Error al realizar el login.',
     });
+    return { error: 'Error en el servidor' }; // Error general
   }
 };
 
@@ -106,7 +111,16 @@ export const loginWithGoogle = (email) => async (dispatch) => {
     const user = response.data.find((user) => user.email === email);
 
     if (user) {
-      // Si encontramos un usuario con el email correcto
+      // Verificamos si el usuario está deshabilitado
+      if (user.disabled) {
+        dispatch({
+          type: LOGIN_FAILURE,
+          payload: 'Tu cuenta ha sido deshabilitada. Por favor, contacta al soporte.',
+        });
+        return { error: 'Usuario bloqueado' }; // Retornamos error si está bloqueado
+      }
+
+      // Si encontramos un usuario con el email correcto y no está bloqueado
       dispatch({
         type: LOGIN_SUCCESS,
         payload: user, // Guardamos el usuario encontrado en Redux
@@ -125,6 +139,7 @@ export const loginWithGoogle = (email) => async (dispatch) => {
     throw error; // Re-lanzamos el error para manejarlo en el componente
   }
 };
+
 
 
 

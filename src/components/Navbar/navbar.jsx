@@ -92,6 +92,9 @@ const Navbar = () => {
                   <a href="/admin" className="dropdown-item">
                     Admin Panel
                   </a>
+                  <a href="/profile" className="dropdown-item">
+                    Profile
+                  </a>
                   <a href="#" onClick={handleLogout} className="dropdown-item">
                     Logout
                   </a>

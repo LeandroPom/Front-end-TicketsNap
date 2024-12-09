@@ -116,7 +116,7 @@ const Detail = () => {
   }
 
   if (!event) {
-    return <div>Evento no encontrado</div>;
+    return <div>Event not Found</div>;
   }
 
   return (
@@ -147,12 +147,12 @@ const Detail = () => {
           onClick={handleCanvasClick}
           style={{ cursor: 'pointer' }}
         />
-        {selectedZone && <p>Zona seleccionada: {selectedZone}</p>}
+        {selectedZone && <p>Selected Zone: {selectedZone}</p>}
       </div>
 
       {/* Botón para abrir el selector de asientos */}
       <button className="select-seats-btn" onClick={handleOpenSeatManager}>
-        Elegir Asientos
+        Select Seats
       </button>
 
       {/* Modal para el selector de asientos */}
@@ -160,7 +160,7 @@ const Detail = () => {
         <div className="modal">
           <div className="modal-overlay" onClick={handleCloseSeatManager}></div>
           <div className="modal-content">
-            <h2>Selecciona tus asientos</h2>
+            <h2> Select Your Seat</h2>
             <SeatManager
   mapaUrl='/mapa.jpg'
   onSeatsSelected={handleSeatsSelected}
@@ -171,7 +171,7 @@ const Detail = () => {
 />
 
             <button className="close-modal-btn" onClick={handleCloseSeatManager}>
-              Cerrar
+              Close
             </button>
           </div>
         </div>
