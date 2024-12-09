@@ -170,7 +170,10 @@ const Login = () => {
           </div>
         </form>
 
-        <GoogleOAuthProvider clientId="220270807051-k0j1nanf7am7do9garnpb5c4u4lmmd8p.apps.googleusercontent.com">
+
+        {/* Login with Google */}
+        <GoogleOAuthProvider clientId="credencial de google">
+
           <GoogleLogin
             onSuccess={handleGoogleLogin}
             onError={(error) => console.log('Error al iniciar sesión con Google:', error)}
