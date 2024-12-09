@@ -107,7 +107,7 @@ const SeatManager = ({ mapaUrl, onSeatsSelected, isSelectable }) => {
     <div>
       {!selectedZone ? (
         <div>
-          <h2>Selecciona una zona en el mapa</h2>
+          <h2>Select Zone</h2>
           <div className="map-controls">
             <button onClick={handleZoomIn}>Zoom +</button>
             <button onClick={handleZoomOut}>Zoom -</button>
@@ -130,11 +130,11 @@ const SeatManager = ({ mapaUrl, onSeatsSelected, isSelectable }) => {
         <div className="modal">
           <div className="modal-overlay" onClick={() => setSelectedZone(null)}></div>
           <div className="modal-content">
-            <h2>Zona Seleccionada: {selectedZone}</h2>
+            <h2>Zona Selected: {selectedZone}</h2>
             <div className="seating-grid">
               <SeatPreview seatingData={seatingData} selectedZone={selectedZone} onSeatSelect={handleSeatSelect} />
             </div>
-            <button onClick={() => setSelectedZone(null)}>Volver al mapa</button>
+            <button onClick={() => setSelectedZone(null)}>Return Map</button>
           </div>
         </div>
       )}

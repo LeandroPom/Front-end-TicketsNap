@@ -51,7 +51,7 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <div>Cargando métricas...</div>; // Mensaje mientras se cargan los datos
+    return <div>Loading Metrics..</div>; // Mensaje mientras se cargan los datos
   }
 
   if (error) {
@@ -64,7 +64,7 @@ const Dashboard = () => {
 
       <div className="metrics-container">
         <div className="metric-card">
-          <h3>Usuarios</h3>
+          <h3>Users</h3>
           <p>{metrics.users}</p>
         </div>
         <div className="metric-card">
@@ -72,22 +72,22 @@ const Dashboard = () => {
           <p>{metrics.shows}</p>
         </div>
         <div className="metric-card">
-          <h3>Lugares</h3>
+          <h3>Places</h3>
           <p>{metrics.places}</p>
         </div>
         <div className="metric-card">
-          <h3>Asientos</h3>
+          <h3>Seats</h3>
           <p>{metrics.seats}</p>
         </div>
       </div>
 
       <div className="charts-container">
         <div className="chart">
-          <h3>Distribución de Recursos</h3>
+          <h3>Resource Distribution</h3>
           <Bar data={barData} />
         </div>
         <div className="chart">
-          <h3>Proporciones</h3>
+          <h3>Proportions</h3>
           <Doughnut data={doughnutData} />
         </div>
       </div>

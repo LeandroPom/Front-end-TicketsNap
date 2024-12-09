@@ -87,3 +87,69 @@
         width: 80%; /* Hacer más ancho en pantallas pequeñas */
     }
 }
+
+
+/* profile.css */
+
+.profile-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .profile-info p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .change-password {
+    margin-top: 30px;
+  }
+  
+  .change-password form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .change-password .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .change-password label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .change-password input {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .change-password button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .change-password button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .password-container {
+    position: relative;
+  }
+  
+  input[type="password"], input[type="text"] {
+    padding-right: 100px; /* Deja espacio para el ícono */
+  }
+  
+  button[type="submit"] {
+    margin-top: 20px;
+  }

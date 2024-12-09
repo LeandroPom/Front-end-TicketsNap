@@ -74,12 +74,12 @@ const Places = () => {
 
       {/* Lista de lugares */}
       <div className="places-list">
-        <h3>Lugares Disponibles</h3>
+        <h3>Available Places</h3>
         <ul>
           {places.map((place) => (
             <li key={place.id}>
               <span>{place.name} - {place.location}</span>
-              <button onClick={() => handleDeletePlace(place.id)}>Eliminar</button>
+              <button onClick={() => handleDeletePlace(place.id)}>Deleted</button>
             </li>
           ))}
         </ul>

@@ -26,17 +26,17 @@ const Events = () => {
 
   return (
     <div className="events-page">
-      <h1>Gestión de Eventos</h1>
-      {loading && <p>Cargando...</p>}
+      <h1>Events Management</h1>
+      {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-      <button onClick={() => navigate('/admin/events/create')}>Crear Evento</button>
+      <button onClick={() => navigate('/admin/events/create')}>Create Event</button>
       <table>
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Género</th>
-            <th>Ubicación</th>
-            <th>Acciones</th>
+            <th>Name</th>
+            <th>Genre</th>
+            <th>Place</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -46,8 +46,8 @@ const Events = () => {
               <td>{show.genre.join(', ')}</td>
               <td>{show.location.name}</td>
               <td>
-                <button onClick={() => handleEdit(show.id)}>Editar</button>
-                <button onClick={() => handleDelete(show.id)}>Eliminar</button>
+                <button onClick={() => handleEdit(show.id)}>Edit</button>
+                <button onClick={() => handleDelete(show.id)}>Deleted</button>
               </td>
             </tr>
           ))}

@@ -170,10 +170,10 @@ const SeatManager = ({ mapaUrl, onSeatsSelected, isSelectable, selectedSeats, se
 
   return (
     <div>
-      <h3>Configurar Asientos</h3>
+      <h3>Configurated Seat</h3>
 
       {/* Selección de la zona */}
-      <label>Seleccionar zona:</label>
+      <label>Select Zone:</label>
       <select
         value={selectedZone}
         onChange={(e) => setSelectedZone(e.target.value)}
@@ -221,17 +221,17 @@ const SeatManager = ({ mapaUrl, onSeatsSelected, isSelectable, selectedSeats, se
       )}
 
 <div className="selected-seats">
-  <h4>Asientos seleccionados</h4>
+  <h4>Seats selected</h4>
   <ul>
     {selectedSeats.map((seat, index) => (
       <li key={index}>
-        ID: {seat.id} - Coordenadas: ({seat.x}, {seat.y})
+        ID: {seat.id} - Coordinates: ({seat.x}, {seat.y})
       </li>
     ))}
   </ul>
 </div>
 
-      <button onClick={handleSubmit}>Guardar asientos</button>
+      <button onClick={handleSubmit}>Saved Seats</button>
     </div>
   );
 };
