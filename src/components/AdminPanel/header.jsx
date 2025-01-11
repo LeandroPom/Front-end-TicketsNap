@@ -33,7 +33,7 @@ const Header = () => {
             <Link to="/admin/places">Places</Link>
           </li>
           <li>
-            <button onClick={handleLogout}>Logout</button>
+            <button className='botonedit' onClick={handleLogout}>Logout</button>
           </li>
         </ul>
       </nav>

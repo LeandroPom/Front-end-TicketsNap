@@ -1,0 +1,191 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Styles */
+  form {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  form div {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+
+
+
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"] {
+    height: 40px;
+  }
+
+
+
+   
+  
+  .botonremove {
+    width: 25%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .selected-genres {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  textarea {
+    height: 120px;
+    resize: vertical;
+  }
+  
+  /* Button Styles */
+  button[type="submit"],
+  button[type="button"] {
+    /* background-color: #4CAF50; */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* button[type="submit"]:hover,
+  button[type="button"]:hover {
+    background-color: #45a049;
+  } */
+  
+  .botonedit{
+    background-color: #505255;
+  }
+  
+  /* button[type="button"]:hover {
+    background-color: #e53935;
+  } */
+  
+  /* Layout and Alignment */
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  textarea {
+    margin-top: 5px;
+  }
+  
+  form .row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  form .row div {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  /* Form Inputs and Labels Alignment */
+  form .input-group {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  form .input-group label {
+    width: 25%;
+  }
+  
+  form .input-group input,
+  form .input-group textarea {
+    width: 70%;
+  }
+  
+  /* Error Messages */
+  p.error {
+    color: red;
+    font-size: 14px;
+  }
+
+  /* Estilos para los géneros seleccionados */
+.selected-genres {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.selected-genres ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.selected-genres li {
+  width: 15%;
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.selected-genres li button {
+  background-color: transparent;
+  color: #e53935;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 0;
+}
+
+.selected-genres li button:hover {
+  color: #cec8c8;
+}

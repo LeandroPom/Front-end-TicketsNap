@@ -24,6 +24,10 @@ export const CREATE_PLACE_FAILURE="CREATE_PLACE_FAILURE";
 export const GET_PLACES_SUCCESS="GET_PLACES_SUCCESS"
 export const GET_PLACES_REQUEST="GET_PLACES_REQUEST"
 export const GET_PLACES_FAILURE="GET_PLACES_FAILURE"
+export const SHOW_REQUEST="SHOW_REQUEST"
+export const SHOW_SUCCESS="SHOW_SUCCES"
+export const SHOW_FAILURE="SHOW_FAILURE"
+export const UPDATE_SHOW_SUCCESS="UPDATE_SHOW_SUCCESS"
 
 const BASE_URL = 'http://localhost:3001';  // Asegúrate de que esta URL corresponda a tu backend
 
@@ -60,7 +64,7 @@ export const loginUser = (email, password) => async (dispatch) => {
       params: { email }, // Filtramos por email
     });
 
-    const user = response.data.find((user) => user.email === email && user.password === password);
+    const user = response.data?.data?.find((user) => user.email === email && user.password === password);
 
     if (user) {
       if (user.disabled) {
@@ -108,7 +112,7 @@ export const loginWithGoogle = (email) => async (dispatch) => {
     });
 
     // Verificamos si existe un usuario con el email proporcionado
-    const user = response.data.find((user) => user.email === email);
+    const user = response.data?.data?.find((user) => user.email === email);
 
     if (user) {
       // Verificamos si el usuario está deshabilitado
@@ -191,7 +195,7 @@ export const getShows = () => async (dispatch) => {
     dispatch({ type: FETCH_SHOWS_LOADING }); // Enviamos el estado de carga antes de hacer la solicitud
 
     // Verificamos cómo llega la data para asegurarnos de que es un array
-    console.log('Shows received:', response.data);
+   
 
     // Asegurarnos de que los shows sean un array de objetos
     const shows = Array.isArray(response.data) 
@@ -211,6 +215,46 @@ export const getShows = () => async (dispatch) => {
     });
   }
 
+};
+
+///OBTENER SHOWS PIR ID /////
+
+export const getShowById = (showId) => async (dispatch) => {
+  try {
+    dispatch({ type: 'SHOW_REQUEST' });
+    const response = await axios.get(`http://localhost:3001/shows/${showId}`);
+    dispatch({ type: 'SHOW_SUCCESS', payload: response.data });
+  } catch (error) {
+    dispatch({ type: 'SHOW_FAILURE', payload: error.message });
+  }
+};
+
+
+////ACTUALIZAR SHOWS POR ID ///
+
+export const updateShow = (id, updates) => async (dispatch) => {
+  try {
+    // Crear el objeto con las actualizaciones (sin el ID aquí)
+    const data = updates;
+
+    // Enviar la solicitud PUT al backend con el ID en la URL
+    const response = await axios.put(`http://localhost:3001/shows/edit/${id}`, data);
+
+    dispatch({
+      type: 'UPDATE_SHOW',
+      payload: response.data,  // O lo que devuelva tu API, por ejemplo, el show actualizado
+    });
+    
+
+    return response.data; // Retornar la respuesta para esperar en el componente
+  } catch (error) {
+    console.error('Error al actualizar el evento:', error);
+    dispatch({
+      type: 'UPDATE_SHOW_ERROR',
+      payload: error.message,
+    });
+    throw error; // Lanzamos el error para manejarlo en el componente
+  }
 };
 
 // Acción para crear un nuevo tag (género)
@@ -236,7 +280,7 @@ export const getTags = () => async (dispatch) => {
 
     // Hacemos la solicitud GET a la API para obtener los tags
     const response = await axios.get('http://localhost:3001/tags');
-    console.log('Tags received:', response.data);
+    
 
     // Asegúrate de que la respuesta sea un array de tags
     const tags = Array.isArray(response.data) ? response.data : [response.data]; // Manejo de respuesta

@@ -1,7 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import { Bar, Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import "./estilospaneladm.css";
+
+// Registra los componentes necesarios de Chart.js
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState({
@@ -10,22 +25,41 @@ const Dashboard = () => {
     places: 0,
     seats: 0,
   });
-  const [loading, setLoading] = useState(true); // Nuevo estado para verificar si se están cargando las métricas
-  const [error, setError] = useState(null); // Estado para manejar el error
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchMetrics();
-  }, []);
+    // Verificamos si el usuario tiene permisos de administrador
+    if (!user?.isAdmin) {
+      Swal.fire({
+        icon: "error",
+        title: "Acción no permitida",
+        text: "Solo los administradores pueden acceder a esta sección.",
+      });
+      navigate("/"); // Redirigir si no es admin
+    } else {
+      fetchMetrics(); // Si es admin, traemos las métricas
+    }
+  }, [user, navigate]);
 
   const fetchMetrics = async () => {
     try {
-      const response = await axios.get("/api/dashboard/metrics");
-      setMetrics(response.data);
-      setLoading(false); // Setea loading a false cuando las métricas estén cargadas
+      const response = await axios.get("http://localhost:3001/analitics/");
+      const data = response.data;
+      setMetrics({
+        users: data.users.length,
+        shows: data.shows.length,
+        places: data.places.length,
+        seats: data.zones.reduce((acc, zone) => acc + zone.seats.length, 0),
+      });
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching metrics:", error);
-      setLoading(false); // También se cambia a false si ocurre un error
-      setError("Error al cargar las métricas."); // Guardamos el mensaje de error
+      setLoading(false);
+      setError("Error al cargar las métricas.");
     }
   };
 
@@ -51,11 +85,11 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <div>Loading Metrics..</div>; // Mensaje mientras se cargan los datos
+    return <div>Loading Metrics...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; // Muestra el mensaje de error si hubo un problema
+    return <div>{error}</div>;
   }
 
   return (

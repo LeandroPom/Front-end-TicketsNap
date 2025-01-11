@@ -1,13 +1,13 @@
 /* Modal base */
 .modal {
     position: fixed;
-    top: 50%; /* Mueve el modal a la mitad de la pantalla verticalmente */
-    left: 50%; /* Mueve el modal a la mitad de la pantalla horizontalmente */
-    margin-left: 25%; /* Ajusta para centrar el modal de acuerdo con su ancho */
+    top: 5%; /* Mueve el modal a la mitad de la pantalla verticalmente */
+    left: 10%; /* Mueve el modal a la mitad de la pantalla horizontalmente */
+    margin-left: -15%; /* Ajusta para centrar el modal de acuerdo con su ancho */
     
-    width: 45%;
-    max-width: 600px;
-    height: 50%;
+    width: 100%;
+    /* max-width: 600px; */
+    height: 100%;
     max-height: 600px;
     display: flex;
     flex-direction: column; /* Asegura que los elementos internos se apilen */
@@ -28,7 +28,7 @@ h2 {
 .modal-overlay {
     position: fixed;
     top: 0;
-    /* left: 0;  */
+    left: 150px; 
     width: 75%;
     height: 75%;
     background: rgba(0, 0, 0, 0.5);

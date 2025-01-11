@@ -3,10 +3,11 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 130%;
+  height: 200%;
   background: rgba(0, 0, 0, 0.5); /* Fondo translúcido */
   z-index: 1000;
+  background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed;
 }
 
 /* Estilo del modal */
@@ -14,15 +15,16 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #333; /* Fondo oscuro */
-  padding: 20px;
+  transform: translate(-55%, -55%);
+  
+  background-color: rgba(77, 76, 76, 0.8); /* Fondo oscuro translúcido */
+  padding: 1%;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
   color: #fff;
   z-index: 1001; /* Asegura que esté por encima del overlay */
-  width: 100%;
-  max-width: 400px; /* Reducido el ancho máximo del modal */
+  width: 150%;
+  max-width: 500px; /* Reducido el ancho máximo del modal */
   text-align: center;
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
@@ -38,7 +40,7 @@
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Reducida la separación entre campos */
+  gap: 14px; /* Reducida la separación entre campos */
 }
 
 /* Grupo de cada campo */
@@ -69,21 +71,22 @@
 /* Botones del formulario */
 .form-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  /* justify-content: space-between; */
+  gap: 5px;
 }
 
 /* Botón de Crear Cuenta */
 .create-btn {
   background-color: #28A745; /* Verde llamativo */
-  color: #fff;
-  padding: 10px 15px; /* Reducido padding */
+  color: #a0f380;
+  padding: 10px 10px; /* Reducido padding */
   border: none;
   border-radius: 5px;
   font-size: 1.1em;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-left: -10px;
 }
 
 .create-btn:hover {
@@ -94,15 +97,16 @@
 
 /* Botón de Cancelar */
 .cancel-btn {
-  background-color: #FF5733; /* Naranja llamativo */
-  color: #fff;
-  padding: 10px 15px; /* Reducido padding */
+  background-color: #dd4a29; /* Naranja llamativo */
+  color: #e70d0d;
+  padding: 10px 20px; /* Reducido padding */
   border-radius: 5px;
   font-size: 1.1em;
   font-weight: bold;
   text-decoration: none;
   text-align: center;
   transition: all 0.3s ease;
+  margin-left: 200px;
 }
 
 .cancel-btn:hover {
@@ -126,4 +130,27 @@
   .btn {
     width: 100%; /* Los botones ocupan todo el ancho */
   }
+}
+
+.google-login {
+  margin-top: -110px; /* Mueve hacia abajo */
+  text-align: center; /* Alinea el botón en el centro, si necesario */
+  margin-left: 118px;
+}
+
+/* Nueva fila para inputs */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* Espacio entre columnas */
+}
+
+/* Ajustar inputs para compartir el espacio */
+.form-row .form-group {
+  flex: 1; /* Igual ancho para todos */
+}
+
+/* Espacio adicional para los botones */
+.form-buttons {
+  margin-top: 20px;
 }

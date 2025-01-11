@@ -57,7 +57,7 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isDarkMode ? 'dark' : 'light'}`}>
       <div className="navbar-logo">
-        <a href="/">Return Home</a>
+        <a href="/">Ticket NAP</a>
          {/* Ícono compacto para cambiar el tema */}
          {isDarkMode ? (
           <FaSun
@@ -103,6 +103,7 @@ const Navbar = () => {
                 <>
                   <a href="/login" className="dropdown-item">Login</a>
                   <a href="/register" className="dropdown-item">Register</a>
+                  <a href="/createzone" className="dropdown-item">Create zone</a>
                 </>
               )}
             </div>
@@ -116,7 +117,7 @@ const Navbar = () => {
           <div className="modal-content">
             <h2>Create Seats</h2>
             <SeatManager
-              mapaUrl="/mapa.jpg"
+              mapaUrl="/images/zona-floresta.png"
               onClose={handleCloseSeatManager}
             />
             <button className="close-modal-btn" onClick={handleCloseSeatManager}>

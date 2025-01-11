@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShows,  } from '../../Redux/Actions/actions';
+import { getShows } from '../../Redux/Actions/actions'; // Asegúrate de que tienes la acción deleteShow importada
 import { useNavigate } from 'react-router-dom';
 import './estilospaneladm.css';
 
 const Events = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { shows, loading, error } = useSelector((state) => state);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+ 
+  const shows = useSelector((state) => state.shows); // Arreglo de shows
+  const loading = useSelector((state) => state.loading); // Indicador de carga
+  const error = useSelector((state) => state.error); // Errores
 
   useEffect(() => {
-    dispatch(getShows());
+    dispatch(getShows()); // Obtén todos los shows al cargar el componente
   }, [dispatch]);
 
-  const handleEdit = (eventId) => {
-    navigate(`/admin/events/edit/${eventId}`);
+  const handleEdit = (showId) => {
+    // Corrige la ruta para editar el show usando el `showId`
+    navigate(`/admin/events/edit/${showId}`);
   };
 
-  const handleDelete = (eventId) => {
+  const handleDelete = (showId) => {
+    // Pregunta al usuario si está seguro de eliminar el evento
     if (window.confirm('¿Seguro que deseas eliminar este evento?')) {
-      dispatch(deleteShow(eventId));
+      dispatch(deleteShow(showId)); // Elimina el evento usando la acción deleteShow
     }
   };
 
@@ -46,8 +50,8 @@ const Events = () => {
               <td>{show.genre.join(', ')}</td>
               <td>{show.location.name}</td>
               <td>
-                <button onClick={() => handleEdit(show.id)}>Edit</button>
-                <button onClick={() => handleDelete(show.id)}>Deleted</button>
+                <button className='botonedit' onClick={() => handleEdit(show.id)}>Edit</button>
+                <button className='botonedit' onClick={() => handleDelete(show.id)}>Delete</button> {/* Cambié "Deleted" por "Delete" */}
               </td>
             </tr>
           ))}

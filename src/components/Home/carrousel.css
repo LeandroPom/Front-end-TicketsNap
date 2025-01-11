@@ -1,0 +1,73 @@
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+    margin-left: 290px;
+  }
+  
+  .carousel-images {
+    position: relative;
+    height: 300px; /* Ajusta al alto deseado */
+  }
+  
+  .carousel-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Ajusta al 100% del contenedor */
+    height: 100%; /* Ocupa todo el contenedor */
+    object-fit: cover; /* Recorta la imagen para que se ajuste sin distorsionarse */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 0;
+  }
+  
+  .carousel-image.active {
+    opacity: 1;
+    z-index: 1; /* Trae la imagen activa al frente */
+  }
+  
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .carousel-button.prev {
+    left: 10px;
+  }
+  
+  .carousel-button.next {
+    right: 10px;
+  }
+  
+  .carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+  }
+  
+  .indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+  }
+  
+  .indicator.active {
+    background-color: white;
+  }
+  
