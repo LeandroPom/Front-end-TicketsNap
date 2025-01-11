@@ -169,7 +169,7 @@ const Login = () => {
             </button>
         
             <div className="google-logins">
-             <GoogleOAuthProvider clientId="220270807051-k0j1nanf7am7do9garnpb5c4u4lmmd8p.apps.googleusercontent.com">
+             <GoogleOAuthProvider clientId="cliente google id">
              <GoogleLogin
              onSuccess={handleGoogleLogin}
              onError={(error) => console.log('Error al iniciar sesión con Google:', error)}
