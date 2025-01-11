@@ -79,7 +79,7 @@ const Places = () => {
           {places.map((place) => (
             <li key={place.id}>
               <span>{place.name} - {place.location}</span>
-              <button onClick={() => handleDeletePlace(place.id)}>Deleted</button>
+              <button className="botonedit" onClick={() => handleDeletePlace(place.id)}>Deleted</button>
             </li>
           ))}
         </ul>
@@ -190,7 +190,7 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
           </select>
         </label>
 
-        <button type="submit">Create Place</button>
+        <button className="botonedit" type="submit">Create Place</button>
       </form>
     </div>
   );

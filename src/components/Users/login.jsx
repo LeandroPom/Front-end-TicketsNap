@@ -167,20 +167,23 @@ const Login = () => {
             <button type="submit" disabled={isLoading}>
               {isLoading ? 'Logging in...' : 'Login'}
             </button>
+        
+            <div className="google-logins">
+             <GoogleOAuthProvider clientId="cliente google id">
+             <GoogleLogin
+             onSuccess={handleGoogleLogin}
+             onError={(error) => console.log('Error al iniciar sesión con Google:', error)}
+             theme="outline"
+             size="medium"
+             />
+            </GoogleOAuthProvider>
+            </div>
+        
+
+        
           </div>
         </form>
 
-
-        {/* Login with Google */}
-        <GoogleOAuthProvider clientId="credencial de google">
-
-          <GoogleLogin
-            onSuccess={handleGoogleLogin}
-            onError={(error) => console.log('Error al iniciar sesión con Google:', error)}
-            theme="outline"
-            size="large"
-          />
-        </GoogleOAuthProvider>
       </div>
     </div>
   );

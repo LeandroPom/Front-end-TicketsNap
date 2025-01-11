@@ -1,26 +1,28 @@
 /* General styling for the login modal */
 .login-modal {
-    position: fixed;
-    top: 3cm; /* Mueve el modal 3 cm hacia abajo */
-    left: 10%; /* Mueve el modal hacia la derecha, ajusta el valor según sea necesario */
-    width: 80%; /* Ajusta el tamaño del modal si es necesario */
-    height: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
-    display: flex;
-    justify-content: center; /* Asegura que el modal esté centrado horizontalmente */
-    align-items: flex-start; /* Alineación hacia arriba */
-    z-index: 1000; /* Asegurarse de que esté encima de otros elementos */
+  background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  backdrop-filter: blur(8px);
 }
 
+
+
+
+
+/* Contenedor del formulario */
 .login-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    text-align: center;
-    overflow: hidden; /* Evita que los elementos se salgan del contenedor */
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  color: transparent;
 }
+
 
 .login-container h2 {
     font-size: 24px;
@@ -40,10 +42,27 @@
     box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
 }
 
+.password-container input {
+  width: 117%; /* Asegura que los inputs ocupen todo el ancho disponible */
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  background-color: #f9f9f9; /* Fondo gris claro */
+  color: #333; /* Color de texto oscuro */
+  box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
+}
+
 .input-field:focus {
     outline: none;
     border-color: #007bff; /* Azul de enfoque */
     background-color: #fff;
+}
+
+.google-logins {
+  margin-top: 23px; /* Mueve hacia abajo */
+  text-align: center; /* Alinea el botón en el centro, si necesario */
 }
 
 .login-container .buttons {
@@ -51,9 +70,15 @@
     justify-content: space-between;
 }
 
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20%;
+}
+
 .login-container .btn {
     text-decoration: none;
-    padding: 10px 20px;
+    padding: 20px 20px;
     border-radius: 25px;
     font-size: 0.9em;
     font-weight: bold;

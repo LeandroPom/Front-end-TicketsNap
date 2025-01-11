@@ -137,89 +137,101 @@ const Register = () => {
 
       {isModalOpen && (
         <div className="register-modal">
-          <h2 className="register-title">Create Your Account</h2>
+          <h2 className="register-title">Create-Account</h2>
           <form className="register-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                placeholder="Enter your first name"
-                required
-              />
-              {errors.firstName && <small>{errors.firstName}</small>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="lastName">Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                placeholder="Enter your last name"
-                required
-              />
-              {errors.lastName && <small>{errors.lastName}</small>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                required
-              />
-              {errors.email && <small>{errors.email}</small>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="Enter your password"
-                required
-              />
-              {errors.password && <small>{errors.password}</small>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="phone">Phone (Optional)</label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="Enter your phone number"
-              />
-            </div>
+  {/* Primera fila: First Name y Email */}
+  <div className="form-row">
+    <div className="form-group">
+      <label htmlFor="firstName">First Name</label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        value={formData.firstName}
+        onChange={handleInputChange}
+        // placeholder="Enter your first name"
+        required
+      />
+      {errors.firstName && <small>{errors.firstName}</small>}
+    </div>
+    <div className="form-group">
+      <label htmlFor="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value={formData.email}
+        onChange={handleInputChange}
+        // placeholder="Enter your email"
+        required
+      />
+      {errors.email && <small>{errors.email}</small>}
+    </div>
+  </div>
 
-            <div className="form-buttons">
-              <button type="submit" className="btn create-btn" disabled={isLoading}>
-                {isLoading ? "Creating..." : "Create Account"}
-              </button>
-              <Link to="/" className="btn cancel-btn">Cancel</Link>
-            </div>
-          </form>
+  {/* Segunda fila: Last Name y Password */}
+  <div className="form-row">
+    <div className="form-group">
+      <label htmlFor="lastName">Last Name</label>
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        value={formData.lastName}
+        onChange={handleInputChange}
+        // placeholder="Enter your last name"
+        required
+      />
+      {errors.lastName && <small>{errors.lastName}</small>}
+    </div>
+    <div className="form-group">
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value={formData.password}
+        onChange={handleInputChange}
+        // placeholder="Enter your password"
+        required
+      />
+      {errors.password && <small>{errors.password}</small>}
+    </div>
+  </div>
 
+  {/* Tercera fila: Phone */}
+  <div className="form-group">
+    <label htmlFor="phone">Phone (Optional)</label>
+    <input
+      type="text"
+      id="phone"
+      name="phone"
+      value={formData.phone}
+      onChange={handleInputChange}
+      // placeholder="Enter your phone number"
+    />
+      </div>
+
+        {/* Botones */}
+         <div >
+         <button type="submit" className="create-btn" disabled={isLoading}>
+          {isLoading ? "Creating..." : "Create"}
+          </button>
+         <Link to="/" className="cancel-btn">Cancel</Link>
+          </div>
+           <div className='google-login'>
           <GoogleOAuthProvider clientId={clientId}>
             <GoogleLogin
               onSuccess={handleGoogleRegister}
               onError={() => console.log('Login failed')}
               useOneTap
               theme="outline"
-              size="large"
+              size="medium"
             />
           </GoogleOAuthProvider>
+            </div>
+          </form>
+
         </div>
       )}
     </div>
@@ -227,3 +239,5 @@ const Register = () => {
 };
 
 export default Register;
+
+

@@ -9,6 +9,10 @@ import CreateShowForm from './components/Shows/createshowform';
 import CreatePlaceForm from './components/Shows/createplace';
 import AdminPanel from './components/AdminPanel/Pages/adminpanel';
 import Profile from './components/Users/profile';
+import EditShow from './components/AdminPanel/Pages/editevent';
+import TicketDetail from './components/Eventdetail/TicketDetail';
+import CreateZone from './components/ManagerSeat/createzone';
+
 
 
 function App() {
@@ -25,6 +29,9 @@ function App() {
           <Route path="/create-show" element={<CreateShowForm />} />
           <Route path="/createplace" element={<CreatePlaceForm />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/admin/events/edit/:showId" element={<EditShow />} />
+          <Route path="/createzone" element={<CreateZone />} />
+          <Route path="/ticket-detail" element={<TicketDetail />} />
           <Route path="*" element={<AdminPanel />} />
         </Routes>
       </Router>

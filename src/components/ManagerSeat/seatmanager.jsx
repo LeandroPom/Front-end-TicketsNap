@@ -58,13 +58,18 @@ const SeatManager = ({ mapaUrl, onSeatsSelected, isSelectable }) => {
           setSelectedZone('Zona Verde');
           setShowZoneForm(true); // Mostrar el formulario de configuración
           break;
-        case 'rgb(255, 0, 0)': // Rojo
+        case 'rgb(218, 125, 131)': // Rojo
           setSelectedZone('Zona Roja');
           setShowZoneForm(true); // Mostrar el formulario de configuración
           break;
         default:
           setSelectedZone(null); // Zona no válida
+          case 'rgb(27, 5, 230)': // Violeta
+          setSelectedZone('Zona Floresta');
+          setShowZoneForm(true); // Mostrar el formulario de configuración
+          break;
       }
+      console.log(rgb, "color seleccionado")
     }
   };
 

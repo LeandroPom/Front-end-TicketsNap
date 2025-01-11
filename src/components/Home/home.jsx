@@ -7,13 +7,17 @@ import { FaSyncAlt } from 'react-icons/fa';
 import { getShows } from '../Redux/Actions/actions';
 import '../Home/home.css'; // Asegúrate de que el archivo contenga estilos actualizados
 
+import Carousel from './carrousel'; // Importar el carrusel
+
 import { FaCalendarAlt } from 'react-icons/fa'; // Ícono para el botón del calendario
 
 const ShowsList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { shows, loading, error } = useSelector((state) => state);
+  const shows = useSelector((state) => state.shows); // Arreglo de shows
+  const loading = useSelector((state) => state.loading); // Indicador de carga
+  const error = useSelector((state) => state.error); // Errores
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
@@ -41,16 +45,19 @@ const ShowsList = () => {
     setFilteredShows(filtered);
   }, [searchQuery, selectedGenre, selectedDate, shows]);
 
+  // Extraer las imágenes de los shows para el carrusel
+  const carouselImages = shows.map((show) => show.coverImage).filter(Boolean);
+
   // Obtener las fechas con eventos para marcarlas en el calendario
-  const eventDates = shows.flatMap((show) =>
-    show.presentation.map((p) => p.date)
+  const eventDates = (shows || []).flatMap((show) =>
+    show.presentation?.map((p) => p.date) || []
   );
 
   const tileClassName = ({ date, view }) => {
     if (view === 'month') {
       const formattedDate = date.toISOString().split('T')[0];
       if (eventDates.includes(formattedDate)) {
-        return 'react-calendar__tile--hasActive'; // Asegúrate de que las fechas con eventos se resalten en verde
+        return 'react-calendar__tile--hasActive'; // Resaltar las fechas con eventos
       }
     }
     return null;
@@ -68,6 +75,12 @@ const ShowsList = () => {
     navigate(`/event/${showId}`);
   };
 
+  // Generar imágenes para el carrusel
+  // const carouselImages = shows.map((show) => ({
+  //   src: show.coverImage,
+  //   alt: show.name,
+  // }));
+
   const genres = [...new Set(shows.flatMap((show) => show.genre))];
 
   // Resetear todos los filtros
@@ -79,7 +92,8 @@ const ShowsList = () => {
 
   return (
     <div className="home">
-      <h2>Shows</h2>
+      {/* Reemplazar el título por el carrusel */}
+      <Carousel images={carouselImages} />
 
       {/* Barra de búsqueda y filtro */}
       <div className="search-container">
@@ -109,7 +123,7 @@ const ShowsList = () => {
         </select>
 
         {/* Botón de reset con ícono de recarga */}
-        <button className="reset-button" onClick={() => { 
+        <button className="buttonhomereset" onClick={() => { 
           setSearchQuery('');
           setSelectedGenre('');
           setSelectedDate(null);
@@ -133,18 +147,20 @@ const ShowsList = () => {
       )}
 
       {/* Verificamos si hay shows filtrados y los mapeamos */}
-      <ul>
+      <ul className='homecard'>
         {filteredShows && filteredShows.length > 0 ? (
           filteredShows.map((show) => (
-            <li className='button' key={show.id}>
+            <li className='card' key={show.id}>
+              <div className='content'>
               <h3>{show.name}</h3>
-              {/* <p>{show.description}</p> */}
-              <p>Location: {show.location.name}</p>
+              <p>{show.description}</p>
+              <p>Location: Floresta</p>
               <p>Genres: {show.genre.join(', ')}</p>
               {/* <p>Artists: {show.artists.join(', ')}</p> */}
               <p>Dates: {show.presentation.map((p) => p.date).join(', ')}</p>
+              </div>
               <img className="event-image" src={show.coverImage} alt={show.name} />
-              <button className='button' onClick={() => handleViewDetails(show.id)}>View Details</button>
+              <button className='buttonhome' onClick={() => handleViewDetails(show.id)}>View Details</button>
             </li>
           ))
         ) : (

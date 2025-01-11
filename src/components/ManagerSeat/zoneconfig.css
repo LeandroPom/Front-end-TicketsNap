@@ -1,17 +1,18 @@
 /* Estilos generales para el formulario de configuración de zonas */
 .zone-config-form {
-    margin: 200px auto; /* Centrado automático */
-    padding: 20px; /* Ajuste del padding */
-    border: 1px solid #ccc;
+    /* margin: 150px auto; Centrado automático */
+    padding: 150px; /* Ajuste del padding */
+    border: 1px solid #d60404;
     border-radius: 8px;
     background-color: #f9f9f9;
     color: #000000;
-    width: 15cm; /* Ancho fijo en centímetros */
-    max-height: 80vh; /* Limita la altura máxima del formulario */
-    display: flex;
+    width: 22cm; /* Ancho fijo en centímetros */
+    max-height: 90vh; /* Limita la altura máxima del formulario */
+    /* display: flex; */
     flex-direction: column; /* Alinear elementos en columna */
     justify-content: flex-start; /* Asegurar que los elementos inicien desde arriba */
     overflow: auto; /* Permite scroll cuando el contenido excede el tamaño del contenedor */
+    margin-left: -130px;
   }
   
   /* Ajustar el contenedor de la imagen para hacerlo desplazable */
@@ -21,6 +22,7 @@
     margin-bottom: 20px; /* Espacio entre la imagen y los botones */
     display: flex;
     justify-content: center;
+    width: 100%;
   }
   
   /* Estilos para la imagen de la zona */
@@ -28,7 +30,7 @@
     position: relative;
     display: inline-block;
     width: 100%;
-    height: auto;
+    height: 100%;
     cursor: pointer;
   }
   

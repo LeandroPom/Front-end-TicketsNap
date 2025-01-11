@@ -6,7 +6,12 @@ import '../Shows/createshowform.css';
 
 const CreateShowForm = () => {
   const dispatch = useDispatch();
-  const { shows, loading, tags, places } = useSelector((state) => state);
+  // const { shows, loading, tags, places } = useSelector((state) => state);
+  const shows = useSelector((state) => state.shows); // Arreglo de shows
+  const loading = useSelector((state) => state.loading); // Indicador de carga
+  const error = useSelector((state) => state.error); // Errores
+  const tags = useSelector((state) => state.tags); // tags
+  const places = useSelector((state) => state.places); // places
   const [selectedLocation, setSelectedLocation] = useState(null); // Nuevo estado para el lugar
 
   const [formData, setFormData] = useState({
@@ -88,12 +93,6 @@ const CreateShowForm = () => {
         genre: [...prevState.genre, { name: selected }],
       }));
     }
-  };
-
-  const handleResetTags = () => {
-    setFormData({ ...formData, genre: [] });
-    setSelectedTag('');
-    setNewTag('');
   };
 
   const handleChange = (e) => {
@@ -181,6 +180,14 @@ const CreateShowForm = () => {
       locationId: selectedId,
     }));
   };
+
+
+  const handleRemoveGenre = (index) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      genre: prevState.genre.filter((_, i) => i !== index),
+    }));
+  };
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -225,8 +232,9 @@ if (isNaN(price) || price < 0) {
     console.error('Precio inválido');
     return; // O muestra un mensaje de error al usuario
 }
+
   
-    // Formatear los datos para enviar al backend
+// Formatear los datos para enviar al backend
     const formattedData = {
       name: formData.name,
       artists: formData.artists.split(',').map((artist) => artist.trim()),
@@ -245,9 +253,9 @@ if (isNaN(price) || price < 0) {
       price: price  // Asegúrate de que price tenga un valor numérico
     };
   
-    console.log('Final presentation data:', formattedData.presentation);
+    
     // Aquí podrías enviar los datos al backend
-
+    
     // Llamar a la acción de crear show
   dispatch(createShow(formattedData))
   .then(() => {
@@ -262,6 +270,7 @@ if (isNaN(price) || price < 0) {
     // Si hay un error al crear el show, mostrar un mensaje de error
     setErrorMessage('Error creating the show. Please try again.');
   });
+
 
   }
   return (
@@ -293,43 +302,69 @@ if (isNaN(price) || price < 0) {
         </label>
 
         <label>
-          Tags:
-          <select
-            name="genre"
-            value={selectedTag}
-            onChange={handleGenreSelect}
-          >
-            <option value="">Select Tag</option>
-            {loading ? (
-              <option disabled>Loading...</option>
-            ) : (
-              tags && tags.length >= 0 ? (
-                tags.map((tag) => (
-                  <option key={tag.id} value={tag.name}>
-                    {tag.name}
-                  </option>
-                ))
-              ) : (
-                <option disabled>No tags available</option>
-              )
-            )}
-          </select>
+        
+  Tags:
+  <select
+    name="genre"
+    value={selectedTag}
+    onChange={handleGenreSelect}
+  >
+    <option value="">Select Tag</option>
+    {loading ? (
+      <option disabled>Loading...</option>
+    ) : (
+      tags && tags.length >= 0 ? (
+        tags.map((tag) => (
+          <option key={tag.id} value={tag.name}>
+            {tag.name}
+          </option>
+        ))
+      ) : (
+        <option disabled>No tags available</option>
+      )
+    )}
+  </select>
 
-          <input
-            type="text"
-            placeholder="Create a new tag"
-            value={newTag}
-            onChange={handleTagChange}
-          />
-          <button type="button" onClick={handleCreateTag}>Add New Tag</button>
-          <button type="button" onClick={handleResetTags}>Reset Tags</button>
-        </label>
+  <div className="input-with-button">
+    <input
+      type="text"
+      placeholder="Create a new tag"
+      value={newTag}
+      onChange={handleTagChange}
+    />
+    <button
+      className="add-link"
+      type="button"
+      onClick={handleCreateTag}
+    >
+      Add new Tag
+    </button>
+  </div>
+</label>
 
-        <div>
-          {formData.genre.length > 0 && (
-            <p>Selected Genres: {formData.genre.map((genre) => genre.name).join(', ')}</p>
-          )}
-        </div>
+<div className="selected-genres">
+  {formData.genre.length > 0 && (
+    <div>
+      <p>Selected Genres:</p>
+      <div className="genres-container">
+        {formData.genre.map((genre, index) => (
+          <div key={index} className="genre-tag">
+            {genre.name}
+            <button
+             type="button"
+             className="remove-genre-button"
+             style={{ fontSize: '10px', marginLeft: '3px', padding: '0', lineHeight: '1' }}
+             onClick={() => handleRemoveGenre(index)}
+             >
+             ❌
+             </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
+
 
         <label>
   Location:
@@ -465,7 +500,7 @@ if (isNaN(price) || price < 0) {
           />
         </label>
 
-        <button type="submit">Create Show</button>
+        <button className='create-show-boton' type="submit">Create Show</button>
       </form>
     </div>
   );

@@ -21,6 +21,10 @@ import {
   GET_PLACES_FAILURE,
   GET_PLACES_SUCCESS,
   GET_PLACES_REQUEST,
+  SHOW_FAILURE,
+  SHOW_REQUEST,
+  SHOW_SUCCESS,
+  UPDATE_SHOW_SUCCESS
 
 } from '../Actions/actions'; // Importa las acciones
 
@@ -29,6 +33,7 @@ const initialState = {
   places: [],
   tags: [],           // LISTA DE TAGS
   shows: [],         // Lista de shows existentes
+  selectedShow: null,
   user: null,        // Datos del usuario recién creado o autenticado
   loading: false,    // Indicador de carga
   error: null,       // Errores si los hay
@@ -101,7 +106,7 @@ const rootReducer = (state = initialState, action) => {
       };
 
       case FETCH_SHOWS_SUCCESS:
-        console.log('Shows received in reducer:', action.payload);
+       
   return {
     ...state,
     shows: action.payload, // Asegúrate de que "action.payload" sea un array de shows
@@ -138,7 +143,7 @@ const rootReducer = (state = initialState, action) => {
   
       // Caso para obtener los tags
       case FETCH_TAGS_SUCCESS:
-        console.log('Tags received in reducer:', action.payload);  // Verifica los datos en el reducer
+        
         return {
           ...state,
           tags: action.payload,  // Aquí estamos actualizando el estado de tags con el payload recibido
@@ -183,6 +188,33 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+   
+    case SHOW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SHOW_SUCCESS:
+      return {
+        ...state,
+        selectedShow: action.payload,
+        loading: false,
+      };
+    case SHOW_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case UPDATE_SHOW_SUCCESS:
+      // Actualiza el show en el estado después de una edición exitosa
+      return {
+        ...state,
+        shows: state.shows.map((show) =>
+          show.id === action.payload.id ? action.payload : show
+        ),
       };
    
    

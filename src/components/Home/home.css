@@ -57,7 +57,7 @@
 .search-container input:focus,
 .search-container select:focus {
   border-color: #0056b3;
-  box-shadow: 0 0 8px rgba(0, 91, 255, 0.6);
+  box-shadow: 0 0 8px rgba(226, 227, 228, 0.6);
 }
 
 .home.light .search-container input,
@@ -74,7 +74,7 @@
 }
 
 /* Contenedor de eventos en columnas */
-.home ul {
+.homecard {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 25px;
@@ -85,22 +85,25 @@
   max-width: 1200px;
   margin-top: 30px;
   margin-bottom: 50px;
+  box-shadow: #007bff;
+  
 }
 
 /* Elementos individuales de eventos */
 li {
   /* background-color: #b4a9a9; */
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(22, 121, 235, 0.1);
   padding: 15px;
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 3px solid #608aca;
   overflow: hidden;
   position: relative;
+  background: #ccd0d6;
 }
 
 li:hover {
@@ -121,10 +124,11 @@ li:hover {
 /* Títulos de los eventos */
 li h3 {
   color: #007bff;
-  font-size: 20px;
+  font-size: 35px;
   margin-bottom: 10px;
   font-weight: 600;
   letter-spacing: 0.5px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .home.light li h3 {
@@ -157,7 +161,7 @@ li p {
 }
 
 .home.dark li p {
-  color: #ccc;
+  color: #525151;
 }
 
 /* Imagen de los eventos */
@@ -178,9 +182,9 @@ li:hover .event-image {
 
 
 
-button {
-  /* background-color: #007bff; */
-  color: white;
+.buttonhome {
+  background-color: #007bff;
+  color: rgb(212, 205, 205);
   padding: 8px 12px;
   border: none;
   border-radius: 8px;
@@ -190,16 +194,28 @@ button {
   width: 100%;
 }
 
-button:hover {
+.buttonhomereset {
+  background-color:transparent;
+  color: rgb(129, 124, 124);
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 25%;
+}
+
+/* button:hover {
   background-color: #0056b3;
   transform: scale(1.02);
+} */
+
+.lightcalendar {
+  background-color: #706d6d;
 }
 
-.light button {
-  background-color: #ffffff;
-}
-
-.dark button {
+.darkcalendar {
   background-color: #acacac;
 }
 
@@ -234,11 +250,13 @@ button:hover {
 
 /* Estilos para el contenedor del calendario y la barra de búsqueda */
 .search-container {
+  background-color:transparent;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 25px;
-  margin-left: 380px;
+  margin-left: 15%;
+  margin-top: 50px;
 }
 
 /* Estilo para el botón del calendario */
@@ -247,8 +265,8 @@ button:hover {
 }
 
 .calendar-button {
-  background-color: transparent;
-  color: #007bff;
+  background-color: white;
+  color: #1873e9;
   border: none;
   cursor: pointer;
   display: flex;
@@ -262,10 +280,11 @@ button:hover {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  background-color: white;
+  background-color: rgb(144, 191, 218);
   padding: 0;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2); */
   border-radius: 8px;
+  color: #000000;
 }
 
 .react-calendar {
@@ -295,7 +314,7 @@ button:hover {
 
 .react-calendar__tile--hasActive {
   color: green;
-  background: transparent;
+  background: green;
 }
 
 .reset-button {
