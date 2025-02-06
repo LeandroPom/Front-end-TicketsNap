@@ -24,6 +24,7 @@ const ShowsList = () => {
   const [filteredShows, setFilteredShows] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false); // Controla si se muestra el calendario
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Controlar si un video está activo
 
   useEffect(() => {
     dispatch(getShows());
@@ -34,13 +35,16 @@ const ShowsList = () => {
     const filtered = shows.filter((show) => {
       const matchesSearch = show.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesGenre = selectedGenre ? show.genre.includes(selectedGenre) : true;
-
+  
       // Si hay una fecha seleccionada, verificamos si coincide con alguna presentación
       const matchesDate = selectedDate
         ? show.presentation.some((p) => p.date === selectedDate.toISOString().split('T')[0])
         : true;
-
-      return matchesSearch && matchesGenre && matchesDate;
+  
+      // Solo incluir shows que estén activos (state === true)
+      const isActive = show.state; // show.state debe ser true para incluirlo
+  
+      return matchesSearch && matchesGenre && matchesDate && isActive;
     });
     setFilteredShows(filtered);
   }, [searchQuery, selectedGenre, selectedDate, shows]);
@@ -90,10 +94,22 @@ const ShowsList = () => {
     setSelectedDate(null);
   };
 
+
+
+   // Determinamos si el video está siendo reproducido y pasamos ese estado al carrusel
+   const handleVideoPlay = () => {
+    setIsVideoPlaying(true); // Un video está siendo reproducido
+  };
+
+  const handleVideoPause = () => {
+    setIsVideoPlaying(false); // El video se detuvo
+  };
+
+
   return (
     <div className="home">
       {/* Reemplazar el título por el carrusel */}
-      <Carousel images={carouselImages} />
+      <Carousel images={carouselImages} isVideoPlaying={isVideoPlaying} /> {/* Pasamos el estado al carrusel */}
 
       {/* Barra de búsqueda y filtro */}
       <div className="search-container">
@@ -146,6 +162,8 @@ const ShowsList = () => {
         </div>
       )}
 
+
+
       {/* Verificamos si hay shows filtrados y los mapeamos */}
       <ul className='homecard'>
         {filteredShows && filteredShows.length > 0 ? (
@@ -153,13 +171,24 @@ const ShowsList = () => {
             <li className='card' key={show.id}>
               <div className='content'>
               <h3>{show.name}</h3>
-              <p>{show.description}</p>
+              {/* <p>{show.description}</p> */}
               <p>Location: Floresta</p>
               <p>Genres: {show.genre.join(', ')}</p>
               {/* <p>Artists: {show.artists.join(', ')}</p> */}
               <p>Dates: {show.presentation.map((p) => p.date).join(', ')}</p>
               </div>
-              <img className="event-image" src={show.coverImage} alt={show.name} />
+              {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
+             {show.coverImage.includes("youtube.com") || show.coverImage.includes("youtu.be") ? (
+                <iframe 
+                 className="event-video"
+                 src={show.coverImage.replace("watch?v=", "embed/")} 
+                 title={show.name}
+                 frameBorder="0"
+                 allowFullScreen
+               ></iframe>
+                 ) : (
+                <img className="event-image" src={show.coverImage} alt={show.name} />
+                )}
               <button className='buttonhome' onClick={() => handleViewDetails(show.id)}>View Details</button>
             </li>
           ))

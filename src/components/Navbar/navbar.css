@@ -10,6 +10,7 @@
   left: 0;
   width: 100%;
   z-index: 1000; /* Siempre encima */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten cuando el espacio es reducido */
 }
 
 /* Fondo dinámico dependiendo del tema */
@@ -36,6 +37,7 @@
   text-decoration: none;
   font-size: 1.5em;
   font-weight: bold;
+  flex: 1; /* Asegura que el logo ocupe el espacio disponible */
 }
 
 /* Ícono del menú */
@@ -52,10 +54,8 @@
 .dropdown {
   position: relative;
   background-color: white;
-  color:#222
+  color: #222;
 }
-
-
 
 /* Contenedor del menú desplegable */
 .dropdown-menu {
@@ -98,16 +98,45 @@
 
 .theme-toggle-icon {
   background: transparent;
-  /* border: none; */
   cursor: pointer;
   font-size: 1.0rem;
   color: inherit; /* El color se adapta al tema */
   margin-left: 20px; /* Separación del texto */
   transition: color 0.3s ease;
-  margin-top: -400px;
 }
 
 .theme-toggle-btn:hover {
   color: #007bff; /* Color al pasar el mouse */
 }
 
+/* Estilo responsivo */
+@media (max-width: 768px) {
+  /* Ajustes para navbar en pantallas pequeñas */
+  .navbar {
+    flex-direction: column; /* Asegura que el navbar se apile verticalmente en pantallas pequeñas */
+    align-items: flex-start; /* Alinea los elementos del navbar a la izquierda */
+    padding: 15px; /* Aumenta el espaciado para pantallas pequeñas */
+  }
+
+  .navbar-logo a {
+    font-size: 1.2em; /* Reduce el tamaño del logo */
+  }
+
+  .dropdown-icon {
+    font-size: 1.5em; /* Ajusta el tamaño del ícono */
+    transform: none; /* Remueve el desplazamiento horizontal */
+  }
+
+  .dropdown-menu {
+    top: 50px; /* Ajusta la posición del menú */
+    width: 100%; /* Hace que el menú se expanda en toda la pantalla */
+  }
+
+  .user-name {
+    font-size: 0.9rem; /* Reduce el tamaño del texto en pantallas pequeñas */
+  }
+
+  .theme-toggle-icon {
+    font-size: 0.9rem; /* Reduce el tamaño del ícono en pantallas pequeñas */
+  }
+}

@@ -28,6 +28,7 @@ export const SHOW_REQUEST="SHOW_REQUEST"
 export const SHOW_SUCCESS="SHOW_SUCCES"
 export const SHOW_FAILURE="SHOW_FAILURE"
 export const UPDATE_SHOW_SUCCESS="UPDATE_SHOW_SUCCESS"
+export const DISABLE_SHOW="DISABLE_SHOW"
 
 const BASE_URL = 'http://localhost:3001';  // Asegúrate de que esta URL corresponda a tu backend
 
@@ -35,7 +36,7 @@ const BASE_URL = 'http://localhost:3001';  // Asegúrate de que esta URL corresp
 export const createUser = (userData) => async (dispatch) => {
   try {
     // Hacemos el POST a la API del backend para crear el usuario
-    const response = await axios.post(`http://localhost:3001/users`, userData);
+    const response = await axios.post(`/users`, userData);
     
     // Despachamos la acción de éxito
     dispatch({
@@ -43,7 +44,7 @@ export const createUser = (userData) => async (dispatch) => {
       payload: response.data.user,
     });
 
-    alert("User created successfully!");
+    
   } catch (error) {
     // Despachamos la acción de fallo
     dispatch({
@@ -51,20 +52,66 @@ export const createUser = (userData) => async (dispatch) => {
       payload: error.response ? error.response.data.error : error.message,
     });
 
-    alert("Error: " + (error.response ? error.response.data.error : error.message));
+    
   }
 };
 
 // Acción para el login manual
-export const loginUser = (email, password) => async (dispatch) => {
+// export const loginUser = (email, password) => async (dispatch) => {
+//   dispatch({ type: LOGIN_REQUEST });
+
+//   try {
+//     const response = await axios.get('/users', {
+//       params: { email }, // Filtramos por email
+//     });
+
+//     const user = response.data?.data?.find((user) => user.email === email && user.password === password);
+
+//     if (user) {
+//       if (user.disabled) {
+//         // Usuario bloqueado
+//         dispatch({
+//           type: LOGIN_FAILURE,
+//           payload: 'Tu cuenta ha sido deshabilitada.',
+//         });
+//         return { error: 'Usuario bloqueado' }; // Retornar error explícito
+//       }
+
+//       dispatch({
+//         type: LOGIN_SUCCESS,
+//         payload: user, // Usuario válido
+//       });
+
+//       return user; // Retornar el usuario encontrado
+//     } else {
+//       dispatch({
+//         type: LOGIN_FAILURE,
+//         payload: 'Usuario o contraseña incorrectos.',
+//       });
+//       return { error: 'Credenciales incorrectas' }; // Retornar error explícito
+//     }
+//   } catch (error) {
+//     dispatch({
+//       type: LOGIN_FAILURE,
+//       payload: 'Error al realizar el login.',
+//     });
+//     return { error: 'Error en el servidor' }; // Error general
+//   }
+// };
+
+
+
+
+export const login = (email, password) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
 
   try {
-    const response = await axios.get('http://localhost:3001/users', {
-      params: { email }, // Filtramos por email
+    const response = await axios.post('users/login', {
+      mail: email,
+      password: password,  // Enviamos la contraseña en texto claro
     });
 
-    const user = response.data?.data?.find((user) => user.email === email && user.password === password);
+    const user = response.data?.user;
 
     if (user) {
       if (user.disabled) {
@@ -107,7 +154,7 @@ export const loginWithGoogle = (email) => async (dispatch) => {
 
   try {
     // Realizamos una búsqueda en la base de datos local por email
-    const response = await axios.get('http://localhost:3001/users', {
+    const response = await axios.get('/users', {
       params: { email }, // Filtramos por email
     });
 
@@ -166,7 +213,7 @@ export const logoutUser = () => (dispatch) => {
 export const createShow = (showData) => async (dispatch) => {
   try {
     // Petición POST al backend
-    const response = await axios.post("http://localhost:3001/shows", showData);
+    const response = await axios.post("/shows", showData);
 
     // Si la respuesta es exitosa, despacha la acción
     dispatch({
@@ -174,7 +221,7 @@ export const createShow = (showData) => async (dispatch) => {
       payload: response.data, // El show creado
     });
 
-    alert('Show created successfully!');
+    
   } catch (error) {
     // Si ocurre un error, despacha la acción de fallo
     dispatch({
@@ -182,7 +229,7 @@ export const createShow = (showData) => async (dispatch) => {
       payload: error.response?.data?.message || 'Error creating the show',
     });
 
-    alert(`Error: ${error.response?.data?.message || error.message}`);
+    
   }
 };
 
@@ -191,7 +238,7 @@ export const createShow = (showData) => async (dispatch) => {
 export const getShows = () => async (dispatch) => {
   try {
     // Enviar la solicitud GET a la API
-    const response = await axios.get('http://localhost:3001/shows');
+    const response = await axios.get('/shows');
     dispatch({ type: FETCH_SHOWS_LOADING }); // Enviamos el estado de carga antes de hacer la solicitud
 
     // Verificamos cómo llega la data para asegurarnos de que es un array
@@ -222,7 +269,7 @@ export const getShows = () => async (dispatch) => {
 export const getShowById = (showId) => async (dispatch) => {
   try {
     dispatch({ type: 'SHOW_REQUEST' });
-    const response = await axios.get(`http://localhost:3001/shows/${showId}`);
+    const response = await axios.get(`/shows/${showId}`);
     dispatch({ type: 'SHOW_SUCCESS', payload: response.data });
   } catch (error) {
     dispatch({ type: 'SHOW_FAILURE', payload: error.message });
@@ -238,7 +285,7 @@ export const updateShow = (id, updates) => async (dispatch) => {
     const data = updates;
 
     // Enviar la solicitud PUT al backend con el ID en la URL
-    const response = await axios.put(`http://localhost:3001/shows/edit/${id}`, data);
+    const response = await axios.put(`/shows/edit/${id}`, data);
 
     dispatch({
       type: 'UPDATE_SHOW',
@@ -257,10 +304,38 @@ export const updateShow = (id, updates) => async (dispatch) => {
   }
 };
 
+/// BORRADO LOGICO AL SHOW ////////////
+
+export const disableShow = (showId) => async (dispatch) => {
+  try {
+    // Realizar la solicitud DELETE al backend para desactivar el show
+    const response = await axios.delete(`/shows/disable/${showId}`);
+    
+    // Si la operación es exitosa, se puede actualizar el estado en Redux
+    dispatch({
+      type: 'DISABLE_SHOW', // Acción para indicar que el show fue desactivado
+      payload: response.data,
+    });
+    
+    // Retornar el mensaje de éxito
+    return response.data;
+  } catch (error) {
+    console.error('Error al desactivar el show:', error);
+    
+    // Enviar error si ocurre alguno
+    dispatch({
+      type: 'SHOW_ERROR',
+      payload: error.message,
+    });
+    
+    throw error;
+  }
+};
+
 // Acción para crear un nuevo tag (género)
 export const createTag = (name) => async (dispatch) => {
   try {
-    const response = await axios.post('http://localhost:3001/tags', { name }); // Enviar la solicitud POST al backend
+    const response = await axios.post('/tags', { name }); // Enviar la solicitud POST al backend
     dispatch({
       type: 'CREATE_TAG_SUCCESS',
       payload: response.data,  // Devuelve los datos del tag creado
@@ -279,7 +354,7 @@ export const getTags = () => async (dispatch) => {
     dispatch({ type: 'FETCH_TAGS_LOADING' }); // Acción para indicar que estamos cargando los tags
 
     // Hacemos la solicitud GET a la API para obtener los tags
-    const response = await axios.get('http://localhost:3001/tags');
+    const response = await axios.get('/tags');
     
 
     // Asegúrate de que la respuesta sea un array de tags
@@ -303,7 +378,7 @@ export const getTags = () => async (dispatch) => {
 export const createPlace = (placeData) => async (dispatch) => {
   try {
     // Enviar la solicitud POST para crear el lugar
-    const response = await axios.post('http://localhost:3001/places', placeData);
+    const response = await axios.post('/places', placeData);
 
     dispatch({
       type: 'CREATE_PLACE_SUCCESS',
@@ -325,7 +400,7 @@ export const getPlaces = () => async (dispatch) => {
   dispatch({ type: 'GET_PLACES_REQUEST' });
 
   try {
-    const response = await axios.get('http://localhost:3001/places');  // Cambia la URL a la correcta de tu backend
+    const response = await axios.get('/places');  // Cambia la URL a la correcta de tu backend
     dispatch({
       type: 'GET_PLACES_SUCCESS',
       payload: response.data,

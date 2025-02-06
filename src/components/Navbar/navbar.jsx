@@ -17,6 +17,8 @@ const Navbar = () => {
   const [isSeatManagerOpen, setIsSeatManagerOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
 
+  console.log(user, "DATOS DEL USUARIO LOGUEADO");
+
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
@@ -86,8 +88,8 @@ const Navbar = () => {
                   <a href="#" onClick={handleCreateShow} className="dropdown-item">
                     Create Show
                   </a>
-                  <a href="#" onClick={handleOpenSeatManager} className="dropdown-item">
-                    Create Seats
+                  <a href="/createzone" className="dropdown-item">
+                    CreateZone
                   </a>
                   <a href="/admin" className="dropdown-item">
                     Admin Panel
@@ -103,7 +105,7 @@ const Navbar = () => {
                 <>
                   <a href="/login" className="dropdown-item">Login</a>
                   <a href="/register" className="dropdown-item">Register</a>
-                  <a href="/createzone" className="dropdown-item">Create zone</a>
+                 
                 </>
               )}
             </div>

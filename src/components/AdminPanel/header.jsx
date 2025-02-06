@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../components/Redux/Actions/actions';
 import "../AdminPanel/Pages/estilospaneladm.css";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -32,6 +33,9 @@ const Header = () => {
           <li>
             <Link to="/admin/places">Places</Link>
           </li>
+          <li>
+             <a href="/admin/tickets">Tickets Vendidos</a>
+           </li>
           <li>
             <button className='botonedit' onClick={handleLogout}>Logout</button>
           </li>

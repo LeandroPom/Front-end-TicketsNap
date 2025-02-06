@@ -18,7 +18,7 @@ const Places = () => {
 
   const fetchPlaces = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/places");
+      const response = await axios.get("/places");
       setPlaces(response.data);
     } catch (error) {
       console.error("Error fetching places:", error);
@@ -35,7 +35,7 @@ const Places = () => {
 
   const handleDeletePlace = async (id) => {
     try {
-      await axios.delete(`/api/places/${id}`);
+      await axios.delete(`/places/${id}`);
       fetchPlaces(); // Actualiza la lista después de eliminar un lugar
     } catch (error) {
       console.error("Error deleting place:", error);

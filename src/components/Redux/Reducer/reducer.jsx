@@ -24,7 +24,8 @@ import {
   SHOW_FAILURE,
   SHOW_REQUEST,
   SHOW_SUCCESS,
-  UPDATE_SHOW_SUCCESS
+  UPDATE_SHOW_SUCCESS,
+  DISABLE_SHOW
 
 } from '../Actions/actions'; // Importa las acciones
 
@@ -214,6 +215,13 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         shows: state.shows.map((show) =>
           show.id === action.payload.id ? action.payload : show
+        ),
+      };
+      case DISABLE_SHOW:
+      return {
+        ...state,
+        shows: state.shows.map((show) =>
+          show.id === action.payload.id ? { ...show, state: false } : show
         ),
       };
    

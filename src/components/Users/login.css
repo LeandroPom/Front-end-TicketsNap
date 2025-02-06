@@ -6,11 +6,8 @@
   justify-content: center;
   height: 100vh;
   backdrop-filter: blur(8px);
+  flex-direction: column; /* Asegura que el contenido se ajuste en dispositivos pequeños */
 }
-
-
-
-
 
 /* Contenedor del formulario */
 .login-container {
@@ -23,27 +20,28 @@
   color: transparent;
 }
 
-
+/* Título del formulario */
 .login-container h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
 }
 
+/* Estilo de los campos de entrada */
 .login-container input {
-    width: 100%; /* Asegura que los inputs ocupen todo el ancho disponible */
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-    background-color: #f9f9f9; /* Fondo gris claro */
-    color: #333; /* Color de texto oscuro */
-    box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
+  width: 100%; /* Asegura que los inputs ocupen todo el ancho disponible */
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  background-color: #f9f9f9; /* Fondo gris claro */
+  color: #333; /* Color de texto oscuro */
+  box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
 }
 
 .password-container input {
-  width: 117%; /* Asegura que los inputs ocupen todo el ancho disponible */
+  width: 100%; /* Corregido a 100% para asegurar que el input ocupe todo el espacio disponible */
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 5px;
@@ -55,19 +53,20 @@
 }
 
 .input-field:focus {
-    outline: none;
-    border-color: #007bff; /* Azul de enfoque */
-    background-color: #fff;
+  outline: none;
+  border-color: #007bff; /* Azul de enfoque */
+  background-color: #fff;
 }
 
+/* Contenedor de botones */
 .google-logins {
   margin-top: 23px; /* Mueve hacia abajo */
   text-align: center; /* Alinea el botón en el centro, si necesario */
 }
 
 .login-container .buttons {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .form-buttons {
@@ -76,105 +75,144 @@
   margin-top: 20%;
 }
 
+/* Estilos de los botones */
 .login-container .btn {
-    text-decoration: none;
-    padding: 20px 20px;
-    border-radius: 25px;
-    font-size: 0.9em;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
+  text-decoration: none;
+  padding: 20px 20px;
+  border-radius: 25px;
+  font-size: 0.9em;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
 
 .login-btn {
-    background-color: #FF5733; /* Naranja llamativo */
+  background-color: #FF5733; /* Naranja llamativo */
 }
 
 .login-btn:hover {
-    background-color: transparent;
-    border-color: #FF5733;
-    color: #FF5733;
+  background-color: transparent;
+  border-color: #FF5733;
+  color: #FF5733;
 }
 
 .cancel-btn {
-    background-color: #ccc; /* Gris claro */
+  background-color: #ccc; /* Gris claro */
 }
 
 .cancel-btn:hover {
-    background-color: transparent;
-    border-color: #ccc;
-    color: #333;
+  background-color: transparent;
+  border-color: #ccc;
+  color: #333;
 }
 
 /* Responsiveness */
 @media (max-width: 768px) {
-    .login-container {
-        width: 80%; /* Hacer más ancho en pantallas pequeñas */
-    }
+  /* Ajustes para el contenedor del formulario en pantallas pequeñas */
+  .login-container {
+    width: 90%; /* Hacer más ancho en pantallas pequeñas */
+    padding: 1.5rem; /* Reducir el padding */
+  }
+
+  .login-container h2 {
+    font-size: 20px; /* Reducir el tamaño del título */
+  }
+
+  .login-container input {
+    font-size: 0.9em; /* Reducir el tamaño de los campos de entrada */
+  }
+
+  .form-buttons {
+    flex-direction: column; /* Asegura que los botones se apilen verticalmente */
+    margin-top: 15px; /* Reducir el margen superior */
+  }
 }
 
+/* Estilo para el perfil */
 
-/* profile.css */
-
+/* Container del perfil */
 .profile-container {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .profile-info p {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .change-password {
-    margin-top: 30px;
-  }
-  
-  .change-password form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .change-password .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .change-password label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .change-password input {
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .change-password button {
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .change-password button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Información del perfil */
+.profile-info p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Contenedor para cambiar la contraseña */
+.change-password {
+  margin-top: 30px;
+}
+
+.change-password form {
+  display: flex;
+  flex-direction: column;
+}
+
+.change-password .form-group {
+  margin-bottom: 15px;
+}
+
+.change-password label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.change-password input {
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.change-password button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.change-password button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.password-container {
+  position: relative;
+}
+
+input[type="password"], input[type="text"] {
+  padding-right: 100px; /* Deja espacio para el ícono */
+}
+
+button[type="submit"] {
+  margin-top: 20px;
+}
+
+/* Responsiveness para el perfil */
+@media (max-width: 768px) {
+  /* Ajustes en el perfil para pantallas pequeñas */
+  .profile-container {
+    padding: 15px;
+    max-width: 90%; /* Hace que el contenedor sea más ancho en pantallas pequeñas */
   }
 
-  .password-container {
-    position: relative;
+  .profile-info p {
+    font-size: 16px; /* Reducir el tamaño de los párrafos */
   }
-  
-  input[type="password"], input[type="text"] {
-    padding-right: 100px; /* Deja espacio para el ícono */
+
+  .change-password form {
+    flex-direction: column; /* Apilar los elementos del formulario */
   }
-  
-  button[type="submit"] {
-    margin-top: 20px;
+
+  .change-password button {
+    font-size: 0.9rem; /* Reducir el tamaño del botón */
   }
+}

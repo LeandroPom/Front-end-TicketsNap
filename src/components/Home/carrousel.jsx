@@ -3,6 +3,7 @@ import './carrousel.css';
 
 const Carousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Estado para saber si el video está reproduciéndose
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
@@ -16,14 +17,42 @@ const Carousel = ({ images }) => {
     setCurrentIndex(index);
   };
 
-  // Cambio automático de imágenes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      goToNext();
-    }, 5000); // Cambia la imagen cada 5 segundos
+  const handleVideoPlay = () => {
+    setIsVideoPlaying(true); // Video empieza a reproducirse
+  };
 
-    return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
-  }, [currentIndex]);
+  const handleVideoPause = () => {
+    setIsVideoPlaying(false); // Video se detiene
+  };
+
+  // Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen
+  const renderContent = (url, index) => {
+    const isActiveVideo = url?.includes("youtube.com") || url?.includes("youtu.be");
+    return isActiveVideo ? (
+      <iframe
+        className={`event-videos ${index === currentIndex ? 'actives' : ''}`}
+        src={url?.replace("watch?v=", "embed/")}
+        title="Event Video"
+        frameBorder="0"
+        allowFullScreen
+        onPlay={handleVideoPlay} // Cuando se empieza a reproducir, se cambia el estado
+        onPause={handleVideoPause} // Cuando se pausa, se cambia el estado
+      ></iframe>
+    ) : (
+      <img className={`event-image ${index === currentIndex ? 'actives' : ''}`} src={url} alt="Event" />
+    );
+  };
+
+  // Cambio automático de imágenes (solo si no hay video reproduciéndose)
+  useEffect(() => {
+    if (!isVideoPlaying) {
+      const interval = setInterval(() => {
+        goToNext();
+      }, 15000); // Cambia la imagen cada 5 segundos
+
+      return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
+    }
+  }, [currentIndex, isVideoPlaying]); // Recalcula el intervalo solo cuando no haya video en reproducción
 
   return (
     <div className="carousel">
@@ -32,14 +61,14 @@ const Carousel = ({ images }) => {
       </button>
 
       <div className="carousel-images">
-        {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Slide ${index + 1}`}
-            className={`carousel-image ${index === currentIndex ? 'active' : ''}`}
-          />
-        ))}
+        {/* Solo muestra el contenido del índice actual */}
+        <div className="carousel-item">
+          {images.map((image, index) => (
+            <div key={index}>
+              {renderContent(image, index)}
+            </div>
+          ))}
+        </div>
       </div>
 
       <button className="carousel-button next" onClick={goToNext}>
@@ -50,7 +79,7 @@ const Carousel = ({ images }) => {
         {images.map((_, index) => (
           <button
             key={index}
-            className={`indicator ${index === currentIndex ? 'active' : ''}`}
+            className={`indicator ${index === currentIndex ? 'actives' : ''}`}
             onClick={() => goToIndex(index)}
           />
         ))}
@@ -60,13 +89,3 @@ const Carousel = ({ images }) => {
 };
 
 export default Carousel;
-
-
-// Ejemplo de uso
-// import Carousel from './Carousel';
-// const images = [
-//   'https://via.placeholder.com/800x400?text=Slide+1',
-//   'https://via.placeholder.com/800x400?text=Slide+2',
-//   'https://via.placeholder.com/800x400?text=Slide+3'
-// ];
-// <Carousel images={images} />;
