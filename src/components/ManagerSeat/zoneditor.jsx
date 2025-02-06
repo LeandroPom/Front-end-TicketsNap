@@ -105,7 +105,7 @@ const ZoneEditor = ({ showId }) => {
       console.log("Datos a enviar al backend:", dataToSend);
 
       // Enviar los datos al backend para crear la nueva zona
-      const response = await axios.post("http://localhost:3001/zones/add", dataToSend);
+      const response = await axios.post("/zones/add", dataToSend);
 
       if (response.status === 200) {
         setSuccessAlert(true); // Mostrar mensaje de éxito

@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShows } from '../../Redux/Actions/actions'; // Asegúrate de que tienes la acción deleteShow importada
+import { getShows, disableShow } from '../../Redux/Actions/actions'; // Usa la acción disableShow
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'; // Importar SweetAlert2
 import './estilospaneladm.css';
 
 const Events = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
- 
+
   const shows = useSelector((state) => state.shows); // Arreglo de shows
   const loading = useSelector((state) => state.loading); // Indicador de carga
   const error = useSelector((state) => state.error); // Errores
@@ -17,15 +18,45 @@ const Events = () => {
   }, [dispatch]);
 
   const handleEdit = (showId) => {
-    // Corrige la ruta para editar el show usando el `showId`
     navigate(`/admin/events/edit/${showId}`);
   };
 
-  const handleDelete = (showId) => {
-    // Pregunta al usuario si está seguro de eliminar el evento
-    if (window.confirm('¿Seguro que deseas eliminar este evento?')) {
-      dispatch(deleteShow(showId)); // Elimina el evento usando la acción deleteShow
-    }
+  // Función para manejar la desactivación o activación con SweetAlert2
+  const handleToggleState = (showId, state) => {
+    const action = state ? 'desactivar' : 'activar'; // Determina la acción según el estado actual
+    const confirmationMessage = state
+      ? '¿Estás seguro de que deseas desactivar este show?'
+      : '¿Estás seguro de que deseas activar este show?';
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: confirmationMessage,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, cambiar estado',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, despachamos la acción
+        dispatch(disableShow(showId))
+          .then(() => {
+            Swal.fire(
+              'Estado cambiado!',
+              `El show ha sido ${action} correctamente.`,
+              'success'
+            );
+          })
+          .catch((error) => {
+            Swal.fire(
+              'Error!',
+              `Hubo un error al intentar cambiar el estado del show.`,
+              'error'
+            );
+          });
+      }
+    });
   };
 
   return (
@@ -39,7 +70,6 @@ const Events = () => {
           <tr>
             <th>Name</th>
             <th>Genre</th>
-            <th>Place</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -48,10 +78,15 @@ const Events = () => {
             <tr key={show.id}>
               <td>{show.name}</td>
               <td>{show.genre.join(', ')}</td>
-              <td>{show.location.name}</td>
               <td>
-                <button className='botonedit' onClick={() => handleEdit(show.id)}>Edit</button>
-                <button className='botonedit' onClick={() => handleDelete(show.id)}>Delete</button> {/* Cambié "Deleted" por "Delete" */}
+                <button className="botonedit" onClick={() => handleEdit(show.id)}>Edit</button>
+                {/* Botón para cambiar el estado con SweetAlert */}
+                <button
+                  className={`botonedit ${show.state ? 'active' : 'inactive'}`}
+                  onClick={() => handleToggleState(show.id)}
+                >
+                  {show.state ? 'Desactivar' : 'Activar'}
+                </button>
               </td>
             </tr>
           ))}

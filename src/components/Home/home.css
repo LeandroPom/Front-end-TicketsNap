@@ -24,7 +24,7 @@
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
-  transition: color 0.3s; /* Transición para el color */
+  transition: color 0.3s;
 }
 
 .home.light h2 {
@@ -86,12 +86,10 @@
   margin-top: 30px;
   margin-bottom: 50px;
   box-shadow: #007bff;
-  
 }
 
 /* Elementos individuales de eventos */
 li {
-  /* background-color: #b4a9a9; */
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(22, 121, 235, 0.1);
   padding: 15px;
@@ -132,24 +130,23 @@ li h3 {
 }
 
 .home.light li h3 {
-  color: #007bff; /* Azul claro en modo claro */
+  color: #007bff;
 }
 
 .home.dark li h3 {
-  color: #bdd9ee; /* Azul más suave en modo oscuro */
+  color: #bdd9ee;
 }
 
 .home.light li p {
-  color: #000000; /* Azul claro en modo claro */
+  color: #000000;
 }
 
 .home.dark li p {
-  color: #ffffff; /* Azul más suave en modo oscuro */
+  color: #ffffff;
 }
 
 /* Descripción de los eventos */
 li p {
-  /* color: #555; */
   font-size: 14px;
   margin: 6px 0;
   line-height: 1.4;
@@ -179,9 +176,6 @@ li:hover .event-image {
 }
 
 /* Botón de ver detalles */
-
-
-
 .buttonhome {
   background-color: #007bff;
   color: rgb(212, 205, 205);
@@ -206,24 +200,26 @@ li:hover .event-image {
   width: 25%;
 }
 
-/* button:hover {
-  background-color: #0056b3;
-  transform: scale(1.02);
-} */
-
-.lightcalendar {
-  background-color: #706d6d;
-}
-
-.darkcalendar {
-  background-color: #acacac;
-}
-
 /* Estilo responsivo */
 @media (max-width: 768px) {
-  .home ul {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    margin-top: 20px;
+  .home {
+    padding: 20px 15px;
+  }
+
+  .home h2 {
+    font-size: 24px;
+  }
+
+  /* Ajustes en la barra de búsqueda */
+  .search-container input,
+  .search-container select {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .homecard {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajustar las columnas */
+    gap: 15px;
   }
 
   li {
@@ -242,9 +238,15 @@ li:hover .event-image {
     height: 120px;
   }
 
-  button {
-    font-size: 13px;
-    padding: 7px 10px;
+  .buttonhome {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .buttonhomereset {
+    font-size: 12px;
+    padding: 6px 10px;
+    width: 50%;
   }
 }
 
@@ -282,7 +284,6 @@ li:hover .event-image {
   z-index: 1000;
   background-color: rgb(144, 191, 218);
   padding: 0;
-  /* box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2); */
   border-radius: 8px;
   color: #000000;
 }

@@ -156,6 +156,58 @@
       width: 100%;
     }
   }
+  .countdown h2 {
+    font-size: 24px;
+    color: red;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.custom-modal {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.custom-overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.small-input {
+  width: 80px;  /* Ajusta el ancho del input según lo necesites */
+  font-size: 14px;  /* Tamaño de la fuente más pequeño */
+  padding: 5px;  /* Reducir el padding */
+}
+
+
+.ReactModal__Overlay {
+  z-index: 1000;
+}
+
+.ReactModal__Content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 500px;
+  margin: 0 auto;
+  max-width: 80%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
 
   
   

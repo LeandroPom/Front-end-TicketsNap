@@ -17,7 +17,7 @@ const UsersManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/users`);
+      const response = await axios.get(`/users`);
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -39,7 +39,7 @@ const UsersManagement = () => {
 
     try {
       // Cambia la propiedad `disabled` al valor opuesto
-      const response = await axios.put(`http://localhost:3001/users/edit`, {
+      const response = await axios.put(`/users/edit`, {
         id,
         updates: { disabled: !currentDisabled },
         user, // Envía el usuario logueado para validaciones
@@ -71,7 +71,7 @@ const UsersManagement = () => {
     }
 
     try {
-      const response = await axios.put(`http://localhost:3001/users/edit`, {
+      const response = await axios.put(`/users/edit`, {
         id,
         updates: { isAdmin: !currentIsAdmin },
         user, // Envía el usuario logueado para validaciones
@@ -103,7 +103,7 @@ const UsersManagement = () => {
     }
 
     try {
-      const response = await axios.put(`http://localhost:3001/users/edit`, {
+      const response = await axios.put(`/users/edit`, {
         id,
         updates: { cashier: !currentCashier },
         user, // Envía el usuario logueado para validaciones

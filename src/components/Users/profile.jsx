@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'; 
+import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
@@ -8,19 +9,19 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './login.css';
 
 const Profile = () => {
-  const user = useSelector((state) => state?.user); // Obtenemos el usuario desde el estado global
+  const user = useSelector((state) => state?.user);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isUserLoading, setIsUserLoading] = useState(true); 
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const dispatch = useDispatch();
-  
+  const navigate = useNavigate(); // Hook para redireccionar
 
   useEffect(() => {
     if (user) {
-      setIsUserLoading(false); // Cambiamos el estado de carga si el usuario está listo
+      setIsUserLoading(false);
     }
   }, [user]);
 
@@ -39,14 +40,12 @@ const Profile = () => {
     setIsLoading(true);
   
     try {
-      const response = await axios.put('http://localhost:3001/users/edit', {
-        email: user.email, // ID del usuario logueado
+      const response = await axios.put('/users/edit', {
+        email: user.email,
         updates: {
-          password: newPassword, // Nueva contraseña
+          password: newPassword,
         },
       });
-
-    
 
       if (response.data.user) {
         dispatch({ type: 'UPDATE_USER', payload: response.data.user });
@@ -82,6 +81,10 @@ const Profile = () => {
         <p><strong>Name:</strong> {user?.name}</p>
         <p><strong>Email:</strong> {user?.email}</p>
       </div>
+
+      <button onClick={() => navigate('/profile/miscompras')} className="my-purchases-button">
+        Mis Compras
+      </button>
 
       <div className="change-password">
         <h3>Change Password</h3>

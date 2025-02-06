@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, loginWithGoogle } from '../Redux/Actions/actions';
+import { login, loginWithGoogle } from '../Redux/Actions/actions';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { auth } from '../Firebase/firebase.config';
@@ -45,10 +45,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     try {
-      const response = await dispatch(loginUser(email, password));
-
+      const response = await dispatch(login(email, password));
+  
       if (response?.error) {
         Swal.fire({
           icon: 'error',
@@ -57,20 +57,23 @@ const Login = () => {
         });
         return;
       }
-
+  
       const userData = {
         name: response.name,
         email: response.email,
-        role: response.role || 'user',
+        isAdmin: response.isAdmin || false,  // Agregar isAdmin
+        cashier: response.cashier || false,  // Agregar cashier
+        image: response.image || '',  // Agregar image
+        disabled: response.disabled || false,  // Agregar disabled
+        id: response.id
       };
-
       localStorage.setItem('user', JSON.stringify(userData));
-
+  
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: userData,
       });
-
+  
       Swal.fire({
         icon: 'success',
         title: 'Login exitoso',
@@ -169,7 +172,7 @@ const Login = () => {
             </button>
         
             <div className="google-logins">
-             <GoogleOAuthProvider clientId="cliente google id">
+             <GoogleOAuthProvider clientId="220270807051-k0j1nanf7am7do9garnpb5c4u4lmmd8p.apps.googleusercontent.com">
              <GoogleLogin
              onSuccess={handleGoogleLogin}
              onError={(error) => console.log('Error al iniciar sesión con Google:', error)}

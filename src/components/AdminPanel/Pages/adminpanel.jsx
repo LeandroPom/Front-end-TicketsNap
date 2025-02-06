@@ -8,6 +8,7 @@ import Events from './events';
 import Places from './places';
 import UsersManagement from './users';
 import "./estilospaneladm.css";
+import SoldTickets from './SoldTickets';
 
 
 const AdminPanel = () => {
@@ -22,6 +23,7 @@ const AdminPanel = () => {
           {/* <Route path="/admin/seats" element={<Seats />} /> */}
           <Route path="/admin/places" element={<Places />} />
           <Route path="/admin/users" element={<UsersManagement />} />
+          <Route path="/admin/tickets" element={<SoldTickets />} />
         
           <Route path="*" element={<Navigate to="/admin/dashboard" />} />
         </Routes>

@@ -12,10 +12,24 @@ import Profile from './components/Users/profile';
 import EditShow from './components/AdminPanel/Pages/editevent';
 import TicketDetail from './components/Eventdetail/TicketDetail';
 import CreateZone from './components/ManagerSeat/createzone';
+import Modal from 'react-modal';
+import Generaltribunes from './components/Eventdetail/generaltribune';
+import MisCompras from './components/Users/miscompras';
+import SuccessPage from './components/Eventdetail/succesbuy';
+import Ticketscan from './components/TiketsEscan/tiketscaned';
+
+
+import axios from "axios";
+  axios.defaults.baseURL = "http://localhost:3001";
+
+  
 
 
 
 function App() {
+
+  Modal.setAppElement('#root');
+
   
   return (
     
@@ -32,6 +46,11 @@ function App() {
           <Route path="/admin/events/edit/:showId" element={<EditShow />} />
           <Route path="/createzone" element={<CreateZone />} />
           <Route path="/ticket-detail" element={<TicketDetail />} />
+          <Route path="/generaltribune" element={<Generaltribunes />} />
+          <Route path="/profile/miscompras" element={<MisCompras />} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/tickets/useQR/:ticketId" element={<Ticketscan />} />
+          <Route path="/tickets/test" element={<h1>🚀 RUTA DETECTADA</h1>} />
           <Route path="*" element={<AdminPanel />} />
         </Routes>
       </Router>

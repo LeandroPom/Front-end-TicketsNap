@@ -94,11 +94,10 @@ const EditShow = () => {
       artists: artists.split(',').map((artist) => artist.trim()), // Asegúrate de dividir correctamente los artistas
       genre: selectedTags,
       description,
-      price: parseFloat(price),
       coverImage,
-      location: { name: place, address },
-      presentation: presentations,
     };
+     
+    
   
     const dataToSend = {
       id: showId, // El ID del show a actualizar
@@ -127,11 +126,7 @@ const EditShow = () => {
     }
   };
 
-  const handlePresentationChange = (index, field, value) => {
-    const updatedPresentations = [...presentations];
-    updatedPresentations[index][field] = value;
-    setPresentations(updatedPresentations);
-  };
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -220,99 +215,50 @@ const EditShow = () => {
           />
         </div>
 
-        {/* Precio */}
-        <div className="form-group">
-          <label htmlFor="price">Price:</label>
-          <input
-            type="number"
-            id="price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-        </div>
+        
 
         {/* Imagen de portada */}
         <div className="form-group">
           <label htmlFor="coverImage">Cover Image URL:</label>
           <input
-            type="text"
-            id="coverImage"
-            value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
-          />
-        </div>
+           type="text"
+           id="coverImage"
+           value={coverImage}
+           onChange={(e) => setCoverImage(e.target.value)}
+           />
+           </div>
 
-        {/* Lugar */}
-        <div className="form-group">
-          <label htmlFor="place">Place:</label>
-          <input
-            type="text"
-            id="place"
-            value={place}
-            onChange={(e) => setPlace(e.target.value)}
-            required
-          />
-        </div>
+          {/* Mostrar un iframe si es un video de YouTube */}
+           {coverImage.includes('youtube.com') || coverImage.includes('youtu.be') ? (
+            <div className="video-preview">
+           <iframe
+            src={coverImage.replace("watch?v=", "embed/")}
+            title="Cover Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+           />
+            </div>
+          ) : (
+           <div className="image-preview">
+           <img src={coverImage} alt="Cover" />
+          </div>
+           )}
 
-        {/* Dirección */}
-        <div className="form-group">
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-        </div>
+       
 
         {/* Presentaciones */}
         <div className="presentations">
-          <h3>Presentations</h3>
+          
           {presentations.map((presentation, index) => (
             <div key={index} className="presentation-form">
               <div className="form-group">
-                <label htmlFor={`date-${index}`}>Date:</label>
-                <input
-                  type="date"
-                  id={`date-${index}`}
-                  value={presentation.date}
-                  onChange={(e) =>
-                    handlePresentationChange(index, 'date', e.target.value)
-                  }
-                />
+               
               </div>
 
-              <div className="form-group">
-                <label htmlFor={`start-${index}`}>Start Time:</label>
-                <input
-                  type="time"
-                  id={`start-${index}`}
-                  value={presentation.time?.start || ''}
-                  onChange={(e) =>
-                    handlePresentationChange(index, 'time', {
-                      ...presentation.time,
-                      start: e.target.value,
-                    })
-                  }
-                />
-              </div>
+              
 
-              <div className="form-group">
-                <label htmlFor={`end-${index}`}>End Time:</label>
-                <input
-                  type="time"
-                  id={`end-${index}`}
-                  value={presentation.time?.end || ''}
-                  onChange={(e) =>
-                    handlePresentationChange(index, 'time', {
-                      ...presentation.time,
-                      end: e.target.value,
-                    })
-                  }
-                />
-              </div>
+           
             </div>
           ))}
         </div>

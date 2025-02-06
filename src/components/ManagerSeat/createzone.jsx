@@ -120,7 +120,7 @@ const CreateZone = () => {
     const totalSeats = 56; // Total de asientos a generar por fila
     const newSeats = [];
     const baseId = parseInt(seatId); // Convertimos el ID inicial a número agregar +1
-    const seatSpacing = 12.3; // Distancia entre asientos
+    const seatSpacing = 11.7; // Distancia entre asientos
     const emptySpacing = seatSpacing; // Espacio vacío igual a la distancia entre los asientos
   
     let xPos = selectedSeat.x; // Comenzamos con la coordenada X del primer asiento
@@ -133,7 +133,7 @@ const CreateZone = () => {
       for (let i = 0; i < numSeatsInRow; i++) {
         // Agregamos un asiento con su coordenada X, Y y ID
         newSeats.push({
-          id: baseId + seatCount + i, // Incremento consecutivo: 1, 2, 3...
+          id: baseId + seatCount + i , // Incremento consecutivo: 1, 2, 3... poner +1 si falta el primer asiento
           row, // Fila
           x: xPos, // Coordenada X
           y: yPos, // Coordenada Y
@@ -256,7 +256,7 @@ const CreateZone = () => {
     // Enviar los datos al backend
     try {
       dispatch({ type: "CREATE_ZONE_REQUEST" });
-      const response = await axios.post("http://localhost:3001/zones", zoneData);
+      const response = await axios.post("/zones", zoneData);
       if (response.status === 201) {
         alert("Zone created successfully!");
         dispatch({ type: "CREATE_ZONE_SUCCESS", payload: response.data });
@@ -278,22 +278,22 @@ const CreateZone = () => {
   // Manejar el clic en el mapa para colocar los asientos
   const handleMapClick = (event) => {
     const imageElement = event.target;
-    
-    // Tamaño mostrado (escalado)
+  
+    // Dimensiones de la imagen mostrada (escaladas)
     const containerWidth = imageElement.offsetWidth;
     const containerHeight = imageElement.offsetHeight;
   
-    // Tamaño natural
+    // Dimensiones naturales de la imagen
     const naturalWidth = imageElement.naturalWidth;
     const naturalHeight = imageElement.naturalHeight;
   
     const { offsetX, offsetY } = event.nativeEvent;
   
-    // Ajustar coordenadas al tamaño natural
-    const adjustedX = (offsetX / containerWidth) * naturalWidth;
-    const adjustedY = (offsetY / containerHeight) * naturalHeight;
+    // Ajuste de coordenadas al tamaño natural, considerando el nivel de zoom
+    const adjustedX = ((offsetX / containerWidth) * naturalWidth) / zoomLevel;
+    const adjustedY = ((offsetY / containerHeight) * naturalHeight) / zoomLevel;
   
-    console.log("Coordenadas ajustadas:", { adjustedX, adjustedY });
+    console.log("Coordenadas ajustadas con zoom:", { adjustedX, adjustedY });
   
     setSelectedSeat({ x: adjustedX, y: adjustedY });
   };
@@ -338,18 +338,19 @@ const CreateZone = () => {
            style={{ transform: `scale(${zoomLevel})`, transformOrigin: '0 0' }} // Aplica el zoom
             />
           {/* Marcadores de asientos existentes */}
-{seats.map((seat, index) => (
+          {seats.map((seat, index) => (
   <div
     key={index}
     className="seat-marker"
     style={{
-      osition: "absolute",
-    left: `${seat.x * zoomLevel}px`, // Ajuste de coordenada X por el zoom
-    top: `${seat.y * zoomLevel}px`,  // Ajuste de coordenada Y por el zoom
-    width: "8px", // Tamaño del marcador
-    height: "8px", // Tamaño del marcador
-    backgroundColor: "green", // Estilo para el marcador
-    borderRadius: "50%", // Forma redonda del marcador
+      position: "absolute",
+      left: `${seat.x * zoomLevel}px`, // Coordenada X ajustada al zoom
+      top: `${seat.y * zoomLevel}px`,  // Coordenada Y ajustada al zoom
+      width: `${8 }px`, // Ajuste del tamaño del marcador
+      height: `${8 }px`,
+      backgroundColor: "green",
+      borderRadius: "50%",
+      transform: `translate(-50%, -50%)`, // Centrar el marcador
     }}
   />
 ))}
@@ -360,15 +361,16 @@ const CreateZone = () => {
     className="seat-marker-temp"
     style={{
       position: "absolute",
-      left: `${selectedSeat.x* zoomLevel}px`,  // Coordenadas ajustadas sin multiplicar por zoomLevel
-      top: `${selectedSeat.y* zoomLevel}px`,
+      left: `${selectedSeat.x * zoomLevel}px`,
+      top: `${selectedSeat.y * zoomLevel}px`,
       backgroundColor: "blue",
       borderRadius: "50%",
-      width: "8px",
-      height: "8px",
-              }}
-             />
-            )}
+      width: `${8}px`,
+      height: `${8 }px`,
+      transform: `translate(-50%, -50%)`,
+    }}
+  />
+)}
         </div>
         )}
 

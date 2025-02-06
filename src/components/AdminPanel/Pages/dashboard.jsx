@@ -47,13 +47,13 @@ const Dashboard = () => {
 
   const fetchMetrics = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/analitics/");
+      const response = await axios.get("/analitics/");
       const data = response.data;
       setMetrics({
-        users: data.users.length,
-        shows: data.shows.length,
-        places: data.places.length,
-        seats: data.zones.reduce((acc, zone) => acc + zone.seats.length, 0),
+        users: data.users?.length,
+        shows: data.shows?.length,
+        // places: data.places.length,
+        // seats: data.zones.reduce((acc, zone) => acc + zone.seats.length, 0),
       });
       setLoading(false);
     } catch (error) {
