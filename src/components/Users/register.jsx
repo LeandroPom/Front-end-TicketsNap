@@ -15,7 +15,7 @@ const Register = () => {
   const navigate = useNavigate(); // Usamos el hook de navegación para redirigir
   const user = useSelector((state) => state?.user);
   const error = useSelector((state) => state?.user); // Obtenemos el estado de Redux
-  const clientId = '220270807051-k0j1nanf7am7do9garnpb5c4u4lmmd8p.apps.googleusercontent.com';
+  const clientId = 'COLOCAR VARIABLE DEL ID DE GOOGLE';
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [formData, setFormData] = useState({
 
