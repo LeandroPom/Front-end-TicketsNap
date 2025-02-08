@@ -8,8 +8,8 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, seatselect, selectedPrese
 
   const user = useSelector((state) => state.user);
 
-  console.log(seats, " datos de visision q necesito")
-  console.log(user, " id del usuario")
+  // console.log(seats, " datos de visision q necesito")
+  // console.log(user, " id del usuario")
   // Asegúrate de que 'event' no esté vacío o undefined antes de usarlo
   if (!eventDetails) {
     return <p>Cargando datos del evento...</p>; // Muestra un mensaje mientras los datos se cargan
@@ -21,7 +21,7 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, seatselect, selectedPrese
   const handleSeatSelection = () => {
     const presentation = selectedPresentation;  // Asegúrate de que haya al menos una presentación
 
-    console.log(presentation, "PRESENTACION SEATBUY")
+    // console.log(presentation, "PRESENTACION SEATBUY")
     
     if (presentation) {
       Swal.fire({
@@ -37,6 +37,7 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, seatselect, selectedPrese
               name: eventDetails?.name,
               description: eventDetails?.description,
               // location: "Floresta",
+              Direccion: eventDetails.location,
               presentation: selectedPresentation
             },
             selectedSeat: {
@@ -56,7 +57,7 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, seatselect, selectedPrese
             // }
           };
   
-          console.log(ticket, " DATOS DEL TICKET");
+          
   
           Swal.fire({
             title: '¡Ticket generado!',
@@ -84,8 +85,8 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, seatselect, selectedPrese
       <h1>{eventDetails?.name}</h1>
       <p><strong>Artists:</strong> {eventDetails?.artists.join(', ')}</p>
       <p><strong>Genres:</strong> {eventDetails?.genre.join(', ')}</p>
-      <p><strong>Location:</strong> Floresta</p>
-      <p><strong>Address:</strong> Jujuy 200</p>
+      <p><strong>Location/Address:</strong> {eventDetails?.location}</p>
+      
         {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
         {eventDetails.coverImage.includes("youtube.com") || eventDetails.coverImage.includes("youtu.be") ? (
                 <iframe 

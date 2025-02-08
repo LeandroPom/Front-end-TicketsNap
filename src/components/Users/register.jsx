@@ -15,9 +15,11 @@ const Register = () => {
   const navigate = useNavigate(); // Usamos el hook de navegación para redirigir
   const user = useSelector((state) => state?.user);
   const error = useSelector((state) => state?.user); // Obtenemos el estado de Redux
-  const clientId = 'COLOCAR VARIABLE DEL ID DE GOOGLE';
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [formData, setFormData] = useState({
+
+    
 
     firstName: '',
     lastName: '',
@@ -57,7 +59,7 @@ const Register = () => {
     }
   }, [user, error, navigate]); // Este useEffect se ejecutará cuando el estado 'user' o 'error' cambien
 
-
+  
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -150,7 +152,7 @@ const Register = () => {
       const userCredential = await signInWithCredential(auth, credential);
       const user = userCredential.user;
   
-      console.log("Google login success:", user);
+     
   
       // Generar una contraseña aleatoria para la creación del usuario
       const temporaryPassword = generateRandomPassword();

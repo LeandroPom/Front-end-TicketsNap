@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
+import { getShows } from '../Redux/Actions/actions';
 
 const TicketDetail = () => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
   const { eventDetails, selectedSeat, selectedGeneral, selectedtribunes } = location.state || {};
   const navigate = useNavigate(); // Hook para redireccionar
+  const shows = useSelector((state) => state.shows);
+  const [loadingShows, setLoadingShows] = useState(true);
+  const [errorShows, setErrorShows] = useState(null);
+  const dispatch = useDispatch();
+  const ticket = location.state;
+
+  useEffect(() => {
+      if (shows.length === 0) {
+        dispatch(getShows())
+          .then(() => setLoadingShows(false))
+          .catch((err) => {
+            setErrorShows('Error al obtener los shows');
+            setLoadingShows(false);
+          });
+      } else {
+        setLoadingShows(false);
+      }
+    }, [dispatch, shows]);
 
   const [buyerData, setBuyerData] = useState({
     dni: '',
@@ -23,7 +42,7 @@ const TicketDetail = () => {
     return <p>Error: No hay datos disponibles para este ticket.</p>;
   }
 
-  console.log(user, "usuario id")
+ 
 
   const handleOpenBuyerModal = () => {
     Swal.fire({
@@ -75,6 +94,7 @@ const TicketDetail = () => {
           division: selectedGeneral.division,
           seatsCount: selectedGeneral.seatsCount,
           totalPrice: selectedGeneral.totalPrice,
+          Direccion: shows.find(show => show.id === ticket.showId)?.location || "direccion desconocida",
           userId: user?.id,
           cashier: user?.cashier,
           name: buyerDetails ? `${buyerDetails.firstName} ${buyerDetails.lastName}` : null,
@@ -89,7 +109,8 @@ const TicketDetail = () => {
           row: selectedSeat?.row,
           seatId: selectedSeat?.id,
           price: selectedSeat?.price,
-          location: `Floresta, Jujuy 200`,
+          location: `Floresta`,
+          Direccion: shows.find(show => show.id === ticket.showId)?.location || "direccion desconocida",
           userId: user?.id,
           cashier: user?.cashier,
           name: buyerDetails ? `${buyerDetails.firstName} ${buyerDetails.lastName}` : null,
@@ -104,7 +125,7 @@ const TicketDetail = () => {
       // Verificar la respuesta para depuración
       
   
-      const { init_point, ticketId, state, totalAmount, qrCode, date, showId, division, price, row, seat } = response.data;
+      const { init_point, ticket, state, totalAmount, qrCode, date, showId, division, price, row, seat, location } = response.data;
   
       if (init_point) {
         // Si es una compra, redirigir al usuario a MercadoPago
@@ -119,7 +140,7 @@ const TicketDetail = () => {
         });
         // Redirigir al success page con los detalles del ticket
         navigate('/success', {
-          state: { qrCode, showId, division, price, date, seat, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone },
+          state: { qrCode, showId, division, price, date, seat, location, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone },
         });
       } else if (action === 'sell') {
         // Para ventas en efectivo, mostrar confirmación sin MercadoPago
@@ -131,7 +152,7 @@ const TicketDetail = () => {
         });
         // Redirigir a la página de éxito con el ticket generado
         navigate('/success', {
-          state: { qrCode, showId, division, price, date, seat, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone },
+          state: { qrCode, showId, division, price, date, seat, location, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone },
         });
       } else {
         // Si no se recibe un 'init_point' ni un 'ticketId', significa que hubo un error
@@ -143,16 +164,29 @@ const TicketDetail = () => {
         });
       }
       if (response.success) {
-        navigate('/success', { state: { qrCode, showId, division, price, date, seat, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone } }); // Asegurar que SIEMPRE redirige
+        navigate('/success', { state: { qrCode, showId, division, price, location, date, seat, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone } }); // Asegurar que SIEMPRE redirige
       } else {
-        alert("Error al procesar la compra.");
+        
       }
     } catch (error) {
       console.error("Error en la compra:", error);
-      alert("Hubo un problema al procesar la compra.");
+      
     }
   
   };
+
+  const showAdress = shows.find(show => show.id === ticket.showId)?.location|| "Show ";
+
+  console.log(ticket,"Datos del tiket")
+  console.log(showAdress,"Datos de la cosntante")
+
+  if (loadingShows) {
+    return <div className="loading">Cargando shows...</div>;
+  }
+
+  if (errorShows) {
+    return <div className="error">{errorShows}</div>;
+  }
    
 
   return (
@@ -172,10 +206,13 @@ const TicketDetail = () => {
           <strong>Descripción:</strong> {eventDetails.description}
         </p>
         <p>
+          <strong>Direccion:</strong> {eventDetails.Direccion}
+        </p>
+        <p>
           <strong>Fecha:</strong> {eventDetails.presentation?.date}
         </p>
         <p>
-          <strong>Ubicación:</strong> Floresta, Jujuy 200
+          <strong>Ubicación:</strong> Floresta
         </p>
         <p>
           <strong>Hora de inicio:</strong> {eventDetails.presentation?.time?.start}
