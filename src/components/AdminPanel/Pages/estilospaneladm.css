@@ -405,3 +405,53 @@ table {
     width: 100%;
   }
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #ddd; /* Agrega un borde a las celdas */
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  border-bottom: 2px solid #ccc; /* Línea más gruesa debajo de los encabezados */
+}
+
+tr:nth-child(even) {
+  background-color: #ccc; /* Alterna colores en filas */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination-button:disabled {
+  background-color: #c0c0c0;
+  cursor: not-allowed;
+}
+
+.pagination-button.active {
+  background-color: #db4328;
+}
+
+

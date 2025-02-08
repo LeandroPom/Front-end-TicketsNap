@@ -78,7 +78,7 @@ const closeModal = () => {
             zone.showId === showId &&
             zone.location.some((loc) => loc.division === divisionName)
         );
-        console.log(response); // Verifica la respuesta completa para asegurarte de que los datos sean correctos.
+        
 
       
   
@@ -89,7 +89,7 @@ const closeModal = () => {
       
   
         if (matchedZones.length > 0) {
-          console.log(matchedZones, "Zonas matcheadas");
+          
         
   
           // Guardar el zoneId de la primera zona coincidente
@@ -104,7 +104,7 @@ const closeModal = () => {
             space: zone.space || zone.location.find(loc => loc.division === divisionName)?.space || 0,
           }));
   
-          console.log(presentations, "Presentaciones disponibles");
+          
   
           // Establecer presentaciones y asientos
           setAvailablePresentations(presentations);
@@ -215,8 +215,8 @@ const closeModal = () => {
         } else {
           setSelectedZone(null);
           setZoneImage("/images/zona-floresta.png");
-          console.log(rgb, "COLORES DEL CLICK")
-          console.log("No se detectó una división válida canvas.");
+          // console.log(rgb, "COLORES DEL CLICK")
+          // console.log("No se detectó una división válida canvas.");
         }
       }
     }
@@ -242,7 +242,7 @@ const closeModal = () => {
         generalDivision = presentation.location.find(
           (loc) => loc.division === "Tribunas Generales"
         );
-        console.log("General Division encontrado:", generalDivision);
+        // console.log("General Division encontrado:", generalDivision);
       } else {
         console.error(
           "La propiedad 'location' no es un array válido:",
@@ -278,7 +278,7 @@ const closeModal = () => {
         // Evitar dibujar asientos para Tribunas Generales
         setAvailableSeats([]);
         setSeatsDrawn(false);
-        console.log("No se dibujan asientos para Tribunas Generales");
+        
       } else {
         // Continuar con el flujo para otras divisiones
         const selectedZone = availablePresentations.find(
@@ -327,8 +327,8 @@ const closeModal = () => {
       });
   
       setIsSelectorOpen(false); // Cierra el selector
-      console.log("Presentación seleccionada:", presentation);
-      console.log("modalData:", modalData);
+      // console.log("Presentación seleccionada:", presentation);
+      // console.log("modalData:", modalData);
     }
   };
   
@@ -343,7 +343,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (modalData) {
-    console.log("modalData actualizado:", modalData);
+   
   }
 }, [modalData]);
 
@@ -487,8 +487,8 @@ const loadImage = () => {
       <h1>{event.name}</h1>
       
       <p>Genre: {event.genre.join(', ')}</p>
-      <p>Location: "Floresta"</p>
-      <p>Address: Jujuy 200</p>
+      <p>Location/Adress: {event.location}</p>
+      
        {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
        {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
                 <iframe 

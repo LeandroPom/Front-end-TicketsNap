@@ -251,7 +251,7 @@ const CreateZone = () => {
   
     // Verificar la estructura antes de enviar
     // Verificar la estructura antes de enviar
-  console.log("Final zoneData:", JSON.stringify(zoneData, null, 2));
+  // console.log("Final zoneData:", JSON.stringify(zoneData, null, 2));
   
     // Enviar los datos al backend
     try {
@@ -293,7 +293,7 @@ const CreateZone = () => {
     const adjustedX = ((offsetX / containerWidth) * naturalWidth) / zoomLevel;
     const adjustedY = ((offsetY / containerHeight) * naturalHeight) / zoomLevel;
   
-    console.log("Coordenadas ajustadas con zoom:", { adjustedX, adjustedY });
+    // console.log("Coordenadas ajustadas con zoom:", { adjustedX, adjustedY });
   
     setSelectedSeat({ x: adjustedX, y: adjustedY });
   };

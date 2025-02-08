@@ -18,6 +18,7 @@ const CreateShowForm = () => {
     name: '',
     artists: '',
     locationId: '',
+    address:"",
     presentationDate: '',
     performance: '', // Inicializa con 1 si es una presentación
     presentation: [{ time: { start: '', end: '' } }], // Se usará para almacenar las presentaciones
@@ -170,15 +171,19 @@ const CreateShowForm = () => {
 
   const handleLocationSelect = (e) => {
     const selectedId = e.target.value;
-  
-    // Buscar el lugar seleccionado y actualizar selectedLocation
+    
+    // Buscar el lugar seleccionado
     const location = places.find((place) => String(place.id) === String(selectedId));
-    setSelectedLocation(location);
+    
+    if (location) {
+      const fullLocation = `${location.name}, ${location.address}`;
+      setSelectedLocation(location);
   
-    setFormData((prevState) => ({
-      ...prevState,
-      locationId: selectedId,
-    }));
+      setFormData((prevState) => ({
+        ...prevState,
+        locationId: fullLocation, // Enviar nombre + dirección
+      }));
+    }
   };
 
 
@@ -191,34 +196,36 @@ const CreateShowForm = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
+    
+    
     // Validar que haya un lugar seleccionado
     if (!selectedLocation || !selectedLocation.name) {
       setErrorMessage('Please select a valid location.');
       return;
     }
-  
+    
     if (!formData.genre || formData.genre.length === 0) {
       setErrorMessage('Please select or create at least one genre.');
       return;
     }
-  
+    
     if (!Array.isArray(formData.presentation) || formData.presentation.length === 0) {
       setErrorMessage('Presentation must be a non-empty array of objects.');
       return;
     }
-  
+    
     // Validar presentaciones antes de enviar
     for (let i = 0; i < formData.presentation.length; i++) {
       const item = formData.presentation[i];
-  
+      
       if (!item.date || !item.performance || !item.time || !item.time.start || !item.time.end) {
         setErrorMessage(`Presentation ${i + 1} is missing required fields (date, performance, start time, end time).`);
         return;
       }
-
-
-  
+      
+      
+      
       // Validar que las horas estén en el formato HH:mm
       const timePattern = /^([0-9]{2}):([0-9]{2})$/;
       if (!timePattern.test(item.time.start) || !timePattern.test(item.time.end)) {
@@ -226,20 +233,24 @@ const CreateShowForm = () => {
         return;
       }
     }
-
+    
     const price = parseFloat(formData.price);
-if (isNaN(price) || price < 0) {
-    console.error('Precio inválido');
-    return; // O muestra un mensaje de error al usuario
-}
-
-  
+    if (isNaN(price) || price < 0) {
+      console.error('Precio inválido');
+      return; // O muestra un mensaje de error al usuario
+    }
+    
+    const newFormData = {
+      ...formData,
+      address: selectedLocation?.address || 'Dirección no disponible', // Asegura que se agregue
+  };
+    
 // Formatear los datos para enviar al backend
     const formattedData = {
       name: formData.name,
       artists: formData.artists.split(',').map((artist) => artist.trim()),
       genre: formData.genre.map((genre) => genre.name),
-      locationName: selectedLocation.name,
+      locationName: formData.locationId, // Aquí se usa formData.locationId
       presentation: formData.presentation.map((item) => ({
         date: item.date,
         performance: item.performance || 1,
@@ -270,7 +281,7 @@ if (isNaN(price) || price < 0) {
     // Si hay un error al crear el show, mostrar un mensaje de error
     setErrorMessage('Error creating the show. Please try again.');
   });
-
+  console.log('Datos enviados al backend:', formattedData);
 
   }
   return (
@@ -367,9 +378,9 @@ if (isNaN(price) || price < 0) {
 
 
         <label>
-  Location:
+  Adress:
   <select onChange={handleLocationSelect} value={formData.locationId || ''} required>
-    <option value="" disabled>Select a location</option>
+    <option value="" disabled>Select Adress</option>
     {places.length > 0 ? (
       places.map((place) => (
         <option key={place.id} value={place.id}>
@@ -383,9 +394,9 @@ if (isNaN(price) || price < 0) {
 </label>
 
 <div>
-  {formData.locationId && (
+{formData.locationId && (
     <p>
-      Selected Location: <strong>{places.find((place) => String(place.id) === String(formData.locationId))?.name || 'Not found'}</strong>
+      Selected Address: <strong>{formData.locationId}</strong>
     </p>
   )}
 </div>

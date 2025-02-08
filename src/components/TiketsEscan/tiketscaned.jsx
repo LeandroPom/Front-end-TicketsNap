@@ -18,14 +18,14 @@ const Ticketscan = () => {
   useEffect(() => {
     const fetchTicketDetails = async () => {
       try {
-        console.log("🔍 Buscando ticket con ID:", ticketId);
+        
         const response = await axios.get(
           `/tickets/useQR/${ticketId}`
         );
         const ticketData = response.data.updatedTicket || response.data;
         setTicket(ticketData);
         setMessage(response.data.message || "Ticket encontrado");
-        console.log("✅ Acción activada:", ticketData);
+       
       } catch (error) {
         console.error("❌ Error al obtener el ticket:", error.message);
         setError("No se pudo obtener la información del ticket.");

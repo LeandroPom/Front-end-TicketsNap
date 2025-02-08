@@ -17,7 +17,7 @@ const Navbar = () => {
   const [isSeatManagerOpen, setIsSeatManagerOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
 
-  console.log(user, "DATOS DEL USUARIO LOGUEADO");
+  
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');

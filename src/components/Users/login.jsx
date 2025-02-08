@@ -92,6 +92,8 @@ const Login = () => {
     }
   };
 
+ 
+
   const handleGoogleLogin = async (response) => {
     const provider = new GoogleAuthProvider();
 
@@ -172,7 +174,7 @@ const Login = () => {
             </button>
         
             <div className="google-logins">
-             <GoogleOAuthProvider clientId=" COLOCAR VARIABLE DEL ID DE GOOGLE">
+             <GoogleOAuthProvider clientId= {process.env.REACT_APP_GOOGLE_CLIENT_ID}>
              <GoogleLogin
              onSuccess={handleGoogleLogin}
              onError={(error) => console.log('Error al iniciar sesión con Google:', error)}

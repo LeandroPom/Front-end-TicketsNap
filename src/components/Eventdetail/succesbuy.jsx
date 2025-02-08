@@ -59,6 +59,7 @@ const SuccessPage = () => {
       price: ticket.price,
       show: shows.find(show => show.id === ticket.showId)?.name || "Show desconocido",
       qrCode: ticket.qrCode,
+      Direccion: ticket.location,
     };
   
     emailjs.send(
@@ -69,7 +70,7 @@ const SuccessPage = () => {
     )
     .then((response) => {
       alert('Correo enviado correctamente!');
-      console.log(response, "Correo enviado")
+     
     })
     .catch((error) => {
       console.error('Error al enviar el correo:', error);
@@ -123,6 +124,7 @@ const SuccessPage = () => {
       {ticket.row && <p><strong>Fila:</strong> {ticket.row}</p>}
       <p><strong>Precio:</strong> ${ticket.totalPrice || ticket.price}</p>
       <p><strong>Evento:</strong> {showName}</p>
+      <p><strong>Direccion:</strong> {ticket.location}</p>
 
       <div>
         <img src={ticket.qrCode} alt="QR Code" />
@@ -168,6 +170,7 @@ const SuccessPage = () => {
         <p><strong>Fila:</strong> {ticket.row}</p>
         <p><strong>Precio:</strong> ${ticket.price}</p>
         <p><strong>Evento:</strong> {showName}</p>
+        <p><strong>Direccion:</strong> {shows.location}</p>
         <div>
           <img src={ticket.qrCode} alt="QR Code" />
         </div>

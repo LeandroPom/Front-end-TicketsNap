@@ -7,43 +7,65 @@ import Swal from 'sweetalert2';
 const CreatePlaceForm = () => {
   const dispatch = useDispatch();
   const [placeData, setPlaceData] = useState({
-    name: '',
-    address: '',
+    name: '', // Inicializa name
+    address: '', // Inicializa address
+    location: '', // location combinada de name y address
     capacity: '',
     layout: '',
-  });
+});
 
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPlaceData({
+  
+    // Actualizamos name o address y luego generamos location
+    const updatedPlaceData = {
       ...placeData,
-      [name]: value,
-    });
+      [name]: value, // Actualiza name o address dinámicamente
+    };
+  
+    updatedPlaceData.location = `${updatedPlaceData.name}, ${updatedPlaceData.address}`.trim();
+  
+    setPlaceData(updatedPlaceData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, address, capacity, layout } = placeData;
   
+    // Verificar que todos los campos estén completos
     if (!name || !address || !capacity || !layout) {
       setError('Please fill in all fields.');
       return;
     }
   
+    // Validar que Address contenga al menos un número y dos letras de Name
+    const nameLetters = name.replace(/[^a-zA-Z]/g, '').slice(0, 4); // Tomamos las primeras 2 letras de Name
+    const hasNumber = /\d/.test(address); // Verifica si Address tiene al menos un número
+    const hasLettersFromName = new RegExp(`[${nameLetters}]`, 'i').test(address); // Verifica si Address contiene al menos una de esas letras
+  
+    if (!hasNumber || !hasLettersFromName) {
+      setError('Address must contain at least one number and at least two letters from the Name field.');
+      return;
+    }
+  
     // Convertir capacity a número
     const numericCapacity = Number(capacity);
-  
     if (isNaN(numericCapacity) || numericCapacity < 0) {
       setError('Capacity must be a non-negative number.');
       return;
     }
   
-    const placeDataWithNumericCapacity = { ...placeData, capacity: numericCapacity };
+    // Crear objeto con los datos corregidos
+    const placeDataToSend = { 
+      ...placeData, 
+      name: `${name}, ${address}`, // Aquí combinamos Name y Address
+      capacity: numericCapacity 
+    };
   
     // Disparar la acción para crear el lugar
-    dispatch(createPlace(placeDataWithNumericCapacity))
+    dispatch(createPlace(placeDataToSend))
       .then(() => {
         Swal.fire({
           icon: 'success',
@@ -62,6 +84,12 @@ const CreatePlaceForm = () => {
         setError('Error creating the place.');
         console.error(err);
       });
+  
+  
+  
+  
+  
+  
   
   };
 

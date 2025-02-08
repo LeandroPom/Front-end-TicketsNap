@@ -157,9 +157,10 @@ export const loginWithGoogle = (email) => async (dispatch) => {
     const response = await axios.get('/users', {
       params: { email }, // Filtramos por email
     });
+     
 
     // Verificamos si existe un usuario con el email proporcionado
-    const user = response.data?.data?.find((user) => user.email === email);
+    const user = response.data?.find((user) => user.email === email);
 
     if (user) {
       // Verificamos si el usuario está deshabilitado
@@ -285,7 +286,7 @@ export const updateShow = (id, updates) => async (dispatch) => {
     const data = updates;
 
     // Enviar la solicitud PUT al backend con el ID en la URL
-    const response = await axios.put(`/shows/edit/${id}`, data);
+    const response = await axios.put(`/shows/edit`, data);
 
     dispatch({
       type: 'UPDATE_SHOW',

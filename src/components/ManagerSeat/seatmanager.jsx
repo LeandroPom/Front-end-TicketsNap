@@ -69,7 +69,7 @@ const SeatManager = ({ mapaUrl, onSeatsSelected, isSelectable }) => {
           setShowZoneForm(true); // Mostrar el formulario de configuración
           break;
       }
-      console.log(rgb, "color seleccionado")
+      // console.log(rgb, "color seleccionado")
     }
   };
 
