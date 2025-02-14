@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { getShows } from "../../Redux/Actions/actions"; // Importar la acción para traer los shows
+import * as XLSX from "xlsx";
 
 const SoldTickets = () => {
   const dispatch = useDispatch();
@@ -176,11 +177,40 @@ const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   }
 
+
 }
+const handleDownloadExcel = () => {
+  // Prepara los datos que quieres exportar
+  const data = noCancelledTickets.map((ticket) => ({
+    Show: shows.find(show => show.id === ticket.showId)?.name || "Cargando...",
+    Division: ticket.division,
+    Row: ticket.row,
+    Seat: ticket.seat,
+    Cashier: users.find(user => user.id === ticket.userId)?.name || "Cajero Desconocido",
+    Date: ticket.date.split(" || ")[0] || "Fecha no disponible",
+    Time: ticket.date.split(" || ")[1] || "Hora no disponible",
+  }));
+
+  // Crea la hoja de Excel
+  const worksheet = XLSX.utils.json_to_sheet(data);
+
+  // Crea el libro de trabajo y agrega la hoja de datos
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Tickets No Cancelados");
+
+  // Descarga el archivo Excel
+  XLSX.writeFile(workbook, "tickets_no_cancelados.xlsx");
+};
+
   return (
     <div style={{ padding: "20px" }}>
       <h2>Detalles de Tickets</h2>
       <h3>Nombre del Cajero: {user && user.name ? user.name : "Cargando..."}</h3>
+
+      {/* Botón para descargar los datos en Excel */}
+    <button onClick={handleDownloadExcel} style={{ padding: "10px", backgroundColor: "#28a745", color: "white", border: "none" }}>
+      📥 Descargar Excel
+    </button>
 
       {/* Filtros */}
       <div style={{ marginBottom: "20px" }}>

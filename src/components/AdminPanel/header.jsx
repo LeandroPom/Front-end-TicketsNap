@@ -21,23 +21,30 @@ const Header = () => {
       </div>
       <nav>
         <ul>
+          {user?.isAdmin && (
+            <>
+              <li >
+                <Link to="/admin/dashboard">Metricas</Link>
+              </li>
+              <li>
+                <Link to="/admin/events">Eventos</Link>
+              </li>
+              <li>
+                <Link to="/admin/users">Usuarios</Link>
+              </li>
+              <li>
+                <Link to="/admin/places">Lugar</Link>
+              </li>
+            </>
+          )}
+
+          {/* Tanto admin como cashier pueden acceder a Tickets Vendidos */}
           <li>
-            <Link to="/admin/dashboard">Dashboard</Link>
+            <Link to="/admin/tickets">Tickets Vendidos</Link>
           </li>
+
           <li>
-            <Link to="/admin/events">Events</Link>
-          </li>
-          <li>
-            <Link to="/admin/users">Users</Link>
-          </li>
-          <li>
-            <Link to="/admin/places">Places</Link>
-          </li>
-          <li>
-             <a href="/admin/tickets">Tickets Vendidos</a>
-           </li>
-          <li>
-            <button className='botonedit' onClick={handleLogout}>Logout</button>
+            <button className='botonedit' onClick={handleLogout}>Salir</button>
           </li>
         </ul>
       </nav>

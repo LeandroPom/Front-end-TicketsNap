@@ -85,14 +85,14 @@ const Navbar = () => {
             <div className="dropdown-menu">
               {user ? (
                 <>
-                  <a href="#" onClick={handleCreateShow} className="dropdown-item">
-                    Create Show
+                  <a href="/admin/tickets" className="dropdown-item" style={{ display: user?.cashier ? 'block' : 'none' }}>
+                    Tickets
                   </a>
-                  <a href="/createzone" className="dropdown-item">
+                  {/* <a href="/createzone" className="dropdown-item">
                     CreateZone
-                  </a>
-                  <a href="/admin" className="dropdown-item">
-                    Admin Panel
+                  </a> */}
+                  <a href="/admin" className="dropdown-item" style={{ display: user?.isAdmin ? 'block' : 'none' }}>
+                     Admin Panel
                   </a>
                   <a href="/profile" className="dropdown-item">
                     Profile

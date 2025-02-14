@@ -3,11 +3,11 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const Seatbuy = ({ seats, eventDetails, selectedSeats, seatselect, selectedPresentation }) => {
+const Seatbuy = ({ seats, eventDetails, selectedSeats, zoneId, selectedPresentation }) => {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
-
+  
   // console.log(seats, " datos de visision q necesito")
   // console.log(user, " id del usuario")
   // Asegúrate de que 'event' no esté vacío o undefined antes de usarlo
@@ -43,22 +43,28 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, seatselect, selectedPrese
             selectedSeat: {
               id: seats.id,
               row: seats.row,
-              price: seats.rowPrice, 
-              zoneId: seats.zoneId,   // Añadir zona
+              price: seats.price,
+              zoneId,
               showId: seats.showId,
               division: seats.division, // Añadir división
+              
             },
+              
             userId: user?.id,  // Cambiar por el ID del usuario autenticado si es necesario
             
             // Añadir los detalles de la presentación
             // presentationDetails: {
-            //   date: presentation.date,
-            //   time: presentation.time,  // Aquí tienes el objeto con start y end time
-            // }
-          };
-  
+              //   date: presentation.date,
+              //   time: presentation.time,  // Aquí tienes el objeto con start y end time
+              // }
+            };
+            console.log("selectedSeats en Seatbuy:", selectedSeats);
+            console.log(ticket, " datos q necesito ver en seatbuy")
+            // console.log(selectedSeats, "Datos de asientos desde seastbuy")
+            // console.log(eventDetails, "Datos de evendetails desde seastbuy")
+            // console.log(presentation, "Datos de precentaciones desde seastbuy")
           
-  
+            
           Swal.fire({
             title: '¡Ticket generado!',
             text: `Has seleccionado el asiento ${seats.id} para el evento ${eventDetails.name} a las ${presentation.time.start} - ${presentation.time.end}.`,

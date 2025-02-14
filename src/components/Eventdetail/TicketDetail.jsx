@@ -9,14 +9,14 @@ import { getShows } from '../Redux/Actions/actions';
 const TicketDetail = () => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
-  const { eventDetails, selectedSeat, selectedGeneral, selectedtribunes } = location.state || {};
+  const {eventDetails,selectedSeat,selectedGeneral,selectedtribunes} = location.state || {};
   const navigate = useNavigate(); // Hook para redireccionar
   const shows = useSelector((state) => state.shows);
   const [loadingShows, setLoadingShows] = useState(true);
   const [errorShows, setErrorShows] = useState(null);
   const dispatch = useDispatch();
   const ticket = location.state;
-
+ 
   useEffect(() => {
       if (shows.length === 0) {
         dispatch(getShows())
@@ -96,36 +96,40 @@ const TicketDetail = () => {
           totalPrice: selectedGeneral.totalPrice,
           Direccion: shows.find(show => show.id === ticket.showId)?.location || "direccion desconocida",
           userId: user?.id,
-          cashier: user?.cashier,
+          user: {
+          "cashier": user?.cashier
+          },
           name: buyerDetails ? `${buyerDetails.firstName} ${buyerDetails.lastName}` : null,
           dni: buyerDetails?.dni || null,
           mail: buyerDetails?.email || null,
           phone: buyerDetails?.phone || null,
         }
       : {
-          showId: selectedSeat.showId,
-          zoneId: selectedSeat?.zoneId,
-          division: selectedSeat?.division,
-          row: selectedSeat?.row,
-          seatId: selectedSeat?.id,
-          price: selectedSeat?.price,
-          location: `Floresta`,
-          Direccion: shows.find(show => show.id === ticket.showId)?.location || "direccion desconocida",
-          userId: user?.id,
-          cashier: user?.cashier,
-          name: buyerDetails ? `${buyerDetails.firstName} ${buyerDetails.lastName}` : null,
-          dni: buyerDetails?.dni || null,
-          mail: buyerDetails?.email || null,
-          phone: buyerDetails?.phone || null,
+        showId: selectedSeat.showId,
+        zoneId: selectedSeat?.zoneId,
+        division: selectedSeat?.division,
+        row: selectedSeat?.row,
+        seatId: selectedSeat?.id,
+        price: selectedSeat?.price,
+        location: `Floresta`,
+        Direccion: shows.find(show => show.id === ticket.showId)?.location || "direccion desconocida",
+        userId: user?.id,
+        user: {
+          "cashier": user?.cashier
+          },
+        name: buyerDetails ? `${buyerDetails.firstName} ${buyerDetails.lastName}` : null,
+        dni: buyerDetails?.dni || null,
+        mail: buyerDetails?.email || null,
+        phone: buyerDetails?.phone || null,
         };
-  
+  console.log(ticketData, "DATOS ENVIADOS AL BACK")
     try {
       const response = await axios.post(endpoint, ticketData);
   
       // Verificar la respuesta para depuración
       
   
-      const { init_point, ticket, state, totalAmount, qrCode, date, showId, division, price, row, seat, location } = response.data;
+      const { init_point, qrCode, date, showId, division, price, row, seat, location } = response.data;
   
       if (init_point) {
         // Si es una compra, redirigir al usuario a MercadoPago

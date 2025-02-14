@@ -3,16 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createShow, getShows, createTag, getTags, getPlaces } from '../Redux/Actions/actions'; // Importar getPlaces
 import Swal from 'sweetalert2';
 import '../Shows/createshowform.css';
+import { Navigate,Link, useNavigate } from 'react-router-dom';
 
 const CreateShowForm = () => {
   const dispatch = useDispatch();
   // const { shows, loading, tags, places } = useSelector((state) => state);
+  const navigate = useNavigate();
   const shows = useSelector((state) => state.shows); // Arreglo de shows
   const loading = useSelector((state) => state.loading); // Indicador de carga
   const error = useSelector((state) => state.error); // Errores
   const tags = useSelector((state) => state.tags); // tags
   const places = useSelector((state) => state.places); // places
   const [selectedLocation, setSelectedLocation] = useState(null); // Nuevo estado para el lugar
+  const [isGeneral, setIsGeneral] = useState(false); // Estado para manejar el valor del switch
 
   const [formData, setFormData] = useState({
     name: '',
@@ -103,8 +106,30 @@ const CreateShowForm = () => {
       [name]: value,
     });
   };
+
+
+  const handlePriceChange = (e) => {
+    const value = e.target.value;
+  
+    // Validate that the input contains only numbers and is not empty
+    if (/^\d*\.?\d*$/.test(value)) {  // Regular expression for numeric input
+      setFormData({
+        ...formData,
+        price: value,
+      });
+    }
+  };
+
+
   const handlePresentationChange = (index, field, value) => {
     const newPresentation = [...formData.presentation];
+
+    // if (price) {
+    //   // Si el campo es precio, aseguramos que el valor no sea negativo
+    //   if (parseFloat(value) <= 0) {
+    //     return; // No actualizamos el estado si el valor es negativo
+    //   }
+    // }
   
     // Si no existe la presentación en ese índice, inicializa el objeto
     if (!newPresentation[index]) {
@@ -261,7 +286,8 @@ const CreateShowForm = () => {
       })),
       description: formData.description || null,
       coverImage: formData.coverImage || 'https://via.placeholder.com/300',
-      price: price  // Asegúrate de que price tenga un valor numérico
+      price: price,  // Asegúrate de que price tenga un valor numérico
+      isGeneral: isGeneral ? true : '', // Si el checkbox está marcado, isGeneral será true, sino será un string vacío
     };
   
     
@@ -273,9 +299,10 @@ const CreateShowForm = () => {
     // Si el show se crea correctamente, mostrar un mensaje de éxito
     Swal.fire({
       icon: 'success',
-      title: 'Show Created!',
-      text: 'The new show has been successfully created.',
+      title: 'Show Creado!',
+      text: 'El nuevo Show se creo correctamente.',
     });
+    navigate("/")
   })
   .catch((error) => {
     // Si hay un error al crear el show, mostrar un mensaje de error
@@ -289,6 +316,15 @@ const CreateShowForm = () => {
       <h2>Create a New Show</h2>
       <form onSubmit={handleSubmit}>
         {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+
+        <label>
+        Is this a general show?
+        <input
+       type="checkbox"
+       checked={isGeneral}  // El estado del checkbox refleja el valor de isGeneral
+       onChange={() => setIsGeneral(!isGeneral)}  // Cambia el valor de isGeneral cuando se marca/desmarca
+        />
+       </label>
 
         <label>
           Name:
@@ -506,8 +542,9 @@ const CreateShowForm = () => {
             type="number"
             name="price"
             value={formData.price}
-            onChange={handleChange}
+            onChange={handlePriceChange}  // Use handlePriceChange here
             required
+            min="1" // Agregar el atributo min
           />
         </label>
 
