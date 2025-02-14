@@ -74,8 +74,12 @@ const eventDates = (shows || []).flatMap((show) =>
     return <div>Error: {error}</div>;
   }
 
-  const handleViewDetails = (showId) => {
-    navigate(`/event/${showId}`);
+  const handleViewDetails = (show) => {
+    if (show.isGeneral) {
+      navigate(`/event/general/${show.id}`);
+    } else {
+      navigate(`/event/${show.id}`);
+    }
   };
 
  // 🔹 PAGINACIÓN: Se aplica después del filtrado
@@ -282,7 +286,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         ) : (
           <img className="event-image" src={show.coverImage} alt={show.name} />
         )}
-        <button className='buttonhome' onClick={() => handleViewDetails(show.id)}>View Details</button>
+        <button className='buttonhome' onClick={() => handleViewDetails(show)}>Comprar</button>
       </li>
     ))
   ) : (

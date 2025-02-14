@@ -79,7 +79,9 @@ const Generaltribunes = () => {
       seat: "",
       price,
       userId: user?.id,
-      cashier: { user: user?.cashier },
+      user: {
+        "cashier": user?.cashier
+        },
       name: `${buyerDetails.firstName} ${buyerDetails.lastName}`,
       dni: buyerDetails.dni,
       mail: buyerDetails.email,

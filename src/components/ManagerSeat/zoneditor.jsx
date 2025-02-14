@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+const initialLocations = [
+  { division: "Vip", generalPrice: 0, rows: Array.from({ length: 10 }, (_, i) => ({ row: i + 1, rowPrice: 0 })) },
+  { division: "Preferencial", generalPrice: 0, rows: Array.from({ length: 10 }, (_, i) => ({ row: i + 1, rowPrice: 0 })) },
+  { division: "Gold", generalPrice: 0, rows: Array.from({ length: 10 }, (_, i) => ({ row: i + 1, rowPrice: 0 })) },
+  { division: "Platea Sur", generalPrice: 0, rows: Array.from({ length: 5 }, (_, i) => ({ row: i + 1, rowPrice: 0 })) },
+  { division: "Platea Norte", generalPrice: 0, rows: Array.from({ length: 5 }, (_, i) => ({ row: i + 1, rowPrice: 0 })) },
+  { division: "Tribunas Generales", generalPrice: 0, rows: [] }, // Sin filas
+];
+
 const ZoneEditor = ({ showId }) => {
   const [zoneData, setZoneData] = useState({
     zoneName: "",
     generalTicket: false,
-    presentation: {
-      date: "",
-      time: {
-        start: "",
-        end: "",
-      },
-      performance: 0,
-    },
-    location: [], // Aquí almacenaremos las divisiones y precios por fila
+    presentation: { date: "", time: { start: "", end: "" }, performance: 0 },
+    location: initialLocations,
   });
-  const [successAlert, setSuccessAlert] = useState(false); // Para mostrar mensajes de éxito
+
+  const [selectedDivision, setSelectedDivision] = useState("Vip");
+  const [selectedRow, setSelectedRow] = useState(1);
 
   const handleInputChange = (field, value) => {
     setZoneData({ ...zoneData, [field]: value });
@@ -24,37 +28,25 @@ const ZoneEditor = ({ showId }) => {
   const handlePresentationChange = (field, value) => {
     setZoneData({
       ...zoneData,
-      presentation: {
-        ...zoneData.presentation,
-        [field]: value,
-      },
+      presentation: { ...zoneData.presentation, [field]: value },
     });
   };
 
-  const handlePresentationTimeChange = (field, value) => {
+  const handleTimeChange = (field, value) => {
     setZoneData({
       ...zoneData,
       presentation: {
         ...zoneData.presentation,
-        time: {
-          ...zoneData.presentation.time,
-          [field]: value,
-        },
+        time: { ...zoneData.presentation.time, [field]: value },
       },
     });
   };
 
   const handleLocationChange = (division, field, value) => {
-    // Actualizamos los precios por fila para cada división
     setZoneData({
       ...zoneData,
       location: zoneData.location.map((loc) =>
-        loc.division === division
-          ? {
-              ...loc,
-              [field]: value,
-            }
-          : loc
+        loc.division === division ? { ...loc, [field]: Number(value) } : loc
       ),
     });
   };
@@ -66,161 +58,154 @@ const ZoneEditor = ({ showId }) => {
         loc.division === division
           ? {
               ...loc,
-              rows: loc.rows.map((r) =>
-                r.row === row ? { ...r, rowPrice: value } : r
-              ),
+              rows: loc.rows.map((r) => (r.row === row ? { ...r, rowPrice: Number(value) } : r)),
             }
           : loc
       ),
     });
   };
-
+  console.log(zoneData)
   const saveChanges = async () => {
     try {
-      // Estructura de datos para enviar al backend
       const dataToSend = {
-        showId: showId, // ID del show seleccionado
-        zoneName: zoneData.zoneName, // Nombre de la zona
+        showId,
+        zoneName: zoneData.zoneName,
         updates: {
-          generalTicket: zoneData.generalTicket, // Valor de generalTicket
-          presentation: {
-            date: zoneData.presentation.date, // Fecha de la presentación
-            performance: zoneData.presentation.performance, // Número de presentaciones
-            time: {
-              start: zoneData.presentation.time.start, // Hora de inicio
-              end: zoneData.presentation.time.end, // Hora de fin
-            },
-          },
-          location: zoneData.location.map((division) => ({
-            division: division.division, // Nombre de la división
-            generalPrice: division.generalPrice, // Precio general de la división
-            rows: division.rows.map((row) => ({
-              row: row.row, // Número de la fila
-              rowPrice: row.rowPrice, // Precio de la fila
-            })),
-          })),
+          generalTicket: zoneData.generalTicket,
+          presentation: zoneData.presentation,
+          location: zoneData.location.map((division) => {
+            if (zoneData.generalTicket) {
+              // Si "generalTicket" está marcado, tomamos solo el precio general para todas las divisiones
+              if (division.division === "Tribunas Generales") {
+                // Tribunas Generales siempre toma el generalPrice
+                return {
+                  division: division.division,
+                  generalPrice: division.generalPrice,
+                  rows: [], // Sin filas
+                };
+              } else {
+                // Para el resto de divisiones, no se deben tomar las filas
+                return {
+                  division: division.division,
+                  generalPrice: division.generalPrice,
+                  rows: [], // Sin filas
+                };
+              }
+            } else {
+              // Si "generalTicket" no está marcado, tomamos los precios por fila para divisiones con filas
+              if (division.division === "Tribunas Generales") {
+                // Tribunas Generales toma siempre el generalPrice
+                return {
+                  division: division.division,
+                  generalPrice: division.generalPrice,
+                  rows: [], // No tiene filas, pero se guarda el generalPrice
+                };
+              } else {
+                // Para el resto de divisiones, tomamos los precios por fila
+                return {
+                  division: division.division,
+                  generalPrice: division.generalPrice,
+                  rows: division.rows, // Se guardan las filas con precios
+                };
+              }
+            }
+          }),
         },
       };
-
-     
-
-      // Enviar los datos al backend para crear la nueva zona
+  
+      console.log("Datos a enviar: ", dataToSend); // Verifica el objeto que estás enviando
+  
       const response = await axios.post("/zones/add", dataToSend);
-
-      if (response.status === 200) {
-        setSuccessAlert(true); // Mostrar mensaje de éxito
-        // Limpiar los campos después de guardar
-        setZoneData({
-          zoneName: "",
-          generalTicket: false,
-          presentation: {
-            date: "",
-            time: {
-              start: "",
-              end: "",
-            },
-            performance: 0,
-          },
-          // location: ["Floresta"],
-        });
-      } else {
-        console.error("Error al guardar los datos de la zona");
-      }
+      if (response.status === 200) alert("Datos guardados correctamente");
     } catch (error) {
-      console.error("Error al guardar los datos de la zona:", error);
+      console.error("Error al guardar:", error);
     }
   };
-
+  
   return (
     <div>
       <h1>Editar Zona</h1>
 
       <label>
         Nombre de la Zona:
-        <input
-          type="text"
-          value={zoneData.zoneName}
-          onChange={(e) => handleInputChange("zoneName", e.target.value)}
-        />
+        <input type="text" value={zoneData.zoneName} onChange={(e) => handleInputChange("zoneName", e.target.value)} />
       </label>
 
       <label>
         Ticket General:
-        <input
-          type="checkbox"
-          checked={zoneData.generalTicket}
-          onChange={(e) => handleInputChange("generalTicket", e.target.checked)}
-        />
+        <input type="checkbox" checked={zoneData.generalTicket} onChange={(e) => handleInputChange("generalTicket", e.target.checked)} />
       </label>
 
       <h3>Presentación</h3>
       <label>
         Fecha:
-        <input
-          type="date"
-          value={zoneData.presentation.date}
-          onChange={(e) => handlePresentationChange("date", e.target.value)}
-        />
+        <input type="date" value={zoneData.presentation.date} onChange={(e) => handlePresentationChange("date", e.target.value)} />
       </label>
-
       <label>
-        Hora de Inicio:
-        <input
-          type="time"
-          value={zoneData.presentation.time.start}
-          onChange={(e) => handlePresentationTimeChange("start", e.target.value)}
-        />
+        Inicio:
+        <input type="time" value={zoneData.presentation.time.start} onChange={(e) => handleTimeChange("start", e.target.value)} />
       </label>
-
       <label>
-        Hora de Fin:
-        <input
-          type="time"
-          value={zoneData.presentation.time.end}
-          onChange={(e) => handlePresentationTimeChange("end", e.target.value)}
-        />
+        Fin:
+        <input type="time" value={zoneData.presentation.time.end} onChange={(e) => handleTimeChange("end", e.target.value)} />
       </label>
-
       <label>
         Performance:
-        <input
-          type="number"
-          value={zoneData.presentation.performance}
-          onChange={(e) => handlePresentationChange("performance", e.target.value)}
-        />
+        <input type="number" value={zoneData.presentation.performance} onChange={(e) => handlePresentationChange("performance", Number(e.target.value))} />
       </label>
 
-      {/* Aquí tendrías que agregar la lógica para manejar las divisiones y los precios */}
+      <h3>Divisiones</h3>
       {zoneData.location.map((division, index) => (
         <div key={index}>
-          <h4>División {division.division}</h4>
+          <h4>{division.division}</h4>
           <label>
             Precio General:
-            <input
-              type="number"
-              value={division.generalPrice}
-              onChange={(e) => handleLocationChange(division.division, "generalPrice", e.target.value)}
-            />
+            <input type="number" value={division.generalPrice} onChange={(e) => handleLocationChange(division.division, "generalPrice", e.target.value)} />
           </label>
-
-          {division.rows.map((row, rowIndex) => (
-            <div key={rowIndex}>
-              <label>
-                Fila {row.row} Precio por Fila:
-                <input
-                  type="number"
-                  value={row.rowPrice}
-                  onChange={(e) => handleRowPriceChange(division.division, row.row, e.target.value)}
-                />
-              </label>
-            </div>
-          ))}
         </div>
       ))}
 
-      <button onClick={saveChanges}>Guardar Cambios</button>
+      {!zoneData.generalTicket && (
+        <div>
+          <h3>Editar Precios por Fila</h3>
+          <label>
+            División:
+            <select value={selectedDivision} onChange={(e) => setSelectedDivision(e.target.value)}>
+  {zoneData.location.map((division) => (
+    <option key={division.division} value={division.division}>
+      {division.division}
+    </option>
+  ))}
+</select>
+          </label>
 
-      {successAlert && <p>Los datos de la zona se han guardado correctamente.</p>}
+          <label>
+            Fila:
+            <select value={selectedRow} onChange={(e) => setSelectedRow(Number(e.target.value))}>
+              {zoneData.location.find(loc => loc.division === selectedDivision)?.rows.map((row) => (
+                <option key={row.row} value={row.row}>
+                  {row.row}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label>
+            Precio:
+            <input
+              type="number"
+              value={
+                zoneData.location
+                  .find(loc => loc.division === selectedDivision)
+                  ?.rows.find(r => r.row === selectedRow)?.rowPrice || 0
+              }
+              onChange={(e) => handleRowPriceChange(selectedDivision, selectedRow, e.target.value)}
+            />
+          </label>
+        </div>
+      )}
+
+      <button onClick={saveChanges}>Guardar Cambios</button>
     </div>
   );
 };

@@ -56,7 +56,8 @@ const SuccessPage = () => {
       division: ticket.division,
       seat: ticket.seat,
       row: ticket.row,
-      price: ticket.price,
+      price: ticket?.price,
+     
       show: shows.find(show => show.id === ticket.showId)?.name || "Show desconocido",
       qrCode: ticket.qrCode,
       Direccion: ticket.location,

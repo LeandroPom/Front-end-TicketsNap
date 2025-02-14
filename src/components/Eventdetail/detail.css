@@ -13,6 +13,7 @@
     margin-bottom: 1rem;
     font-size: 2.5rem;
     color: #333;
+    margin-right: 800px ;
   }
 
   .dark h1 {
@@ -22,11 +23,37 @@
   }
   
   /* Estilos para la lista de detalles del evento */
-  .event-detail p {
+  .event-info {
     
-    margin: 0.5rem 0;
-    font-size: 1.2rem;
-    color: #555;
+    margin-top: -5%;
+    text-align: center;
+    padding: 0.3rem;
+    font-family: Arial, sans-serif;
+    margin-right: 1px;
+    box-shadow: #333;
+    position: relative; /* Para posicionar la línea vertical */
+  }
+
+  .event-imagen {
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    color: #333;
+    height: 200px;
+    width: 200px;
+    margin-right: 400px;  /* Separación entre la imagen y el texto */
+    margin-top: 2%;
+    z-index: 0;
+  }
+
+  .box-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #f0f0f0; /* Fondo del box */
+    border: 1px solid #ccc;    /* Borde del box */
+    border-radius: 8px;         /* Bordes redondeados */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra alrededor del box */
   }
   .dark p {
     margin: 0.5rem 0;
@@ -124,10 +151,7 @@
     cursor: pointer;
   }
 
-  .event-image {
-    height: 200px;
-    width: 200px;
-  }
+  
   
   /* Estilos responsivos */
   @media (max-width: 768px) {

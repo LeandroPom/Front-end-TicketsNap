@@ -25,6 +25,7 @@ const Register = () => {
     lastName: '',
     email: '',
     password: '',
+    confirmPassword: '', // Campo de confirmación de contraseña
     phone: '',
     image: '',
   });
@@ -46,6 +47,7 @@ const Register = () => {
         lastName: '',
         email: '',
         password: '',
+        confirmPassword: '', // Limpiar confirmPassword
         phone: '',
         image: '',
       });
@@ -73,17 +75,14 @@ const Register = () => {
     }));
   
     // Revalidar el formulario cada vez que se cambie el valor
-    if (name === 'password') {
+    if (name === 'password' || name === 'confirmPassword') {
       validateForm();  // Esto revalida la contraseña cada vez que cambia
     }
   };
-
-  
   
   const validateForm = () => {
     const newErrors = {};
-  
-    // Validaciones de los campos
+
     if (!formData.firstName) newErrors.firstName = "First name is required.";
     if (!formData.lastName) newErrors.lastName = "Last name is required.";
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
@@ -92,12 +91,15 @@ const Register = () => {
       newErrors.password = "Password must be at least 6 characters long.";
     if (!/\d/.test(formData.password) || !/[A-Za-z]/.test(formData.password))
       newErrors.password = "Password must contain at least one letter and one number.";
-  
+    // if (formData.password !== formData.confirmPassword)
+    //   newErrors.confirmPassword = "Passwords do not match."; // Verificar si las contraseñas coinciden
+    if (!formData.phone)
+      newErrors.phone = "Phone number is required."; // Campo de teléfono obligatorio
+
     setErrors(newErrors);
-  
+
     return Object.keys(newErrors).length === 0; // Solo pasa si no hay errores
   };
-
 
 
 
@@ -122,6 +124,8 @@ const Register = () => {
         email: formData.email,
         password: formData.password,
         image: formData.image,
+        confirmPassword: formData.confirmPassword,
+        phone: formData.phone,
         role: 'user',
       };
 
@@ -250,6 +254,19 @@ const Register = () => {
         required
       />
       {errors.password && <small className="error-message">{errors.password}</small>}
+    </div>
+    <div className="form-group">
+      <label htmlFor="password">Confirm Pass</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        value={formData.confirmPassword}
+        onChange={handleInputChange}
+        // placeholder="Enter your password"
+        required
+      />
+      {errors.confirmPassword && <small className="error-message">{errors.confirmPassword}</small>}
     </div>
   </div>
 

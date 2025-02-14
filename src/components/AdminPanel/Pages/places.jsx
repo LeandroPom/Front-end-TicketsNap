@@ -93,7 +93,7 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
   const [placeData, setPlaceData] = useState({
     name: '',
     address: '',
-    capacity: '',
+    capacity: '500',
     layout: '',
   });
   const [error, setError] = useState('');
@@ -108,28 +108,20 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, address, capacity, layout } = placeData;
-
-    if (!name || !address || !capacity || !layout) {
+    const { name, address, layout } = placeData;
+  
+    if (!name || !address || !layout) {
       setError('Please fill in all fields.');
       return;
     }
-
-    // Convertir capacity a número
-    const numericCapacity = Number(capacity);
-
-    if (isNaN(numericCapacity) || numericCapacity < 0) {
-      setError('Capacity must be a non-negative number.');
-      return;
-    }
-
-    const placeDataWithNumericCapacity = { ...placeData, capacity: numericCapacity };
-
-    handleCreatePlace(placeDataWithNumericCapacity); // Llama al método pasado como prop
+  
+    const placeDataWithNumericCapacity = { ...placeData };
+  
+    handleCreatePlace(placeDataWithNumericCapacity); // Enviar datos correctos
     setPlaceData({
       name: '',
       address: '',
-      capacity: '',
+      capacity: '500',
       layout: '',
     });
     setError('');
@@ -163,7 +155,7 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
           />
         </label>
 
-        <label>
+        {/* <label>
           Capacity:
           <input
             type="number"
@@ -172,7 +164,7 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
             onChange={handleChange}
             required
           />
-        </label>
+        </label> */}
 
         <label>
           Layout:
