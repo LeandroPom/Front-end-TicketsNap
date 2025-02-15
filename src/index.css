@@ -11,6 +11,8 @@ body {
   
 }
 
+
+
 body.light {
   background-color: rgb(221, 221, 221) !important;
   color: black !important;
@@ -29,7 +31,7 @@ a, .navbar, .dropdown-menu, .dropdown-item {
 
 button {
   background-color: inherit;
-  color: inherit; /* Hereda el color del texto según el tema */
+  color: inherit; 
 }
 
 .theme-toggle-btn {
