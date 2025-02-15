@@ -10,7 +10,7 @@ const EditShow = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isReadyToEdit, setIsReadyToEdit] = useState(false);
-  
+  const user = useSelector((state) => state.user);
   const shows = useSelector((state) => state.shows); // Arreglo de shows
   const loading = useSelector((state) => state.loading); // Indicador de carga
   const error = useSelector((state) => state.error); // Errores
@@ -102,6 +102,9 @@ const EditShow = () => {
     const dataToSend = {
       id: showId, // El ID del show a actualizar
       updates: updates, // Los datos a actualizar
+      user: {
+        "isAdmin": user?.isAdmin
+        },
 
     };
     

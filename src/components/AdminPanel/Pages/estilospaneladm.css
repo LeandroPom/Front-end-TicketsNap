@@ -325,7 +325,7 @@
 }
 
 /* Botones y elementos dentro de las rutas */
-button {
+.button-admin {
   background-color: #3498db;
   color: white;
   border: none;
@@ -336,7 +336,7 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.button-admin:hover {
   background-color: #2980b9;
 }
 

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import '../Home/home.css';
 
 const GeneralDetail = () => {
   const { id } = useParams();
@@ -14,14 +16,7 @@ const GeneralDetail = () => {
   const [loading, setLoading] = useState(true);
   const [selectedDivision, setSelectedDivision] = useState('');
   const [selectedPrice, setSelectedPrice] = useState(0);
-  const [formData, setFormData] = useState({
-    name: '',
-    dni: '',
-    mail: '',
-    phone: '',
-    userId: 1,
-    user: { cashier: true },
-  });
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchShowAndZones = async () => {
@@ -66,10 +61,6 @@ const GeneralDetail = () => {
     fetchShowAndZones();
   }, [showId, navigate]);
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const handleDivisionChange = (e) => {
     const divisionName = e.target.value;
     setSelectedDivision(divisionName);
@@ -80,26 +71,82 @@ const GeneralDetail = () => {
     }
   };
 
-  const handlePurchase = async () => {
-    if (!selectedDivision) {
-      Swal.fire({ title: 'Error', text: 'Debe seleccionar una división', icon: 'error' });
-      return;
-    }
+  const handleOpenBuyerModal = (paymentMethod) => {
+    Swal.fire({
+      title: 'Debe cargar los datos del comprador',
+      html: `
+        <div>
+          <label>DNI:</label><br/>
+          <input type="text" id="dni" class="swal2-input" placeholder="Ingrese el DNI"/>
+          <label>Nombre:</label><br/>
+          <input type="text" id="firstName" class="swal2-input" placeholder="Ingrese el nombre"/>
+          <label>Apellido:</label><br/>
+          <input type="text" id="lastName" class="swal2-input" placeholder="Ingrese el apellido"/>
+          <label>Correo:</label><br/>
+          <input type="email" id="email" class="swal2-input" placeholder="Ingrese el correo"/>
+          <label>Teléfono:</label><br/>
+          <input type="text" id="phone" class="swal2-input" placeholder="Ingrese el teléfono"/>
+        </div>
+      `,
+      focusConfirm: false,
+      preConfirm: () => {
+        const dni = document.getElementById('dni').value;
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
 
+        if (!dni || !firstName || !lastName || !email || !phone) {
+          Swal.showValidationMessage('Todos los campos son obligatorios');
+          return null;
+        }
+        return { dni, firstName, lastName, email, phone };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleConfirmPurchase(result.value, paymentMethod);
+      }
+    });
+  };
+
+  const handleConfirmPurchase = async (buyerDetails, paymentMethod) => {
     const ticketData = {
       showId,
       zoneId: zone.id,
       division: selectedDivision,
       price: selectedPrice,
-      ...formData,
+      userId: user?.id,
+      user: {
+        "cashier": user?.cashier
+      },
+      name: `${buyerDetails.firstName} ${buyerDetails.lastName}`,
+      dni: buyerDetails.dni,
+      mail: buyerDetails.email,
+      phone: buyerDetails.phone,
     };
 
     try {
-      await axios.post('http://localhost:3001/tickets/sell/general', ticketData);
-      Swal.fire({ title: 'Compra realizada', text: 'El ticket ha sido generado', icon: 'success', confirmButtonText: 'Aceptar' });
-      navigate(`/general/ticket/success?zoneId=${zone.id}&showId=${showId}&ticketInfo=${JSON.stringify(ticketData)}`);
+      if (paymentMethod === "sell") {
+        const response = await axios.post('/tickets/sell/general', ticketData);
+        Swal.fire({
+          title: 'Compra finalizada con éxito',
+          text: 'Tu ticket ha sido generado correctamente.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then(() => {
+          navigate('/success', { state: response.data });
+        });
+      } else if (paymentMethod === "buy") {
+        const response = await axios.post('/tickets/buy/general', ticketData);
+        window.location.href = response.data.init_point;
+      }
     } catch (error) {
-      Swal.fire({ title: 'Error', text: 'No se pudo completar la compra', icon: 'error' });
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo completar la venta. Intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 
@@ -153,89 +200,19 @@ const GeneralDetail = () => {
 
           <p><strong>Precio:</strong> ${selectedPrice}</p>
 
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Nombre:</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              style={{
-                padding: '10px',
-                borderRadius: '5px',
-                border: '1px solid #ccc',
-                width: '100%',
-                fontSize: '16px',
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>DNI:</label>
-            <input
-              type="number"
-              name="dni"
-              value={formData.dni}
-              onChange={handleInputChange}
-              style={{
-                padding: '10px',
-                borderRadius: '5px',
-                border: '1px solid #ccc',
-                width: '100%',
-                fontSize: '16px',
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Email:</label>
-            <input
-              type="email"
-              name="mail"
-              value={formData.mail}
-              onChange={handleInputChange}
-              style={{
-                padding: '10px',
-                borderRadius: '5px',
-                border: '1px solid #ccc',
-                width: '100%',
-                fontSize: '16px',
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Teléfono:</label>
-            <input
-              type="number"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              style={{
-                padding: '10px',
-                borderRadius: '5px',
-                border: '1px solid #ccc',
-                width: '100%',
-                fontSize: '16px',
-              }}
-            />
-          </div>
-
           <button
-            onClick={handlePurchase}
-            style={{
-              padding: '12px 20px',
-              backgroundColor: '#28a745',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontSize: '16px',
-              width: '100%',
-            }}
-          >
-            Comprar
-          </button>
+  onClick={() => handleOpenBuyerModal(user?.cashier ? "sell" : "buy")}
+  className="buttonhome"
+  style={{
+    width: '50%', // Asegúrate de que el botón ocupe todo el ancho si así lo prefieres
+    padding: '12px 10px', // Ajuste adicional de padding si lo necesitas
+    cursor: 'pointer',
+    marginLeft: '180px',  // Esto empuja el botón hacia la derecha
+    marginRight: '0',    // Elimina cualquier margen a la derecha (si es necesario)
+  }}
+>
+  {user?.cashier ? "Vender Entrada" : "Comprar con Mercado Pago"}
+</button>
         </div>
       )}
     </div>
