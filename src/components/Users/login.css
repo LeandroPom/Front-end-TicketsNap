@@ -15,9 +15,10 @@
   padding: 2rem;
   border-radius: 10px;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
   color: transparent;
+  margin-top: 100px;
 }
 
 /* Título del formulario */
@@ -60,12 +61,12 @@
 
 /* Contenedor de botones */
 .google-logins {
-  margin-top: 25px;
+  margin-top: 10px;
+  margin-right: 180px;    /* Elimina cualquier margen derecho si lo hay */
+}
   
-  margin-right: 250px;    /* Elimina cualquier margen derecho si lo hay */
   
  
-}
 
 
 /* Ajusta los botones */
@@ -93,22 +94,28 @@
 
 .login-btn {
   background-color: #FF5733; /* Naranja llamativo */
+  color:#fffbfb
 }
 
 .login-btn:hover {
   background-color: transparent;
-  border-color: #FF5733;
-  color: #FF5733;
+  border-color: #db3e1b;
+  color: #991313;
 }
 
 .cancel-btn {
-  background-color: #ccc; /* Gris claro */
+  background-color: #c73f3f; /* Gris claro */
+}
+
+label {
+  color: #000000; /* Puedes poner el color que desees, en este caso un tono naranja */
+  font-weight: bold;
 }
 
 .cancel-btn:hover {
-  background-color: transparent;
-  border-color: #ccc;
-  color: #333;
+  background-color: red;
+  border-color: #b32e2e;
+  color: #ffffff;
 }
 
 /* Responsiveness */

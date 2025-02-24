@@ -83,45 +83,49 @@
 }
 
 /* Botón de Crear Cuenta */
-.create-btn {
+.create-btns {
   background-color: #28A745; /* Verde llamativo */
-  color: #a0f380;
+  color: #000000;
   padding: 5px 10px; /* Reducido padding */
-  border: none;
+  
   border-radius: 5px;
   font-size: 1.1em;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
+
   margin-top: 10px;
   margin-right: 285px;
 }
 
-.create-btn:hover {
-  background-color: transparent;
+.create-btns:hover {
+  background-color: green;
   border: 2px solid #28A745;
-  color: #28A745;
+  color: #ffffff;
 }
 
 /* Botón de Cancelar */
-.cancel-btn {
+.cancel-btns {
   background-color: #dd4a29; /* Naranja llamativo */
-  color: #e70d0d;
-  padding: 10px 10px; /* Reducido padding */
+  color: #000000;
+  padding: 7px 5px; /* Reducido padding */
   border-radius: 5px;
   font-size: 1em;
   font-weight: bold;
   text-decoration: none;
   text-align: center;
-  transition: all 0.3s ease;
-  margin-top: -250px;
-  margin-left: 300px;
+  
+  /* Ajustamos el posicionamiento */
+  position: relative; /* Usamos position relative en vez de margin-top negativo */
+  top: -30px; /* Ajusta este valor según sea necesario para moverlo hacia arriba o hacia abajo */
+  left: 170px; /* Esto asegura que el botón esté alineado con el contenedor */
+  z-index: 1002; /* Asegura que el botón quede encima de otros elementos si es necesario */
 }
 
-.cancel-btn:hover {
-  background-color: rgb(7, 197, 7);
+
+.cancel-btns:hover {
+  background-color: rgb(233, 26, 26);
   border: 2px solid #FF5733;
-  color: #FF5733;
+  color: #ffffff;
 }
 
 /* Responsividad */
@@ -141,16 +145,23 @@
     margin-top: 20px; /* Espacio extra para separar de los campos */
   }
 
-  .create-btn, .cancel-btn {
-    width: 100%; /* Los botones ocupan todo el ancho disponible */
-  }
+ 
 }
 
 .google-login {
-  margin-top: -90px; /* Mueve hacia abajo */
-  text-align: center; /* Alinea el botón en el centro, si necesario */
-  margin-left: 170px;
+  margin-top: -65px; /* Mueve hacia abajo */
+  text-align: center; /* Alinea el botón en el centro */
+  margin-left: 25px;
+  padding: 2px 2px; /* Ajusta el relleno */
 }
+
+.google-login .google-button {
+  width: 5px !important; /* Ajusta el ancho */
+  height: 5px !important; /* Ajusta la altura */
+  padding: 5px 5px !important; /* Ajusta el relleno para hacerlo más pequeño */
+}
+
+
 
 /* Nueva fila para inputs */
 .form-row {

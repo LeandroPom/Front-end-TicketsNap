@@ -462,22 +462,21 @@ const Register = () => {
          <div>
          <button 
    
-  className="create-btn" 
+  className="create-btns" 
   disabled={isLoading || Object.keys(errors).length > 0 || !formData.password || !formData.confirmPassword}
 >
   Create
 </button>
-<button className="cancel-btn" onClick={handleCancel} >
-              Cancelar
-            </button>
-
-          
-          
+            
           </div>
-          
-         
           </form>
            <div className='google-login'>
+            </div>
+            <div>
+          <button  className="cancel-btns" onClick={handleCancel} >
+              Cancelar
+            </button>
+          </div>
           <GoogleOAuthProvider clientId={clientId}>
             <GoogleLogin
               
@@ -488,8 +487,6 @@ const Register = () => {
               size="medium"
             />
           </GoogleOAuthProvider>
-            </div>
-            
 
         </div>
       )}

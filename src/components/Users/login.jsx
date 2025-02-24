@@ -135,7 +135,15 @@ const Login = () => {
     <div className="login-modal">
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
-          <h2>Login</h2>
+          <h2>¡¡ Bienvenido !!</h2>
+           {/* Insertamos la imagen debajo del título */}
+           <img 
+              src="/images/solticket.png" 
+              alt="KI Logo" 
+              className="Solticket-logo" 
+              style={{ width: '100px', height: '100px', objectFit: 'contain' }} 
+            />
+
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -149,9 +157,9 @@ const Login = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div>
             <div className="password-container">
+            <label htmlFor="password">Password</label>
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
@@ -173,11 +181,6 @@ const Login = () => {
               {isLoading ? 'Logging in...' : 'Login'}
             </button>
           </div>
-        
-        
-
-        
-        </form>
             <div className="google-logins">
              <GoogleOAuthProvider clientId= {process.env.REACT_APP_GOOGLE_CLIENT_ID}>
              <GoogleLogin className="google-logins"
@@ -188,6 +191,11 @@ const Login = () => {
              />
             </GoogleOAuthProvider>
             </div>
+        
+        
+
+        
+        </form>
 
       </div>
     </div>
