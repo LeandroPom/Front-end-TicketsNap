@@ -215,7 +215,7 @@ img.scaled {
   margin-top: 20px;
 }
 
-button {
+.button-zone {
   padding: 10px;
   margin: 5px;
   cursor: pointer;

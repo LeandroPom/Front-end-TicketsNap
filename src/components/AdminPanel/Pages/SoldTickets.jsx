@@ -203,7 +203,7 @@ const handleDownloadExcel = () => {
 };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", color:"black" }}>
       <h2>Detalles de Tickets</h2>
       <h3>Nombre del Cajero: {user && user.name ? user.name : "Cargando..."}</h3>
 

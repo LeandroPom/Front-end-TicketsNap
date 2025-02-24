@@ -16,6 +16,7 @@ const CreateShowForm = () => {
   const places = useSelector((state) => state.places); // places
   const [selectedLocation, setSelectedLocation] = useState(null); // Nuevo estado para el lugar
   const [isGeneral, setIsGeneral] = useState(false); // Estado para manejar el valor del switch
+  const user = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -106,6 +107,30 @@ const CreateShowForm = () => {
       [name]: value,
     });
   };
+
+
+  const handleGeneralChange = () => {
+    if (!isGeneral) {
+      // Si ya está marcado, mostrar la advertencia
+      Swal.fire({
+        icon: 'warning',
+        title: '¿Estás seguro?',
+        text: '¿Deseas marcar este Show como General, una vez seleccionado no se puede modificar?',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, continuar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setIsGeneral(true); // Si el usuario confirma, se marca como General
+        } else {
+          setIsGeneral(false); // Si el usuario cancela, se desmarca
+        }
+      });
+    } else {
+      setIsGeneral(true);  // Si no está marcado, simplemente lo marca como General
+    }
+  };
+  
 
 
   const handlePriceChange = (e) => {
@@ -318,11 +343,11 @@ const CreateShowForm = () => {
         {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
 
         <label>
-        Is this a general show?
+        Es un Show General? ¡¡Marca la casilla!!
         <input
        type="checkbox"
        checked={isGeneral}  // El estado del checkbox refleja el valor de isGeneral
-       onChange={() => setIsGeneral(!isGeneral)}  // Cambia el valor de isGeneral cuando se marca/desmarca
+       onChange={handleGeneralChange}  // Cambiar a nuestra función personalizada
         />
        </label>
 
@@ -548,7 +573,7 @@ const CreateShowForm = () => {
           />
         </label>
 
-        <button className='create-show-boton' type="submit">Create Show</button>
+        <button className='create-show-boton' type="submits">Create Show</button>
       </form>
     </div>
   );

@@ -148,7 +148,7 @@ const CreatePlaceForm = () => {
           </select>
         </label>
 
-        <button type="submit">Create Place</button>
+        <button type="submits">Create Place</button>
       </form>
     </div>
   );
