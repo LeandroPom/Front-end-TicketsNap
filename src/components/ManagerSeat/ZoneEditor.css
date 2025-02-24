@@ -1,0 +1,51 @@
+/* ZoneEditor.css */
+.zone-editor-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .zone-editor-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #2b9c45;
+  }
+  
+  .zone-editor-container label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+  }
+  
+  .zone-editor-container input,
+  .zone-editor-container select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .zone-editor-container input[type="checkbox"] {
+    width: auto;
+  }
+  
+  .zone-editor-container button {
+    background-color: #2b9c45;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .zone-editor-container button:hover {
+    background-color: #238c39;
+  }
+  

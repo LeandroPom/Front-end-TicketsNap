@@ -161,7 +161,10 @@ const SoldTickets = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const ticketsPerPage = 5;
   const totalPages = Math.ceil(noCancelledTickets.length / ticketsPerPage);
-  const currentTickets = noCancelledTickets.slice(currentPage, ticketsPerPage);
+  const currentTickets = noCancelledTickets.slice(
+    (currentPage - 1) * ticketsPerPage, 
+    currentPage * ticketsPerPage
+  );
 
 // Lógica para definir el rango de páginas visibles
 const maxVisiblePages = 3;
@@ -231,7 +234,7 @@ const handleDownloadExcel = () => {
 
       {/* Filtros */}
       <div style={{ marginBottom: "20px" }}>
-        <label>Filtrar por Fecha y Hora:</label>
+        <label>Filtrar por Fecha :</label>
         <select
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}

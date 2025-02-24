@@ -118,6 +118,19 @@
     overflow: auto; /* Permite scroll cuando el contenido excede el tamaño del contenedor */
   }
 
+
+  .boton-adddata {
+    background-color: #2b9c45; /* Verde llamativo */
+    color: #000000;
+    padding: 10px 10px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 23px;
+    margin-left: 10px; /* Añade espacio entre los botones */
+  }
+
  
   
   .modal-content {

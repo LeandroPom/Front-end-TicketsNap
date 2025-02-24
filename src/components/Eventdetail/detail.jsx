@@ -684,18 +684,25 @@ const Detail = () => {
       {!showMap && (
   <button 
   onClick={handleChooseSeats} 
-  style={{ backgroundColor: 'green', color: 'white' }}
-  >
-    Elegir Asientos
-  </button>
+  style={{
+    backgroundColor: 'green',
+    color: 'white',
+    padding: '12px 20px',  // Aumenta el tamaño del botón (más alto y ancho)
+    borderRadius: '15px',  // Redondea los bordes del botón
+    fontWeight: 'bold',  // Puedes agregar para que el texto se vea en negrita (opcional)
+    cursor: 'pointer'  // Cambia el cursor al pasar sobre el botón
+  }}
+>
+  Elegir Asientos
+</button>
       )} 
       
       
                 {user?.isAdmin && (
         <>
-          <button onClick={() => setIsZoneEditorOpen(true)}>Add Data</button>
+          <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Add Data</button>
           {isZoneEditorOpen && <ZoneEditor showId={id} />}
-          <button onClick={() => setIsZoneEditorOpen(false)}>Close</button>
+          <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Close</button>
         </>
       )}
 

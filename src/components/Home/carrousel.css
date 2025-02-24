@@ -10,7 +10,8 @@
 
 .carousel-images {
   position: relative;
-  height: 300px; /* Ajusta al alto deseado */
+  height: 260px; /* Ajusta al alto deseado */
+  width: 800px;
   object-fit: cover; /* Aseguramos que la imagen se ajuste bien */
 }
 
