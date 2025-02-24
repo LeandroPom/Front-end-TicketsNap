@@ -182,7 +182,7 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
           </select>
         </label>
 
-        <button className="botonedit" type="submit">Create Place</button>
+        <button className="botonedit" type="submits">Create Place</button>
       </form>
     </div>
   );

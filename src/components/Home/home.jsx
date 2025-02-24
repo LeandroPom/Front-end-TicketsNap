@@ -6,6 +6,7 @@ import 'react-calendar/dist/Calendar.css'; // Importar los estilos predeterminad
 import { FaSyncAlt } from 'react-icons/fa';
 import { getShows } from '../Redux/Actions/actions';
 import '../Home/home.css'; // Asegúrate de que el archivo contenga estilos actualizados
+import { FaMusic, FaMapMarkerAlt} from 'react-icons/fa';
 
 import Carousel from './carrousel'; // Importar el carrusel
 
@@ -271,11 +272,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
       <li className='card' key={show.id}>
         <div className='content'>
           <h3>{show.name}</h3>
-          <p>Location/Adress: {show.location}</p>
-          <p>Genres: {show.genre.join(', ')}</p>
-          <p>Dates: {show.presentation.map((p) => p.date).join(', ')}</p>
-        </div>
-        {show.coverImage.includes("youtube.com") || show.coverImage.includes("youtu.be") ? (
+          {show.coverImage.includes("youtube.com") || show.coverImage.includes("youtu.be") ? (
           <iframe 
             className="event-video"
             src={show.coverImage.replace("watch?v=", "embed/")} 
@@ -286,6 +283,11 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         ) : (
           <img className="event-image" src={show.coverImage} alt={show.name} />
         )}
+          <p><FaMapMarkerAlt style={{ color: 'red' }} />Location/Adress:{show.location}</p>
+          <p><FaMusic style={{ color: 'black' }} />Genres:{show.genre.join(', ')}</p>
+          <p><FaCalendarAlt style={{ color: 'green' }} />Dates:{show.presentation.map((p) => p.date).join(', ')}</p>
+        </div>
+        
         <button className='buttonhome' onClick={() => handleViewDetails(show)}>Comprar</button>
       </li>
     ))

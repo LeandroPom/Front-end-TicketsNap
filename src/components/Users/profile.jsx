@@ -126,7 +126,7 @@ const Profile = () => {
           </div>
 
           <div className="form-group">
-            <button type="submit" disabled={isLoading}>
+            <button type="submits" disabled={isLoading}>
               {isLoading ? 'Cambiando...' : 'Cambiar Contraseña'}
             </button>
           </div>

@@ -11,7 +11,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    navigate('/login');  // Redirige a la página de login después de hacer logout
+    navigate('/');  // Redirige a la página de login después de hacer logout
   };
 
   return (

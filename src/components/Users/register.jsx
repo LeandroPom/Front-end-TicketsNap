@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../Redux/Actions/actions';
 import { auth } from '../Firebase/firebase.config'; 
 import Swal from 'sweetalert2'; // Importamos SweetAlert2
+import axios from 'axios';
 
 const Register = () => {
   const [errors, setErrors] = useState({});
@@ -69,44 +70,136 @@ const Register = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+  
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   
-    // Revalidar el formulario cada vez que se cambie el valor
-    if (name === 'password' || name === 'confirmPassword') {
-      validateForm();  // Esto revalida la contraseña cada vez que cambia
+    
+  
+    // Verificar correo si se cambia el valor
+    if (name === 'email') {
+      checkEmailExists(value);  // Verificar el correo cada vez que se cambie
     }
   };
   
+
+
   const validateForm = () => {
     const newErrors = {};
-
+  
+    // Validación de los campos
     if (!formData.firstName) newErrors.firstName = "First name is required.";
     if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
+    
+    // Validación del correo
+    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
-    if (!formData.password || formData.password.length < 6)
+
+      if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = "Las contraseñas no coinciden.";
+      }
+    }
+  
+    // Validación de las contraseñas
+    if (!formData.password || formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters long.";
-    if (!/\d/.test(formData.password) || !/[A-Za-z]/.test(formData.password))
+    }
+    if (!/\d/.test(formData.password) || !/[A-Za-z]/.test(formData.password)) {
       newErrors.password = "Password must contain at least one letter and one number.";
-    // if (formData.password !== formData.confirmPassword)
-    //   newErrors.confirmPassword = "Passwords do not match."; // Verificar si las contraseñas coinciden
-    if (!formData.phone)
+    }
+  
+    // Verificar si las contraseñas coinciden
+    
+  
+    if (!formData.phone) {
       newErrors.phone = "Phone number is required."; // Campo de teléfono obligatorio
-
+    }
+  
     setErrors(newErrors);
-
+  
     return Object.keys(newErrors).length === 0; // Solo pasa si no hay errores
   };
+  
+  useEffect(() => {
+    if (user) {
+      // Si el usuario se creó correctamente, mostrar el mensaje de éxito
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro exitoso',
+        text: 'Tu cuenta ha sido creada con éxito.',
+      }).then(() => {
+        navigate('/'); // Redirigir al home o página principal
+      });
+  
+      // Limpiar los campos del formulario
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '', // Limpiar confirmPassword
+        phone: '',
+        image: '',
+      });
+    } else if (error) {
+      // Si hay un error en la creación del usuario, mostrar el mensaje de error
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: error || 'Hubo un problema al registrar tu cuenta. Intenta nuevamente.',
+      });
+    }
+  }, [user, error, navigate]); // Este useEffect se ejecutará cuando el estado 'user' o 'error' cambien
+
+   
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Primero, verificar si el correo o el nombre ya existen
+    const emailExists = await checkEmailExists(formData.email);
+    if (emailExists) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Correo ya registrado',
+        text: 'Este correo ya está asociado a una cuenta.',
+      });
+      return;  // Detener el proceso si el correo ya existe
+    }
 
-    // Validar formulario antes de enviar
+    // Validar si la contraseña es suficientemente larga (mínimo 6 caracteres)
+  if (formData.password.length < 6) {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      password: 'La contraseña debe tener al menos 6 caracteres.'
+    }));
+    return;
+  }
+
+  // Verificar que las contraseñas coincidan
+  if (formData.password !== formData.confirmPassword) {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      confirmPassword: 'Las contraseñas no coinciden.'
+    }));
+    return;
+  }
+  
+    const usernameExists = await checkUsernameExists(formData.firstName + ' ' + formData.lastName);  // Asegúrate de que sea el nombre completo
+    if (usernameExists) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Nombre de usuario ya registrado',
+        text: 'Este nombre de usuario ya está asociado a una cuenta.',
+      });
+      return;  // Detener el proceso si el nombre de usuario ya existe
+    }
+  
+    // Validar el formulario antes de enviar
     if (!validateForm()) {
       Swal.fire({
         icon: 'error',
@@ -115,9 +208,9 @@ const Register = () => {
       });
       return;
     }
-
+  
     setIsLoading(true);
-
+  
     try {
       const userData = {
         name: `${formData.firstName} ${formData.lastName}`,
@@ -128,10 +221,28 @@ const Register = () => {
         phone: formData.phone,
         role: 'user',
       };
-
-      // Esperamos a que se complete la creación del usuario
+  
+      // Despachar la acción para crear el usuario
       await dispatch(createUser(userData));
-
+  
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro exitoso',
+        text: 'Tu cuenta ha sido creada con éxito.',
+      }).then(() => {
+        navigate('/');  // Redirigir a la página principal
+      });
+  
+      // Limpiar el formulario
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phone: '',
+        image: '',
+      });
     } catch (error) {
       console.error('Error al registrar usuario:', error?.message);
       Swal.fire({
@@ -140,14 +251,59 @@ const Register = () => {
         text: 'Hubo un problema al registrar tu cuenta. Intenta nuevamente.',
       });
     } finally {
-      setIsLoading(false); // Desactivar el indicador de carga
+      setIsLoading(false);
+    }
+  };
+  
+ 
+  
+ 
+  
+   const generateRandomPassword = () => {
+    return Math.random().toString(36).slice(-8); // Genera una contraseña aleatoria de 8 caracteres
+  };
+
+
+  const checkEmailExists = async (email) => {
+    try {
+      const response = await axios.get('/users');
+  
+      // Muestra toda la respuesta
+      console.log('Respuesta del servidor:', response.data);
+  
+      if (!Array.isArray(response.data)) {
+        console.error('La respuesta no es un array:', response.data);
+        return false;
+      }
+  
+      const emailExists = response.data.some((user) => user.email === email);
+      return emailExists;
+    } catch (error) {
+      console.error('Error al verificar el correo:', error.message);
+      return false;
+    }
+  };
+
+  const checkUsernameExists = async (name) => {
+    try {
+      const response = await axios.get('/users');  // Asegúrate de que esta URL sea la correcta
+      console.log('Respuesta del servidor:', response.data);
+  
+      if (!Array.isArray(response.data)) {
+        console.error('La respuesta no es un array:', response.data);
+        return false;
+      }
+  
+      const usernameExists = response.data.some((user) => user.name === name);
+      return usernameExists;
+    } catch (error) {
+      console.error('Error al verificar el nombre de usuario:', error.message);
+      return false;
     }
   };
   
 
-  const generateRandomPassword = () => {
-    return Math.random().toString(36).slice(-8); // Genera una contraseña aleatoria de 8 caracteres
-  };
+  
   
   const handleGoogleRegister = async (response) => {
     const provider = new GoogleAuthProvider();
@@ -156,7 +312,17 @@ const Register = () => {
       const userCredential = await signInWithCredential(auth, credential);
       const user = userCredential.user;
   
-     
+      // Verificar si el correo ya está registrado
+      const emailExists = await checkEmailExists(user.email);
+  
+      if (emailExists) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Correo ya registrado',
+          text: 'Este correo ya está asociado a una cuenta.',
+        });
+        return;  // Detener el flujo si el correo ya existe
+      }
   
       // Generar una contraseña aleatoria para la creación del usuario
       const temporaryPassword = generateRandomPassword();
@@ -185,8 +351,16 @@ const Register = () => {
   
     } catch (error) {
       console.error("Error logging in with Google:", error.message);
+      // Aquí podrías manejar otro tipo de errores si es necesario.
     }
   };
+
+  // Función para redirigir a la página principal
+  const handleCancel = () => {
+    navigate('/');  // Redirige a la página principal
+  };
+
+  
   return (
     <div>
       {isModalOpen && (
@@ -226,6 +400,7 @@ const Register = () => {
       {errors.email && <small>{errors.email}</small>}
     </div>
   </div>
+  
 
   {/* Segunda fila: Last Name y Password */}
   <div className="form-row">
@@ -284,15 +459,28 @@ const Register = () => {
       </div>
 
         {/* Botones */}
-         <div >
-           <button type="submit" className="create-btn" disabled={isLoading || Object.keys(errors).length > 0}>
-            "Create"
-           </button>
-         <Link to="/" className="cancel-btn">Cancel</Link>
+         <div>
+         <button 
+   
+  className="create-btn" 
+  disabled={isLoading || Object.keys(errors).length > 0 || !formData.password || !formData.confirmPassword}
+>
+  Create
+</button>
+<button className="cancel-btn" onClick={handleCancel} >
+              Cancelar
+            </button>
+
+          
+          
           </div>
+          
+         
+          </form>
            <div className='google-login'>
           <GoogleOAuthProvider clientId={clientId}>
             <GoogleLogin
+              
               onSuccess={handleGoogleRegister}
               onError={() => console.log('Login failed')}
               useOneTap
@@ -301,7 +489,7 @@ const Register = () => {
             />
           </GoogleOAuthProvider>
             </div>
-          </form>
+            
 
         </div>
       )}

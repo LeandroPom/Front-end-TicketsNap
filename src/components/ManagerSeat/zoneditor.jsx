@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 const initialLocations = [
   { division: "Vip", generalPrice: 0, rows: Array.from({ length: 10 }, (_, i) => ({ row: i + 1, rowPrice: 0 })) },
@@ -20,6 +23,7 @@ const ZoneEditor = ({ showId }) => {
 
   const [selectedDivision, setSelectedDivision] = useState("Vip");
   const [selectedRow, setSelectedRow] = useState(1);
+  const navigate = useNavigate();
 
   const handleInputChange = (field, value) => {
     setZoneData({ ...zoneData, [field]: value });
@@ -116,10 +120,46 @@ const ZoneEditor = ({ showId }) => {
       console.log("Datos a enviar: ", dataToSend); // Verifica el objeto que estás enviando
   
       const response = await axios.post("/zones/add", dataToSend);
-      if (response.status === 200) alert("Datos guardados correctamente");
+      if (response.status === 201) {
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Los datos se guardaron correctamente.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+        navigate("/")
+      }
     } catch (error) {
+      // Manejando el error
       console.error("Error al guardar:", error);
+  
+      // Si el error es un error de respuesta HTTP (error.response), muestra un SweetAlert
+      if (error.response) {
+        Swal.fire({
+          title: '¡Error!',
+          text: error.response.data.message || 'Verifique los datos de Performance, Data y Time',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        });
+      } else if (error.request) {
+        // Si no se recibe respuesta del servidor
+        Swal.fire({
+          title: '¡Error!',
+          text: 'No se recibió respuesta del servidor. Intente nuevamente.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        });
+      } else {
+        // Para otros tipos de error (como un error en la configuración de la solicitud)
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Ocurrió un error inesperado. Intente nuevamente.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        });
+      }
     }
+
   };
   
   return (

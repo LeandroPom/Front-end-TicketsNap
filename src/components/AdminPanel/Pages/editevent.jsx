@@ -199,7 +199,7 @@ const EditShow = () => {
     {selectedTags.map((tag, index) => (
       <li key={index}>
         {tag}
-        <button className="botonremove" type="button" onClick={() => handleRemoveTag(tag)}>
+        <button className="botonremove" type="buttons" onClick={() => handleRemoveTag(tag)}>
           &times;
          </button>
          </li>
@@ -267,7 +267,7 @@ const EditShow = () => {
         </div>
 
         {/* Botón para enviar el formulario */}
-        <button type="submit">Update Event</button>
+        <button type="submits">Update Event</button>
       </form>
     </div>
   );

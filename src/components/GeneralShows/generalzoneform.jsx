@@ -132,7 +132,7 @@ const GeneralZoneForm = () => {
         </>
       )}
 
-      <button type="submit" style={buttonStyle}>Guardar Zona</button>
+      <button type="submits" style={buttonStyle}>Guardar Zona</button>
     </form>
   );
 };

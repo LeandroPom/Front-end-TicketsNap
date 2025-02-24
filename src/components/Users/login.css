@@ -60,25 +60,30 @@
 
 /* Contenedor de botones */
 .google-logins {
-  margin-top: 23px; /* Mueve hacia abajo */
-  text-align: center; /* Alinea el botón en el centro, si necesario */
+  margin-top: 25px;
+  
+  margin-right: 250px;    /* Elimina cualquier margen derecho si lo hay */
+  
+ 
 }
 
-.login-container .buttons {
-  display: flex;
-  justify-content: space-between;
-}
 
+/* Ajusta los botones */
 .form-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20%;
+  background-color: #28A745; /* Verde llamativo */
+  color: #ffffff;
+  padding: 10px 10px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 23px;
 }
 
 /* Estilos de los botones */
 .login-container .btn {
   text-decoration: none;
-  padding: 20px 20px;
+  padding: 5px 5px;
   border-radius: 25px;
   font-size: 0.9em;
   font-weight: bold;
@@ -192,9 +197,7 @@ input[type="password"], input[type="text"] {
   padding-right: 100px; /* Deja espacio para el ícono */
 }
 
-button[type="submit"] {
-  margin-top: 20px;
-}
+
 
 /* Responsiveness para el perfil */
 @media (max-width: 768px) {

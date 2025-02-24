@@ -27,11 +27,11 @@ body {
     margin-bottom: 15px;
   }
   
-  label {
+  .label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #555;
+    color: #000000;
   }
   
   input, textarea {
@@ -80,11 +80,11 @@ body {
     resize: vertical;
   }
   
-  /* Button Styles */
-  button[type="submit"],
-  button[type="button"] {
-    /* background-color: #4CAF50; */
-    color: white;
+  
+  /* button[type="submits"],
+  button[type="buttons"] {
+    
+    color: rgb(71, 230, 50);
     border: none;
     padding: 12px 20px;
     font-size: 16px;
@@ -92,7 +92,7 @@ body {
     cursor: pointer;
     margin-right: 10px;
     transition: background-color 0.3s ease;
-  }
+  } */
   
   /* button[type="submit"]:hover,
   button[type="button"]:hover {

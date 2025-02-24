@@ -8,7 +8,8 @@ import ZoneEditor from "../ManagerSeat/zoneditor"
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal'; // Si usas React Modal
-import { FaMusic, FaMapMarkerAlt, FaCalendarAlt, FaTheaterMasks, FaClock } from 'react-icons/fa';
+import { FaMusic, FaMapMarkerAlt, FaCalendarAlt, FaTheaterMasks, FaClock, FaChair } from 'react-icons/fa';
+
 
 // import Generaltribunes from './generaltribune';
 // Agrega esta configuración inicial si aún no lo hiciste
@@ -49,6 +50,7 @@ const Detail = () => {
   const [modalData, setModalData] = useState(null); // Aquí almacenarás la información de la división
   const user = useSelector((state) => state.user);
   const [showMap, setShowMap] = useState(false); // El mapa está oculto por defecto
+  
 
 
   const openModal = (data) => {
@@ -69,6 +71,9 @@ const Detail = () => {
       console.error("id no está definido, no se puede cargar la imagen del mapa.");
       return;
     }
+
+  
+    
   
     const fetchZones = async () => {
       try {
@@ -172,9 +177,7 @@ const Detail = () => {
   
   
  
-  const canvasWidth = zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png" ? 2600 : 1400; // Tamaño de canvas específico para Platea
-  const canvasHeight = zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png" ? 300 : 1400; // Tamaño de canvas específico para Platea
-
+  
 
   const handleCanvasClick = (e) => {
     const canvas = canvasRef.current;
@@ -257,6 +260,7 @@ const Detail = () => {
             text: 'Este asiento ya está ocupado, selecciona otro asiento.',
           });
         }
+        
       } else {
         // Aquí va la lógica para detectar las zonas
         if (rgb === "rgb(255, 199, 206)" || rgb === "rgb(247, 191, 203)") {
@@ -418,8 +422,25 @@ const Detail = () => {
     }
   }, [modalData]);
 
-
-
+  useEffect(() => {
+    if (availableSeats.length > 0) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      drawSeats(ctx);  // Dibuja los asientos cuando se actualizan
+    }
+  }, [availableSeats]);  // Este useEffect se ejecuta cuando los asientos están disponibles
+  
+  useEffect(() => {
+    if (zoneImage) {
+      loadImage();
+      if (availableSeats.length > 0) {
+        // Si ya tenemos asientos disponibles, dibujamos inmediatamente
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        drawSeats(ctx);  // Dibuja los asientos con el canvas
+      }
+    }
+  }, [zoneImage, availableSeats]);  // Ejecutar cada vez que se cargue una zona o cambien los asientos disponibles
 
 
   const handleZoomIn = () => {
@@ -451,85 +472,115 @@ const Detail = () => {
   }, [zoneImage]);
 
 
+  const canvasWidth = zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png" ? 990 : 495 ; // Tamaño de canvas específico para Platea
+  const canvasHeight = zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png" ? 200 : 800; // Tamaño de canvas específico para Platea
 
 
   // Función para dibujar los asientos sobre la imagen de la zona
   const drawSeats = (ctx) => {
     if (availableSeats && availableSeats.length > 0) {
-      const image = new Image();
-      image.src = zoneImage;
-
-      image.onload = () => {
-        const imageWidth = zoneImage === "/images/Platea-Sur.jpg" ? 800 : zoneImage === "/images/Platea-Norte.png" ? 800 : image.width;
-        const imageHeight = zoneImage === "/images/Platea-Sur.jpg" ? 48 : zoneImage === "/images/Platea-Norte.png" ? 48 : image.height;
-
+      const greenImage = new Image();
+      greenImage.src = '/images/chair-azul.png';
+      
+      const redImage = new Image();
+      redImage.src = '/images/chair-rojo.png';
+      
+      const zoneImageObj = new Image();
+      zoneImageObj.src = zoneImage;
+  
+      zoneImageObj.onload = () => {
         const canvasWidth = canvasRef.current.width;
         const canvasHeight = canvasRef.current.height;
-
-        const scaleX = canvasWidth / imageWidth;
-        const scaleY = canvasHeight / imageHeight;
-
+  
+        // Declarar scaleX y scaleY fuera de las condiciones
+        let scaleX, scaleY;
+  
+        // Ajuste específico para Platea Norte y Platea Sur
+        if (zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png") {
+          // Si es una de las imágenes de Platea, usa tamaños fijos específicos
+          const specificWidth = 1739;  // o el tamaño correcto para estas imágenes
+          const specificHeight = 365;  // o el tamaño correcto para estas imágenes
+          scaleX = specificWidth / zoneImageObj.width;
+          scaleY = specificHeight / zoneImageObj.height;
+  
+          console.log("Dibujando Platea Norte/Sur con escala específica: ", scaleX, scaleY);
+        } 
+  
+        // Ajuste específico para Platea Gold
+        else if (zoneImage === "/images/zona-Gold.png" || zoneImage === "/images/zona-verde.jpg" || zoneImage === "/images/zona-roja.jpg") {
+          // Si es una de las imágenes de Platea Gold, usa tamaños fijos específicos
+          const specificWidth = 506;  // o el tamaño correcto para estas imágenes
+          const specificHeight = 820;  // o el tamaño correcto para estas imágenes
+          scaleX = specificWidth / zoneImageObj.width;
+          scaleY = specificHeight / zoneImageObj.height;
+  
+          console.log("Dibujando Platea Gold con escala específica: ", scaleX, scaleY);
+        } 
+  
+        // Para el resto de las imágenes, usar el cálculo normal
+        else {
+          scaleX = canvasWidth / zoneImageObj.width;
+          scaleY = canvasHeight / zoneImageObj.height;
+        }
+  
+        // Aplica la escala a la imagen cargada y dibuja el fondo
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.drawImage(zoneImageObj, 0, 0, zoneImageObj.width, zoneImageObj.height, 0, 0, canvasWidth, canvasHeight);
+  
         availableSeats.forEach((seatRow) => {
           seatRow?.seats?.forEach((seat) => {
-            const seatColor = seat.taken ? 'red' : 'green';
-
-            // Ajustar las posiciones de los asientos según la escala y el zoom
-            const scaledX = seat.x * scaleX * zoom;
-            const scaledY = seat.y * scaleY * zoom;
-
-            // Dibujar el asiento en el canvas
-            ctx.beginPath();
-            ctx.arc(scaledX, scaledY, 14 * zoom, 0, 2 * Math.PI); // Ajustar el radio del asiento
-            ctx.fillStyle = seatColor;
-            ctx.fill();
-            ctx.stroke();
-
+            // Aplica la escala a las coordenadas de los asientos
+            const scaledX = seat.x * scaleX;
+            const scaledY = seat.y * scaleY;
+  
+            // Determinar qué imagen usar dependiendo del estado del asiento (verde o rojo)
+            const seatImage = seat.taken ? redImage : greenImage;
+  
+            // Dibuja la imagen correspondiente sobre el asiento
+            ctx.drawImage(seatImage, scaledX - 20, scaledY - 20, 21, 21);
+            
             if (seat.taken) {
-              ctx.font = `${14 * zoom}px Arial`;
+              ctx.font = '14px Arial';
               ctx.fillStyle = "white";
-              const textWidth = ctx.measureText("").width;
-              ctx.fillText("", scaledX - textWidth / 2, scaledY + 5 * zoom); // Centrar el texto
+              const textWidth = ctx.measureText(seat.id).width;
+              ctx.fillText(seat.id, scaledX - textWidth / 2, scaledY + 25);
             }
-
-            seat.drawingPosition = { x: scaledX, y: scaledY, radius: 12 * zoom }; // Actualizar posición de dibujo
+  
+            seat.drawingPosition = { x: scaledX, y: scaledY, radius: 30 };
           });
         });
-
-        setSeatsDrawn(true);
+        setSeatsDrawn(true);  // Indica que los asientos fueron dibujados
       };
-    } else {
-      console.log("No hay asientos disponibles para la división seleccionada");
     }
   };
+ 
+  
 
   const loadImage = () => {
     const canvas = canvasRef.current;
     if (canvas) {
       const img = new Image();
       img.src = zoneImage;
-
+  
       img.onload = () => {
         const ctx = canvas.getContext('2d');
         const scaledWidth = canvas.width * zoom;
         const scaledHeight = canvas.height * zoom;
-
+  
         // Limpiar el canvas antes de dibujar
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  
         let width = img.width;
         let height = img.height;
 
-        if (zoneImage === "/images/Platea-Sur.jpg") {
-          width = 1400; // Ajuste específico para Platea Sur
-          height = 1200;
-        } else if (zoneImage === "/images/Platea-Norte.png") {
-          width = 1400; // Ajuste específico para Platea Norte
-          height = 1200;
-        }
-
+        
+  
+        // Aquí se usa el tamaño original de la imagen
+        // ya no es necesario el ajuste específico 130x130
+  
         // Dibujar la imagen escalada en el canvas
-        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, scaledWidth, scaledHeight);
-
+        ctx.drawImage(img, 0, 0, width, height, 0, 0, scaledWidth, scaledHeight);
+  
         // Solo dibujar los asientos si ya se ha seleccionado una zona
         if (selectedZone) {
           drawSeats(ctx);  // Redibuja los asientos con la nueva escala
@@ -561,14 +612,6 @@ const Detail = () => {
     <div className="event-detail">
       <h1>{event.name}</h1>
 
-      
-
-     
-      {countdownStarted && (
-        <div className="countdown" style={{ position: 'absolute', top: '610px', left: '60%', transform: 'translateX(-50%)' }}>
-          <h2>{Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}</h2> {/* Mostrar el tiempo restante */}
-        </div>
-      )}
 
       {event.presentation.map((presentation, index) => (
         <div class="box-contenedor">
@@ -593,18 +636,16 @@ const Detail = () => {
        <p><FaCalendarAlt style={{ color: 'green' }} /> <strong>Fecha:</strong> {presentation.date}</p>
        <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentaciones:</strong> {presentation.performance}</p>
        <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
+       
+      {countdownStarted && (
+        <div>
+          <h2 style={{ color: 'red' }}>{Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}</h2> {/* Mostrar el tiempo restante */}
+        </div>
+      )}
        </div>
           </div>
       ))}
           
-
-          {user?.isAdmin && (
-  <>
-    <button onClick={() => setIsZoneEditorOpen(true)}>Add Data</button>
-    {isZoneEditorOpen && <ZoneEditor showId={id} />}
-    <button onClick={() => setIsZoneEditorOpen(false)}>Close</button>
-  </>
-)}
       {/* <ZoneEditor showId={event.id} /> */}
 
       {isSelectorOpen && (
@@ -642,16 +683,24 @@ const Detail = () => {
       
       {!showMap && (
   <button 
-    onClick={handleChooseSeats} 
-    style={{ backgroundColor: 'green', color: 'white' }}
+  onClick={handleChooseSeats} 
+  style={{ backgroundColor: 'green', color: 'white' }}
   >
     Elegir Asientos
   </button>
-)}
+      )} 
       
+      
+                {user?.isAdmin && (
+        <>
+          <button onClick={() => setIsZoneEditorOpen(true)}>Add Data</button>
+          {isZoneEditorOpen && <ZoneEditor showId={id} />}
+          <button onClick={() => setIsZoneEditorOpen(false)}>Close</button>
+        </>
+      )}
 
-      {/* Aquí se muestra el mapa debajo de los detalles del evento */}
-      {showMap && zoneImage && (
+       {/* Aquí se muestra el mapa debajo de los detalles del evento */}
+       {showMap && zoneImage && (
         <div className="map-container" style={{
           position: 'relative',
           width: '50%',

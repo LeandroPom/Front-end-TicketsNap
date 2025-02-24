@@ -117,6 +117,8 @@
     z-index: 999;
     overflow: auto; /* Permite scroll cuando el contenido excede el tamaño del contenedor */
   }
+
+ 
   
   .modal-content {
     background: white;

@@ -98,10 +98,10 @@ li {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: 3px solid #608aca;
+  border: 3px solid #000000;
   overflow: hidden;
   position: relative;
-  background: #ccd0d6;
+  background: #a1a5aa;
 }
 
 li:hover {
@@ -121,7 +121,7 @@ li:hover {
 
 /* Títulos de los eventos */
 li h3 {
-  color: #007bff;
+  color: #242424;
   font-size: 35px;
   margin-bottom: 10px;
   font-weight: 600;

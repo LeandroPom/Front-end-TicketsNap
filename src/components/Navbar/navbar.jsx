@@ -58,9 +58,11 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${isDarkMode ? 'dark' : 'light'}`}>
-      <div className="navbar-logo">
-        <a href="/">Ticket NAP</a>
-         {/* Ícono compacto para cambiar el tema */}
+  <div className="navbar-logo">
+    <a href="/">
+    <img src="/images/solticket.png" alt="Sol Ticket" style={{ width: '180px', height: '70px' }} />
+    </a>
+    {/* Ícono compacto para cambiar el tema */}
          {isDarkMode ? (
           <FaSun
             onClick={toggleTheme}

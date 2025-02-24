@@ -53,7 +53,7 @@ const Login = () => {
         Swal.fire({
           icon: 'error',
           title: 'Error al iniciar sesión',
-          text: response.error,
+          text: 'Por favor verifica correo y contraseña.',
         });
         return;
       }
@@ -168,14 +168,19 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="form-buttons">
-            <button type="submit" disabled={isLoading}>
+          <div>
+            <button className='form-buttons' disabled={isLoading}>
               {isLoading ? 'Logging in...' : 'Login'}
             </button>
+          </div>
         
+        
+
+        
+        </form>
             <div className="google-logins">
              <GoogleOAuthProvider clientId= {process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-             <GoogleLogin
+             <GoogleLogin className="google-logins"
              onSuccess={handleGoogleLogin}
              onError={(error) => console.log('Error al iniciar sesión con Google:', error)}
              theme="outline"
@@ -183,11 +188,6 @@ const Login = () => {
              />
             </GoogleOAuthProvider>
             </div>
-        
-
-        
-          </div>
-        </form>
 
       </div>
     </div>
