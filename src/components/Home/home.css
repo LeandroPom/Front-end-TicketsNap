@@ -282,7 +282,7 @@ li:hover .event-image {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  background-color: rgb(144, 191, 218);
+  background-color: rgb(253, 254, 255);
   padding: 0;
   border-radius: 8px;
   color: #000000;
@@ -315,7 +315,7 @@ li:hover .event-image {
 
 .react-calendar__tile--hasActive {
   color: green;
-  background: green;
+  background: rgb(255, 255, 255);
 }
 
 .reset-button {

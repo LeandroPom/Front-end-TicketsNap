@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
+import './ZoneEditor.css';
 
 const initialLocations = [
   { division: "Vip", generalPrice: 0, rows: Array.from({ length: 10 }, (_, i) => ({ row: i + 1, rowPrice: 0 })) },
@@ -163,8 +163,8 @@ const ZoneEditor = ({ showId }) => {
   };
   
   return (
-    <div>
-      <h1>Editar Zona</h1>
+    <div className="zone-editor-container">
+      <h1>Agregar Data</h1>
 
       <label>
         Nombre de la Zona:

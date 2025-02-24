@@ -39,7 +39,7 @@ const Carousel = ({ images }) => {
         onPause={handleVideoPause} // Cuando se pausa, se cambia el estado
       ></iframe>
     ) : (
-      <img className={`event-imagen ${index === currentIndex ? 'actives' : ''}`} src={url} alt="Event" />
+      <img className={`event-imagen ${index === currentIndex ? 'active' : ''}`} src={url} alt="Event" />
     );
   };
 
@@ -61,7 +61,7 @@ const Carousel = ({ images }) => {
       </button>
 
       <div className="carousel-images">
-  <div className="carousel-item">
+  <div className="carousel-images">
     {renderContent(images[currentIndex], currentIndex)}
   </div>
 </div>

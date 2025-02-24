@@ -70,7 +70,7 @@ const Events = () => {
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
 
-      <button onClick={() => navigate('/create-show')}>Create Event</button>
+      <button className='botoncreate' onClick={() => navigate('/create-show')}>Create Event</button>
 
       <input
         type="text"
@@ -80,7 +80,7 @@ const Events = () => {
         style={{ margin: '10px 0', padding: '8px', width: '100%' }}
       />
 
-      <table>
+      <table className='Titles-tables'>
         <thead>
           <tr>
             <th>Name</th>
@@ -96,7 +96,7 @@ const Events = () => {
               <td>
                 <button className="botonedit" onClick={() => handleEdit(show.id)}>Edit</button>
                 <button
-                  className={`botonedit ${show.state ? 'active' : 'inactive'}`}
+                  className={`botonedit-desactivated ${show.state ? 'active' : 'inactive'}`}
                   onClick={() => handleToggleState(show.id, show.state)}
                 >
                   {show.state ? 'Desactivar' : 'Activar'}

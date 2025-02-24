@@ -79,7 +79,7 @@ const Places = () => {
           {places.map((place) => (
             <li key={place.id}>
               <span>{place.name} - {place.location}</span>
-              <button className="botonedit" onClick={() => handleDeletePlace(place.id)}>Deleted</button>
+              <button className="botonedit-desactivated" onClick={() => handleDeletePlace(place.id)}>Deleted</button>
             </li>
           ))}
         </ul>
