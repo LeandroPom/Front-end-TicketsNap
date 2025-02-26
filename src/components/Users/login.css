@@ -1,4 +1,4 @@
-/* General styling for the login modal */
+/* ======= Fondo del Modal ======= */
 .login-modal {
   background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed;
   display: flex;
@@ -6,223 +6,141 @@
   justify-content: center;
   height: 100vh;
   backdrop-filter: blur(8px);
-  flex-direction: column; /* Asegura que el contenido se ajuste en dispositivos pequeños */
+  flex-direction: column;
 }
 
-/* Contenedor del formulario */
+.Solticket-logo{
+  width: 200px;
+  margin-left: 120px;
+}
+
+/* ======= Contenedor del Formulario ======= */
 .login-container {
-  background: rgba(0, 0, 0, 0.8);
-  padding: 2rem;
+  background: rgba(var(--bg-container-rgb), 0.8);
+  padding: 16px;
   border-radius: 10px;
   width: 100%;
   max-width: 500px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-  color: transparent;
-  margin-top: 100px;
+  color: var(--color-texto-light);
+  margin-top: 150px;
+  box-sizing: border-box;
 }
 
-/* Título del formulario */
-.login-container h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
+.texto-inicio{
+  color: rgba(var(--color-texto-light));
 }
 
-/* Estilo de los campos de entrada */
+/* ======= Tema Claro/Oscuro ======= */
+:root {
+  --color-texto-light: #000000;
+  --color-texto-dark: #FFFFFF;
+  --bg-container-light-rgb: 255, 255, 255; /* Blanco */
+  --bg-container-dark-rgb: 0, 0, 0; /* Negro */
+  --form-bg-light: #FFFFFF;
+  --form-bg-dark: var(--color-secundario);
+  --color-principal: #FFE57F;
+  --color-intermedio: #FFD166;
+  --color-secundario: #FFB74D;
+}
+
+.login-container.light {
+  --bg-container-rgb: var(--bg-container-light-rgb);
+  --color-texto: var(--color-texto-light);
+}
+
+.login-container.dark {
+  --bg-container-rgb: var(--bg-container-dark-rgb);
+  --color-texto: var(--color-texto-dark);
+}
+
+/* ======= Estilo de los campos de entrada ======= */
 .login-container input {
-  width: 100%; /* Asegura que los inputs ocupen todo el ancho disponible */
-  padding: 10px;
+  width: 100%;
+  padding: 11px;
   margin-bottom: 15px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border-radius: 6px;
+  border: 1px solid var(--color-intermedio);
   font-size: 1em;
-  background-color: #f9f9f9; /* Fondo gris claro */
-  color: #333; /* Color de texto oscuro */
-  box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
+  background-color: var(--form-bg);
+  color: var(--color-texto);
+  box-sizing: border-box;
 }
 
-.password-container input {
-  width: 100%; /* Corregido a 100% para asegurar que el input ocupe todo el espacio disponible */
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1em;
-  background-color: #f9f9f9; /* Fondo gris claro */
-  color: #333; /* Color de texto oscuro */
-  box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
+.login-container.light input {
+  --form-bg: var(--form-bg-light);
+}
+
+.login-container.dark input {
+  --form-bg: var(--form-bg-dark);
 }
 
 .input-field:focus {
   outline: none;
-  border-color: #007bff; /* Azul de enfoque */
-  background-color: #fff;
+  border-color: var(--color-principal);
 }
 
-/* Contenedor de botones */
-.google-logins {
-  margin-top: 10px;
-  margin-right: 180px;    /* Elimina cualquier margen derecho si lo hay */
-}
-  
-  
- 
-
-
-/* Ajusta los botones */
+/* ======= Botones ======= */
 .form-buttons {
-  background-color: #28A745; /* Verde llamativo */
-  color: #ffffff;
-  padding: 10px 10px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
+  background-color: var(--color-principal);
+  color: var(--color-texto-light);
+  padding: 12px;
   border: none;
-  border-radius: 50px;
+  border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 23px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Estilos de los botones */
-.login-container .btn {
-  text-decoration: none;
-  padding: 5px 5px;
-  border-radius: 25px;
-  font-size: 0.9em;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
+.form-buttons:hover {
+  background-color: var(--color-secundario);
 }
 
 .login-btn {
-  background-color: #FF5733; /* Naranja llamativo */
-  color:#fffbfb
+  background-color: var(--color-intermedio);
+  color: var(--color-texto-dark);
 }
 
 .login-btn:hover {
   background-color: transparent;
-  border-color: #db3e1b;
-  color: #991313;
+  border: 2px solid var(--color-intermedio);
+  color: var(--color-texto);
 }
 
 .cancel-btn {
-  background-color: #c73f3f; /* Gris claro */
-}
-
-label {
-  color: #000000; /* Puedes poner el color que desees, en este caso un tono naranja */
-  font-weight: bold;
+  background-color: var(--color-secundario);
+  color: var(--color-texto-dark);
 }
 
 .cancel-btn:hover {
   background-color: red;
   border-color: #b32e2e;
-  color: #ffffff;
+  color: white;
 }
 
-/* Responsiveness */
-@media (max-width: 768px) {
-  /* Ajustes para el contenedor del formulario en pantallas pequeñas */
-  .login-container {
-    width: 90%; /* Hacer más ancho en pantallas pequeñas */
-    padding: 1.5rem; /* Reducir el padding */
-  }
-
-  .login-container h2 {
-    font-size: 20px; /* Reducir el tamaño del título */
-  }
-
-  .login-container input {
-    font-size: 0.9em; /* Reducir el tamaño de los campos de entrada */
-  }
-
-  .form-buttons {
-    flex-direction: column; /* Asegura que los botones se apilen verticalmente */
-    margin-top: 15px; /* Reducir el margen superior */
-  }
-}
-
-/* Estilo para el perfil */
-
-/* Container del perfil */
-.profile-container {
-  padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* Información del perfil */
-.profile-info p {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-/* Contenedor para cambiar la contraseña */
-.change-password {
-  margin-top: 30px;
-}
-
-.change-password form {
-  display: flex;
-  flex-direction: column;
-}
-
-.change-password .form-group {
-  margin-bottom: 15px;
-}
-
-.change-password label {
-  margin-bottom: 5px;
+/* ======= Etiquetas de los Inputs ======= */
+label {
+  color: var(--color-texto);
   font-weight: bold;
 }
 
-.change-password input {
-  padding: 10px;
-  font-size: 16px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.change-password button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.change-password button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.password-container {
-  position: relative;
-}
-
-input[type="password"], input[type="text"] {
-  padding-right: 100px; /* Deja espacio para el ícono */
-}
-
-
-
-/* Responsiveness para el perfil */
+/* ======= Responsividad ======= */
 @media (max-width: 768px) {
-  /* Ajustes en el perfil para pantallas pequeñas */
-  .profile-container {
-    padding: 15px;
-    max-width: 90%; /* Hace que el contenedor sea más ancho en pantallas pequeñas */
+  .login-container {
+    width: 90%;
+    padding: 12px;
   }
-
-  .profile-info p {
-    font-size: 16px; /* Reducir el tamaño de los párrafos */
+  
+  .login-container h2 {
+    font-size: 20px;
   }
-
-  .change-password form {
-    flex-direction: column; /* Apilar los elementos del formulario */
+  
+  .login-container input {
+    font-size: 0.9em;
   }
-
-  .change-password button {
-    font-size: 0.9rem; /* Reducir el tamaño del botón */
+  
+  .form-buttons {
+    flex-direction: column;
+    margin-top: 15px;
   }
 }

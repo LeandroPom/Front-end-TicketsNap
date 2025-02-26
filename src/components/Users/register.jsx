@@ -76,12 +76,51 @@ const Register = () => {
       [name]: value,
     }));
   
-    
+    // Validar el campo actualizado en tiempo real
+      validateField(name, value);
   
     // Verificar correo si se cambia el valor
     if (name === 'email') {
       checkEmailExists(value);  // Verificar el correo cada vez que se cambie
     }
+  };
+
+
+
+
+  const validateField = (name, value) => {
+    const newErrors = { ...errors };
+  
+    switch (name) {
+      case 'firstName':
+        newErrors.firstName = value ? '' : 'First name is required.';
+        break;
+      case 'lastName':
+        newErrors.lastName = value ? '' : 'Last name is required.';
+        break;
+      case 'email':
+        newErrors.email = /\S+@\S+\.\S+/.test(value) ? '' : 'Please enter a valid email address.';
+        break;
+      case 'password':
+        if (!value) {
+          newErrors.password = 'Password must be at least 6 characters long.';
+        } else if (!/\d/.test(value) || !/[A-Za-z]/.test(value)) {
+          newErrors.password = 'Password must contain at least one letter and one number.';
+        } else {
+          newErrors.password = '';
+        }
+        break;
+      case 'confirmPassword':
+        newErrors.confirmPassword = value === formData.password ? '' : 'Passwords do not match.';
+        break;
+      case 'phone':
+        newErrors.phone = value ? '' : 'Phone number is required.';
+        break;
+      default:
+        break;
+    }
+  
+    setErrors(newErrors);
   };
   
 
@@ -369,12 +408,12 @@ const Register = () => {
 
       {isModalOpen && (
         <div className="register-modal">
-          <h2 className="register-title">Create-Account</h2>
+          <h2 className="register-title">CREA TU CUENTA</h2>
           <form className="register-form" onSubmit={handleSubmit}>
   {/* Primera fila: First Name y Email */}
   <div className="form-row">
     <div className="form-group">
-      <label htmlFor="firstName">First Name</label>
+      <label htmlFor="firstName">Nombre</label>
       <input
         type="text"
         id="firstName"
@@ -387,14 +426,14 @@ const Register = () => {
       {errors.firstName && <small>{errors.firstName}</small>}
     </div>
     <div className="form-group">
-      <label htmlFor="email">Email</label>
+      <label htmlFor="email">Correo</label>
       <input
         type="email"
         id="email"
         name="email"
         value={formData.email}
         onChange={handleInputChange}
-        // placeholder="Enter your email"
+        placeholder="Coloca tu correo real, para recibir tu entrada"
         required
       />
       {errors.email && <small>{errors.email}</small>}
@@ -405,7 +444,7 @@ const Register = () => {
   {/* Segunda fila: Last Name y Password */}
   <div className="form-row">
     <div className="form-group">
-      <label htmlFor="lastName">Last Name</label>
+      <label htmlFor="lastName">Apellido</label>
       <input
         type="text"
         id="lastName"
@@ -418,7 +457,7 @@ const Register = () => {
       {errors.lastName && <small>{errors.lastName}</small>}
     </div>
     <div className="form-group">
-      <label htmlFor="password">Password</label>
+      <label htmlFor="password">Contraseña</label>
       <input
         type="password"
         id="password"
@@ -431,7 +470,7 @@ const Register = () => {
       {errors.password && <small className="error-message">{errors.password}</small>}
     </div>
     <div className="form-group">
-      <label htmlFor="password">Confirm Pass</label>
+      <label htmlFor="password">Confirmar contraseña</label>
       <input
         type="password"
         id="confirmPassword"
@@ -447,14 +486,15 @@ const Register = () => {
 
   {/* Tercera fila: Phone */}
   <div className="form-group">
-    <label htmlFor="phone">Phone (Optional)</label>
+    <label htmlFor="phone">Numero de celular completo (Optional)</label>
     <input
       type="text"
       id="phone"
       name="phone"
       value={formData.phone}
       onChange={handleInputChange}
-      // placeholder="Enter your phone number"
+      placeholder="Ej: Tucuman: 381-15403286, sin guiones/espacios"
+      maxLength="12"  // Limita la longitud a 12 caracteres
     />
       </div>
 
@@ -463,9 +503,9 @@ const Register = () => {
          <button 
    
   className="create-btns" 
-  disabled={isLoading || Object.keys(errors).length > 0 || !formData.password || !formData.confirmPassword}
+  // disabled={isLoading || Object.keys(errors).length > 0 || !formData.password || !formData.confirmPassword}
 >
-  Create
+  Crear Cuenta
 </button>
             
           </div>

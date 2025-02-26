@@ -1,4 +1,4 @@
-/* General navbar styling */
+/* ======= Navbar General ======= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -9,134 +9,187 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000; /* Siempre encima */
-  flex-wrap: wrap; /* Permite que los elementos se ajusten cuando el espacio es reducido */
+  z-index: 1000;
+  flex-wrap: wrap;
+  color: var(--navbar-text);
 }
 
-/* Fondo dinámico dependiendo del tema */
-.navbar.dark {
-  background-color: #222; /* Fondo oscuro para el tema oscuro */
-}
-
-.navbar.light {
-  background-color: #f8f9fa; /* Fondo claro para el tema claro */
-}
-
-/* Color de texto y elementos del navbar */
-.navbar.dark {
-  color: #fff; /* Letras blancas para el tema oscuro */
+/* Modo claro y oscuro */
+:root {
+  --navbar-bg-light: #f8f9fa;
+  --navbar-text-light: #333;
+  --navbar-bg-dark: #222;
+  --navbar-text-dark: #FFB74D;
 }
 
 .navbar.light {
-  color: #333; /* Letras negras para el tema claro */
+  --navbar-bg: var(--navbar-bg-light);
+  --navbar-text: var(--navbar-text-light);
+  background-color: #f8f9fa;
+  color: #333;
 }
 
-/* Logo */
+.navbar.dark {
+  --navbar-bg: var(--navbar-bg-dark);
+  --navbar-text: var(--navbar-text-dark);
+  background-color: #222;
+  color: #FFB74D;
+}
+
+/* ======= Logo ======= */
 .navbar-logo a {
-  color: inherit; /* Usa el color heredado para adaptarse al tema */
   text-decoration: none;
-  font-size: 1.5em;
-  font-weight: bold;
-  flex: 1; /* Asegura que el logo ocupe el espacio disponible */
+  flex: 1;
 }
 
-/* Ícono del menú */
+.navbar-logo img {
+  width: 180px;
+  height: 70px;
+  background-color:#FF9800;
+  border-radius: 16px;
+}
+
+/* ======= Botón de Cambio de Tema ======= */
+.theme-toggle-icon {
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: inherit;
+  margin-left: 30px;
+  margin-bottom: 26px;
+  transition: color 0.3s ease;
+}
+
+.theme-toggle-icon:hover {
+  color: #FFB74D;
+}
+
+/* ======= Nombre del Usuario ======= */
+.user-name {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-left: 750px; /* Mantiene la posición original */
+}
+
+/* ======= Ícono del Menú ======= */
 .dropdown-icon {
   font-size: 1.8em;
   cursor: pointer;
   transition: color 0.3s ease;
-  color: rgb(153, 147, 147); /* Usa el color heredado para adaptarse al tema */
+  color: rgb(153, 147, 147);
   transform: translateX(-50px);
   z-index: 500;
+  margin-top: 0px;
 }
 
-/* Contenedor del menú desplegable */
+/* ======= Menú Desplegable ======= */
 .dropdown {
   position: relative;
-  background-color: white;
+  background-color: inherit;
   color: #222;
 }
 
-/* Contenedor del menú desplegable */
 .dropdown-menu {
   position: absolute;
-  top: 100%; /* Mantén el menú justo debajo del botón */
-  right: 0; /* Alinea el menú a la derecha */
-  background-color: inherit; /* Fondo adaptado al tema */
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Bordes sutiles para ambos temas */
+  top: 100%;
+  right: 0;
+  background-color: var(--navbar-bg);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   z-index: 999;
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-width: 150px;
 }
 
-/* Opciones del menú */
 .dropdown-item {
-  color: inherit; /* Usa el color heredado para adaptarse al tema */
+  color: inherit;
   text-decoration: none;
+  color: var(--navbar-text);
   padding: 10px;
   border-radius: 5px;
   font-size: 14px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  z-index: 500;
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Fondo al hacer hover */
+  background-color: #ff990054;
 }
 
-/* Nombre del usuario */
-.user-name {
-  font-weight: bold;
-  margin-left: 10px; /* Ajusta este valor para mejorar la alineación */
-  font-size: 1rem;
-  color: inherit; /* Usa el color heredado para adaptarse al tema */
+/* ======= Modal para "Create Seats" ======= */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
 }
 
-.theme-toggle-icon {
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: transparent;
+}
+
+.close-modal-btn {
+  background-color: #d9534f;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 1.0rem;
-  color: inherit; /* El color se adapta al tema */
-  margin-left: 20px; /* Separación del texto */
-  transition: color 0.3s ease;
+  margin-top: 10px;
 }
 
-.theme-toggle-btn:hover {
-  color: #007bff; /* Color al pasar el mouse */
+.close-modal-btn:hover {
+  background-color: #c9302c;
 }
 
-/* Estilo responsivo */
-@media (max-width: 768px) {
-  /* Ajustes para navbar en pantallas pequeñas */
+/* ======= Responsividad ======= */
+@media (max-width: 1137px) {
   .navbar {
-    flex-direction: column; /* Asegura que el navbar se apile verticalmente en pantallas pequeñas */
-    align-items: flex-start; /* Alinea los elementos del navbar a la izquierda */
-    padding: 15px; /* Aumenta el espaciado para pantallas pequeñas */
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
   }
 
-  .navbar-logo a {
-    font-size: 1.2em; /* Reduce el tamaño del logo */
-  }
-
-  .dropdown-icon {
-    font-size: 1.5em; /* Ajusta el tamaño del ícono */
-    transform: none; /* Remueve el desplazamiento horizontal */
-  }
-
-  .dropdown-menu {
-    top: 50px; /* Ajusta la posición del menú */
-    width: 100%; /* Hace que el menú se expanda en toda la pantalla */
+  .navbar-logo img {
+    width: 130px;
   }
 
   .user-name {
-    font-size: 0.9rem; /* Reduce el tamaño del texto en pantallas pequeñas */
+    font-size: 0.9rem;
+    margin-top: 20px;
+    margin-left: 4px;
   }
 
-  .theme-toggle-icon {
-    font-size: 0.9rem; /* Reduce el tamaño del ícono en pantallas pequeñas */
+  .dropdown-menu {
+    width:  200%;
+    margin-right: -170px;
+    top: 50px;
+  }
+
+  .dropdown-icon {
+    font-size: 1.5em; 
+    transform: none;
+    margin-right: -200px;
   }
 }

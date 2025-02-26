@@ -101,7 +101,7 @@ li {
   border: 3px solid #000000;
   overflow: hidden;
   position: relative;
-  background: #a1a5aa;
+  background: #d8d785; /* backgroud de las cards */
 }
 
 li:hover {
@@ -177,8 +177,11 @@ li:hover .event-image {
 
 /* Botón de ver detalles */
 .buttonhome {
-  background-color: #169732;
-  color: rgb(212, 205, 205);
+  background-color: #e7b048;
+  color: rgb(3, 3, 3);
+  font-family:monospace;
+  font-weight: bold;
+  font-size: medium;
   padding: 8px 12px;
   border: none;
   border-radius: 8px;
@@ -186,18 +189,6 @@ li:hover .event-image {
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   width: 100%;
-}
-
-.buttonhomereset {
-  background-color:transparent;
-  color: rgb(129, 124, 124);
-  padding: 8px 12px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  width: 25%;
 }
 
 /* Estilo responsivo */

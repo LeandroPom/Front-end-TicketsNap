@@ -135,15 +135,16 @@ const Login = () => {
     <div className="login-modal">
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
-          <h2>¡¡ Bienvenido !!</h2>
            {/* Insertamos la imagen debajo del título */}
            <img 
               src="/images/solticket.png" 
               alt="KI Logo" 
               className="Solticket-logo" 
-              style={{ width: '100px', height: '100px', objectFit: 'contain' }} 
+              // style={{ width: '100px', height: '100px', objectFit: 'contain' }} 
+            
             />
 
+          <h2 style={{ color: 'black'}}>iniciar sesion</h2>
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -171,7 +172,7 @@ const Login = () => {
               <FontAwesomeIcon 
                 icon={showPassword ? faEyeSlash : faEye} 
                 onClick={() => setShowPassword(!showPassword)} 
-                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '38%', transform: 'translateY(-50%)' }}
+                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '40px'}}
               />
             </div>
           </div>

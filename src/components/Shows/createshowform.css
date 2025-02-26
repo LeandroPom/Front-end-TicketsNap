@@ -1,179 +1,186 @@
+/* Variables de color para modo claro y oscuro */
+:root {
+  --color-dominante-light: #FFFFFF;
+  --color-dominante-dark: #000000;
+  --color-principal: #FFE57F;
+  --color-secundario: #FFB74D;
+  --color-intermedio: #FFD166;
+  --color-texto-light: #333;
+  --color-texto-dark: #f9f9f9;
+  --borde-color-light: #ddd;
+  --borde-color-dark: #444;
+}
+
 /* Estilos generales del contenedor */
 .create-show-form {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: var(--color-dominante-light);
+  border: 1px solid var(--borde-color-light);
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  transition: background-color 0.3s ease;
+  margin-top: 120px;
+}
+
+body.dark-mode .create-show-form {
+  background-color: var(--color-dominante-dark);
+  border: 1px solid var(--borde-color-dark);
+}
+
+/* Título */
+.create-show-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--color-texto-light);
+  font-size: 1.8rem;
+}
+
+body.dark-mode .create-show-form h2 {
+  color: var(--color-texto-dark);
+}
+
+/* Estilos de los labels */
+.create-show-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--color-texto-light);
+}
+
+body.dark-mode .create-show-form label {
+  color: var(--color-texto-dark);
+}
+
+/* Inputs de texto y textarea */
+.create-show-form input[type="text"],
+.create-show-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--borde-color-light);
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+body.dark-mode .create-show-form input[type="text"],
+body.dark-mode .create-show-form textarea {
+  border: 1px solid var(--borde-color-dark);
+  background-color: #222;
+  color: var(--color-texto-dark);
+}
+
+/* Botón de envío */
+.create-show-boton {
+  display: block;
+  width: 40%;
+  padding: 10px;
+  margin: 0 auto;
+  background-color: var(--color-secundario);
+  color: #000;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-show-boton:hover {
+  background-color: var(--color-intermedio);
+}
+
+/* Modo oscuro para botón */
+body.dark-mode .create-show-boton {
+  background-color: var(--color-principal);
+  color: #000;
+}
+
+/* Contenedor de input con botón */
+.input-with-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-button input {
+  flex: 1;
+  padding-right: 50px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid var(--borde-color-light);
+  border-radius: 4px;
+}
+
+.input-with-button .add-link {
+  position: absolute;
+  right: 10px;
+  color: #fe9900;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.input-with-button .add-link:hover {
+  color: var(--color-secundario);
+}
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .create-show-form {
+    padding: 15px;
   }
-  
-  /* Título */
+
   .create-show-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
-  
-  /* Estilos de los labels */
-  .create-show-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #555;
-  }
-  
-  /* Inputs de texto y textarea */
-  .create-show-form input[type="text"],
-  .create-show-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-  
-  .create-show-form textarea {
-    resize: vertical; /* Permite cambiar el tamaño solo verticalmente */
-    min-height: 80px;
-  }
-  
-  /* Botón de envío */
+
   .create-show-boton {
-    display: block;
-    width: 40%;
-    padding: 10px;
-    margin-left: 170px;
-    /* background-color: #382bf0; */
-    color: #154ce4;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    /* transition: background-color 0.3s ease; */
-    background-color:#53b453;
+    font-size: 1rem;
   }
+}
 
+/* Géneros seleccionados */
+.selected-genres-container {
+  margin-top: 10px;
+}
 
-  .input-with-button {
-    position: relative;
-    display: flex;
-    align-items: center; /* Centra el contenido verticalmente */
-  }
-  
-  .input-with-button input {
-    flex: 1; /* Permite que el input ocupe todo el espacio restante */
-    padding-right: 50px; /* Deja espacio para el enlace "Add" */
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .input-with-button .add-link {
-    position: absolute;
-    right: -7px; /* Ubica el enlace cerca del borde derecho del input */
-    top: -20%; /* Centra verticalmente */
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #007bff;
-    font-size: 14px;
-    line-height: 1;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    display: inline; /* Restringe el área activa al contenido del texto */
-  }
-  
-  .input-with-button .add-link:hover {
-    text-decoration: underline;
-    color: #0056b3;
-  }
-  
-  /* .create-show-form button:hover {
-    background-color: #0056b3;
-  } */
-  
-  /* Estilos para pantallas más pequeñas */
-  @media (max-width: 768px) {
-    .create-show-form {
-      padding: 15px;
-    }
-  
-    .create-show-form h2 {
-      font-size: 1.5rem;
-    }
-  
-    .create-show-form button {
-      font-size: 1rem;
-    }
-  }
+.selected-genres-box {
+  border: 1px solid var(--borde-color-light);
+  padding: 10px;
+  background-color: var(--color-dominante-light);
+  border-radius: 5px;
+  max-height: 100px;
+  overflow-y: auto;
+}
 
-  .selected-genres-container {
-    margin-top: 10px;
-  }
-  
-  .selected-genres-box {
-    border: 1px solid #ccc;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    max-height: 100px;
-    overflow-y: auto; /* Para manejar muchos tags */
-  }
-  
-  .genre-tag {
-    display: inline-block;
-    background-color: #e0e0e0;
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 3px;
-    font-size: 14px;
-    color: #333;
-  }
+body.dark-mode .selected-genres-box {
+  background-color: var(--color-dominante-dark);
+  border: 1px solid var(--borde-color-dark);
+}
 
-  .selected-genres {
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-  }
-  
-  .genres-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .genre-tag {
-    display: flex;
-    align-items: center;
-    background-color: #e0e0e0;
-    border-radius: 20px;
-    padding: 5px 10px;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .remove-genre-button {
-    margin-left: 3px; /* Más cerca del texto */
-    background-color: transparent;
-    border: none;
-    color: #ff4d4d;
-    cursor: pointer;
-    font-size: 8px; /* Muy pequeña */
-    line-height: 1; /* Alineación vertical adecuada */
-    padding: 0; /* Elimina el espacio interno */
-  }
-  
-  .remove-genre-button:hover {
-    color: #ff0000;
-  }
-  
+.genre-tag {
+  display: inline-block;
+  background-color: var(--color-principal);
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #000;
+}
+
+/* Botón de eliminación de géneros */
+.remove-genre-button {
+  margin-left: 3px;
+  background-color: transparent;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.remove-genre-button:hover {
+  color: #ff0000;
+}

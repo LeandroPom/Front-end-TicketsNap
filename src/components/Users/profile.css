@@ -1,0 +1,206 @@
+/* Contenedor principal del perfil */
+.profile-container {
+    max-width: 500px;
+    margin: 40px auto;
+    margin-top: 100px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: center;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .dark .profile-container {
+    background-color: #1D1D1D;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Título */
+  h2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 28px;
+    color: #242424;
+    margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+  
+  .dark h2 {
+    color: #FF9800;
+  }
+  
+  /* Información del usuario */
+  .profile-info {
+    background: #FFB74D;
+    padding: 15px;
+    border-radius: 10px;
+    font-family: "Inter", sans-serif;
+    color: #333;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .dark .profile-info {
+    background: #FF9800;
+    color: #FFF;
+  }
+  
+  .profile-info p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  /* Botón "Mis Compras" */
+  .my-purchases-button {
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #ffb445;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    transition: background 0.3s, transform 0.2s ease;
+  }
+  
+  .my-purchases-button:hover {
+    background: #fcbe60;
+    transform: scale(1.05);
+  }
+  
+  /* Sección de cambio de contraseña */
+  .change-password {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  h3 {
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    color: #333;
+    transition: color 0.3s;
+  }
+  
+  .dark h3 {
+    color: #FF9800;
+  }
+  
+  /* Grupos de formulario */
+  .form-group {
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  label {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 5px;
+    transition: color 0.3s;
+  }
+  
+  .dark label {
+    color: #333;
+  }
+  
+  /* Input */
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    transition: border 0.3s ease, background 0.3s ease;
+  }
+  
+  .dark input {
+    background: #333;
+    border: 1px solid #555;
+    color: #FFF;
+  }
+  
+  input:focus {
+    border-color: #FF9800;
+    outline: none;
+  }
+  
+  /* Contenedor de la contraseña con ícono */
+  .password-container {
+    position: relative;
+  }
+  
+  .password-container input {
+    padding-right: 35px;
+  }
+  
+  .password-container svg {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    transition: color 0.3s;
+  }
+  
+  .dark .password-container svg {
+    color: #CCC;
+  }
+  
+  /* Botón de cambio de contraseña */
+  button[type="submits"] {
+    width: 100%;
+    padding: 12px;
+    background: #FF7043;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  button[type="submits"]:hover {
+    background: #F4511E;
+    transform: scale(1.05);
+  }
+  
+  button[type="submits"]:disabled {
+    background: #CCC;
+    cursor: not-allowed;
+  }
+  
+  /* Diseño responsivo */
+  @media (max-width: 600px) {
+    .profile-container {
+      width: 90%;
+      padding: 15px;
+      margin-top: 180px;
+    }
+  
+    h2 {
+      font-size: 24px;
+    }
+  
+    h3 {
+      font-size: 18px;
+    }
+  
+    .profile-info {
+      font-size: 14px;
+    }
+  
+    input {
+      font-size: 13px;
+      padding: 8px;
+    }
+  
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  

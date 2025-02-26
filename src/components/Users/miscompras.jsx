@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getShows } from '../Redux/Actions/actions'; 
 import '../Users/miscompras.css';
+import Swal from 'sweetalert2';  // Asegúrate de importar SweetAlert
 
 const MisCompras = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,20 @@ const MisCompras = () => {
         if (response.data?.tickets) {
           const userTickets = response.data.tickets.filter(ticket => ticket.userId === user?.id);
           setTickets(userTickets);
+
+          // Si no hay tickets, muestra SweetAlert
+          if (userTickets.length === 0) {
+            Swal.fire({
+              title: '¡No tienes compras!',
+              text: 'No tienes tickets registrados. ¿Quieres ir a tu perfil?',
+              icon: 'info',
+              confirmButtonText: 'Aceptar',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                navigate('/profile');  // Redirige a la página de perfil al aceptar
+              }
+            });
+          }
         }
       } catch (err) {
         setError('Error al obtener los tickets. Intente nuevamente.');
@@ -36,13 +51,16 @@ const MisCompras = () => {
       fetchTickets();
       dispatch(getShows());
     }
-  }, [user, dispatch]);
+  }, [user, dispatch, navigate]);
+  
 
   const currentDateTime = new Date();
 
   if (loading) return <div className="loading">Cargando tus compras...</div>;
   if (error) return <div className="error">{error}</div>;
   if (tickets.length === 0) return <div className="no-compras">No tienes compras registradas.</div>;
+
+  
 
   // PAGINACIÓN: Obtener los tickets de la página actual
   const startIndex = (currentPage - 1) * ticketsPerPage;
