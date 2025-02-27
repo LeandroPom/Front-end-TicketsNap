@@ -24,11 +24,15 @@
   color: var(--color-texto-light);
   margin-top: 150px;
   box-sizing: border-box;
+  background-color: #cccccc6b;
 }
 
-.texto-inicio{
-  color: rgba(var(--color-texto-light));
+.dark .login-form{
+  background-color: hsl(0, 0%, 8%);
+  color: var(--color-texto-dark);
 }
+
+
 
 /* ======= Tema Claro/Oscuro ======= */
 :root {
@@ -40,17 +44,7 @@
   --form-bg-dark: var(--color-secundario);
   --color-principal: #FFE57F;
   --color-intermedio: #FFD166;
-  --color-secundario: #FFB74D;
-}
-
-.login-container.light {
-  --bg-container-rgb: var(--bg-container-light-rgb);
-  --color-texto: var(--color-texto-light);
-}
-
-.login-container.dark {
-  --bg-container-rgb: var(--bg-container-dark-rgb);
-  --color-texto: var(--color-texto-dark);
+  --color-secundario: #fea623;
 }
 
 /* ======= Estilo de los campos de entrada ======= */
@@ -64,14 +58,6 @@
   background-color: var(--form-bg);
   color: var(--color-texto);
   box-sizing: border-box;
-}
-
-.login-container.light input {
-  --form-bg: var(--form-bg-light);
-}
-
-.login-container.dark input {
-  --form-bg: var(--form-bg-dark);
 }
 
 .input-field:focus {
@@ -97,18 +83,18 @@
 }
 
 .login-btn {
-  background-color: var(--color-intermedio);
-  color: var(--color-texto-dark);
+  background-color: var(--color-principal);
+  color: var(--color-texto-light);
 }
 
 .login-btn:hover {
   background-color: transparent;
-  border: 2px solid var(--color-intermedio);
+  border: 2px solid var(--color-secundario);
   color: var(--color-texto);
 }
 
 .cancel-btn {
-  background-color: var(--color-secundario);
+  background-color: #FF9800;
   color: var(--color-texto-dark);
 }
 
@@ -119,8 +105,23 @@
 }
 
 /* ======= Etiquetas de los Inputs ======= */
-label {
-  color: var(--color-texto);
+.password-container label {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+
+}
+.dark .password-container label {
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+.form-group label {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+
+}
+.dark .form-group label {
+  color: rgb(255, 255, 255);
   font-weight: bold;
 }
 

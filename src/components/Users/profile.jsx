@@ -88,7 +88,7 @@ const Profile = () => {
 
       <div className="change-password">
         <h3>Change Password</h3>
-        <form onSubmit={handleChangePassword}>
+        <form onSubmit={handleChangePassword} className='form-profile'>
           <div className="form-group">
             <label htmlFor="newPassword">New Password</label>
             <div className="password-container">

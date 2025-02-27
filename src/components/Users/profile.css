@@ -26,7 +26,7 @@
   }
   
   .dark h2 {
-    color: #FF9800;
+    color: #f4f4f4;
   }
   
   /* Información del usuario */
@@ -40,7 +40,7 @@
   }
   
   .dark .profile-info {
-    background: #FF9800;
+    background: #FFE57F;
     color: #FFF;
   }
   
@@ -49,12 +49,17 @@
     font-size: 16px;
   }
   
+  .dark .profile-info p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #000000;
+  }
   /* Botón "Mis Compras" */
   .my-purchases-button {
     margin-top: 15px;
     padding: 10px 18px;
-    background: #ffb445;
-    color: white;
+    background: #FFE57F;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 8px;
     font-size: 16px;
@@ -64,11 +69,15 @@
   }
   
   .my-purchases-button:hover {
-    background: #fcbe60;
+    background: #FFB74D;
     transform: scale(1.05);
   }
   
   /* Sección de cambio de contraseña */
+  .dark .form-profile{
+    background-color: #1D1D1D;
+  }
+
   .change-password {
     margin-top: 20px;
     text-align: left;
@@ -82,7 +91,7 @@
   }
   
   .dark h3 {
-    color: #FF9800;
+    color: #ffffff;
   }
   
   /* Grupos de formulario */
@@ -95,13 +104,13 @@
     display: block;
     font-family: "Inter", sans-serif;
     font-size: 14px;
-    color: #444;
+    color: #000000;
     margin-bottom: 5px;
     transition: color 0.3s;
   }
   
   .dark label {
-    color: #333;
+    color: #ffffff;
   }
   
   /* Input */
@@ -112,17 +121,16 @@
     border-radius: 8px;
     font-size: 14px;
     font-family: "Inter", sans-serif;
-    transition: border 0.3s ease, background 0.3s ease;
   }
   
   .dark input {
-    background: #333;
+    background: #FFF;;
     border: 1px solid #555;
-    color: #FFF;
+    color: #000000;
   }
   
   input:focus {
-    border-color: #FF9800;
+    border-color: #FFB74D;
     outline: none;
   }
   
@@ -141,20 +149,20 @@
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #888;
+    color: #6d6d6d;
     transition: color 0.3s;
   }
   
-  .dark .password-container svg {
+  /* .dark .password-container svg {
     color: #CCC;
-  }
+  } */
   
   /* Botón de cambio de contraseña */
   button[type="submits"] {
     width: 100%;
     padding: 12px;
-    background: #FF7043;
-    color: white;
+    background: #FFE57F;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 8px;
     font-size: 16px;
@@ -164,7 +172,7 @@
   }
   
   button[type="submits"]:hover {
-    background: #F4511E;
+    background: #FFB74D;
     transform: scale(1.05);
   }
   

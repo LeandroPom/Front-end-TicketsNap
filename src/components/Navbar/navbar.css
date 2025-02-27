@@ -19,7 +19,7 @@
   --navbar-bg-light: #f8f9fa;
   --navbar-text-light: #333;
   --navbar-bg-dark: #222;
-  --navbar-text-dark: #FFB74D;
+  --navbar-text-dark: #FFE57F;
 }
 
 .navbar.light {
@@ -33,7 +33,7 @@
   --navbar-bg: var(--navbar-bg-dark);
   --navbar-text: var(--navbar-text-dark);
   background-color: #222;
-  color: #FFB74D;
+  color: #FFE57F;
 }
 
 /* ======= Logo ======= */
@@ -45,7 +45,7 @@
 .navbar-logo img {
   width: 180px;
   height: 70px;
-  background-color:#FF9800;
+  /* background-color:#FFE57F; */
   border-radius: 16px;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .theme-toggle-icon:hover {
-  color: #FFB74D;
+  color: #FFE57F;
 }
 
 /* ======= Nombre del Usuario ======= */

@@ -144,7 +144,7 @@ const Login = () => {
             
             />
 
-          <h2 style={{ color: 'black'}}>iniciar sesion</h2>
+          <h2 className='title'>iniciar sesion</h2>
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
