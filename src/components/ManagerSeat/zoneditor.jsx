@@ -15,7 +15,7 @@ const initialLocations = [
 
 const ZoneEditor = ({ showId }) => {
   const [zoneData, setZoneData] = useState({
-    zoneName: "",
+    zoneName: "Floresta",
     generalTicket: false,
     presentation: { date: "", time: { start: "", end: "" }, performance: 0 },
     location: initialLocations,
@@ -164,63 +164,72 @@ const ZoneEditor = ({ showId }) => {
   
   return (
     <div className="zone-editor-container">
-      <h1>Agregar Data</h1>
-
-      <label>
-        Nombre de la Zona:
-        <input type="text" value={zoneData.zoneName} onChange={(e) => handleInputChange("zoneName", e.target.value)} />
+      <h1>Carga,Datos</h1>
+  
+      <label className="styled-title">
+        Nombre de la Zona
+        <input 
+          type="text"
+          value={zoneData.zoneName}
+          onChange={(e) => handleInputChange("zoneName", e.target.value)}
+          disabled
+        />
       </label>
-
-      <label>
-        Ticket General:
+  
+      <div className="input-group">
+        <label>Precio General ⇨</label>
         <input type="checkbox" checked={zoneData.generalTicket} onChange={(e) => handleInputChange("generalTicket", e.target.checked)} />
-      </label>
-
-      <h3>Presentación</h3>
-      <label>
-        Fecha:
+      </div>
+  
+      <label className="styled-title">Presentacion</label>
+      <div className="input-group">
+        <label>Fecha:</label>
         <input type="date" value={zoneData.presentation.date} onChange={(e) => handlePresentationChange("date", e.target.value)} />
-      </label>
-      <label>
-        Inicio:
+      </div>
+      <div className="input-group">
+        <label>Inicio:</label>
         <input type="time" value={zoneData.presentation.time.start} onChange={(e) => handleTimeChange("start", e.target.value)} />
-      </label>
-      <label>
-        Fin:
+      </div>
+      <div className="input-group">
+        <label>Fin:</label>
         <input type="time" value={zoneData.presentation.time.end} onChange={(e) => handleTimeChange("end", e.target.value)} />
-      </label>
-      <label>
-        Performance:
+      </div>
+      <div className="input-group">
+        <label>Performance:</label>
         <input type="number" value={zoneData.presentation.performance} onChange={(e) => handlePresentationChange("performance", Number(e.target.value))} />
-      </label>
-
-      <h3>Divisiones</h3>
+      </div>
+  
+      <label className="styled-title">Divisiones</label>
       {zoneData.location.map((division, index) => (
         <div key={index}>
           <h4>{division.division}</h4>
-          <label>
-            Precio General:
-            <input type="number" value={division.generalPrice} onChange={(e) => handleLocationChange(division.division, "generalPrice", e.target.value)} />
-          </label>
+          <div className="input-group">
+            <label>Precio General:</label>
+            <input 
+              type="number" 
+              value={division.generalPrice} 
+              onChange={(e) => handleLocationChange(division.division, "generalPrice", e.target.value)} 
+            />
+          </div>
         </div>
       ))}
-
+  
       {!zoneData.generalTicket && (
         <div>
-          <h3>Editar Precios por Fila</h3>
-          <label>
-            División:
+          <label className="styled-title">Precios por fila</label>
+          <div className="input-group">
+            <label>División:</label>
             <select value={selectedDivision} onChange={(e) => setSelectedDivision(e.target.value)}>
-  {zoneData.location.map((division) => (
-    <option key={division.division} value={division.division}>
-      {division.division}
-    </option>
-  ))}
-</select>
-          </label>
-
-          <label>
-            Fila:
+              {zoneData.location.map((division) => (
+                <option key={division.division} value={division.division}>
+                  {division.division}
+                </option>
+              ))}
+            </select>
+          </div>
+  
+          <div className="input-group">
+            <label>Fila:</label>
             <select value={selectedRow} onChange={(e) => setSelectedRow(Number(e.target.value))}>
               {zoneData.location.find(loc => loc.division === selectedDivision)?.rows.map((row) => (
                 <option key={row.row} value={row.row}>
@@ -228,23 +237,21 @@ const ZoneEditor = ({ showId }) => {
                 </option>
               ))}
             </select>
-          </label>
-
-          <label>
-            Precio:
+          </div>
+  
+          <div className="input-group">
+            <label>Precio:</label>
             <input
               type="number"
-              value={
-                zoneData.location
-                  .find(loc => loc.division === selectedDivision)
-                  ?.rows.find(r => r.row === selectedRow)?.rowPrice || 0
-              }
+              value={zoneData.location
+                .find(loc => loc.division === selectedDivision)
+                ?.rows.find(r => r.row === selectedRow)?.rowPrice || 0}
               onChange={(e) => handleRowPriceChange(selectedDivision, selectedRow, e.target.value)}
             />
-          </label>
+          </div>
         </div>
       )}
-
+  
       <button onClick={saveChanges}>Guardar Cambios</button>
     </div>
   );

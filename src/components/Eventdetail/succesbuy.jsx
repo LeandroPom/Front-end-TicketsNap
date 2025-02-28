@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getShows } from '../Redux/Actions/actions';
 import emailjs from 'emailjs-com'; // Importar emailjs
+import styles from './succesbuy.css'
 
 const SuccessPage = () => {
   const location = useLocation();
@@ -113,11 +114,10 @@ const SuccessPage = () => {
   }
 
   return (
-    <div>
-      <h1>Compra Exitosa</h1>
+    <div className="ticket-container">
+      <h1 className="ticket-title">Compra Exitosa</h1>
       <p><strong>Nombre:</strong> {ticket.name}</p>
       <p><strong>Email:</strong> {ticket.mail || "Correo no disponible"}</p>
-      {/* <p><strong>Email:</strong> {sendTo || "Correo no disponible"}</p> */}
       <p><strong>Teléfono:</strong> {ticket.phone}</p>
       <p><strong>Fecha y Hora:</strong> {ticket.date}</p>
       <p><strong>División:</strong> {ticket.division}</p>
@@ -125,42 +125,43 @@ const SuccessPage = () => {
       {ticket.row && <p><strong>Fila:</strong> {ticket.row}</p>}
       <p><strong>Precio:</strong> ${ticket.totalPrice || ticket.price}</p>
       <p><strong>Evento:</strong> {showName}</p>
-      <p><strong>Direccion:</strong> {ticket.location}</p>
-
-      <div>
-        <img src={ticket.qrCode} alt="QR Code" />
+      <p><strong>Dirección:</strong> {ticket.location}</p>
+  
+      <div className="qr-container">
+        <img src={ticket.qrCode} alt="QR Code" className="qr-image" />
       </div>
-
+  
       {/* Selector de correo */}
-      <div>
+      <div className="email-select-container">
         <label>
           Enviar a:
-          <select value={sendTo} onChange={handleSendToChange}>
-            <option value={ticket.mail || "Correo no disponible"}>Mi correo ({ticket.mail || "Correo no disponible"})</option>
+          <select value={sendTo} onChange={handleSendToChange} className="email-select">
+            <option value={ticket.mail || "Correo no disponible"}>
+              Mi correo ({ticket.mail || "Correo no disponible"})
+            </option>
             <option value="custom">Otro correo</option>
           </select>
         </label>
-
+  
         {/* Input para ingresar el correo si se elige 'Otro correo' */}
         {showCustomEmailInput && (
-          <div>
+          <div className="custom-email-container">
             <input 
               type="email" 
               value={customEmail} 
               onChange={handleEmailChange} 
               placeholder="Ingresa el correo"
+              className="email-input"
             />
           </div>
         )}
       </div>
-
-      <button onClick={sendTicketEmail}>Enviar Ticket por Email</button> {/* Botón para enviar el email */}
-      
-      {/* Botón para imprimir los datos del ticket */}
-      <button onClick={printTicket}>Imprimir Ticket</button>
-      
+  
+      <button onClick={sendTicketEmail} className="btn-primary">Enviar Ticket por Email</button>
+      <button onClick={printTicket} className="btn-secondary">Imprimir Ticket</button>
+  
       {/* Contenido a imprimir */}
-      <div id="ticket-info" style={{display: 'none'}}>
+      <div id="ticket-info" className="print-ticket">
         <h2>Detalles del Ticket</h2>
         <p><strong>Nombre:</strong> {ticket.name}</p>
         <p><strong>Email:</strong> {ticket.mail || "Correo no disponible"}</p>
@@ -171,13 +172,13 @@ const SuccessPage = () => {
         <p><strong>Fila:</strong> {ticket.row}</p>
         <p><strong>Precio:</strong> ${ticket.price}</p>
         <p><strong>Evento:</strong> {showName}</p>
-        <p><strong>Direccion:</strong> {shows.location}</p>
-        <div>
-          <img src={ticket.qrCode} alt="QR Code" />
+        <p><strong>Dirección:</strong> {shows.location}</p>
+        <div className="qr-container">
+          <img src={ticket.qrCode} alt="QR Code" className="qr-image" />
         </div>
       </div>
     </div>
-  );
+  );  
 };
 
 export default SuccessPage;

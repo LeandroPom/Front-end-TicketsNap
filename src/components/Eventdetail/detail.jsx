@@ -18,7 +18,7 @@ Modal.setAppElement('#root');
 
 
 const Detail = () => {
-  const { id} = useParams();
+  const { id } = useParams();
   const showId = Number(id); // Convertir a número si es necesario
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ const Detail = () => {
   const [modalData, setModalData] = useState(null); // Aquí almacenarás la información de la división
   const user = useSelector((state) => state.user);
   const [showMap, setShowMap] = useState(false); // El mapa está oculto por defecto
-  
+
 
 
   const openModal = (data) => {
@@ -72,21 +72,21 @@ const Detail = () => {
       return;
     }
 
-  
-    
-  
+
+
+
     const fetchZones = async () => {
       try {
         const response = await axios.get("/zones"); // Ruta correcta de la API
         if (response.status === 200) {
           const zones = response.data.zones;
-          
+
           // Filtrar zonas por showId
           const matchingZones = zones.filter((zone) => zone.showId === Number(id));
-  
+
           if (matchingZones.length > 0) {
             console.log("Zonas encontradas para el show:", matchingZones);
-  
+
             // Asignar imagen basada en zoneId
             matchingZones.forEach((zone) => {
               switch (zone.id) {
@@ -109,10 +109,10 @@ const Detail = () => {
         console.error("Error al cargar las zonas:", error);
       }
     };
-  
+
     fetchZones();
-  }, [showMap,id]); // Se ejecuta solo cuando el id cambia
-  
+  }, [showMap, id]); // Se ejecuta solo cuando el id cambia
+
   // Este efecto se ejecuta cuando zonesLoaded cambia, forzando la actualización del estado
   useEffect(() => {
     if (zonesLoaded) {
@@ -128,56 +128,56 @@ const Detail = () => {
   // Filtrar los asientos disponibles cuando se seleccione una zona
   const fetchSeatsForZone = async (divisionName, showId) => {
     try {
-        const response = await axios.get("/zones");
-        if (response.status === 200) {
-            const zones = response.data.zones;
+      const response = await axios.get("/zones");
+      if (response.status === 200) {
+        const zones = response.data.zones;
 
-            // Filtrar las zonas por showId y divisionName
-            const matchedZones = zones.filter(
-                (zone) =>
-                    zone.showId === showId &&
-                    zone.location.some((loc) => loc.division === divisionName)
-            );
+        // Filtrar las zonas por showId y divisionName
+        const matchedZones = zones.filter(
+          (zone) =>
+            zone.showId === showId &&
+            zone.location.some((loc) => loc.division === divisionName)
+        );
 
-            if (matchedZones.length > 0) {
-                // Crear el array de presentaciones con lógica adaptada
-                const presentations = matchedZones.map((zone) => {
-                    const presentation = zone.presentation;
-                    const generalTicket = zone.generalTicket ?? false; // Asegurar que no sea undefined
-                    const generalPrice = zone.location.find(
-                        (loc) => loc.division === divisionName
-                    )?.generalPrice || 0;
+        if (matchedZones.length > 0) {
+          // Crear el array de presentaciones con lógica adaptada
+          const presentations = matchedZones.map((zone) => {
+            const presentation = zone.presentation;
+            const generalTicket = zone.generalTicket ?? false; // Asegurar que no sea undefined
+            const generalPrice = zone.location.find(
+              (loc) => loc.division === divisionName
+            )?.generalPrice || 0;
 
-                    // Asignar generalTicket según la fecha y hora de la presentación
-                    const isCorrectTime = presentation.time.start && presentation.time.end;
-                    
-                    return {
-                        zoneId: zone.id,
-                        divisionName: divisionName,
-                        presentation: presentation,
-                        location: zone.location,
-                        space: zone.space || zone.location.find(loc => loc.division === divisionName)?.space || 0,
-                        generalPrice: generalPrice,
-                        generalTicket: isCorrectTime ? generalTicket : false, // Aquí asignamos el valor dinámicamente
-                      };
-                    });
-      
+            // Asignar generalTicket según la fecha y hora de la presentación
+            const isCorrectTime = presentation.time.start && presentation.time.end;
 
-                console.log('Presentations:', presentations);
-                setAvailablePresentations(presentations);
-                setIsSelectorOpen(true);
-            } else {
-                console.log("No se encontraron zonas para esta presentación.");
-            }
+            return {
+              zoneId: zone.id,
+              divisionName: divisionName,
+              presentation: presentation,
+              location: zone.location,
+              space: zone.space || zone.location.find(loc => loc.division === divisionName)?.space || 0,
+              generalPrice: generalPrice,
+              generalTicket: isCorrectTime ? generalTicket : false, // Aquí asignamos el valor dinámicamente
+            };
+          });
+
+
+          console.log('Presentations:', presentations);
+          setAvailablePresentations(presentations);
+          setIsSelectorOpen(true);
+        } else {
+          console.log("No se encontraron zonas para esta presentación.");
         }
+      }
     } catch (error) {
-        console.error("Error al cargar las divisiones:", error);
+      console.error("Error al cargar las divisiones:", error);
     }
-};
-  
-  
- 
-  
+  };
+
+
+
+
 
   const handleCanvasClick = (e) => {
     const canvas = canvasRef.current;
@@ -197,7 +197,7 @@ const Detail = () => {
         drawSeats(ctx); // Asegúrate de que los asientos se dibujen con la escala correcta
       }
 
-     
+
 
 
       const pixel = ctx.getImageData(scaledX, scaledY, 1, 1).data;
@@ -215,30 +215,41 @@ const Detail = () => {
               Math.pow(scaledX - seatPosX, 2) + Math.pow(scaledY - seatPosY, 2)
             );
 
-            return distance <= seatRadius && !seat.taken;
+            return distance <= seatRadius; // Filtra por cercanía, no por estado de ocupación
           })
         );
 
         if (clickedSeat.length > 0) {
+          const seat = clickedSeat[0]; // Solo debe haber un asiento en el clic
+          if (seat.taken) {
+            // Si el asiento está ocupado, muestra la alerta
+            Swal.fire({
+              icon: 'error',
+              title: '¡Asiento Ocupado!',
+              text: 'Este asiento ya está ocupado, selecciona otro asiento.',
+            });
+            return; // Detiene la ejecución y no permite seleccionar otro asiento
+          }
+
           const seatRow = availableSeats.find((row) =>
             row.seats.some((seat) => seat.uniqueId === clickedSeat[0].uniqueId)
           );
 
-            
-          const selectedZoneInfo = availablePresentations.find(p => 
+
+          const selectedZoneInfo = availablePresentations.find(p =>
             p.divisionName === selectedZone &&
             p.presentation.date === selectedPresentation.date &&
             p.presentation.time.start === selectedPresentation.time.start
           );
-          
+
           // Verifica que selectedZoneId esté correctamente asignado
           const selectedZoneId = selectedZoneInfo ? selectedZoneInfo.zoneId : null;
-          
+
           // Asegúrate de obtener el precio adecuado
           const price = selectedZoneInfo?.generalTicket
             ? selectedZoneInfo.generalPrice  // Si es true, usar generalPrice para todos los asientos
             : seatRow?.rowPrice;  // Si es false, usar rowPrice de la fila
-          
+
           // Crear el objeto seatInfo con zoneId corregido
           const seatInfo = {
             ...clickedSeat[0],
@@ -248,7 +259,7 @@ const Detail = () => {
             zoneId: selectedZoneId, // Aquí asegúrate que zoneId no sea null
             showId: event.id,
           };
-          
+
           console.log("ENVIAR A SEATS", seatInfo);
           setSelectedSeats([seatInfo]);
           setSelectedSeats([seatInfo]);
@@ -256,11 +267,11 @@ const Detail = () => {
         } else {
           Swal.fire({
             icon: 'error',
-            title: '¡Asiento Ocupado!',
-            text: 'Este asiento ya está ocupado, selecciona otro asiento.',
+            title: '¡Presiona sobre un asiento!',
+            text: 'Seleccion no permitida',
           });
         }
-        
+
       } else {
         // Aquí va la lógica para detectar las zonas
         if (rgb === "rgb(255, 199, 206)" || rgb === "rgb(247, 191, 203)") {
@@ -299,6 +310,7 @@ const Detail = () => {
       }
     }
   };
+
   const handleConfirmSelection = (presentation) => {
     if (presentation) {
       // Establecer la presentación seleccionada
@@ -394,7 +406,7 @@ const Detail = () => {
           setTimer((prevTimer) => {
             if (prevTimer <= 0) {
               clearInterval(intervalId); // Detener el contador
-              window.location.href = "/home"; // Redirigir a la página de inicio
+              window.location.href = "/"; // Redirigir a la página de inicio
             }
             return prevTimer - 1;
           });
@@ -429,7 +441,7 @@ const Detail = () => {
       drawSeats(ctx);  // Dibuja los asientos cuando se actualizan
     }
   }, [availableSeats]);  // Este useEffect se ejecuta cuando los asientos están disponibles
-  
+
   useEffect(() => {
     if (zoneImage) {
       loadImage();
@@ -472,7 +484,7 @@ const Detail = () => {
   }, [zoneImage]);
 
 
-  const canvasWidth = zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png" ? 990 : 495 ; // Tamaño de canvas específico para Platea
+  const canvasWidth = zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png" ? 990 : 495; // Tamaño de canvas específico para Platea
   const canvasHeight = zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png" ? 200 : 800; // Tamaño de canvas específico para Platea
 
 
@@ -481,20 +493,20 @@ const Detail = () => {
     if (availableSeats && availableSeats.length > 0) {
       const greenImage = new Image();
       greenImage.src = '/images/chair-azul.png';
-      
+
       const redImage = new Image();
       redImage.src = '/images/chair-rojo.png';
-      
+
       const zoneImageObj = new Image();
       zoneImageObj.src = zoneImage;
-  
+
       zoneImageObj.onload = () => {
         const canvasWidth = canvasRef.current.width;
         const canvasHeight = canvasRef.current.height;
-  
+
         // Declarar scaleX y scaleY fuera de las condiciones
         let scaleX, scaleY;
-  
+
         // Ajuste específico para Platea Norte y Platea Sur
         if (zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png") {
           // Si es una de las imágenes de Platea, usa tamaños fijos específicos
@@ -502,10 +514,10 @@ const Detail = () => {
           const specificHeight = 365;  // o el tamaño correcto para estas imágenes
           scaleX = specificWidth / zoneImageObj.width;
           scaleY = specificHeight / zoneImageObj.height;
-  
+
           console.log("Dibujando Platea Norte/Sur con escala específica: ", scaleX, scaleY);
-        } 
-  
+        }
+
         // Ajuste específico para Platea Gold
         else if (zoneImage === "/images/zona-Gold.png" || zoneImage === "/images/zona-verde.jpg" || zoneImage === "/images/zona-roja.jpg") {
           // Si es una de las imágenes de Platea Gold, usa tamaños fijos específicos
@@ -513,39 +525,39 @@ const Detail = () => {
           const specificHeight = 820;  // o el tamaño correcto para estas imágenes
           scaleX = specificWidth / zoneImageObj.width;
           scaleY = specificHeight / zoneImageObj.height;
-  
+
           console.log("Dibujando Platea Gold con escala específica: ", scaleX, scaleY);
-        } 
-  
+        }
+
         // Para el resto de las imágenes, usar el cálculo normal
         else {
           scaleX = canvasWidth / zoneImageObj.width;
           scaleY = canvasHeight / zoneImageObj.height;
         }
-  
+
         // Aplica la escala a la imagen cargada y dibuja el fondo
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.drawImage(zoneImageObj, 0, 0, zoneImageObj.width, zoneImageObj.height, 0, 0, canvasWidth, canvasHeight);
-  
+
         availableSeats.forEach((seatRow) => {
           seatRow?.seats?.forEach((seat) => {
             // Aplica la escala a las coordenadas de los asientos
             const scaledX = seat.x * scaleX;
             const scaledY = seat.y * scaleY;
-  
+
             // Determinar qué imagen usar dependiendo del estado del asiento (verde o rojo)
             const seatImage = seat.taken ? redImage : greenImage;
-  
+
             // Dibuja la imagen correspondiente sobre el asiento
             ctx.drawImage(seatImage, scaledX - 20, scaledY - 20, 21, 21);
-            
-            if (seat.taken) {
-              ctx.font = '14px Arial';
-              ctx.fillStyle = "white";
-              const textWidth = ctx.measureText(seat.id).width;
-              ctx.fillText(seat.id, scaledX - textWidth / 2, scaledY + 25);
-            }
-  
+
+            // if (seat.taken) {
+            //   ctx.font = '14px Arial';
+            //   ctx.fillStyle = "black";
+            //   const textWidth = ctx.measureText(seat.id).width;
+            //   ctx.fillText(seat.id, scaledX - textWidth / 2, scaledY + 25);
+            // }
+
             seat.drawingPosition = { x: scaledX, y: scaledY, radius: 30 };
           });
         });
@@ -553,34 +565,34 @@ const Detail = () => {
       };
     }
   };
- 
-  
+
+
 
   const loadImage = () => {
     const canvas = canvasRef.current;
     if (canvas) {
       const img = new Image();
       img.src = zoneImage;
-  
+
       img.onload = () => {
         const ctx = canvas.getContext('2d');
         const scaledWidth = canvas.width * zoom;
         const scaledHeight = canvas.height * zoom;
-  
+
         // Limpiar el canvas antes de dibujar
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
+
         let width = img.width;
         let height = img.height;
 
-        
-  
+
+
         // Aquí se usa el tamaño original de la imagen
         // ya no es necesario el ajuste específico 130x130
-  
+
         // Dibujar la imagen escalada en el canvas
         ctx.drawImage(img, 0, 0, width, height, 0, 0, scaledWidth, scaledHeight);
-  
+
         // Solo dibujar los asientos si ya se ha seleccionado una zona
         if (selectedZone) {
           drawSeats(ctx);  // Redibuja los asientos con la nueva escala
@@ -607,6 +619,14 @@ const Detail = () => {
     setShowMap(true); // Muestra el mapa cuando se hace clic en "Elegir asientos"
   };
 
+  const handleCloseModal = () => {
+    // Cierra el modal
+    setIsSeatManagerOpen(false);
+
+    // Redirige al usuario a la página principal
+    navigate('/');
+  };
+
 
   return (
     <div className="event-detail">
@@ -616,36 +636,36 @@ const Detail = () => {
       {event.presentation.map((presentation, index) => (
         <div class="box-contenedor">
           <div className="event-imagen" key={index}>
-          
-          {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
-      {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
-        <iframe
-          className="event-video"
-          src={event.coverImage.replace("watch?v=", "embed/")}
-          title={event.name}
-          frameBorder="0"
-          allowFullScreen
-        ></iframe>
-      ) : (
-        <img className="event-image" src={event.coverImage} alt={event.name} />
-      )}
-      </div>
-      <div className="event-info" key={index}>
-       <p><FaMusic style={{ color: 'black' }} /> <strong>Genero:</strong> {event.genre.join(', ')}</p>
-       <p><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Direccion y Lugar:</strong> {event.location}</p>
-       <p><FaCalendarAlt style={{ color: 'green' }} /> <strong>Fecha:</strong> {presentation.date}</p>
-       <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentaciones:</strong> {presentation.performance}</p>
-       <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
-       
-      {countdownStarted && (
-        <div>
-          <h2 style={{ color: 'red' }}>{Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}</h2> {/* Mostrar el tiempo restante */}
-        </div>
-      )}
-       </div>
+
+            {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
+            {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
+              <iframe
+                className="event-video"
+                src={event.coverImage.replace("watch?v=", "embed/")}
+                title={event.name}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <img className="event-image" src={event.coverImage} alt={event.name} />
+            )}
           </div>
+          <div className="event-info" key={index}>
+            <p><FaMusic style={{ color: 'black' }} /> <strong>Genero:</strong> {event.genre.join(', ')}</p>
+            <p><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Direccion y Lugar:</strong> {event.location}</p>
+            <p><FaCalendarAlt style={{ color: 'green' }} /> <strong>Fecha:</strong> {presentation.date}</p>
+            <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentaciones:</strong> {presentation.performance}</p>
+            <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
+
+            {countdownStarted && (
+              <div>
+                <h2 style={{ color: 'red' }}>{Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}</h2> {/* Mostrar el tiempo restante */}
+              </div>
+            )}
+          </div>
+        </div>
       ))}
-          
+
       {/* <ZoneEditor showId={event.id} /> */}
 
       {isSelectorOpen && (
@@ -676,70 +696,72 @@ const Detail = () => {
       )}
 
 
+
+
       {/* Aquí se muestra el mapa debajo de los detalles del evento */}
 
       <div>
-      {/* Botón para mostrar el mapa */}
-      
-      {!showMap && (
-  <button 
-  onClick={handleChooseSeats} 
-  style={{
-    backgroundColor: 'green',
-    color: 'white',
-    padding: '12px 20px',  // Aumenta el tamaño del botón (más alto y ancho)
-    borderRadius: '15px',  // Redondea los bordes del botón
-    fontWeight: 'bold',  // Puedes agregar para que el texto se vea en negrita (opcional)
-    cursor: 'pointer'  // Cambia el cursor al pasar sobre el botón
-  }}
->
-  Elegir Asientos
-</button>
-      )} 
-      
-      
-                {user?.isAdmin && (
-        <>
-          <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Add Data</button>
-          {isZoneEditorOpen && <ZoneEditor showId={id} />}
-          <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Close</button>
-        </>
-      )}
+        {/* Botón para mostrar el mapa */}
 
-       {/* Aquí se muestra el mapa debajo de los detalles del evento */}
-       {showMap && zoneImage && (
-        <div className="map-container" style={{
-          position: 'relative',
-          width: '50%',
-          height: '50%',
-          left: "25%"
-        }}>
-          <canvas
-            ref={canvasRef}
-            onClick={handleCanvasClick}
+        {!showMap && (
+          <button
+            onClick={handleChooseSeats}
             style={{
-              cursor: 'pointer',
-              width: '100%',
-              height: '100%',
+              backgroundColor: '#FFD166',
+              color: 'black',
+              padding: '12px 20px',  // Aumenta el tamaño del botón (más alto y ancho)
+              borderRadius: '15px',  // Redondea los bordes del botón
+              fontWeight: 'bold',  // Puedes agregar para que el texto se vea en negrita (opcional)
+              cursor: 'pointer'  // Cambia el cursor al pasar sobre el botón
             }}
-            width={canvasWidth}
-            height={canvasHeight}
-          />
+          >
+            Elegir Asientos
+          </button>
+        )}
 
-          {selectedZone && <p>Selected Zone: {selectedZone}</p>}
+
+        {user?.isAdmin && (
+          <>
+            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Add Data</button>
+            {isZoneEditorOpen && <ZoneEditor showId={id} />}
+            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Close</button>
+          </>
+        )}
+
+        {/* Aquí se muestra el mapa debajo de los detalles del evento */}
+        {showMap && zoneImage && (
+          <div className="map-container" style={{
+            position: 'relative',
+            width: '50%',
+            height: '50%',
+            left: "25%"
+          }}>
+            <canvas
+              ref={canvasRef}
+              onClick={handleCanvasClick}
+              style={{
+                cursor: 'pointer',
+                width: '100%',
+                height: '100%',
+              }}
+              width={canvasWidth}
+              height={canvasHeight}
+            />
+
+            {selectedZone && <p>Selected Zone: {selectedZone}</p>}
+          </div>
+        )}
+
+        <div
+          className="image-preview"
+          style={{
+            transform: `scale(${zoom})`,
+            transformOrigin: "center",
+          }}
+        >
         </div>
-      )}
-
-      <div
-        className="image-preview"
-        style={{
-          transform: `scale(${zoom})`,
-          transformOrigin: "center",
-        }}
-      >
       </div>
-    </div>
-  
+
 
       <div className="zoom-controls">
         {/* <button onClick={handleZoomOut}>-</button>
@@ -748,23 +770,18 @@ const Detail = () => {
       {isSeatManagerOpen && (
         <div className="modal">
           <div className="modal-overlay" onClick={() => setIsSeatManagerOpen(false)}></div>
-          <div className="modal-content">
-            <h2> Select Your Seat</h2>
 
-            <Seatbuy
-  seats={selectedSeats[0]}  // Solo el primer asiento seleccionado
-  onSeatsSelected={handleSeatsSelected}
-  availableSeats={availableSeats}
-  isSelectable={true}
-  selectedSeats={selectedSeats}
-  eventDetails={event}
-  selectedPresentation={selectedPresentation}
-  zoneId={selectedSeats[0]?.zoneId}  // Asegúrate de pasar zoneId aquí
-/>
+          <Seatbuy
+            seats={selectedSeats[0]}  // Solo el primer asiento seleccionado
+            onSeatsSelected={handleSeatsSelected}
+            availableSeats={availableSeats}
+            isSelectable={true}
+            selectedSeats={selectedSeats}
+            eventDetails={event}
+            selectedPresentation={selectedPresentation}
+            zoneId={selectedSeats[0]?.zoneId}  // Asegúrate de pasar zoneId aquí
+          />
 
-            <button onClick={() => setIsSeatManagerOpen(false)}>Close</button>
-
-          </div>
         </div>
       )}
     </div>
@@ -772,6 +789,18 @@ const Detail = () => {
 };
 
 export default Detail;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

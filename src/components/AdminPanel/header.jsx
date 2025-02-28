@@ -23,29 +23,35 @@ const Header = () => {
         <ul>
           {user?.isAdmin && (
             <>
-              <li >
-                <Link to="/admin/dashboard">Metricas</Link>
-              </li>
-              <li>
-                <Link to="/admin/events">Eventos</Link>
-              </li>
-              <li>
-                <Link to="/admin/users">Usuarios</Link>
-              </li>
-              <li>
-                <Link to="/admin/places">Lugar</Link>
-              </li>
+              
+              <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/dashboard'}>
+              Metricas
+              </button>
+              
+              <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/events'}>
+               Eventos
+              </button>
+
+              <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/users'}>
+              Usuarios
+              </button>
+              
+              <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/places'}>
+              Lugar
+              </button>
+             
             </>
           )}
 
           {/* Tanto admin como cashier pueden acceder a Tickets Vendidos */}
-          <li>
-            <Link to="/admin/tickets">Tickets Vendidos</Link>
-          </li>
+          
+          <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/tickets'}>
+          Tickets Vendidos
+          </button>
 
-          <li>
-            <button className='botonedit' onClick={handleLogout}>Salir</button>
-          </li>
+          
+            <button className='boton-barra-adm' onClick={handleLogout}>Salir</button>
+         
         </ul>
       </nav>
     </header>
