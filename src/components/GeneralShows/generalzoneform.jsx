@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import './generalzone.css';  // Asegúrate de importar el archivo CSS
 
 const GeneralZoneForm = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const GeneralZoneForm = () => {
 
     const data = {
       showId,
-      zoneName,
+      zoneName: "FlorestaGeneral",
       updates: {
         presentation: {
           date,
@@ -72,7 +73,10 @@ const GeneralZoneForm = () => {
       Swal.fire({
         title: 'Zona creada con éxito',
         icon: 'success',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       }).then(() => navigate('/'));
     } catch (error) {
       Swal.fire({
@@ -84,12 +88,12 @@ const GeneralZoneForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={formStyle}>
-      <div style={formRowStyle}>
+    <form  className="form-containers" onSubmit={handleSubmit}>
+      <div className="form-row">
         <div style={{ width: '48%' }}>
-          <label>Nombre de la Zona:
+          {/* <label>Nombre de la Zona:
             <input type="text" value={zoneName} onChange={(e) => setZoneName(e.target.value)} required />
-          </label>
+          </label> */}
           <label>Fecha de Presentación:
             <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
           </label>
@@ -132,38 +136,9 @@ const GeneralZoneForm = () => {
         </>
       )}
 
-      <button type="submits" style={buttonStyle}>Guardar Zona</button>
+      <button type="submit" className="custom-button">Guardar Zona</button>
     </form>
   );
-};
-
-const formStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  maxWidth: '600px',
-  margin: '80px auto 0',
-  padding: '20px',
-  border: '1px solid #ccc',
-  borderRadius: '10px',
-  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-  backgroundColor: 'white'
-};
-
-const formRowStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  width: '100%'
-};
-
-const buttonStyle = {
-  marginTop: '20px',
-  padding: '10px 20px',
-  backgroundColor: '#007BFF',
-  color: 'white',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer'
 };
 
 export default GeneralZoneForm;

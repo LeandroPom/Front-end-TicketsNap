@@ -1,6 +1,6 @@
 /* ======= Fondo del Modal ======= */
 .login-modal {
-  background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed;
+  /* background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,6 +30,10 @@
 .dark .login-form{
   background-color: hsl(0, 0%, 8%);
   color: var(--color-texto-dark);
+}
+
+.dark .login-container {
+  background-color: hsl(0, 0%, 8%);
 }
 
 

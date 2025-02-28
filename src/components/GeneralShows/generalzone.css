@@ -1,0 +1,42 @@
+/* GeneralZoneForm.css */
+.form-containers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 80px auto 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: rgb(233, 233, 233);
+  }
+
+
+  .dark .form-containers {
+    background-color: rgb(83, 83, 83);
+  }
+  
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .custom-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .custom-button:hover {
+    background-color: #0056b3; /* Color más oscuro cuando el ratón pasa sobre el botón */
+  }
+  
+  .custom-button:active {
+    background-color: #004080; /* Color cuando el botón es presionado */
+  }
+  

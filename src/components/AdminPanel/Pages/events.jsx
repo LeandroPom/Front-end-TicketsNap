@@ -66,11 +66,11 @@ const Events = () => {
 
   return (
     <div className="events-page">
-      <h1>Events Management</h1>
-      {loading && <p>Loading...</p>}
+      <h1>Administrador de eventos</h1>
+      {loading && <p>Cargando...</p>}
       {error && <p>Error: {error}</p>}
 
-      <button className='botoncreate' onClick={() => navigate('/create-show')}>Create Event</button>
+      <button className='botoncreate' onClick={() => navigate('/create-show')}>Crear evento</button>
 
       <input
         type="text"
@@ -83,9 +83,9 @@ const Events = () => {
       <table className='Titles-tables'>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Genre</th>
-            <th>Actions</th>
+            <th>Nombre</th>
+            <th>Genero</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -94,7 +94,7 @@ const Events = () => {
               <td>{show.name}</td>
               <td>{show.genre.join(', ')}</td>
               <td>
-                <button className="botonedit" onClick={() => handleEdit(show.id)}>Edit</button>
+                <button className="botonedit" onClick={() => handleEdit(show.id)}>Editar</button>
                 <button
                   className={`botonedit-desactivated ${show.state ? 'active' : 'inactive'}`}
                   onClick={() => handleToggleState(show.id, show.state)}
@@ -112,7 +112,9 @@ const Events = () => {
         <button 
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          style={{ margin: '0 5px', padding: '8px 12px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}
+          style={{ margin: '0 5px', padding: '8px 12px', backgroundColor: '#FFE57F', color: 'black', border: 'none', cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+          borderRadius: '12px'
+           }}
         >
           ◀ Anterior
         </button>
@@ -123,11 +125,11 @@ const Events = () => {
             style={{ 
               margin: '0 5px', 
               padding: '8px 12px', 
-              backgroundColor: currentPage === index + 1 ? '#0056b3' : '#007bff', 
-              color: 'white', 
+              backgroundColor: currentPage === index + 1 ? '#FFE57F' : '#FFD166', 
+              color: 'black', 
               border: 'none', 
               cursor: 'pointer',
-              borderRadius: '5px' 
+              borderRadius: '16px' 
             }}
           >
             {index + 1}
@@ -136,7 +138,9 @@ const Events = () => {
         <button 
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
-          style={{ margin: '0 5px', padding: '8px 12px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer' }}
+          style={{ margin: '0 5px', padding: '8px 12px', backgroundColor: '#FFE57F', color: 'black', border: 'none', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+          borderRadius: '12px',
+           }}
         >
           Siguiente ▶
         </button>

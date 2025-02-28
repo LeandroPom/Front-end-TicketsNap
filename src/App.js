@@ -21,11 +21,11 @@ import GeneralShow from "./components/GeneralShows/generaldetail"
 import GeneralZoneForm from './components/GeneralShows/generalzoneform';
 import axios from "axios";
 import TicketGeneral from './components/GeneralShows/ticketgeneral';
-  axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "http://localhost:3001";
 
 
 
-  
+
 
 
 
@@ -33,34 +33,34 @@ function App() {
 
   Modal.setAppElement('#root');
 
-  
+
   return (
-    
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/event/:id" element={<Detail />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/create-show" element={<CreateShowForm />} />
-          <Route path="/event/general/:id" element={<GeneralShow />} />
-          <Route path="/createplace" element={<CreatePlaceForm />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/admin/events/edit/:showId" element={<EditShow />} />
-          <Route path="/create/general/zone/:id" element={<GeneralZoneForm/>} />
-          {/* <Route path="/createzone" element={<CreateZone />} /> */}
-          <Route path="/ticket-detail" element={<TicketDetail />} />
-          <Route path="/generaltribune" element={<Generaltribunes />} />
-          <Route path="/profile/miscompras" element={<MisCompras />} />
-          <Route path="/success" element={<SuccessPage />} />
-          <Route path="/general/ticket/success" element={<TicketGeneral />} />
-          <Route path="/tickets/useQR/:ticketId" element={<Ticketscan />} />
-          <Route path="/tickets/test" element={<h1>🚀 RUTA DETECTADA</h1>} />
-          <Route path="*" element={<AdminPanel />} />
-        </Routes>
-      </Router>
-      
+
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/event/:id" element={<Detail />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/create-show" element={<CreateShowForm />} />
+        <Route path="/event/general/:id" element={<GeneralShow />} />
+        <Route path="/createplace" element={<CreatePlaceForm />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/admin/events/edit/:showId" element={<EditShow />} />
+        <Route path="/create/general/zone/:id" element={<GeneralZoneForm />} />
+        {/* <Route path="/createzone" element={<CreateZone />} /> */}
+        <Route path="/ticket-detail" element={<TicketDetail />} />
+        <Route path="/generaltribune" element={<Generaltribunes />} />
+        <Route path="/profile/miscompras" element={<MisCompras />} />
+        <Route path="/success" element={<SuccessPage />} />
+        <Route path="/general/ticket/success" element={<TicketGeneral />} />
+        <Route path="/tickets/useQR/:ticketId" element={<Ticketscan />} />
+        <Route path="/tickets/test" element={<h1>🚀 RUTA DETECTADA</h1>} />
+        <Route path="*" element={<AdminPanel />} />
+      </Routes>
+    </Router>
+
   );
 }
 

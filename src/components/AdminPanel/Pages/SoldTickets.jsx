@@ -327,7 +327,7 @@ const handleDownloadExcel = () => {
                 <td>
                   <button
                     onClick={() => cancelTicket(ticket)}
-                    style={{ padding: "5px", backgroundColor: "red", color: "white" }}
+                    style={{ padding: "5px", backgroundColor: "#FFE57F", color: "black" }}
                     >
                     Cancelar Ticket
                   </button>
@@ -350,10 +350,11 @@ const handleDownloadExcel = () => {
       style={{ 
         margin: "0 5px", 
         padding: "8px 12px", 
-        backgroundColor: "#007bff", 
-        color: "white", 
+        backgroundColor: "#FFE57F", 
+        color: "black", 
         border: "none", 
-        cursor: currentPage === 1 ? "not-allowed" : "pointer" 
+        cursor: currentPage === 1 ? "not-allowed" : "pointer" ,
+        borderRadius: '16px'
       }}
     >
       ◀ Anterior
@@ -366,8 +367,8 @@ const handleDownloadExcel = () => {
         style={{ 
           margin: "0 5px", 
           padding: "8px 12px", 
-          backgroundColor: currentPage === startPage + index ? "#0056b3" : "#007bff", 
-          color: "white", 
+          backgroundColor: currentPage === startPage + index ? "#FFE57F" : "#FFD166", 
+          color: "black", 
           border: "none", 
           cursor: "pointer",
           borderRadius: "5px"
@@ -383,10 +384,11 @@ const handleDownloadExcel = () => {
       style={{ 
         margin: "0 5px", 
         padding: "8px 12px", 
-        backgroundColor: "#007bff", 
-        color: "white", 
+        backgroundColor: "#FFE57F", 
+        color: "black", 
         border: "none", 
-        cursor: currentPage === totalPages ? "not-allowed" : "pointer" 
+        cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+        borderRadius: '16px', 
       }}
     >
       Siguiente ▶

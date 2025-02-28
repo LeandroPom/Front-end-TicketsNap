@@ -7,15 +7,7 @@
   transition: background-color 0.3s, color 0.3s; /* Animación */
 }
 
-.home.light {
-  background-color: #f1f1f1; /* Fondo claro para el modo claro */
-  color: black; /* Color de texto en modo claro */
-}
 
-.home.dark {
-  background-color: #2e2e2e; /* Fondo oscuro para el modo oscuro */
-  color: white; /* Color de texto en modo oscuro */
-}
 
 /* Título de la sección */
 .home h2 {
@@ -27,31 +19,28 @@
   transition: color 0.3s;
 }
 
-.home.light h2 {
-  color: #222; /* Título en negro en modo claro */
-}
 
-.home.dark h2 {
-  color: #ddd; /* Título en gris claro en modo oscuro */
-}
 
 /* Estilos de la barra de búsqueda y select */
 .search-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  margin-left: 150px;
 }
 
 .search-container input,
 .search-container select {
-  padding: 8px 15px;
-  margin: 0 10px;
-  border: 2px solid #007bff;
+  padding: 6px 10px;
+  margin: 5px;
+  border: 2px solid #e9aa16;
   border-radius: 8px;
   font-size: 16px;
-  background-color: #fff;
+  background-color: #FFD166;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  
+  
 }
 
 .search-container input:focus,
@@ -60,34 +49,94 @@
   box-shadow: 0 0 8px rgba(226, 227, 228, 0.6);
 }
 
-.home.light .search-container input,
-.home.light .search-container select {
-  background-color: #fff;
-  color: black;
+/* Estilos para los botones de paginación */
+.paginate-boton{
+  padding: 10px 10px;
+  font-size: 0.8rem;
+  background-color: #FFE57F; /* Amarillo pastel brillante */
+  color: #333; /* Color oscuro para el texto */
+  border: 2px solid #FFD166; /* Amarillo-naranja pastel brillante */
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin: 6px
 }
 
-.home.dark .search-container input,
-.home.dark .search-container select {
-  background-color: #333;
-  color: white;
-  border-color: #555;
+/* Efecto hover: al pasar el mouse sobre el botón */
+.paginate-boton:hover {
+  background-color: #FFB74D; /* Naranja pastel brillante */
+  transform: scale(1.05); /* Efecto de agrandar ligeramente */
 }
 
-/* Contenedor de eventos en columnas */
+/* Efecto active: cuando el botón está presionado */
+.paginate-botonact {
+  background-color: #df9d23; /* Amarillo-naranja pastel brillante */
+  transform: scale(0.95); /* Efecto de reducir el tamaño cuando se presiona */
+  padding: 10px 10px;
+  border-radius: 16px;
+  color: black
+}
+
+
+/* Contenedor de eventos en columnas en Home/ Cards */
 .homecard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 25px;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  max-width: 1200px;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  box-shadow: #007bff;
+  margin: 10px;
+  margin-top: 65px;
 }
 
+.content{
+  color:#030303
+}
+.dark .content{
+  color:#ffffff
+}
+ 
+ /* Cards color de fondo y tamaño de la misma */
+
+.cardshome {
+  border-radius: 12px;
+  padding: 15px;
+  transition: all 0.3s ease-in-out;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 5px solid #eca624;
+  overflow: hidden;
+  position: relative;
+  background: #ffffff; /* backgroud de las cards */
+  max-height: 400px;
+  width: 330px;
+  display: flex;
+}
+
+.dark .cardshome {
+  background: #000000; /* backgroud de las cards */
+}
+  
+  
+ 
+  
+  
+  /* Titulo y efecto del mismo en cards */
+.titulo-card {
+  color: #141413; /* Color negro que ya estás usando */
+  font-size: 35px; /* Tamaño de fuente grande para destacar */
+  margin-bottom: 10px; 
+  font-weight: 600; /* Negrita */
+  letter-spacing: 0.5px; /* Espaciado entre letras */
+  font-family: 'Roboto Slab', serif;
+}
+
+  .dark .titulo-card{
+    color: #ffffff; /* Color Blanco */
+  }
+  
+ 
 /* Elementos individuales de eventos */
 li {
   border-radius: 12px;
@@ -101,7 +150,7 @@ li {
   border: 3px solid #000000;
   overflow: hidden;
   position: relative;
-  background: #d8d785; /* backgroud de las cards */
+  background: #d8d785; 
 }
 
 li:hover {
@@ -109,19 +158,9 @@ li:hover {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
-.home.light li {
-  background-color: #fff;
-  color: black;
-}
-
-.home.dark li {
-  background-color: #faf4f4;
-  color: rgb(8, 8, 8);
-}
-
 /* Títulos de los eventos */
 li h3 {
-  color: #242424;
+  color: #080808;
   font-size: 35px;
   margin-bottom: 10px;
   font-weight: 600;
@@ -129,20 +168,9 @@ li h3 {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.home.light li h3 {
-  color: #007bff;
-}
 
 .home.dark li h3 {
   color: #bdd9ee;
-}
-
-.home.light li p {
-  color: #000000;
-}
-
-.home.dark li p {
-  color: #ffffff;
 }
 
 /* Descripción de los eventos */
@@ -153,12 +181,36 @@ li p {
   text-align: justify;
 }
 
-.home.light li p {
-  color: #555;
+.calendar-button {
+  background-color: transparent;
+  color: #e9b118;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.home.dark li p {
-  color: #525151;
+.calendar-popup {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: #fcdb8f;
+  padding: 0;
+  border-radius: 8px;
+  color: #000000;
+}
+
+.react-calendar__tile--hasActive {
+  color: green;
+  background: #fcdb8f;
+}
+
+.react-calendar {
+  background: #fcdb8f;
+  border: none;
 }
 
 /* Imagen de los eventos */
@@ -177,22 +229,78 @@ li:hover .event-image {
 
 /* Botón de ver detalles */
 .buttonhome {
-  background-color: #e7b048;
-  color: rgb(3, 3, 3);
+  background-color: white;
+  color: #000000;
   font-family:monospace;
   font-weight: bold;
-  font-size: medium;
+  font-size: large;
+  padding: 8px 8px;
+  border:3px solid #eca624;
+  margin: 1px;
+  border-radius: 0px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  margin-top: auto; /* Asegura que el botón se quede al fondo */
+  
+  /* Sombra adicional para mayor contraste */
+  transition: all 0.3s ease-in-out; /* Efecto suave en el hover */
+}
+
+/* Efecto cuando el título se pasa por encima */
+.buttonhome:hover {
+  background-color:#FFB74D;
+  transform: scale(1.5);
+}
+
+.dark .buttonhome{
+  color:white;
+  background-color: transparent;
+}
+
+.dark .buttonhome:hover{
+  color:white;
+  background-color: #FFB74D;
+}
+
+.buttonhomereset {
+  background-color:transparent;
+  color: #f78400;
   padding: 8px 12px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  width: 100%;
+  width: 25%;
 }
 
+.whatsapp-link {
+  position: fixed;      /* Fijar el enlace en la pantalla */
+  bottom: 20px;         /* A 20px del borde inferior */
+  right: 20px;          /* A 20px del borde derecho */
+  background-color: transparent; /* Color de fondo para hacerlo visible */
+  color: rgb(0, 0, 0);         /* Color del texto */
+  padding: 10px;        /* Espaciado alrededor del texto */
+  border-radius: 16%;   /* Hacer el ícono circular */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto */
+  display: flex;        /* Centrar el ícono */
+  justify-content: center; /* Centrar el contenido horizontalmente */
+  align-items: center;  /* Centrar el contenido verticalmente */
+  text-decoration: none; /* Quitar el subrayado del enlace */
+  font-weight: bold;    /* Hacer el texto más visible */
+  z-index: 999;         /* Asegurar que esté por encima de otros elementos */
+}
+
+.dark .whatsapp-link {
+  color: white;         /* Color del texto */
+  }
+
+
+
 /* Estilo responsivo */
-@media (max-width: 768px) {
+@media (max-width: 500px) {
   .home {
     padding: 20px 15px;
   }
@@ -211,6 +319,27 @@ li:hover .event-image {
   .homecard {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajustar las columnas */
     gap: 15px;
+    left: 250px;
+  }
+
+  
+
+
+   /* UBICACION DE LAS CARDS RESPONSIVAS */
+  .cardshome {
+    border-radius: 12px;
+    padding: 15px;
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 5px solid #eca624;
+    overflow: hidden;
+    position: relative;
+    background: #ffffff; /* backgroud de las cards */
+    max-height: 400px;
+    width: 300px;
+    margin-left: -59px; /* margen por defecto */
   }
 
   li {
@@ -239,9 +368,37 @@ li:hover .event-image {
     padding: 6px 10px;
     width: 50%;
   }
+
+
+/* Estilos para los botones de paginación MODO RESPONSIVE */
+.paginate-boton{
+  padding: 10px 10px;
+  font-size: 0.8rem;
+  background-color: #FFE57F; /* Amarillo pastel brillante */
+  color: #333; /* Color oscuro para el texto */
+  border: 2px solid #FFD166; /* Amarillo-naranja pastel brillante */
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin: 5px;
+  margin-right: -3px;
 }
 
-/* Estilos para el contenedor del calendario y la barra de búsqueda */
+/* Efecto hover: al pasar el mouse sobre el botón */
+.paginate-boton:hover {
+  background-color: #FFB74D; /* Naranja pastel brillante */
+  transform: scale(1.05); /* Efecto de agrandar ligeramente */
+}
+
+/* Efecto active: cuando el botón está presionado */
+.paginate-botonact {
+  background-color: #dfdb23; /* Amarillo-naranja pastel brillante */
+  transform: scale(0.95); /* Efecto de reducir el tamaño cuando se presiona */
+  padding: 10px 10px;
+  border-radius: 50px;
+}
+
+/* Estilos para el contenedor del calendario y la barra de búsqueda RESPONSIVE */
 .search-container {
   background-color:transparent;
   display: flex;
@@ -250,21 +407,27 @@ li:hover .event-image {
   margin-bottom: 25px;
   margin-left: 15%;
   margin-top: 50px;
+  justify-content: flex-start;
+  transform: translateX(-65px); /* Desplaza el botón hacia la izquierda */
 }
+  
 
-/* Estilo para el botón del calendario */
+/* Estilo para el botón del calendario RESPONSIVE */
 .calendar-button-container {
-  margin-right: 10px;
+  display: flex;
+  justify-content: flex-start;
+  transform: translateX(-5px); /* Desplaza el botón hacia la izquierda */
+  margin: 3px;
 }
 
 .calendar-button {
-  background-color: white;
-  color: #1873e9;
+  background-color: transparent;
+  color: #e9b118;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 15px;
 }
 
 .calendar-popup {
@@ -273,7 +436,7 @@ li:hover .event-image {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  background-color: rgb(253, 254, 255);
+  background-color: #fcdb8f;
   padding: 0;
   border-radius: 8px;
   color: #000000;
@@ -306,11 +469,11 @@ li:hover .event-image {
 
 .react-calendar__tile--hasActive {
   color: green;
-  background: rgb(255, 255, 255);
+  background: #fcdb8f;
 }
 
 .reset-button {
-  color: white;
+  color: rgb(153, 20, 20);
   border: none;
   border-radius: 8px;
   padding: 8px 12px;
@@ -325,3 +488,30 @@ li:hover .event-image {
 .reset-button:hover {
   background-color: #d32f2f;
 }
+
+.whatsapp-link {
+  position: fixed;      /* Fijar el enlace en la pantalla */
+  bottom: -25px;         /* A 20px del borde inferior */
+  right: 20px;          /* A 20px del borde derecho */
+  background-color: transparent; /* Color de fondo para hacerlo visible */
+  color: rgb(0, 0, 0);         /* Color del texto */
+  padding: 10px;        /* Espaciado alrededor del texto */
+  border-radius: 50%;   /* Hacer el ícono circular */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto */
+  display: flex;        /* Centrar el ícono */
+  justify-content: center; /* Centrar el contenido horizontalmente */
+  align-items: center;  /* Centrar el contenido verticalmente */
+  text-decoration: none; /* Quitar el subrayado del enlace */
+  font-weight: bold;    /* Hacer el texto más visible */
+  z-index: 1;         /* Asegurar que esté por encima de otros elementos */
+}
+
+.dark .whatsapp-link {
+  color: white;         /* Color del texto */
+  }
+
+}
+  
+
+
+

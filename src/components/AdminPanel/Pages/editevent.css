@@ -14,10 +14,19 @@ body {
   }
   
   /* Form Styles */
-  form {
+  .form-stile {
     max-width: 800px;
     margin: 20px auto;
     background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .form-stile {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #5c5b5b;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -43,9 +52,6 @@ body {
     box-sizing: border-box;
   }
   
-
-
-
   input[type="text"],
   input[type="number"],
   input[type="date"],
@@ -53,10 +59,6 @@ body {
     height: 40px;
   }
 
-
-
-   
-  
   .botonremove {
     width: 25%;
     padding: 10px;
@@ -79,33 +81,6 @@ body {
     height: 120px;
     resize: vertical;
   }
-  
-  
-  /* button[type="submits"],
-  button[type="buttons"] {
-    
-    color: rgb(71, 230, 50);
-    border: none;
-    padding: 12px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
-    transition: background-color 0.3s ease;
-  } */
-  
-  /* button[type="submit"]:hover,
-  button[type="button"]:hover {
-    background-color: #45a049;
-  } */
-  
-  /* .botonedit{
-    background-color: #46b846;
-  } */
-  
-  /* button[type="button"]:hover {
-    background-color: #e53935;
-  } */
   
   /* Layout and Alignment */
   input[type="text"],
@@ -176,6 +151,18 @@ body {
   margin-right: 10px;
 }
 
+.dark .selected-genres li {
+  width: 15%;
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #8a8a8a;
+  border-radius: 20px;
+  margin-right: 10px;
+  text-decoration-color: #000000;
+}
+
 .selected-genres li button {
   background-color: transparent;
   color: #e53935;
@@ -187,5 +174,22 @@ body {
 }
 
 .selected-genres li button:hover {
-  color: #cec8c8;
+  color: #726d6d;
+}
+
+ /* Personaliza el fondo para el popup de éxito del sweet alert */
+ .swal2-popup.custom-popup-success {
+  background-color: #f9fbfd ; /* Fondo azul claro */
+  color: #000; /* Color del texto */
+}
+
+.dark .swal2-popup.custom-popup-success {
+  background-color: #585858; /* Fondo azul claro */
+  color: #f0f0f0; /* Color del texto */
+}
+
+/* Personaliza el fondo para el popup de error del sweet alert */
+.swal2-popup.custom-popup-error {
+  background-color: #ffe6e6; /* Fondo rojo claro */
+  color: #d9534f; /* Color de texto para el error */
 }

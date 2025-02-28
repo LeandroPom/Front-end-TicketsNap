@@ -120,6 +120,9 @@ const EditShow = () => {
       title: 'Event Updated Successfully',
       text: 'The event has been updated successfully!',
       confirmButtonText: 'OK',
+      customClass: {
+        popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+      }
     });
 
       navigate('/admin/events'); // Redirigir después de la actualización exitosa
@@ -132,7 +135,7 @@ const EditShow = () => {
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Cargando...</div>;
   }
 
   if (error) {
@@ -140,16 +143,16 @@ const EditShow = () => {
   }
 
   if (!showId || shows.length === 0) {
-    return <div>No events found.</div>;
+    return <div>No se encontraron eventos.</div>;
   }
 
   return (
     <div className="edit-show">
       <h1>Edit Event</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='form-stile' onSubmit={handleSubmit}>
         {/* Nombre del evento */}
         <div className="form-group">
-          <label htmlFor="name">Event Name:</label>
+          <label htmlFor="name">Nombre del evento:</label>
           <input
             type="text"
             id="name"
@@ -161,7 +164,7 @@ const EditShow = () => {
 
         {/* Artistas */}
         <div className="form-group">
-          <label htmlFor="artists">Artists (comma separated):</label>
+          <label htmlFor="artists">Artistas (separación con coma):</label>
           <input
             type="text"
             id="artists"
@@ -173,7 +176,7 @@ const EditShow = () => {
 
         {/* Géneros */}
         <div className="form-group">
-          <label htmlFor="tags">Genres:</label>
+          <label htmlFor="tags">Generos:</label>
           <select
             id="tags"
             multiple
@@ -194,7 +197,7 @@ const EditShow = () => {
 
         {/* Mostrar los géneros seleccionados */}
         <div className="selected-genres">
-  <h4>Selected Genres:</h4>
+  <h4>Selección de genero:</h4>
   <ul>
     {selectedTags.map((tag, index) => (
       <li key={index}>
@@ -209,7 +212,7 @@ const EditShow = () => {
 
         {/* Descripción */}
         <div className="form-group">
-          <label htmlFor="description">Description:</label>
+          <label htmlFor="description">Descripción:</label>
           <textarea
             id="description"
             value={description}
@@ -222,7 +225,7 @@ const EditShow = () => {
 
         {/* Imagen de portada */}
         <div className="form-group">
-          <label htmlFor="coverImage">Cover Image URL:</label>
+          <label htmlFor="coverImage">Imagen del Show:</label>
           <input
            type="text"
            id="coverImage"
@@ -267,7 +270,7 @@ const EditShow = () => {
         </div>
 
         {/* Botón para enviar el formulario */}
-        <button type="submits">Update Event</button>
+        <button type="submits">Modificar evento</button>
       </form>
     </div>
   );
