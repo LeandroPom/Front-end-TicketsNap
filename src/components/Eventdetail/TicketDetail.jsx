@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import { useSelector,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
 import { getShows } from '../Redux/Actions/actions';
+import './ticketdetail.css';
+
 
 const TicketDetail = () => {
   const user = useSelector((state) => state.user);
@@ -13,6 +15,7 @@ const TicketDetail = () => {
   const navigate = useNavigate(); // Hook para redireccionar
   const shows = useSelector((state) => state.shows);
   const [loadingShows, setLoadingShows] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);  // Nuevo estado para cargar
   const [errorShows, setErrorShows] = useState(null);
   const dispatch = useDispatch();
   const ticket = location.state;
@@ -85,6 +88,7 @@ const TicketDetail = () => {
   };
 
   const handleConfirmPurchase = async (buyerDetails = null, action = 'buy') => {
+    setIsLoading(true);  // Activar el loading cuando comience la compra/venta
     // Cambiar el endpoint dinámicamente dependiendo de si es compra o venta
     const endpoint = action === 'sell' ? '/tickets/sell' : '/tickets/buy';
   
@@ -167,8 +171,11 @@ const TicketDetail = () => {
           confirmButtonText: 'Aceptar',
         });
       }
+      
+ 
       if (response.success) {
         navigate('/success', { state: { qrCode, showId, division, price, location, date, seat, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone } }); // Asegurar que SIEMPRE redirige
+        setIsLoading(false);  // Desactivar el loading cuando finalice la compra/venta
       } else {
         
       }
@@ -192,7 +199,19 @@ const TicketDetail = () => {
     return <div className="error">{errorShows}</div>;
   }
    
-
+  if (isLoading) {
+    return (
+      <div className="loading-overlay">
+        <div className="corner-img top-left" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img top-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img bottom-left" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img bottom-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+  
+        <div className="spinner"></div>
+        <p>Procesando su compra...</p>
+      </div>
+    );
+  }
   return (
     <div style={{ textAlign: 'center', marginTop: '80px' }}>
       <h1>Ticket de Evento</h1>
@@ -274,6 +293,7 @@ const TicketDetail = () => {
             {user?.cashier ? 'Vender Entrada' : 'Comprar Entrada'} {/* Esto solo cambia el texto */}
           </button>
         </div>
+        
       </div>
     </div>
   );

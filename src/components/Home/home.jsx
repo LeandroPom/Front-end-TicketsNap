@@ -6,7 +6,7 @@ import 'react-calendar/dist/Calendar.css'; // Importar los estilos predeterminad
 import { FaSyncAlt } from 'react-icons/fa';
 import { getShows } from '../Redux/Actions/actions';
 import '../Home/home.css'; // Asegúrate de que el archivo contenga estilos actualizados
-import { FaMusic, FaMapMarkerAlt} from 'react-icons/fa';
+import { FaMusic, FaMapMarkerAlt, FaWhatsapp} from 'react-icons/fa';
 
 import Carousel from './carrousel'; // Importar el carrusel
 
@@ -81,7 +81,10 @@ const eventDates = (shows || []).flatMap((show) =>
     } else {
       navigate(`/event/${show.id}`);
     }
+    
   };
+
+  
 
  // 🔹 PAGINACIÓN: Se aplica después del filtrado
  const indexOfLastShow = currentPage * showsPerPage;
@@ -116,7 +119,7 @@ const prevPage = () => {
   const goToFirstPage = () => {
     setCurrentPage(1);
   };
-
+  
   // Lógica para ir a la última página
   const goToLastPage = () => {
     setCurrentPage(pageNumbers.length);
@@ -146,6 +149,10 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const handleVideoPause = () => {
     setIsVideoPlaying(false); // El video se detuvo
   };
+
+  // WhatsApp: Aquí definimos el número y mensaje
+  const whatsappNumber = '3584448512'; // Reemplazar con el número real
+  const message = '¡Hola, tengo una consulta sobre mi compra!';
 
 
   return (
@@ -212,56 +219,10 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
     setCurrentPage(1); // 🔹 Resetear paginación al seleccionar fecha
   }}
   tileClassName={tileClassName}
+  style={{ backgroundColor: 'transparent' }} // Quitar fondo directamente
 />
         </div>
       )}
-
-       {/* Paginación */}
-       <div className="pagination">
-        {/* Botón para ir al principio */}
-        <button
-          onClick={goToFirstPage}
-          disabled={currentPage === 1}
-          className="pagination-button"
-        >
-          Inicio
-        </button>
-
-        <button
-          onClick={prevPage}
-          disabled={currentPage === 1}
-          className="pagination-button"
-        >
-          ◀ Anterior
-        </button>
-
-        {pageNumbers.slice(currentPage - 1, currentPage + 4).map((number) => (
-          <button
-            key={number}
-            onClick={() => paginate(number)}
-            className={`pagination-button ${number === currentPage ? "active" : ""}`}
-          >
-            {number}
-          </button>
-        ))}
-
-        <button
-          onClick={nextPage}
-          disabled={currentPage + 1 > pageNumbers.length}
-          className="pagination-button"
-        >
-          Siguiente ▶
-        </button>
-
-        {/* Botón para ir al final */}
-        <button
-          onClick={goToLastPage}
-          disabled={currentPage === pageNumbers.length}
-          className="pagination-button"
-        >
-          Final
-        </button>
-      </div>
 
 
 
@@ -269,9 +230,9 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
       <ul className='homecard'>
   {currentShows && currentShows.length > 0 ? (
     currentShows.map((show) => (
-      <li className='card' key={show.id}>
+      <li className='cardshome' key={show.id}>
         <div className='content'>
-          <h3>{show.name}</h3>
+          <h3 className='titulo-card'>{show.name}</h3>
           {show.coverImage.includes("youtube.com") || show.coverImage.includes("youtu.be") ? (
           <iframe 
             className="event-video"
@@ -283,9 +244,12 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         ) : (
           <img className="event-image" src={show.coverImage} alt={show.name} />
         )}
-          <p><FaMapMarkerAlt style={{ color: 'red' }} />Location/Adress:{show.location}</p>
-          <p><FaMusic style={{ color: 'black' }} />Genres:{show.genre.join(', ')}</p>
-          <p><FaCalendarAlt style={{ color: 'green' }} />Dates:{show.presentation.map((p) => p.date).join(', ')}</p>
+       
+          <h5> <FaMapMarkerAlt style={{ color: 'red' }} /> Location/Adress:{show.location}</h5>
+          <h5><FaMusic style={{ color: 'orange' }} /> Genres:{show.genre.join(', ')}</h5>
+          <h5><FaCalendarAlt style={{ color: 'green' }} /> Dates:{show.presentation.map((p) => p.date).join(', ')}</h5>
+        
+
         </div>
         
         <button className='buttonhome' onClick={() => handleViewDetails(show)}>Comprar</button>
@@ -294,9 +258,71 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
   ) : (
     <div>No shows found</div>
   )}
+
+  
 </ul>
+
+{/* Paginación */}
+<div >
+        {/* Botón para ir al principio */}
+        <button
+          onClick={goToFirstPage}
+          disabled={currentPage === 1}
+          className="paginate-boton"
+        >
+          Inicio
+        </button>
+
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className="paginate-boton"
+        >
+          ◀ Anterior
+        </button>
+
+        {pageNumbers.slice(currentPage - 1, currentPage + 4).map((number) => (
+          <button
+            key={number}
+            onClick={() => paginate(number)}
+            className={`paginate-botonact ${number === currentPage ? "active" : ""}`}
+          >
+            {number}
+          </button>
+        ))}
+
+        <button
+          onClick={nextPage}
+          disabled={currentPage + 1 > pageNumbers.length}
+          className="paginate-boton"
+        >
+          Siguiente ▶
+        </button>
+
+        {/* Botón para ir al final */}
+        <button
+          onClick={goToLastPage}
+          disabled={currentPage === pageNumbers.length}
+          className="paginate-boton"
+        >
+          Final
+        </button>
+      </div>
+
+ <a
+      href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="whatsapp-link"
+    >
+      <FaWhatsapp size={30} color="#25D366" /> Contacto
+    </a>
     </div>
+
+    
   );
+
+  
 };
 
 export default ShowsList;

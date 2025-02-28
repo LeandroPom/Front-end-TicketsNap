@@ -7,7 +7,7 @@
   height: 280%;
   background: rgba(0, 0, 0, 0.5); /* Fondo translúcido */
   z-index: 1000;
-  background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed;
+  /* background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed; */
 }
 
 /* Estilo del modal */

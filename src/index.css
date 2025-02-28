@@ -14,8 +14,11 @@ body {
 
 
 body.light {
-  background-color: rgb(221, 221, 221) !important;
+  background-color: rgb(189, 187, 187) !important;
   color: black !important;
+  /* background-image: url('../public/images/solticket.png'); */
+  background-repeat: repeat;
+  background-size: 100px 100px;
 }
 
 body.dark {

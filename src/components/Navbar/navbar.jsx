@@ -64,25 +64,33 @@ const Navbar = () => {
     </a>
     {/* Ícono compacto para cambiar el tema */}
          {isDarkMode ? (
-          <FaSun
+          <FaMoon
             onClick={toggleTheme}
             className="theme-toggle-icon"
           />
         ) : (
-          <FaMoon
+          <FaSun
             onClick={toggleTheme}
             className="theme-toggle-icon"
           />
         )}
       </div>
-      <div className="navbar-links">
+          
+          
         {user && user.name && (
-          <span className="user-name">
-            {user.name}
-          </span>
+          <a href='/profile'>
+            <span className="user-name">
+              {user.name}
+            </span>
+          </a>
         )}
+          
+      <div className="navbar-links">
         <div className="dropdown">
-          <FaBars className="dropdown-icon" onClick={toggleDropdown} />
+         <p>
+          
+         </p>
+         <FaBars className="dropdown-icon" onClick={toggleDropdown} />
           {dropdownOpen && (
             <div className="dropdown-menu">
               {user ? (

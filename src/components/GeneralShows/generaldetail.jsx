@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import '../Home/home.css';
+import './generaldetail.css'
 
 const GeneralDetail = () => {
   const { id } = useParams();
@@ -75,17 +75,26 @@ const GeneralDetail = () => {
     Swal.fire({
       title: 'Debe cargar los datos del comprador',
       html: `
-        <div>
-          <label>DNI:</label><br/>
-          <input type="text" id="dni" class="swal2-input" placeholder="Ingrese el DNI"/>
-          <label>Nombre:</label><br/>
-          <input type="text" id="firstName" class="swal2-input" placeholder="Ingrese el nombre"/>
-          <label>Apellido:</label><br/>
-          <input type="text" id="lastName" class="swal2-input" placeholder="Ingrese el apellido"/>
-          <label>Correo:</label><br/>
-          <input type="email" id="email" class="swal2-input" placeholder="Ingrese el correo"/>
-          <label>Teléfono:</label><br/>
-          <input type="text" id="phone" class="swal2-input" placeholder="Ingrese el teléfono"/>
+        <div style="padding: 24px; max-width: 400px; margin: auto; background-color: #FFE57F; border-radius: 10px; font-family: 'Inter', sans-serif;">
+          <label style="display: block; font-weight: bold; margin-bottom: 8px;">DNI:</label>
+          <input type="text" id="dni" placeholder="Ingrese el DNI" 
+            style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
+
+          <label style="display: block; font-weight: bold; margin-bottom: 8px;">Nombre:</label>
+          <input type="text" id="firstName" placeholder="Ingrese el nombre" 
+            style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
+
+          <label style="display: block; font-weight: bold; margin-bottom: 8px;">Apellido:</label>
+          <input type="text" id="lastName" placeholder="Ingrese el apellido" 
+            style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
+
+          <label style="display: block; font-weight: bold; margin-bottom: 8px;">Correo:</label>
+          <input type="email" id="email" placeholder="Ingrese el correo" 
+            style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
+
+          <label style="display: block; font-weight: bold; margin-bottom: 8px;">Teléfono:</label>
+          <input type="text" id="phone" placeholder="Ingrese el teléfono" 
+            style="width: 100%; padding: 10px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
         </div>
       `,
       focusConfirm: false,
@@ -154,65 +163,39 @@ const GeneralDetail = () => {
   if (!show) return <p>SIN INFORMACIÓN</p>;
 
   return (
-    <div style={{ padding: '30px', maxWidth: '800px', margin: 'auto', backgroundColor: '#f8f9fa', borderRadius: '10px' }}>
-      <h1 style={{ color: '#007bff' }}>{show.name}</h1>
-      <img src={show.coverImage} alt={show.name} style={{ width: '100%', borderRadius: '10px', marginBottom: '20px' }} />
+    <div className="show-container">
+      <h1 className="show-title">{show.name}</h1>
+      <img src={show.coverImage} alt={show.name} className="show-image" />
       <p><strong>Género:</strong> {show.genre.join(', ')}</p>
       <p><strong>Artistas:</strong> {show.artists.join(', ')}</p>
       <p><strong>Descripción:</strong> {show.description}</p>
       <p><strong>Ubicación:</strong> {show.location}</p>
-
+      
       {zone && (
-        <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-          <h3 style={{ color: '#343a40' }}>Información de la Zona</h3>
+        <div className="zone-info">
+          <h3 className="zone-title">Información de la Zona</h3>
           <p><strong>Fecha Presentación:</strong> {zone.presentation.date}</p>
           <p><strong>Horario:</strong> {zone.presentation.time.start} - {zone.presentation.time.end}</p>
-
-          {zone.location.map((loc, index) => {
-            const availableSpace = loc.space - loc.occupied;
-            return (
-              <p key={index}>
-                <strong>{loc.division}:</strong> Capacidad: {loc.space} | Disponible: {availableSpace} | <strong>Precio:</strong> ${loc.price}
-              </p>
-            );
-          })}
-
-          <h3 style={{ marginTop: '20px', color: '#007bff' }}>Comprar Entrada</h3>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ marginRight: '10px' }}>División:</label>
-            <select
-              value={selectedDivision}
-              onChange={handleDivisionChange}
-              style={{
-                padding: '10px',
-                borderRadius: '5px',
-                border: '1px solid #ccc',
-                fontSize: '16px',
-                width: '100%',
-                marginTop: '5px',
-              }}
-            >
+          {zone.location.map((loc, index) => (
+            <p key={index}>
+              <strong>{loc.division}:</strong> Capacidad: {loc.space} | Disponible: {loc.space - loc.occupied} | <strong>Precio:</strong> ${loc.price}
+            </p>
+          ))}
+          
+          <h3 className="purchase-title">Comprar Entrada</h3>
+          <div className="purchase-options">
+            <label>División:</label>
+            <select value={selectedDivision} onChange={handleDivisionChange} className="division-select">
               {zone?.location?.map((loc) => (
                 <option key={loc.division} value={loc.division}>{loc.division}</option>
               ))}
             </select>
           </div>
-
           <p><strong>Precio:</strong> ${selectedPrice}</p>
-
-          <button
-  onClick={() => handleOpenBuyerModal(user?.cashier ? "sell" : "buy")}
-  className="buttonhome"
-  style={{
-    width: '50%', // Asegúrate de que el botón ocupe todo el ancho si así lo prefieres
-    padding: '12px 10px', // Ajuste adicional de padding si lo necesitas
-    cursor: 'pointer',
-    marginLeft: '180px',  // Esto empuja el botón hacia la derecha
-    marginRight: '0',    // Elimina cualquier margen a la derecha (si es necesario)
-  }}
->
-  {user?.cashier ? "Vender Entrada" : "Comprar con Mercado Pago"}
-</button>
+          
+          <button onClick={() => handleOpenBuyerModal(user?.cashier ? "sell" : "buy")} className="buy-button">
+            {user?.cashier ? "Vender Entrada" : "Comprar con Mercado Pago"}
+          </button>
         </div>
       )}
     </div>

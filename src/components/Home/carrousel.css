@@ -93,7 +93,7 @@
 @media (max-width: 600px) {
   .carousel {
     margin-left: 0; /* Eliminar el margen de 188px */
-    max-width: 100%; /* Ajustar al 100% del ancho */
+    max-width: 130%; /* Ajustar al 100% del ancho */
   }
 
   .carousel-button {
@@ -102,12 +102,17 @@
 
   .event-imagen {
     height: 200px; /* Ajustar la altura para móviles */
+    width: 200px;
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
-
+    transform: translateX(10px); /* Desplaza el botón hacia la izquierda */
   }
+    
+
 
   .event-videos.actives {
     transform: scale(1); /* No agrandar los videos en móviles */
+    object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+    transform: translateX(-10px); /* Desplaza el botón hacia la izquierda */
   }
 }
 
