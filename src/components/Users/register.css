@@ -1,49 +1,64 @@
 /* Fondo oscuro del modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 280%;
-  background: rgba(0, 0, 0, 0.5); /* Fondo translúcido */
-  z-index: 1000;
-  /* background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed; */
-}
+
 
 /* Estilo del modal */
 .register-modal {
   position: fixed;
-  top: 45%;
+  top: 57%;
   left: 50%;
   transform: translate(-50%, -50%);
-  
+  background-color:#ffffff; /* Fondo oscuro translúcido */
+  padding: 3%;
+  border-radius: 10px;
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.3);
+  color: #000000;
+  border:2px solid #FFB74D;
+  z-index: 1001; /* Asegura que esté por encima del overlay */
+  width: 500px; /* Establecer un tamaño fijo */
+  height: 500px; /* Establecer un tamaño fijo */
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.dark .register-modal {
+  position: fixed;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: rgba(77, 76, 76, 0.8); /* Fondo oscuro translúcido */
   padding: 3%;
   border-radius: 10px;
   box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.3);
   color: #fff;
   z-index: 1001; /* Asegura que esté por encima del overlay */
-  width: 100%; /* Reduce el tamaño en pantallas pequeñas */
-  max-width: 600px; /* Tamaño máximo del modal */
-  max-height: 800px; /* Tamaño máximo del modal */
+  width: 500px; /* Establecer un tamaño fijo */
+  height: 500px; /* Establecer un tamaño fijo */
+  box-sizing: border-box;
   text-align: center;
-  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
-  margin-top: 30px;
+  display: flex;
+  border: 2px solid #ffffff;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Título del formulario */
 .register-title {
   font-size: 1.6em; /* Reducido tamaño del título */
   margin-bottom: 25px;
-  color: #FF5733; /* Color naranja llamativo */
+  color: #FFB74D; /* Color naranja llamativo */
 }
 
 /* Estilos del formulario */
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 14px; /* Reducida la separación entre campos */
-  margin-top: -25px;
+  gap: 10px; /* Reducida la separación entre campos */
+  overflow-y: auto; /* Permite desplazarse si el contenido es demasiado largo */
+  height: 85%; /* Ajusta la altura del formulario */
 }
 
 /* Grupo de cada campo */
@@ -51,7 +66,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px; /* Reducida la separación entre label y input */
+  gap: 5px; /* Reducida la separación entre label y input */
   text-decoration: black;
 }
 
@@ -60,129 +75,174 @@
   font-size: 1em;
   font-weight: bold;
   text-decoration: black;
-  color:black;
+  color: black;
 }
 
 /* Campos de entrada */
 .form-group input {
-  width: 100%;
-  padding: 10px; /* Reducida la altura de los campos */
+  width: calc(100% - 5px); /* Asegura que los inputs tengan un margen de 2px */
+  padding: 9px; /* Altura de los campos */
   border: none;
   border-radius: 5px;
   font-size: 1em;
   box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
   box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+  margin-top: 4px
+}
+
+.password-container {
+  position: relative; /* Esto asegura que el ícono se posicione correctamente */
+  margin-top: -19px;
+}
+
+.password-container input {
+  padding-right: 30px; /* Proporciona espacio a la derecha para el ícono */
+}
+
+.password-eye {
+  position:absolute;
+  right: 80px;
+  top: 9%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-eye-confirm {
+  position:absolute;
+  right: 205px;
+  top: 9%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+.dark .password-eye {
+  position: absolute;
+  right: 10px;
+  top: 48%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color:#000000
+}
+
+.dark .password-eye-confirm {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color:#000000;
+}
+
+.dark .form-group input {
+  width: calc(100% - 5px); /* Asegura que los inputs tengan un margen de 2px */
+  padding: 9px; /* Altura de los campos */
+  border: 2px solid #FFB74D;
+  border-radius: 5px;
+  font-size: 1em;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+  margin-top: 4px
 }
 
 /* Botones del formulario */
 .form-buttons-register {
   display: flex;
+  justify-content: space-between; /* Botones alineados a los extremos */
   gap: 10px;
-  justify-content: flex-end; /* Los botones se alinean al final */
-  margin-top: 20px; /* Separación con los campos */
+  margin-top: 10px;
 }
+
+
 
 /* Botón de Crear Cuenta */
 .create-btns {
-  background-color: #28A745; /* Verde llamativo */
+  background-color: #FFB74D; /* naranja llamativo */
   color: #000000;
-  padding: 5px 10px; /* Reducido padding */
-  
+  padding: 8px 16px; /* Aumentado el padding */
   border-radius: 5px;
   font-size: 1.1em;
   font-weight: bold;
   cursor: pointer;
+  width: 48%; /* Asegura que el botón ocupe la mitad del espacio disponible */
+}
 
-  margin-top: 10px;
-  margin-right: 285px;
+.dark .create-btns {
+  background-color: #FFE57F; /* Verde llamativo */
+  color: #000000;
+  padding: 8px 16px; /* Aumentado el padding */
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  width: 48%; /* Asegura que el botón ocupe la mitad del espacio disponible */
 }
 
 .create-btns:hover {
-  background-color: green;
-  border: 2px solid #28A745;
-  color: #ffffff;
+  background-color: #FFD166;
+  border: 2px solid #000000;
+  color: #000000;
+}
+
+.dark .create-btns:hover {
+  background-color: #FFD166;
+  border: 2px solid #000000;
+  color: #000000;
 }
 
 /* Botón de Cancelar */
 .cancel-btns {
-  background-color: #dd4a29; /* Naranja llamativo */
+  background-color: #FFB74D; /* naranja llamativo */
   color: #000000;
-  padding: 7px 5px; /* Reducido padding */
+  padding: 8px 16px; /* Aumentado el padding */
   border-radius: 5px;
   font-size: 1em;
   font-weight: bold;
   text-decoration: none;
   text-align: center;
-  
-  /* Ajustamos el posicionamiento */
-  position: relative; /* Usamos position relative en vez de margin-top negativo */
-  top: -30px; /* Ajusta este valor según sea necesario para moverlo hacia arriba o hacia abajo */
-  left: 170px; /* Esto asegura que el botón esté alineado con el contenedor */
-  z-index: 1002; /* Asegura que el botón quede encima de otros elementos si es necesario */
+  width: 48%; /* Asegura que el botón ocupe la mitad del espacio disponible */
 }
 
+.dark .cancel-btns{
+  background-color: #FFE57F; /* Verde llamativo */
+  color: #000000;
+}
 
 .cancel-btns:hover {
-  background-color: rgb(233, 26, 26);
-  border: 2px solid #FF5733;
-  color: #ffffff;
+  background-color: #FFD166;
+  border: 2px solid #000000;
+  color: #000000;
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-  .register-modal {
-    width: 90%; /* El modal ocupa más espacio en pantallas pequeñas */
-    margin: 0 5px; /* Asegura que haya espacio a los lados */
-  }
-
-  .register-title {
-    font-size: 1.4em; /* Reducir el tamaño del título en pantallas pequeñas */
-  }
-
-  .form-buttons-register {
-    flex-direction: column; /* Los botones se apilan verticalmente */
-    gap: 10px; /* Aumentar el espacio entre los botones */
-    margin-top: 20px; /* Espacio extra para separar de los campos */
-  }
-
- 
+.dark .cancel-btns:hover{
+  background-color: #FFD166;
+  border: 2px solid #000000;
+  color: #000000;
 }
 
+/* Google Login */
 .google-login {
-  margin-top: -65px; /* Mueve hacia abajo */
-  text-align: center; /* Alinea el botón en el centro */
-  margin-left: 25px;
-  padding: 2px 2px; /* Ajusta el relleno */
+  text-align: center;
+  margin-top: 20px;
 }
 
 .google-login .google-button {
-  width: 5px !important; /* Ajusta el ancho */
-  height: 5px !important; /* Ajusta la altura */
-  padding: 5px 5px !important; /* Ajusta el relleno para hacerlo más pequeño */
+  width: 100%; /* Asegura que el botón de Google ocupe el 100% del ancho */
+  height: auto; /* Ajusta la altura automáticamente */
+  padding: 8px 16px; /* Ajusta el relleno para que el botón sea más visible */
 }
-
-
 
 /* Nueva fila para inputs */
 .form-row {
   display: flex;
   flex-wrap: wrap; /* Permite que los inputs se acomoden en varias filas */
-  justify-content: space-between;
-  gap: 15px; /* Espacio entre columnas */
-  text-decoration: black;
-  color:black;
+  gap: 10px; /* Espacio entre columnas */
 }
 
 /* Ajustar inputs para compartir el espacio */
 .form-row .form-group {
   flex: 1 1 45%; /* Los inputs ocupan el 45% del espacio, permitiendo dos en cada fila */
   min-width: 150px; /* Asegura que no se vuelvan demasiado pequeños */
-  color:black;
-}
-
-/* Espacio adicional para los botones */
-.form-buttons-register {
-  margin-top: 20px;
 }
 
 /* Estilo para mensajes de error */
@@ -191,3 +251,88 @@
   font-size: 14px;
   margin-top: 5px;
 }
+
+
+
+/* Responsividad para pantallas con max-width 860px */
+
+
+/* Responsividad para pantallas con max-width 511px (smartphones) */
+@media (max-width: 511px) {
+  .register-modal {
+    width: 90%; /* El modal ocupa el 90% del ancho de la pantalla */
+    height: auto; /* Ajuste de la altura según el contenido */
+    padding: 15px; /* Reducir el padding para maximizar el espacio */
+    box-sizing: border-box;
+  }
+
+  .register-title {
+    font-size: 1.3em; /* Ajustar el tamaño del título para pantallas más pequeñas */
+  }
+
+  .form-buttons-register {
+    flex-direction: column; /* Los botones se apilan verticalmente */
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 20px; /* Aumentar el espacio entre los botones y los campos */
+  }
+
+  .create-btns, .cancel-btns {
+    width: 100%; /* Los botones ocupan el 100% del ancho en pantallas pequeñas */
+    padding: 10px 0; /* Asegurarse de que los botones sean lo suficientemente grandes */
+    margin: 5px 0; /* Márgenes entre los botones */
+  }
+
+  .google-login .google-button {
+    width: 100%; /* El botón de Google ocupa todo el ancho disponible */
+    padding: 12px 0; /* Tamaño adecuado para el botón */
+  }
+
+  .form-row .form-group {
+    flex: 1 1 100%; /* Los inputs ocupan todo el ancho en pantallas pequeñas */
+    margin-bottom: 10px; /* Espacio adicional entre los inputs */
+  }
+
+  .register-form {
+    height: auto; /* Ajuste automático de la altura del formulario */
+    margin-bottom: 20px; /* Espacio adicional debajo del formulario */
+  }
+
+  .google-login {
+    margin-top: 20px;
+  }
+}
+
+/* Responsividad para pantallas con max-width 860px */
+@media (max-width: 860px) {
+  .register-modal {
+    width: 400px; /* El modal ocupa el 80% del ancho de la pantalla */
+    height: 400px; /* Ajuste automático de la altura */
+    padding: 20px; /* Ajustar el relleno para pantallas intermedias */
+  }
+
+  .register-title {
+    font-size: 1.4em; /* Tamaño de título ajustado */
+  }
+
+  .form-buttons-register {
+    flex-direction: column; /* Los botones se apilan verticalmente */
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .create-btns, .cancel-btns {
+    width: 100%; /* Los botones ocupan el 100% del ancho */
+    padding: 12px 0; /* Ajuste del padding */
+    margin: 5px 0; /* Espacio entre los botones */
+  }
+
+  .google-login .google-button {
+    width: 100%;
+    padding: 12px 0;
+  }
+
+  .form-row .form-group {
+    flex: 1 1 100%; /* Los inputs ocupan todo el ancho */
+  }
+}
+

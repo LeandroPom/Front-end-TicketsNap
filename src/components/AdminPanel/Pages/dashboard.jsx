@@ -31,19 +31,10 @@ const Dashboard = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
+  // Cargar métricas sin verificar si es admin
   useEffect(() => {
-    // Verificamos si el usuario tiene permisos de administrador
-    if (!user?.isAdmin) {
-      Swal.fire({
-        icon: "error",
-        title: "Acción no permitida",
-        text: "Solo los administradores pueden acceder a esta sección.",
-      });
-      navigate("/"); // Redirigir si no es admin
-    } else {
-      fetchMetrics(); // Si es admin, traemos las métricas
-    }
-  }, [user, navigate]);
+    fetchMetrics(); // Traemos las métricas sin importar si el usuario es admin o no
+  }, []); // Se ejecuta una sola vez al montar el componente
 
   const fetchMetrics = async () => {
     try {
@@ -52,8 +43,8 @@ const Dashboard = () => {
       setMetrics({
         users: data.users?.length,
         shows: data.shows?.length,
-        // places: data.places.length,
-        // seats: data.zones.reduce((acc, zone) => acc + zone.seats.length, 0),
+        places: data.places?.length,
+        seats: data.seats?.reduce((acc, seat) => acc + seat, 0), // Sumar los asientos si es necesario
       });
       setLoading(false);
     } catch (error) {

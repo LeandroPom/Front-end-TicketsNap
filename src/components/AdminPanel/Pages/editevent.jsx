@@ -47,11 +47,11 @@ const EditShow = () => {
    useEffect(() => {
     if (shows?.length > 0 && tags?.length > 0 && !isReadyToEdit) {
       Swal.fire({
-        title: 'Edit Event',
-        text: 'Do you want to load the event data for editing?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, load it!',
+        title: 'Editar evento',
+        text: 'Datos cargados',
+        icon: 'success',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false, // Permitir hacer clic fuera para cerrar el modal
       }).then((result) => {
         if (result.isConfirmed) {
           setIsReadyToEdit(true); // Esto debería activar la carga de datos
@@ -60,7 +60,9 @@ const EditShow = () => {
         }
       });
     }
-  }, [isReadyToEdit, dispatch, shows?.length, tags?.length]);
+  }, [isReadyToEdit, dispatch, shows?.length, tags?.length, navigate]);
+       
+        
 
   // Cuando los shows estén disponibles, se encuentra el show a editar
   useEffect(() => {
@@ -116,9 +118,9 @@ const EditShow = () => {
 
          // Mostrar SweetAlert antes de redirigir
     await Swal.fire({
-      icon: 'success',
-      title: 'Event Updated Successfully',
-      text: 'The event has been updated successfully!',
+      icon: 'Exito',
+      title: 'Evento Modificado',
+      text: 'El evento fue modificado correctamente!',
       confirmButtonText: 'OK',
       customClass: {
         popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
@@ -146,7 +148,12 @@ const EditShow = () => {
     return <div>No se encontraron eventos.</div>;
   }
 
+  const handleClose = () => {
+    navigate('/admin/events'); // Redirigir al dashboard de eventos
+  };
+
   return (
+    
     <div className="edit-show">
       <h1>Edit Event</h1>
       <form className='form-stile' onSubmit={handleSubmit}>
@@ -270,7 +277,8 @@ const EditShow = () => {
         </div>
 
         {/* Botón para enviar el formulario */}
-        <button type="submits">Modificar evento</button>
+        <button className='boton-enviar'>Modificar</button>
+        <button className="close-btn" onClick={handleClose}>Close</button> {/* Botón de cerrar */}
       </form>
     </div>
   );

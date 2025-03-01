@@ -1,7 +1,7 @@
 /* Contenedor principal */
 .mis-compras-container {
   max-width: 900px;
-  margin: 0 auto;
+  margin: 120px auto;
   padding: 20px;
   background-color: #FFFFFF; /* Modo Light */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -9,8 +9,8 @@
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.mis-compras-container.dark {
-  background-color: #000000; /* Modo Dark */
+.dark .mis-compras-container {
+  background-color: #1D1D1D;; /* Modo Dark */
   box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
 }
 
@@ -38,7 +38,7 @@ h2 {
 
 /* Cada ticket ocupa una caja más pequeña */
 .ticket-item {
-  background: #FFD166;
+  background:#FFB74D;
   padding: 16px;
   border-radius: 10px;
   width: 280px;
@@ -56,7 +56,7 @@ h2 {
 }
 
 .dark .ticket-item {
-  background: #FFB74D;
+  background:#FFE57F;
 }
 
 /* Texto de los tickets */
@@ -69,7 +69,7 @@ h2 {
 }
 
 .dark .ticket-item p {
-  color: #FFFFFF;
+  color: #000000;
 }
 
 /* Código QR */
@@ -136,9 +136,17 @@ h2 {
   transition: background-color 0.3s, transform 0.2s ease;
 }
 
+.dark .page-button{
+  background-color: #FFE57F;
+}
+
 .page-button:hover {
   background-color: #FFE57F;
   transform: scale(1.05);
+}
+
+.dark .page-button:hover{
+  background-color: #FFB74D;
 }
 
 .page-button:disabled {
@@ -156,6 +164,34 @@ h2 {
 .dark .page-info {
   color: #FFFFFF;
 }
+
+/* boton de retorno */
+
+.back-button{
+  padding: 10px 18px;
+  background-color: #FFB74D;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.dark .back-button{
+  background-color: #FFE57F;
+}
+
+.back-button:hover {
+  background-color: #FFE57F;
+  transform: scale(1.05);
+}
+
+.dark .back-button:hover{
+  background-color: #FFB74D;
+}
+
 
 /* Estilos responsivos */
 @media (max-width: 768px) {

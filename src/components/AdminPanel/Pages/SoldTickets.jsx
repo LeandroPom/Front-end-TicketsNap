@@ -4,6 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { getShows } from "../../Redux/Actions/actions"; // Importar la acción para traer los shows
 import * as XLSX from "xlsx";
+import "./soldtickets.css"; // Importa el archivo CSS
 
 const SoldTickets = () => {
   const dispatch = useDispatch();
@@ -205,23 +206,29 @@ const handleDownloadExcel = () => {
   XLSX.writeFile(workbook, "tickets_no_cancelados.xlsx");
 };
 
-  return (
-    <div style={{ padding: "20px", color:"black" }}>
-      <h2>Detalles de Tickets</h2>
-      <h3>Nombre del Cajero: {user && user.name ? user.name : "Cargando..."}</h3>
+return (
+  <div className="container">
+    <h2>Detalles de Tickets</h2>
+    <h3>Nombre del Cajero: {user && user.name ? user.name : "Cargando..."}</h3>
 
-      {/* Botón para descargar los datos en Excel */}
-    <button onClick={handleDownloadExcel} style={{ padding: "10px", backgroundColor: "#28a745", color: "white", border: "none" }}>
-      📥 Descargar Excel
-    </button>
+    {/* Filtro por Nombre de Show */}
+    <div className="filter-container">
+      <label>Filtrar por Show:</label>
+      <input
+        type="text"
+        value={showFilter}
+        onChange={(e) => setShowFilter(e.target.value)}
+        placeholder="Buscar Show"
+      />
+    </div>
 
-      {/* Filtros */}
-      <div style={{ marginBottom: "20px" }}>
+    <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
+      {/* Filtro de División */}
+      <div>
         <label>Filtrar por División:</label>
         <select
           value={divisionFilter}
           onChange={(e) => setDivisionFilter(e.target.value)}
-          style={{ marginLeft: "10px", padding: "5px" }}
         >
           <option value="">Todas las divisiones</option>
           {divisions.map((division, index) => (
@@ -232,13 +239,12 @@ const handleDownloadExcel = () => {
         </select>
       </div>
 
-      {/* Filtros */}
-      <div style={{ marginBottom: "20px" }}>
+      {/* Filtro de Fecha */}
+      <div>
         <label>Filtrar por Fecha :</label>
         <select
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
-          style={{ marginLeft: "10px", padding: "5px" }}
         >
           <option value="">Todas las fechas y Horarios</option>
           {date.map((date, index) => (
@@ -250,12 +256,11 @@ const handleDownloadExcel = () => {
       </div>
 
       {/* Filtro de Cajero */}
-      <div style={{ marginBottom: "20px" }}>
+      <div>
         <label>Filtrar por Cajero:</label>
         <select
           value={cashierFilter}
           onChange={(e) => setCashierFilter(e.target.value)}
-          style={{ marginLeft: "10px", padding: "5px" }}
         >
           <option value="">Todos los cajeros</option>
           {users.length > 0 ? (
@@ -270,174 +275,133 @@ const handleDownloadExcel = () => {
         </select>
       </div>
 
-      {/* Filtro por Nombre de Show */}
-      <div style={{ marginBottom: "20px" }}>
-        <label>Filtrar por Show:</label>
-        <input
-          type="text"
-          value={showFilter}
-          onChange={(e) => setShowFilter(e.target.value)}
-          placeholder="Buscar Show"
-          style={{ marginLeft: "10px", padding: "5px" }}
-        />
-      </div>
-
-      {/* Filtro de Estado (Cancelado / No Cancelado) */}
-      <div style={{ marginBottom: "20px" }}>
+      {/* Filtro de Estado */}
+      <div>
         <label>Filtrar por Estado:</label>
         <select
           value={canceledFilter}
           onChange={(e) => setCanceledFilter(e.target.value === "null" ? null : e.target.value)}
-          style={{ marginLeft: "10px", padding: "5px" }}
         >
-          <option value="">Todos</option>
-          <option value="true">No Cancelados</option>
+          <option value="true"> Activos</option>
           <option value="false">Cancelados</option>
         </select>
       </div>
-
-      {/* Mostrar Tickets No Cancelados */}
-      <h3>Tickets No Cancelados:</h3>
-      <table border="1" style={{ width: "100%", marginTop: "10px", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th>Show</th>
-            <th>División</th>
-            <th>Fila</th>
-            <th>Asiento</th>
-            <th>Cajero</th>
-            <th>Fecha</th> {/* Nueva columna para la fecha */}
-            <th>Hora</th>  {/* Nueva columna para la hora */}
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentTickets.map((ticket, index) => {
-            const show = shows.find((show) => show.id === ticket.showId);
-            const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
-            return (
-              <tr key={ticket.id}>
-                <td>{show ? show.name : "Cargando..."}</td>
-                <td>{ticket.division}</td>
-                <td>{ticket.row}</td>
-                <td>{ticket.seat}</td>
-                <td>{ticket.userId ? users.find(user => user.id === ticket.userId)?.name : "Cajero Desconocido"}</td>
-                <td>{date}</td> {/* Fecha */}
-                <td>{time}</td> {/* Hora */}
-                <td>
-                  <button
-                    onClick={() => cancelTicket(ticket)}
-                    style={{ padding: "5px", backgroundColor: "#FFE57F", color: "black" }}
-                    >
-                    Cancelar Ticket
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-            
-                
-                
-               
-
-      {/* Paginación */}
-         <div style={{ marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-         <button 
-      onClick={() => handlePageChange(currentPage - 1)} 
-      disabled={currentPage === 1} 
-      style={{ 
-        margin: "0 5px", 
-        padding: "8px 12px", 
-        backgroundColor: "#FFE57F", 
-        color: "black", 
-        border: "none", 
-        cursor: currentPage === 1 ? "not-allowed" : "pointer" ,
-        borderRadius: '16px'
-      }}
-    >
-      ◀ Anterior
-    </button>
-
-    {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
-      <button 
-        key={startPage + index} 
-        onClick={() => handlePageChange(startPage + index)} 
-        style={{ 
-          margin: "0 5px", 
-          padding: "8px 12px", 
-          backgroundColor: currentPage === startPage + index ? "#FFE57F" : "#FFD166", 
-          color: "black", 
-          border: "none", 
-          cursor: "pointer",
-          borderRadius: "5px"
-        }}
-      >
-        {startPage + index}
-      </button>
-    ))}
-
-    <button 
-      onClick={() => handlePageChange(currentPage + 1)} 
-      disabled={currentPage === totalPages} 
-      style={{ 
-        margin: "0 5px", 
-        padding: "8px 12px", 
-        backgroundColor: "#FFE57F", 
-        color: "black", 
-        border: "none", 
-        cursor: currentPage === totalPages ? "not-allowed" : "pointer",
-        borderRadius: '16px', 
-      }}
-    >
-      Siguiente ▶
-    </button>
-</div>
-
-      {/* Mostrar Tickets Cancelados */}
-      {canceledFilter !== "true" && canceledFilter !== null && (
-        <div>
-          <h3>Tickets Cancelados:</h3>
-          <table border="1" style={{ width: "100%", marginTop: "10px", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th>Show</th>
-                <th>División</th>
-                <th>Fila</th>
-                <th>Asiento</th>
-                <th>Cajero</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cancelledTickets.map((ticket) => {
-                const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
-                const show = shows.find((show) => show.id === ticket.showId);
-                return (
-                  <tr key={ticket.id}>
-                    <td>{show ? show.name : "Cargando..."}</td>
-                    <td>{ticket.division}</td>
-                    <td>{ticket.row}</td>
-                    <td>{ticket.seat}</td>
-                    <td>{ticket.userId ? users.find(user => user.id === ticket.userId)?.name : "Cajero Desconocido"}</td>
-                    <td>{date}</td>
-                    <td>{time}</td>
-                    <td style={{ color: 'red' }}>
-                       Cancelado
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
     </div>
-                    
-  );
+
+    {/* Mostrar Tickets No Cancelados */}
+    <h3>Tickets totales:</h3>
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Show</th>
+          <th>División</th>
+          <th>Fila</th>
+          <th>Asiento</th>
+          <th>Cajero</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {currentTickets.map((ticket, index) => {
+          const show = shows.find((show) => show.id === ticket.showId);
+          const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
+          return (
+            <tr key={ticket.id}>
+              <td>{show ? show.name : "Cargando..."}</td>
+              <td>{ticket.division}</td>
+              <td>{ticket.row}</td>
+              <td>{ticket.seat}</td>
+              <td>{ticket.userId ? users.find(user => user.id === ticket.userId)?.name : "Cajero Desconocido"}</td>
+              <td>{date}</td>
+              <td>{time}</td>
+              <td>
+                <button
+                  onClick={() => cancelTicket(ticket)}
+                  className="cancel-button"
+                >
+                  Cancelar Ticket
+                </button>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+
+    {/* Descargar Excel */}
+    <button onClick={handleDownloadExcel} className="download-button">
+      📥 Descargar Excel
+    </button>
+
+    {/* Paginación */}
+    <div className="pagination">
+      <button
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        ◀ Anterior
+      </button>
+
+      {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
+        <button
+          key={startPage + index}
+          onClick={() => handlePageChange(startPage + index)}
+          className={currentPage === startPage + index ? "active" : "inactive"}
+        >
+          {startPage + index}
+        </button>
+      ))}
+
+      <button
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        Siguiente ▶
+      </button>
+    </div>
+
+    {/* Mostrar Tickets Cancelados */}
+    {canceledFilter !== "true" && canceledFilter !== null && (
+      <div>
+        <h3>Tickets Cancelados:</h3>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Show</th>
+              <th>División</th>
+              <th>Fila</th>
+              <th>Asiento</th>
+              <th>Cajero</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cancelledTickets.map((ticket) => {
+              const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
+              const show = shows.find((show) => show.id === ticket.showId);
+              return (
+                <tr key={ticket.id}>
+                  <td>{show ? show.name : "Cargando..."}</td>
+                  <td>{ticket.division}</td>
+                  <td>{ticket.row}</td>
+                  <td>{ticket.seat}</td>
+                  <td>{ticket.userId ? users.find(user => user.id === ticket.userId)?.name : "Cajero Desconocido"}</td>
+                  <td>{date}</td>
+                  <td>{time}</td>
+                  <td style={{ color: 'red' }}>Cancelado</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+);
 };
 
 export default SoldTickets;

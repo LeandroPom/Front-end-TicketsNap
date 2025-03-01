@@ -1,36 +1,150 @@
 /* Estilos para la superposición de carga */
 .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #999898; /* Fondo gris claro */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 9999; /* Asegúrate de que se muestre sobre otros elementos */
-    overflow: hidden; /* Evitar que el contenido se desborde */
-  }
-  
-  /* Posición de las imágenes en las 4 esquinas */
-  .loading-overlay .corner-img {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    background-size: contain;  /* Cambiado de 'cover' a 'contain' para evitar el recorte */
-    background-position: center;
-    background-repeat: no-repeat; /* Para que la imagen no se repita si es más pequeña */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #999898;
+  /* Fondo gris claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+  /* Asegúrate de que se muestre sobre otros elementos */
+  overflow: hidden;
+  /* Evitar que el contenido se desborde */
+}
+
+/* Posición de las imágenes en las 4 esquinas */
+.loading-overlay .corner-img {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-size: contain;
+  /* Cambiado de 'cover' a 'contain' para evitar el recorte */
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Para que la imagen no se repita si es más pequeña */
+}
+
+
+.loading-overlay .top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.loading-overlay .top-right {
+  top: 10px;
+  right: 10px;
+}
+
+:root {
+  --bg-light: #FFFFFF;
+  --bg-dark: #000000;
+  --primary: #FFE57F;
+  --secondary: #FFB74D;
+  --accent: #FFD166;
+  --text-light: #343a40;
+  --text-dark: #f8f9fa;
+}
+
+/* Contenedor principal del ticket */
+.ticket-container {
+  text-align: center;
+  margin-top: 80px;
+}
+
+/* Título principal */
+.ticket-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--secondary);
+}
+
+/* Contenedor del contenido */
+.ticket-content {
+  border: 1px solid black;
+  padding: 20px;
+  display: inline-block;
+  text-align: left;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  border-radius: 10px;
+  transition: background 0.3s;
+  max-width: 600px;
+}
+
+/* Modo oscuro */
+.dark .ticket-content {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* Nombre del evento */
+.event-name {
+  font-size: 20px;
+  color: var(--secondary);
+}
+
+/* Modo oscuro para el título del evento */
+.dark .event-name {
+  color: var(--primary);
+}
+
+/* Detalles de asiento y selección */
+.seat-details-title,
+.selection-details-title {
+  font-size: 18px;
+  color: var(--secondary);
+  margin-top: 16px;
+}
+
+.dark .seat-details-title,
+.dark .selection-details-title {
+  color: var(--primary);
+}
+
+/* Contenedor del botón */
+.button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Botón de compra */
+.buy-button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: var(--secondary);
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dark .buy-button {
+  background-color: var(--primary);
+}
+
+.buy-button:hover {
+  background-color: var(--accent);
+}
+
+
+/* Responsividad */
+@media (max-width: 1024px) {
+  .ticket-content {
+    padding: 24px;
+    max-width: 800px;
+    margin-top: 120px;
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    border-radius: 10px;
+    transition: background 0.3s;
+    margin-left: 4px;
+
   }
 
-  
-  .loading-overlay .top-left {
-    top: 10px;
-    left: 10px;
-  }
-  
-  .loading-overlay .top-right {
-    top: 10px;
-    right: 10px;
-  }
+}
