@@ -5,7 +5,7 @@
   max-width: 800px;
   margin: auto;
   overflow: hidden;
-  margin-left: 188px; /* Este margen puede necesitar ajustes para móviles */
+  margin-left: 280px; /* Este margen puede necesitar ajustes para móviles */
 }
 
 .carousel-images {
@@ -13,13 +13,14 @@
   height: 260px; /* Ajusta al alto deseado */
   width: 800px;
   object-fit: cover; /* Aseguramos que la imagen se ajuste bien */
+  
 }
 
 .carousel-image,
 .event-videos {
   position: absolute;
   top: 0;
-  left: 0;
+  margin-left: 350px;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -130,6 +131,15 @@
     height: 250px; /* Ajustar la altura del carrusel en tabletas */
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
 
+  }
+
+  .carousel {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+    margin-left: 5px; /* Este margen puede necesitar ajustes para móviles */
   }
 }
 

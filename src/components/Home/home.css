@@ -4,7 +4,8 @@
   font-family: 'Arial', sans-serif;
   margin-top: 60px;
   text-align: center;
-  transition: background-color 0.3s, color 0.3s; /* Animación */
+  transition: background-color 0.3s, color 0.3s;
+  /* Animación */
 }
 
 
@@ -27,35 +28,44 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
-  margin-left: 150px;
+  margin-left: 220px;
+  padding: 5px 5px;
 }
 
-.search-container input,
-.search-container select {
-  padding: 6px 10px;
-  margin: 5px;
+.search-container input {
+  padding: 2px 5px;
+  margin: 3px;
   border: 2px solid #e9aa16;
   border-radius: 8px;
   font-size: 16px;
   background-color: #FFD166;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  
-  
+
+
 }
 
-.search-container input:focus,
-.search-container select:focus {
-  border-color: #0056b3;
-  box-shadow: 0 0 8px rgba(226, 227, 228, 0.6);
+
+.search-container select {
+  padding: 5px 25px;
+  margin: 3px;
+  border: 1px solid #e9aa16;
+  border-radius: 8px;
+  font-size: 12px;
+  background-color: #FFD166;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 /* Estilos para los botones de paginación */
-.paginate-boton{
+.paginate-boton {
   padding: 10px 10px;
   font-size: 0.8rem;
-  background-color: #FFE57F; /* Amarillo pastel brillante */
-  color: #333; /* Color oscuro para el texto */
-  border: 2px solid #FFD166; /* Amarillo-naranja pastel brillante */
+  background-color: #FFE57F;
+  /* Amarillo pastel brillante */
+  color: #333;
+  /* Color oscuro para el texto */
+  border: 2px solid #FFD166;
+  /* Amarillo-naranja pastel brillante */
   border-radius: 16px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
@@ -64,14 +74,18 @@
 
 /* Efecto hover: al pasar el mouse sobre el botón */
 .paginate-boton:hover {
-  background-color: #FFB74D; /* Naranja pastel brillante */
-  transform: scale(1.05); /* Efecto de agrandar ligeramente */
+  background-color: #FFB74D;
+  /* Naranja pastel brillante */
+  transform: scale(1.05);
+  /* Efecto de agrandar ligeramente */
 }
 
 /* Efecto active: cuando el botón está presionado */
 .paginate-botonact {
-  background-color: #df9d23; /* Amarillo-naranja pastel brillante */
-  transform: scale(0.95); /* Efecto de reducir el tamaño cuando se presiona */
+  background-color: #df9d23;
+  /* Amarillo-naranja pastel brillante */
+  transform: scale(0.95);
+  /* Efecto de reducir el tamaño cuando se presiona */
   padding: 10px 10px;
   border-radius: 16px;
   color: black
@@ -89,14 +103,15 @@
   margin-top: 65px;
 }
 
-.content{
-  color:#030303
+.content {
+  color: #030303
 }
-.dark .content{
-  color:#ffffff
+
+.dark .content {
+  color: #ffffff
 }
- 
- /* Cards color de fondo y tamaño de la misma */
+
+/* Cards color de fondo y tamaño de la misma */
 
 .cardshome {
   border-radius: 12px;
@@ -108,35 +123,42 @@
   border: 5px solid #eca624;
   overflow: hidden;
   position: relative;
-  background: #ffffff; /* backgroud de las cards */
+  background: #ffffff;
+  /* backgroud de las cards */
   max-height: 400px;
   width: 330px;
   display: flex;
 }
 
 .dark .cardshome {
-  background: #000000; /* backgroud de las cards */
+  background: #000000;
+  /* backgroud de las cards */
 }
-  
-  
- 
-  
-  
-  /* Titulo y efecto del mismo en cards */
+
+
+
+
+
+/* Titulo y efecto del mismo en cards */
 .titulo-card {
-  color: #141413; /* Color negro que ya estás usando */
-  font-size: 35px; /* Tamaño de fuente grande para destacar */
-  margin-bottom: 10px; 
-  font-weight: 600; /* Negrita */
-  letter-spacing: 0.5px; /* Espaciado entre letras */
+  color: #141413;
+  /* Color negro que ya estás usando */
+  font-size: 35px;
+  /* Tamaño de fuente grande para destacar */
+  margin-bottom: 10px;
+  font-weight: 600;
+  /* Negrita */
+  letter-spacing: 0.5px;
+  /* Espaciado entre letras */
   font-family: 'Roboto Slab', serif;
 }
 
-  .dark .titulo-card{
-    color: #ffffff; /* Color Blanco */
-  }
-  
- 
+.dark .titulo-card {
+  color: #ffffff;
+  /* Color Blanco */
+}
+
+
 /* Elementos individuales de eventos */
 li {
   border-radius: 12px;
@@ -150,7 +172,7 @@ li {
   border: 3px solid #000000;
   overflow: hidden;
   position: relative;
-  background: #d8d785; 
+  background: #d8d785;
 }
 
 li:hover {
@@ -231,41 +253,43 @@ li:hover .event-image {
 .buttonhome {
   background-color: white;
   color: #000000;
-  font-family:monospace;
+  font-family: monospace;
   font-weight: bold;
   font-size: large;
   padding: 8px 8px;
-  border:3px solid #eca624;
+  border: 3px solid #eca624;
   margin: 1px;
   border-radius: 0px;
   cursor: pointer;
   font-size: 18px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   width: 100%;
-  margin-top: auto; /* Asegura que el botón se quede al fondo */
-  
+  margin-top: auto;
+  /* Asegura que el botón se quede al fondo */
+
   /* Sombra adicional para mayor contraste */
-  transition: all 0.3s ease-in-out; /* Efecto suave en el hover */
+  transition: all 0.3s ease-in-out;
+  /* Efecto suave en el hover */
 }
 
 /* Efecto cuando el título se pasa por encima */
 .buttonhome:hover {
-  background-color:#FFB74D;
+  background-color: #FFB74D;
   transform: scale(1.5);
 }
 
-.dark .buttonhome{
-  color:white;
+.dark .buttonhome {
+  color: white;
   background-color: transparent;
 }
 
-.dark .buttonhome:hover{
-  color:white;
+.dark .buttonhome:hover {
+  color: white;
   background-color: #FFB74D;
 }
 
 .buttonhomereset {
-  background-color:transparent;
+  background-color: transparent;
   color: #f78400;
   padding: 8px 12px;
   border: none;
@@ -277,25 +301,41 @@ li:hover .event-image {
 }
 
 .whatsapp-link {
-  position: fixed;      /* Fijar el enlace en la pantalla */
-  bottom: 20px;         /* A 20px del borde inferior */
-  right: 20px;          /* A 20px del borde derecho */
-  background-color: transparent; /* Color de fondo para hacerlo visible */
-  color: rgb(0, 0, 0);         /* Color del texto */
-  padding: 10px;        /* Espaciado alrededor del texto */
-  border-radius: 16%;   /* Hacer el ícono circular */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto */
-  display: flex;        /* Centrar el ícono */
-  justify-content: center; /* Centrar el contenido horizontalmente */
-  align-items: center;  /* Centrar el contenido verticalmente */
-  text-decoration: none; /* Quitar el subrayado del enlace */
-  font-weight: bold;    /* Hacer el texto más visible */
-  z-index: 999;         /* Asegurar que esté por encima de otros elementos */
+  position: fixed;
+  /* Fijar el enlace en la pantalla */
+  bottom: 20px;
+  /* A 20px del borde inferior */
+  right: 20px;
+  /* A 20px del borde derecho */
+  background-color: white;
+  /* Color de fondo para hacerlo visible */
+  color: rgb(0, 0, 0);
+  /* Color del texto */
+  padding: 10px;
+  /* Espaciado alrededor del texto */
+  border-radius: 16px;
+  /* Hacer el ícono circular */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Sombra para darle un efecto */
+  display: flex;
+  /* Centrar el ícono */
+  justify-content: center;
+  /* Centrar el contenido horizontalmente */
+  align-items: center;
+  /* Centrar el contenido verticalmente */
+  text-decoration: none;
+  /* Quitar el subrayado del enlace */
+  font-weight: bold;
+  /* Hacer el texto más visible */
+  z-index: 999;
+  /* Asegurar que esté por encima de otros elementos */
 }
 
 .dark .whatsapp-link {
-  color: white;         /* Color del texto */
-  }
+  color: white;
+  background-color: #1D1D1D;
+  /* Color del texto */
+}
 
 
 
@@ -317,15 +357,16 @@ li:hover .event-image {
   }
 
   .homecard {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajustar las columnas */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* Ajustar las columnas */
     gap: 15px;
     left: 250px;
   }
 
-  
 
 
-   /* UBICACION DE LAS CARDS RESPONSIVAS */
+
+  /* UBICACION DE LAS CARDS RESPONSIVAS */
   .cardshome {
     border-radius: 12px;
     padding: 15px;
@@ -336,10 +377,12 @@ li:hover .event-image {
     border: 5px solid #eca624;
     overflow: hidden;
     position: relative;
-    background: #ffffff; /* backgroud de las cards */
+    background: #ffffff;
+    /* backgroud de las cards */
     max-height: 400px;
     width: 300px;
-    margin-left: -59px; /* margen por defecto */
+    margin-left: -59px;
+    /* margen por defecto */
   }
 
   li {
@@ -370,148 +413,168 @@ li:hover .event-image {
   }
 
 
-/* Estilos para los botones de paginación MODO RESPONSIVE */
-.paginate-boton{
-  padding: 10px 10px;
-  font-size: 0.8rem;
-  background-color: #FFE57F; /* Amarillo pastel brillante */
-  color: #333; /* Color oscuro para el texto */
-  border: 2px solid #FFD166; /* Amarillo-naranja pastel brillante */
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  margin: 5px;
-  margin-right: -3px;
-}
+  /* Estilos para los botones de paginación MODO RESPONSIVE */
+  .paginate-boton {
+    padding: 10px 10px;
+    font-size: 0.8rem;
+    background-color: #FFE57F;
+    /* Amarillo pastel brillante */
+    color: #333;
+    /* Color oscuro para el texto */
+    border: 2px solid #FFD166;
+    /* Amarillo-naranja pastel brillante */
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 5px;
+    margin-right: -3px;
+  }
 
-/* Efecto hover: al pasar el mouse sobre el botón */
-.paginate-boton:hover {
-  background-color: #FFB74D; /* Naranja pastel brillante */
-  transform: scale(1.05); /* Efecto de agrandar ligeramente */
-}
+  /* Efecto hover: al pasar el mouse sobre el botón */
+  .paginate-boton:hover {
+    background-color: #FFB74D;
+    /* Naranja pastel brillante */
+    transform: scale(1.05);
+    /* Efecto de agrandar ligeramente */
+  }
 
-/* Efecto active: cuando el botón está presionado */
-.paginate-botonact {
-  background-color: #dfdb23; /* Amarillo-naranja pastel brillante */
-  transform: scale(0.95); /* Efecto de reducir el tamaño cuando se presiona */
-  padding: 10px 10px;
-  border-radius: 50px;
-}
+  /* Efecto active: cuando el botón está presionado */
+  .paginate-botonact {
+    background-color: #dfdb23;
+    /* Amarillo-naranja pastel brillante */
+    transform: scale(0.95);
+    /* Efecto de reducir el tamaño cuando se presiona */
+    padding: 10px 10px;
+    border-radius: 50px;
+  }
 
-/* Estilos para el contenedor del calendario y la barra de búsqueda RESPONSIVE */
-.search-container {
-  background-color:transparent;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 25px;
-  margin-left: 15%;
-  margin-top: 50px;
-  justify-content: flex-start;
-  transform: translateX(-65px); /* Desplaza el botón hacia la izquierda */
-}
-  
+  /* Estilos para el contenedor del calendario y la barra de búsqueda RESPONSIVE */
+  .search-container {
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+    margin-left: 15%;
+    margin-top: 50px;
+    justify-content: flex-start;
+    transform: translateX(-65px);
+    /* Desplaza el botón hacia la izquierda */
+  }
 
-/* Estilo para el botón del calendario RESPONSIVE */
-.calendar-button-container {
-  display: flex;
-  justify-content: flex-start;
-  transform: translateX(-5px); /* Desplaza el botón hacia la izquierda */
-  margin: 3px;
-}
 
-.calendar-button {
-  background-color: transparent;
-  color: #e9b118;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
+  /* Estilo para el botón del calendario RESPONSIVE */
+  .calendar-button-container {
+    display: flex;
+    justify-content: flex-start;
+    transform: translateX(-5px);
+    /* Desplaza el botón hacia la izquierda */
+    margin: 3px;
+  }
 
-.calendar-popup {
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  background-color: #fcdb8f;
-  padding: 0;
-  border-radius: 8px;
-  color: #000000;
-}
+  .calendar-button {
+    background-color: transparent;
+    color: #e9b118;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
 
-.react-calendar {
-  background: transparent;
-  border: none;
-}
+  .calendar-popup {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background-color: #fcdb8f;
+    padding: 0;
+    border-radius: 8px;
+    color: #000000;
+  }
 
-.react-calendar__navigation button {
-  color: black !important;
-}
+  .react-calendar {
+    background: transparent;
+    border: none;
+  }
 
-.react-calendar__navigation__label {
-  color: black !important;
-}
+  .react-calendar__navigation button {
+    color: black !important;
+  }
 
-.react-calendar__tile {
-  color: rgb(255, 0, 0);
-}
+  .react-calendar__navigation__label {
+    color: black !important;
+  }
 
-.react-calendar__tile--now {
-  background: transparent;
-}
+  .react-calendar__tile {
+    color: rgb(255, 0, 0);
+  }
 
-.react-calendar__tile--active {
-  background: transparent;
-}
+  .react-calendar__tile--now {
+    background: transparent;
+  }
 
-.react-calendar__tile--hasActive {
-  color: green;
-  background: #fcdb8f;
-}
+  .react-calendar__tile--active {
+    background: transparent;
+  }
 
-.reset-button {
-  color: rgb(153, 20, 20);
-  border: none;
-  border-radius: 8px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  margin-left: 10px;
-  width: auto;
-  display: inline-block;
-}
+  .react-calendar__tile--hasActive {
+    color: green;
+    background: #fcdb8f;
+  }
 
-.reset-button:hover {
-  background-color: #d32f2f;
-}
+  .reset-button {
+    color: rgb(153, 20, 20);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+    width: auto;
+    display: inline-block;
+  }
 
-.whatsapp-link {
-  position: fixed;      /* Fijar el enlace en la pantalla */
-  bottom: -25px;         /* A 20px del borde inferior */
-  right: 20px;          /* A 20px del borde derecho */
-  background-color: transparent; /* Color de fondo para hacerlo visible */
-  color: rgb(0, 0, 0);         /* Color del texto */
-  padding: 10px;        /* Espaciado alrededor del texto */
-  border-radius: 50%;   /* Hacer el ícono circular */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto */
-  display: flex;        /* Centrar el ícono */
-  justify-content: center; /* Centrar el contenido horizontalmente */
-  align-items: center;  /* Centrar el contenido verticalmente */
-  text-decoration: none; /* Quitar el subrayado del enlace */
-  font-weight: bold;    /* Hacer el texto más visible */
-  z-index: 1;         /* Asegurar que esté por encima de otros elementos */
-}
+  .reset-button:hover {
+    background-color: #d32f2f;
+  }
 
-.dark .whatsapp-link {
-  color: white;         /* Color del texto */
+  .whatsapp-link {
+    position: fixed;
+    /* Fijar el enlace en la pantalla */
+    bottom: -25px;
+    /* A 20px del borde inferior */
+    right: 20px;
+    /* A 20px del borde derecho */
+    background-color: transparent;
+    /* Color de fondo para hacerlo visible */
+    color: rgb(0, 0, 0);
+    /* Color del texto */
+    padding: 10px;
+    /* Espaciado alrededor del texto */
+    border-radius: 50%;
+    /* Hacer el ícono circular */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra para darle un efecto */
+    display: flex;
+    /* Centrar el ícono */
+    justify-content: center;
+    /* Centrar el contenido horizontalmente */
+    align-items: center;
+    /* Centrar el contenido verticalmente */
+    text-decoration: none;
+    /* Quitar el subrayado del enlace */
+    font-weight: bold;
+    /* Hacer el texto más visible */
+    z-index: 1;
+    /* Asegurar que esté por encima de otros elementos */
+  }
+
+  .dark .whatsapp-link {
+    color: white;
+    /* Color del texto */
   }
 
 }
-  
-
-
-

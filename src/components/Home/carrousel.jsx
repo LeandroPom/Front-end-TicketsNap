@@ -5,6 +5,7 @@ const Carousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Estado para saber si el video está reproduciéndose
 
+  // Funciones para ir a la imagen anterior o siguiente
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
   };
@@ -45,27 +46,37 @@ const Carousel = ({ images }) => {
 
   // Cambio automático de imágenes (solo si no hay video reproduciéndose)
   useEffect(() => {
-    if (!isVideoPlaying) {
+    if (!isVideoPlaying && images.length > 1) { // Solo cambia si hay más de una imagen
       const interval = setInterval(() => {
         goToNext();
-      }, 15000); // Cambia la imagen cada 5 segundos
+      }, 15000); // Cambia la imagen cada 15 segundos
 
       return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
     }
-  }, [currentIndex, isVideoPlaying]); // Recalcula el intervalo solo cuando no haya video en reproducción
+  }, [currentIndex, isVideoPlaying, images.length]); // Recalcula el intervalo solo cuando no haya video en reproducción
+
+  // Determina si solo hay una imagen para desactivar los botones
+  const isSingleImage = images.length === 1;
 
   return (
     <div className="carousel">
-      <button className="carousel-button prev" onClick={goToPrevious}>
+      <button
+        className="carousel-button prev"
+        onClick={goToPrevious}
+        disabled={isSingleImage} // Desactiva el botón si solo hay una imagen
+      >
         &#8249;
       </button>
 
       <div className="carousel-images">
-  <div className="carousel-images">
-    {renderContent(images[currentIndex], currentIndex)}
-  </div>
-</div>
-      <button className="carousel-button next" onClick={goToNext}>
+        {renderContent(images[currentIndex], currentIndex)}
+      </div>
+
+      <button
+        className="carousel-button next"
+        onClick={goToNext}
+        disabled={isSingleImage} // Desactiva el botón si solo hay una imagen
+      >
         &#8250;
       </button>
 

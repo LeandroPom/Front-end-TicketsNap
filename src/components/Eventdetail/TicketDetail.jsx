@@ -213,23 +213,16 @@ const TicketDetail = () => {
     );
   }
   return (
-    <div style={{ textAlign: 'center', marginTop: '80px' }}>
-      <h1>Ticket de Evento</h1>
+    <div className="ticket-container">
+      <h1 className="ticket-title">Ticket de Evento</h1>
 
-      <div
-        style={{
-          border: '1px solid black',
-          padding: '20px',
-          display: 'inline-block',
-          textAlign: 'left',
-        }}
-      >
-        <h2>{eventDetails.name}</h2>
+      <div className="ticket-box">
+        <h2 className="event-name">{eventDetails.name}</h2>
         <p>
           <strong>Descripción:</strong> {eventDetails.description}
         </p>
         <p>
-          <strong>Direccion:</strong> {eventDetails.Direccion}
+          <strong>Dirección:</strong> {eventDetails.Direccion}
         </p>
         <p>
           <strong>Fecha:</strong> {eventDetails.presentation?.date}
@@ -247,7 +240,7 @@ const TicketDetail = () => {
 
         {selectedSeat ? (
           <>
-            <h3>Detalles del Asiento:</h3>
+            <h3 className="seat-title">Detalles del Asiento:</h3>
             <p>
               <strong>División:</strong> {selectedSeat.division}
             </p>
@@ -263,7 +256,7 @@ const TicketDetail = () => {
           </>
         ) : (
           <>
-            <h3>Detalles de la Selección:</h3>
+            <h3 className="seat-title">Detalles de la Selección:</h3>
             <p>
               <strong>División:</strong> {selectedGeneral.division}
             </p>
@@ -276,24 +269,11 @@ const TicketDetail = () => {
           </>
         )}
 
-        <div style={{ marginBottom: '40px' }}>
-          <button
-            onClick={handleOpenBuyerModal} // Siempre abre el modal de datos
-            style={{
-              padding: '10px 20px',
-              fontSize: '16px',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              margin: 'auto',
-            }}
-          >
-            {user?.cashier ? 'Vender Entrada' : 'Comprar Entrada'} {/* Esto solo cambia el texto */}
+        <div className="button-container">
+          <button onClick={handleOpenBuyerModal} className="buy-button">
+            {user?.cashier ? 'Vender Entrada' : 'Comprar Entrada'}
           </button>
         </div>
-        
       </div>
     </div>
   );

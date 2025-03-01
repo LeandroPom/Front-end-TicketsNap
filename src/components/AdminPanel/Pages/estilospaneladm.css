@@ -33,20 +33,27 @@
 }
 
 .boton-barra-adm{
-  background-color: #cfcfce; /* Verde llamativo */
-  color: #000000;
-  padding: 10px 10px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
+  background-color: #FFFFFF; /* Verde llamativo */
+  color: #1D1D1D;
+  padding: 16px 16px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
   border: none;
-  border-radius: 10px;
+  border-radius: 0px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 23px;
-  margin-left: 25px; /* Añade espacio entre los botones */
+  margin-top: 8px;
+  margin-left: 0px; /* Añade espacio entre los botones */
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .dark .boton-barra-adm{
-  background-color: #727272; /* Verde llamativo */
-  color: #ffffff;
+  background-color: #1D1D1D; /* Verde llamativo */
+  color: #FFE57F;
+}
+
+.boton-barra-adm:hover{
+  background-color: #ffd1664d;
+  transform:scaleY(1.6);
+  border-radius: 3px;
 }
 
 .botoncreate {
@@ -194,13 +201,17 @@ font-weight: bold;
 }
 
 .metric-card {
-  /* background-color: #f8f9fa; */
+  background-color: #FFFFFF;
   padding: 20px;
   text-align: center;
   border-radius: 10px;
   width: 20%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 999;
+}
+
+.dark .metric-card{
+  background-color: #1D1D1D;
 }
 
 .metric-card h3 {
@@ -210,14 +221,24 @@ font-weight: bold;
 
 .metric-card p {
   font-size: 24px;
-  color: #007bff;
+  color: #FFB74D;
   font-weight: bold;
+}
+
+.dark .metric-card p {
+  color: #FFE57F;
 }
 
 .charts-container {
   display: flex;
   justify-content: space-around;
   z-index: 999;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+}
+
+.dark .charts-container {
+  background-color: #1D1D1D;
 }
 
 .chart {
@@ -320,7 +341,7 @@ font-weight: bold;
 
 /* admin-header */
 .admin-header {
-  background-color: #2c3e50;
+  background-color: #FFFFFF;
   /* color: rgb(0, 0, 0); */
   padding: 15px 0;
   display: flex;
@@ -328,15 +349,23 @@ font-weight: bold;
   align-items: center;
   position: fixed;
   width: 100%;
-  top: 70px;
-  z-index: 500; /* Asegura que la navbar esté siempre por encima de todo */
-  margin-left: -265px ;
+  top: 90px;
+  z-index: 1000; /* Asegura que la navbar esté siempre por encima de todo */
+  margin-left: -270px ;
+}
+
+.dark .admin-header {
+  background-color: #1D1D1D;
 }
 
 .admin-header .logo h2 {
   margin: 0;
   padding-left: 20px;
   z-index: 999;
+}
+
+.dark .admin-header .logo h2 {
+  color: #FFE57F;
 }
 
 .admin-header nav ul {
@@ -461,13 +490,6 @@ table {
   margin-top: 20px;
 }
 
-/* th, td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  color:black
-} */
-
 .dark th{
   padding: 10px;
   text-align: left;
@@ -518,6 +540,7 @@ td {
   .main-content {
     margin-left: 0;
     width: 100%;
+    margin-top: 230px;
   }
 }
 
@@ -553,20 +576,26 @@ tr:nth-child(even) {
 .pagination-button {
   padding: 8px 12px;
   margin: 0 5px;
-  background-color: #007bff;
-  color: white;
+  background-color: #FFE57F;
+  color: black;
   border: none;
   cursor: pointer;
   border-radius: 5px;
 }
 
+
+
 .pagination-button:disabled {
-  background-color: #c0c0c0;
+  background-color: #FFD166;
+  cursor: not-allowed;
+}
+
+.dark .pagination-button:disabled {
+  background-color: #f1b11a;
   cursor: not-allowed;
 }
 
 .pagination-button.active {
-  background-color: #db4328;
+  background-color: #db9c28;
 }
-
 
