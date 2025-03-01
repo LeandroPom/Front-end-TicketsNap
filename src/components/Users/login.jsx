@@ -26,6 +26,9 @@ const Login = () => {
         icon: 'success',
         title: 'Login exitoso',
         text: `Bienvenido, ${user.name}`,
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       }).then(() => {
         navigate('/');
       });

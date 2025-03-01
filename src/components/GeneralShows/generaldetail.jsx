@@ -14,6 +14,7 @@ const GeneralDetail = () => {
   const [show, setShow] = useState(null);
   const [zone, setZone] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);  // Nuevo estado para cargar
   const [selectedDivision, setSelectedDivision] = useState('');
   const [selectedPrice, setSelectedPrice] = useState(0);
   const user = useSelector((state) => state.user);
@@ -119,6 +120,7 @@ const GeneralDetail = () => {
   };
 
   const handleConfirmPurchase = async (buyerDetails, paymentMethod) => {
+    setIsLoading(true);  // Activar el loading cuando comience la compra/venta
     const ticketData = {
       showId,
       zoneId: zone.id,
@@ -157,10 +159,25 @@ const GeneralDetail = () => {
         confirmButtonText: 'Aceptar',
       });
     }
+    setIsLoading(false);  // Desactivar el loading cuando finalice la compra/venta
   };
 
-  if (loading) return <p>Cargando...</p>;
+  
   if (!show) return <p>SIN INFORMACIÓN</p>;
+
+  if (isLoading) {
+    return (
+      <div className="loading-overlay">
+        <div className="corner-img top-left" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img top-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img bottom-left" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img bottom-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+  
+        <div className="spinner"></div>
+        <p>Procesando su compra...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="show-container">

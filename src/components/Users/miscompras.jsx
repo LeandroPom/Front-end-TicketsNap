@@ -23,7 +23,7 @@ const MisCompras = () => {
       try {
         const response = await axios.get('/tickets');
         if (response.data?.tickets) {
-          const userTickets = response.data.tickets.filter(ticket => ticket.userId === user?.id);
+          const userTickets = response.data.tickets.filter(ticket => ticket.userId === user?.id && ticket.state === true); // Filtramos por state === true
           setTickets(userTickets);
 
           // Si no hay tickets, muestra SweetAlert
