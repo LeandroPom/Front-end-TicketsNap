@@ -24,7 +24,7 @@
   color: var(--color-texto-light);
   margin-top: 150px;
   box-sizing: border-box;
-  background-color: #cccccc6b;
+  background-color: #ffffffff;
 }
 
 .dark .login-form{

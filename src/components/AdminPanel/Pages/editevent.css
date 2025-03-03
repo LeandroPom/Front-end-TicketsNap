@@ -7,6 +7,71 @@ body {
     padding: 0;
   }
   
+
+  /* Overlay para cubrir toda la pantalla */
+
+
+/* Estilo para el botón de cerrar y crear */
+.close-btn {
+  position: absolute;
+  top: 985px;
+  right:290px;
+  background-color: #FFB74D;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.boton-enviar {
+  position: absolute;
+  top: 1000px;
+  right:950px;
+  background-color: #FFB74D;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+.dark .close-btn {
+  position: absolute;
+  top: 998px;
+  right:290px;
+  background-color: #FFE57F;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.dark .boton-enviar {
+  position: absolute;
+  top: 1013px;
+  right:950px;
+  background-color: #FFE57F;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.close-btn:hover {
+  background-color: #ff9100;
+}
+
+.boton-enviar:hover {
+  background-color: #ff9100;
+}
+
+
   h1 {
     text-align: center;
     color: #333;

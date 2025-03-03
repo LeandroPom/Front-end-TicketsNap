@@ -105,10 +105,6 @@ const UsersManagement = () => {
         />
       </div>
 
-      <button className="export-button" onClick={handleDownloadExcel}>
-        📥 Descargar Excel
-      </button>
-
       <table className="users-table">
         <thead>
           <tr>
@@ -156,6 +152,10 @@ const UsersManagement = () => {
           ))}
         </tbody>
       </table>
+
+      <button className="export-button" onClick={handleDownloadExcel}>
+        📥 Descargar Excel
+      </button>
 
       <div className="pagination">
         <button

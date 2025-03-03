@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../components/Redux/Actions/actions';
@@ -13,6 +13,7 @@ const Header = () => {
     dispatch(logoutUser());
     navigate('/');  // Redirige a la página de login después de hacer logout
   };
+
 
   return (
     <header className="admin-header">
