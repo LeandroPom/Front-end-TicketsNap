@@ -117,18 +117,18 @@
 
 
 .dark .password-eye {
-  position: absolute;
-  right: 10px;
-  top: 48%;
+  position:absolute;
+  right: 80px;
+  top: 9%;
   transform: translateY(-50%);
   cursor: pointer;
   color:#000000
 }
 
 .dark .password-eye-confirm {
-  position: absolute;
-  right: 10px;
-  top: 50%;
+  position:absolute;
+  right: 205px;
+  top: 9%;
   transform: translateY(-50%);
   cursor: pointer;
   color:#000000;

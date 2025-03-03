@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux"; // Si usas Redux para el dispatch
 import { createPlace } from "../../Redux/Actions/actions"; // Asegúrate de importar correctamente tu acción
-import "./estilospaneladm.css";
+import "./places.css";
 
 const Places = () => {
   const dispatch = useDispatch();
@@ -11,6 +11,8 @@ const Places = () => {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const placesPerPage = 2;
 
   useEffect(() => {
     fetchPlaces();
@@ -30,7 +32,6 @@ const Places = () => {
       setError("Please fill in all fields.");
       return;
     }
-
   };
 
   const handleDeletePlace = async (id) => {
@@ -47,8 +48,8 @@ const Places = () => {
       await dispatch(createPlace(placeData)); // Llama la acción de Redux para crear el lugar
       Swal.fire({
         icon: 'success',
-        title: 'Place Created!',
-        text: 'The new place has been successfully created.',
+        title: 'Lugar creado!',
+        text: 'Su nuevo lugar fue creado.',
       });
       fetchPlaces(); // Actualiza la lista de lugares
     } catch (err) {
@@ -57,32 +58,43 @@ const Places = () => {
     }
   };
 
+  // Calcular los lugares a mostrar según la página actual
+  const indexOfLastPlace = currentPage * placesPerPage;
+  const indexOfFirstPlace = indexOfLastPlace - placesPerPage;
+  const currentPlaces = places.slice(indexOfFirstPlace, indexOfLastPlace);
+
+  // Cambiar de página
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="places-management">
-      <h2>Gestión de Lugares</h2>
-
-      {/* Formulario para agregar un nuevo lugar */}
-      <div className="add-place-form">
-       
-      </div>
-
       {/* Mostrar errores si los campos no están completos */}
       {error && <div style={{ color: 'red' }}>{error}</div>}
 
-      {/* Formulario de creación de lugar (nuevo componente) */}
+      {/* Formulario de creación de lugar */}
       <CreatePlaceForm handleCreatePlace={handleCreatePlace} />
 
       {/* Lista de lugares */}
       <div className="places-list">
-        <h3>Available Places</h3>
-        <ul>
-          {places.map((place) => (
-            <li key={place.id}>
-              <span>{place.name} - {place.location}</span>
-              <button className="botonedit-desactivated" onClick={() => handleDeletePlace(place.id)}>Deleted</button>
-            </li>
+        <h3>Lugares Disponibles</h3>
+        <div className="places-grid">
+          {currentPlaces.map((place) => (
+            <div key={place.id} className="place-item">
+              <span >{place.name} {place.location}</span>
+              <button className="botonedit-desactivated" onClick={() => handleDeletePlace(place.id)}>Borrar</button>
+            </div>
           ))}
-        </ul>
+        </div>
+
+        {/* Paginación */}
+        <div className="pagination">
+          {currentPage > 1 && (
+            <button onClick={() => paginate(currentPage - 1)}>Anterior</button>
+          )}
+          {currentPage < Math.ceil(places.length / placesPerPage) && (
+            <button onClick={() => paginate(currentPage + 1)}>Siguiente</button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -94,7 +106,7 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
     name: '',
     address: '',
     capacity: '500',
-    layout: '',
+    layout: 'Arena',
   });
   const [error, setError] = useState('');
 
@@ -122,19 +134,19 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
       name: '',
       address: '',
       capacity: '500',
-      layout: '',
+      layout: 'Arena',
     });
     setError('');
   };
 
   return (
     <div className="create-place-form">
-      <h2>Create a New Place</h2>
+      <h2>Crear nuevo lugar</h2>
       <form onSubmit={handleSubmit}>
         {error && <div style={{ color: 'red' }}>{error}</div>}
 
         <label>
-          Name:
+          Nombre:
           <input
             type="text"
             name="name"
@@ -145,7 +157,7 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
         </label>
 
         <label>
-          Address:
+          Direccion:
           <input
             type="text"
             name="address"
@@ -154,35 +166,7 @@ const CreatePlaceForm = ({ handleCreatePlace }) => {
             required
           />
         </label>
-
-        {/* <label>
-          Capacity:
-          <input
-            type="number"
-            name="capacity"
-            value={placeData.capacity}
-            onChange={handleChange}
-            required
-          />
-        </label> */}
-
-        <label>
-          Layout:
-          <select
-            name="layout"
-            value={placeData.layout}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Layout</option>
-            <option value="theater">Theater</option>
-            <option value="arena">Arena</option>
-            <option value="field">Field</option>
-            <option value="mixed">Mixed</option>
-          </select>
-        </label>
-
-        <button className="botonedit" type="submits">Create Place</button>
+         <button className="add-place-form" type="submit">Crear lugar</button>
       </form>
     </div>
   );

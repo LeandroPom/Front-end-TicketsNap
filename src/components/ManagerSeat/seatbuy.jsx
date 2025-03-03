@@ -76,7 +76,7 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, zoneId, selectedPresentat
  
     return (
       <div className='modal-contenido'>
-        <h1 style={{color:"black"}}>{eventDetails?.name}</h1>
+        <h1 >{eventDetails?.name}</h1>
         <p><strong>Artista:</strong> {eventDetails?.artists.join(', ')}</p>
         <p><strong>Genero:</strong> {eventDetails?.genre.join(', ')}</p>
         <p><strong>Direccion:</strong> {eventDetails?.location}</p>
@@ -91,7 +91,7 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, zoneId, selectedPresentat
                    allowFullScreen
                  ></iframe>
                    ) : (
-                  <img className="event-image" src={eventDetails.coverImage} alt={eventDetails.name} />
+                  <img className="event-image-confirm" src={eventDetails.coverImage} alt={eventDetails.name} />
                   )}
   
         <div className="presentations">
@@ -105,11 +105,11 @@ const Seatbuy = ({ seats, eventDetails, selectedSeats, zoneId, selectedPresentat
           ))}
         </div>
   
+        {/* Botón "Cerrar" que lleva a la página principal */}
         <button className='select-seats-btns' onClick={handleSeatSelection}>
           Seleccionar Asiento {seats.id}, Fila {seats.row}
         </button>
-        {/* Botón "Cerrar" que lleva a la página principal */}
-      <button className='close-btn' onClick={handleClose}>
+      <button className='close-modal-btns' onClick={handleClose}>
         Cerrar
       </button>
       </div>
