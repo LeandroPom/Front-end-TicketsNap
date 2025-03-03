@@ -1,13 +1,36 @@
 /* Contenido del modal */
 .modal-contenido {
-    background: rgb(255, 244, 141);
+    background:#FFFFFF;
+    padding: 60px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px; /* Limita el ancho máximo del contenido */
+    z-index: 1001;
+    max-height: 550px;
+    color: black
+    
+  }
+
+
+  .dark .modal-contenido {
+    background:#1D1D1D;
     padding: 60px;
     border-radius: 8px;
     width: 100%;
     max-width: 400px; /* Limita el ancho máximo del contenido */
     z-index: 1001;
     max-height: 550px;
+    color:white
     
+  }
+
+  .event-image-confirm {
+    width: 250px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out;
   }
 
   .close-btn {
@@ -18,11 +41,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 80px;
   }
   
   .close-btn:hover {
-    background: #da7313; /* Color más oscuro cuando el mouse pasa sobre el botón */
+    background: #FFD166; /* Color más oscuro cuando el mouse pasa sobre el botón */
   }
 
   /* Botones */
@@ -31,7 +54,31 @@
     margin-top: 10px;
     width: 100%; /* Ajusta el botón para ocupar el 100% del contenedor */
     font-size: 16px;
-    background: #dbaa21;
+    background: #FFB74D;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .dark .select-seats-btns {
+    padding: 12px 24px; /* Aumenta el tamaño del botón */
+    margin-top: 10px;
+    width: 100%; /* Ajusta el botón para ocupar el 100% del contenedor */
+    font-size: 16px;
+    background: #FFE57F;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .dark .select-seats-btns:hover {
+    padding: 12px 24px; /* Aumenta el tamaño del botón */
+    margin-top: 10px;
+    width: 100%; /* Ajusta el botón para ocupar el 100% del contenedor */
+    font-size: 16px;
+    background: #FFD166;
     color: rgb(0, 0, 0);
     border: none;
     border-radius: 5px;

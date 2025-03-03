@@ -242,7 +242,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
             allowFullScreen
           ></iframe>
         ) : (
-          <img className="event-image" src={show.coverImage} alt={show.name} />
+          <img className="event-image-home" src={show.coverImage} alt={show.name} />
         )}
        
           <h5> <FaMapMarkerAlt style={{ color: 'red' }} /> Location/Adress:{show.location}</h5>

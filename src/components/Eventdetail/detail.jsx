@@ -630,41 +630,51 @@ const Detail = () => {
 
   return (
     <div className="event-detail">
-      <h1>{event.name}</h1>
+    <h1>{event.name}</h1>
+  
+    {event.presentation.map((presentation, index) => (
+  <div className="event-container" key={index}>
+    {/* Contenedor para la imagen del evento */}
+    <div className="box-contenedor">
+      <div className="event-imagen">
+        {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
+        {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
+          <iframe
+            className="event-video"
+            src={event.coverImage.replace("watch?v=", "embed/")}
+            title={event.name}
+            frameBorder="0"
+            allowFullScreen
+          ></iframe>
+        ) : (
+          <img className="event-image" src={event.coverImage} alt={event.name} />
+        )}
+      </div>
+    </div>
 
+    {/* Contenedor para la información del evento */}
+    <div className="box-contenedor-info">
+      <div className="event-info">
+        <p><FaMusic style={{ color: 'black' }} /> <strong>Género:</strong> {event.genre.join(', ')}</p>
+        <p><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}</p>
+        <p><FaCalendarAlt style={{ color: 'green' }} /> <strong>Fecha:</strong> {presentation.date}</p>
+        <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentaciones:</strong> {presentation.performance}</p>
+        <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
 
-      {event.presentation.map((presentation, index) => (
-        <div class="box-contenedor">
-          <div className="event-imagen" key={index}>
-
-            {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
-            {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
-              <iframe
-                className="event-video"
-                src={event.coverImage.replace("watch?v=", "embed/")}
-                title={event.name}
-                frameBorder="0"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <img className="event-image" src={event.coverImage} alt={event.name} />
-            )}
+        {countdownStarted && (
+          <div className='time-count'>
+            <h2 >
+              {Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}
+            </h2> {/* Mostrar el tiempo restante */}
           </div>
-          <div className="event-info" key={index}>
-            <p><FaMusic style={{ color: 'black' }} /> <strong>Genero:</strong> {event.genre.join(', ')}</p>
-            <p><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Direccion y Lugar:</strong> {event.location}</p>
-            <p><FaCalendarAlt style={{ color: 'green' }} /> <strong>Fecha:</strong> {presentation.date}</p>
-            <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentaciones:</strong> {presentation.performance}</p>
-            <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
+        )}
+      </div>
+    </div>
+  </div>
+))}
 
-            {countdownStarted && (
-              <div>
-                <h2 style={{ color: 'red' }}>{Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}</h2> {/* Mostrar el tiempo restante */}
-              </div>
-            )}
-          </div>
-        </div>
-      ))}
+  
+  
 
       {/* <ZoneEditor showId={event.id} /> */}
 
