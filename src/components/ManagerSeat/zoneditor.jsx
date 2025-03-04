@@ -196,7 +196,7 @@ const ZoneEditor = ({ showId }) => {
       </div>
       <div className="input-group">
         <label>Performance:</label>
-        <input type="number" value={zoneData.presentation.performance} onChange={(e) => handlePresentationChange("performance", Number(e.target.value))} />
+        <input type="number" value={zoneData.presentation.performance} onChange={(e) => handlePresentationChange("performance", Number(e.target.value))} min="1" />
       </div>
   
       <label className="styled-title">Divisiones</label>
@@ -208,7 +208,8 @@ const ZoneEditor = ({ showId }) => {
             <input 
               type="number" 
               value={division.generalPrice} 
-              onChange={(e) => handleLocationChange(division.division, "generalPrice", e.target.value)} 
+              onChange={(e) => handleLocationChange(division.division, "generalPrice", e.target.value)}
+              min="1" 
             />
           </div>
         </div>
@@ -247,6 +248,7 @@ const ZoneEditor = ({ showId }) => {
                 .find(loc => loc.division === selectedDivision)
                 ?.rows.find(r => r.row === selectedRow)?.rowPrice || 0}
               onChange={(e) => handleRowPriceChange(selectedDivision, selectedRow, e.target.value)}
+              min="1"
             />
           </div>
         </div>

@@ -33,6 +33,9 @@ const Profile = () => {
         icon: 'error',
         title: 'Contraseñas no coinciden',
         text: 'Por favor verifica que ambas contraseñas sean iguales.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
       return;
     }
@@ -54,6 +57,9 @@ const Profile = () => {
           icon: 'success',
           title: 'Contraseña actualizada',
           text: response.data.message || 'Tu contraseña ha sido cambiada exitosamente.',
+          customClass: {
+            popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          }
         });
       
         setNewPassword('');
@@ -63,6 +69,9 @@ const Profile = () => {
           icon: 'error',
           title: 'Error al cambiar la contraseña',
           text: response.data.error || 'Hubo un problema al cambiar la contraseña.',
+          customClass: {
+            popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          }
         });
       }
     } finally {
@@ -76,10 +85,10 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      <h2>My Profile</h2>
+      <h2 className='profile-title'>Mi perfil</h2>
       <div className="profile-info">
-        <p><strong>Name:</strong> {user?.name}</p>
-        <p><strong>Email:</strong> {user?.email}</p>
+        <p><strong>Nombre:</strong> {user?.name}</p>
+        <p><strong>Correo:</strong> {user?.email}</p>
       </div>
 
       <button onClick={() => navigate('/profile/miscompras')} className="my-purchases-button">
@@ -87,10 +96,10 @@ const Profile = () => {
       </button>
 
       <div className="change-password">
-        <h3>Change Password</h3>
+        <h3>Cambiar contraseña</h3>
         <form onSubmit={handleChangePassword} className='form-profile'>
           <div className="form-group">
-            <label htmlFor="newPassword">New Password</label>
+            <label htmlFor="newPassword">Nueva contraseña</label>
             <div className="password-container">
               <input
                 type={showNewPassword ? 'text' : 'password'}
@@ -108,7 +117,7 @@ const Profile = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm New Password</label>
+            <label htmlFor="confirmPassword">Confirmar contraseña</label>
             <div className="password-container">
               <input
                 type={showConfirmPassword ? 'text' : 'password'}

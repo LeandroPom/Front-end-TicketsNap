@@ -8,13 +8,18 @@ body {
   }
   
 
-  /* Overlay para cubrir toda la pantalla */
+  /* estilos de url de la imagen */
+
+  .coverImage-edit {
+    width:200px;
+    height: 200px;
+  }
 
 
 /* Estilo para el botón de cerrar y crear */
 .close-btn {
   position: absolute;
-  top: 975px;
+  top: 960px;
   right:290px;
   background-color: #FFB74D;
   color: rgb(0, 0, 0);
@@ -26,7 +31,7 @@ body {
 }
 .boton-enviar {
   position: absolute;
-  top: 990px;
+  top: 1040px;
   right:950px;
   background-color: #FFB74D;
   color: rgb(0, 0, 0);
@@ -40,7 +45,7 @@ body {
 
 .dark .close-btn {
   position: absolute;
-  top: 975px;
+  top: 960px;
   right:290px;
   background-color: #FFE57F;
   color: rgb(0, 0, 0);
@@ -52,7 +57,7 @@ body {
 }
 .dark .boton-enviar {
   position: absolute;
-  top: 990px;
+  top: 1040px;
   right:950px;
   background-color: #FFE57F;
   color: rgb(0, 0, 0);

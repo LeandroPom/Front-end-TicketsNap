@@ -42,6 +42,9 @@ const Register = () => {
         icon: 'success',
         title: 'Registro exitoso',
         text: 'Tu cuenta ha sido creada con éxito.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       }).then(() => {
         dispatch(logoutUser());
         navigate('/login'); // Redirigir al home o página principal
@@ -63,6 +66,9 @@ const Register = () => {
         icon: 'error',
         title: 'Error en el registro',
         text: error || 'Hubo un problema al registrar tu cuenta. Intenta nuevamente.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
     }
   }, [user, error, navigate]); // Este useEffect se ejecutará cuando el estado 'user' o 'error' cambien
@@ -177,6 +183,9 @@ const Register = () => {
         icon: 'error',
         title: 'Correo ya registrado',
         text: 'Este correo ya está asociado a una cuenta.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
       return;  // Detener el proceso si el correo ya existe
     }
@@ -205,6 +214,9 @@ const Register = () => {
         icon: 'error',
         title: 'Nombre de usuario ya registrado',
         text: 'Este nombre de usuario ya está asociado a una cuenta.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
       return;  // Detener el proceso si el nombre de usuario ya existe
     }
@@ -215,6 +227,9 @@ const Register = () => {
         icon: 'error',
         title: 'Oops...',
         text: 'Por favor, corrige los errores antes de enviar.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
       return;
     }
@@ -239,6 +254,9 @@ const Register = () => {
         icon: 'success',
         title: 'Registro exitoso',
         text: 'Tu cuenta ha sido creada con éxito.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       }).then(() => {
         dispatch(logoutUser());
         navigate('/login');  // Redirigir a la página principal
@@ -260,6 +278,9 @@ const Register = () => {
         icon: 'error',
         title: 'Error en el registro',
         text: 'Hubo un problema al registrar tu cuenta. Intenta nuevamente.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
     } finally {
       setIsLoading(false);
@@ -331,6 +352,9 @@ const Register = () => {
           icon: 'error',
           title: 'Correo ya registrado',
           text: 'Este correo ya está asociado a una cuenta.',
+          customClass: {
+            popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          }
         });
         return;  // Detener el flujo si el correo ya existe
       }
@@ -355,6 +379,9 @@ const Register = () => {
         icon: 'success',
         title: 'Registro correcto',
         text: 'Bienvenido, tu cuenta de Google ha sido registrada con éxito.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       }).then(() => {
         setIsModalOpen(false);
         dispatch(logoutUser())

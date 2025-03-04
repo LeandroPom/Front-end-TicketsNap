@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <header className="admin-header">
       <div className="logo">
-        <h2>Panel Administration</h2>
+        <h2>Panel de Administración</h2>
       </div>
       <nav>
         <ul>
@@ -38,7 +38,7 @@ const Header = () => {
               </button>
               
               <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/places'}>
-              Lugar
+              Lugares
               </button>
              
             </>

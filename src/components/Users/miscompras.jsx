@@ -33,6 +33,9 @@ const MisCompras = () => {
               text: 'No tienes tickets registrados. ¿Quieres ir a tu perfil?',
               icon: 'info',
               confirmButtonText: 'Aceptar',
+              customClass: {
+                popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+              }
             }).then((result) => {
               if (result.isConfirmed) {
                 navigate('/profile');  // Redirige a la página de perfil al aceptar
@@ -69,7 +72,7 @@ const MisCompras = () => {
 
   return (
     <div className="mis-compras-container">
-      <h2>Mis Compras</h2>
+      <h2 className='miscompras-title'>Mis Compras</h2>
       <ul className="ticket-list">
         {currentTickets.map(ticket => {
           const showName = shows.find(show => show.id === ticket.showId)?.name || "Show desconocido";
@@ -87,8 +90,22 @@ const MisCompras = () => {
               <p><strong>Evento:</strong> {showName}</p>
               <p><strong>Zona:</strong> {ticket.division}</p>
               <p><strong>Fecha y Hora:</strong> {ticket.date}</p>
-              <p><strong>Fila:</strong> {ticket.row}</p>
-              <p><strong>Asiento:</strong> {ticket.seat}</p>
+
+
+               {/* Mostrar Fila y Asiento solo si existen */}
+            {ticket.row && ticket.seat ? (
+              <>
+                <p><strong>Fila:</strong> {ticket.row}</p>
+                <p><strong>Asiento:</strong> {ticket.seat}</p>
+              </>
+            ) : (
+              <p>
+              <p><strong>Fila:</strong> No corresponde </p>
+              <p><strong>Asiento:</strong> No corresponde </p>
+               
+              </p>
+            )}
+
               <p><strong>Precio:</strong> ${ticket.price}</p>
 
               {/* Estado del evento */}

@@ -338,7 +338,7 @@ const CreateShowForm = () => {
   }
   return (
     <div className="create-show-form">
-      <h2>Create a New Show</h2>
+      <h2>Crear Evento</h2>
       <form onSubmit={handleSubmit}>
         {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
 
@@ -352,7 +352,7 @@ const CreateShowForm = () => {
         </label>
 
         <label>
-          Name:
+          Nombre:
           <input
             type="text"
             name="name"
@@ -363,7 +363,7 @@ const CreateShowForm = () => {
         </label>
 
         <label>
-          Artists (comma-separated):
+          Artistas (separado por coma si es mas de uno):
           <input
             type="text"
             name="artists"
@@ -375,13 +375,13 @@ const CreateShowForm = () => {
 
         <label>
 
-          Tags:
+          Genero:
           <select
             name="genre"
             value={selectedTag}
             onChange={handleGenreSelect}
           >
-            <option value="">Select Tag</option>
+            <option value="">Seleccionar genero</option>
             {loading ? (
               <option disabled>Loading...</option>
             ) : (
@@ -392,7 +392,7 @@ const CreateShowForm = () => {
                   </option>
                 ))
               ) : (
-                <option disabled>No tags available</option>
+                <option disabled>No hay generos</option>
               )
             )}
           </select>
@@ -409,7 +409,7 @@ const CreateShowForm = () => {
               type="button"
               onClick={handleCreateTag}
             >
-              Add new Tag
+              Agregar nuevo genero
             </button>
           </div>
         </label>
@@ -417,7 +417,7 @@ const CreateShowForm = () => {
         <div className="selected-genres">
           {formData.genre.length > 0 && (
             <div>
-              <p>Selected Genres:</p>
+              <p>Genero seleccionado:</p>
               <div className="genres-container">
                 {formData.genre.map((genre, index) => (
                   <div key={index} className="genre-tag">
@@ -439,9 +439,9 @@ const CreateShowForm = () => {
 
 
         <label>
-          Adress:
+          Dirección:
           <select onChange={handleLocationSelect} value={formData.locationId || ''} required>
-            <option value="" disabled>Select Adress</option>
+            <option value="" disabled>Dirección seleccionada</option>
             {places.length > 0 ? (
               places.map((place) => (
                 <option key={place.id} value={place.id}>
@@ -449,7 +449,7 @@ const CreateShowForm = () => {
                 </option>
               ))
             ) : (
-              <option disabled>No locations available</option>
+              <option disabled>No hay lugares disponibles</option>
             )}
           </select>
         </label>
@@ -457,7 +457,7 @@ const CreateShowForm = () => {
         <div>
           {formData.locationId && (
             <p>
-              Selected Address: <strong>{formData.locationId}</strong>
+              Dirección seleccionada: <strong>{formData.locationId}</strong>
             </p>
           )}
         </div>
@@ -471,7 +471,7 @@ const CreateShowForm = () => {
         </div>
 
         <label>
-          Performance:
+          Presentación:
           <input
             type="number"
             name="performance"
@@ -487,7 +487,7 @@ const CreateShowForm = () => {
               <div key={index}>
                 {index === 0 && (  // Solo mostrar el campo de fecha para la primera presentación
                   <label>
-                    Date {index + 1}:
+                    Fecha {index + 1}:
                     <input
                       type="date"
                       value={formData.presentation[0]?.date || ''}  // Asegurarse de que siempre se use el valor de la primera presentación
@@ -505,7 +505,7 @@ const CreateShowForm = () => {
                 )}
 
                 <label>
-                  Start Time {index + 1}:
+                  Comienzo {index + 1}:
                   <input
                     type="time"
                     value={formData.presentation[index]?.time?.start || ''}
@@ -522,7 +522,7 @@ const CreateShowForm = () => {
                 )}
 
                 <label>
-                  End Time {index + 1}:
+                  Finalización {index + 1}:
                   <input
                     type="time"
                     value={formData.presentation[index]?.time?.end || ''}
@@ -543,7 +543,7 @@ const CreateShowForm = () => {
         )}
 
         <label>
-          Description:
+          Descripción:
           <textarea
             name="description"
             value={formData.description}
@@ -551,7 +551,7 @@ const CreateShowForm = () => {
           />
         </label>
         <label>
-          Cover Image URL:
+          Imagen del Evento:
           <input
             type="text"
             name="coverImage"
@@ -568,7 +568,7 @@ const CreateShowForm = () => {
 
 
 
-        <button className='create-show-boton' type="submits">Create Show</button>
+        <button className='create-show-boton' type="submits">Finalizar</button>
       </form>
     </div>
   );

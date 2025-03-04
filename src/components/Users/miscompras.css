@@ -15,7 +15,7 @@
 }
 
 /* Títulos */
-h2 {
+.miscompras-title {
   text-align: center;
   font-family: "Poppins", sans-serif;
   font-size: 28px;
@@ -23,7 +23,7 @@ h2 {
   transition: color 0.3s;
 }
 
-.dark h2 {
+.dark .miscompras-title {
   color: #ffffff;
 }
 
