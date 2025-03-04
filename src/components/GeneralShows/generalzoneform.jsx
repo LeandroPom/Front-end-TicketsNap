@@ -95,28 +95,28 @@ const GeneralZoneForm = () => {
             <input type="text" value={zoneName} onChange={(e) => setZoneName(e.target.value)} required />
           </label> */}
           <label>Fecha de Presentación:
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required min="1" />
           </label>
-          <label>Performance:
-            <input type="number" value={performance} onChange={(e) => setPerformance(e.target.value)} required />
+          <label>Presentación:
+            <input type="number" value={performance} onChange={(e) => setPerformance(e.target.value)} required min="1" />
           </label>
         </div>
         <div style={{ width: '48%' }}>
           <label>Hora de Inicio:
-            <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+            <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required min="1" />
           </label>
           <label>Hora de Fin:
-            <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
+            <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required min="1" />
           </label>
         </div>
       </div>
 
       <h3>Zona General</h3>
       <label>Precio General:
-        <input type="number" value={priceGeneral} onChange={(e) => setPriceGeneral(e.target.value)} required />
+        <input type="number" value={priceGeneral} onChange={(e) => setPriceGeneral(e.target.value)} required min="1" />
       </label>
       <label>Capacidad General:
-        <input type="number" value={spaceGeneral} onChange={(e) => setSpaceGeneral(e.target.value)} required />
+        <input type="number" value={spaceGeneral} onChange={(e) => setSpaceGeneral(e.target.value)} required min="1" />
       </label>
 
       <h3>Zona VIP</h3>
@@ -128,10 +128,10 @@ const GeneralZoneForm = () => {
       {hasVip && (
         <>
           <label>Precio VIP:
-            <input type="number" value={priceVip} onChange={(e) => setPriceVip(e.target.value)} required />
+            <input type="number" value={priceVip} onChange={(e) => setPriceVip(e.target.value)} required min="1" />
           </label>
           <label>Capacidad VIP:
-            <input type="number" value={spaceVip} onChange={(e) => setSpaceVip(e.target.value)} required />
+            <input type="number" value={spaceVip} onChange={(e) => setSpaceVip(e.target.value)} required min="1" />
           </label>
         </>
       )}

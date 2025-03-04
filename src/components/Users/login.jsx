@@ -57,6 +57,9 @@ const Login = () => {
           icon: 'error',
           title: 'Error al iniciar sesión',
           text: 'Por favor verifica correo y contraseña.',
+          customClass: {
+            popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          }
         });
         return;
       }
@@ -81,6 +84,9 @@ const Login = () => {
         icon: 'success',
         title: 'Login exitoso',
         text: `Bienvenido, ${response.name}`,
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       }).then(() => {
         navigate('/');
       });
@@ -89,6 +95,9 @@ const Login = () => {
         icon: 'error',
         title: 'Error al iniciar sesión',
         text: 'Por favor verifica tus credenciales.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
     } finally {
       setIsLoading(false);
@@ -112,6 +121,9 @@ const Login = () => {
           icon: 'error',
           title: 'Usuario bloqueado',
           text: 'Tu cuenta ha sido deshabilitada. Por favor, contacta al soporte.',
+          customClass: {
+            popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          }
         });
         return;
       }
@@ -122,6 +134,9 @@ const Login = () => {
         icon: 'success',
         title: 'Login exitoso',
         text: `Bienvenido, ${user.name}`,
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       }).then(() => {
         navigate('/');
       });
@@ -130,6 +145,9 @@ const Login = () => {
         icon: 'error',
         title: 'Error al iniciar sesión',
         text: error.message || 'No se pudo iniciar sesión con Google.',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
     }
   };
@@ -175,7 +193,7 @@ const Login = () => {
               <FontAwesomeIcon 
                 icon={showPassword ? faEyeSlash : faEye} 
                 onClick={() => setShowPassword(!showPassword)} 
-                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '40px'}}
+                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '52px'}}
               />
             </div>
           </div>

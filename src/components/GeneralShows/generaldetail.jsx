@@ -77,23 +77,23 @@ const GeneralDetail = () => {
       title: 'Debe cargar los datos del comprador',
       html: `
         <div style="padding: 24px; max-width: 400px; margin: auto; background-color: #FFE57F; border-radius: 10px; font-family: 'Inter', sans-serif;">
-          <label style="display: block; font-weight: bold; margin-bottom: 8px;">DNI:</label>
+          <label style="display: block; font-weight: bold; color: black; margin-bottom: 8px;">DNI:</label>
           <input type="text" id="dni" placeholder="Ingrese el DNI" 
             style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
 
-          <label style="display: block; font-weight: bold; margin-bottom: 8px;">Nombre:</label>
+          <label style="display: block; font-weight: bold; color: black; margin-bottom: 8px;">Nombre:</label>
           <input type="text" id="firstName" placeholder="Ingrese el nombre" 
             style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
 
-          <label style="display: block; font-weight: bold; margin-bottom: 8px;">Apellido:</label>
+          <label style="display: block; font-weight: bold; color: black; margin-bottom: 8px;">Apellido:</label>
           <input type="text" id="lastName" placeholder="Ingrese el apellido" 
             style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
 
-          <label style="display: block; font-weight: bold; margin-bottom: 8px;">Correo:</label>
+          <label style="display: block; font-weight: bold; color: black; margin-bottom: 8px;">Correo:</label>
           <input type="email" id="email" placeholder="Ingrese el correo" 
             style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
 
-          <label style="display: block; font-weight: bold; margin-bottom: 8px;">Teléfono:</label>
+          <label style="display: block; font-weight: bold; color: black; margin-bottom: 8px;">Teléfono:</label>
           <input type="text" id="phone" placeholder="Ingrese el teléfono" 
             style="width: 100%; padding: 10px; border: 1px solid #FFB74D; border-radius: 5px; font-size: 16px;"/>
         </div>

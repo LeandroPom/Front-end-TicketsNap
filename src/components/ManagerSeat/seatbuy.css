@@ -4,11 +4,12 @@
     padding: 60px;
     border-radius: 8px;
     width: 100%;
-    max-width: 500px; /* Limita el ancho máximo del contenido */
+    max-width: 450px; /* Limita el ancho máximo del contenido */
     z-index: 1001;
-    max-height: 550px;
-    color: black
-    
+    max-height: 450px;
+    color: black;
+    overflow: auto; /* Añade desplazamiento vertical cuando el contenido exceda la altura máxima */
+  
   }
 
 
@@ -17,11 +18,11 @@
     padding: 60px;
     border-radius: 8px;
     width: 100%;
-    max-width: 400px; /* Limita el ancho máximo del contenido */
+    max-width: 450px; /* Limita el ancho máximo del contenido */
     z-index: 1001;
-    max-height: 550px;
-    color:white
-    
+    max-height: 800px;
+    color:white;
+    max-height: 450px;
   }
 
   .event-image-confirm {

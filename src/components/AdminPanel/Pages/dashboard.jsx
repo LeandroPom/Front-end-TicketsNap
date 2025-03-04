@@ -85,34 +85,34 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h2>Dashboard</h2>
+      <h2>Metricas</h2>
 
       <div className="metrics-container">
         <div className="metric-card">
-          <h3>Users</h3>
+          <h3>Usuarios</h3>
           <p>{metrics.users}</p>
         </div>
         <div className="metric-card">
-          <h3>Shows</h3>
+          <h3>Eventos</h3>
           <p>{metrics.shows}</p>
         </div>
         <div className="metric-card">
-          <h3>Places</h3>
+          <h3>Lugares</h3>
           <p>{metrics.places}</p>
         </div>
         <div className="metric-card">
-          <h3>Seats</h3>
+          <h3>Asientos</h3>
           <p>{metrics.seats}</p>
         </div>
       </div>
 
       <div className="charts-container">
         <div className="chart">
-          <h3>Resource Distribution</h3>
+          <h3>Diatribucion de recursos</h3>
           <Bar data={barData} />
         </div>
         <div className="chart">
-          <h3>Proportions</h3>
+          <h3>Proporciones</h3>
           <Doughnut data={doughnutData} />
         </div>
       </div>

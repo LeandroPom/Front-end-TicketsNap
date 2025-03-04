@@ -69,8 +69,7 @@ body.dark .create-show-form label {
 body.dark .create-show-form input[type="text"],
 body.dark .create-show-form textarea {
   border: 1px solid var(--borde-color-dark);
-  background-color: #222;
-  color: var(--color-texto-dark);
+  color: var(--color-texto-light);
 }
 
 /* Botón de envío */
@@ -116,14 +115,17 @@ body.dark .create-show-boton {
 
 .input-with-button .add-link {
   position: absolute;
-  right: 10px;
-  color: #fe9900;
+  right: 0px;
+  color: #000000;
+  background-color: var(--color-principal);
   font-size: 14px;
+  padding: 10px;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .input-with-button .add-link:hover {
-  color: var(--color-secundario);
+  background-color:  var(--color-intermedio);
 }
 
 

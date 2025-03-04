@@ -102,19 +102,19 @@ const Navbar = () => {
                     CreateZone
                   </a> */}
                   <a href="/admin" className="dropdown-item" style={{ display: user?.isAdmin ? 'block' : 'none' }}>
-                     Admin Panel
+                    Panel de admin
                   </a>
                   <a href="/profile" className="dropdown-item">
-                    Profile
+                    Mi perfil
                   </a>
                   <a href="#" onClick={handleLogout} className="dropdown-item">
-                    Logout
+                    Salir
                   </a>
                 </>
               ) : (
                 <>
-                  <a href="/login" className="dropdown-item">Login</a>
-                  <a href="/register" className="dropdown-item">Register</a>
+                  <a href="/login" className="dropdown-item">Entrar</a>
+                  <a href="/register" className="dropdown-item">Registrarse</a>
                  
                 </>
               )}
@@ -126,16 +126,7 @@ const Navbar = () => {
       {isSeatManagerOpen && (
         <div className="modal">
           <div className="modal-overlay" onClick={handleCloseSeatManager}></div>
-          <div className="modal-content">
-            <h2>Create Seats</h2>
-            <SeatManager
-              mapaUrl="/images/zona-floresta.png"
-              onClose={handleCloseSeatManager}
-            />
-            <button className="close-modal-btn" onClick={handleCloseSeatManager}>
-              Cerrar
-            </button>
-          </div>
+         
         </div>
       )}
     </nav>

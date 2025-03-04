@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import '../Eventdetail/detail.css';
 import Seatbuy from '../ManagerSeat/seatbuy';
@@ -612,7 +612,7 @@ const Detail = () => {
   }
 
   if (!event) {
-    return <div>Event not Found</div>;
+    return <div>Evento no encontrado</div>;
   }
 
   const handleChooseSeats = () => {
@@ -679,9 +679,13 @@ const Detail = () => {
       {/* <ZoneEditor showId={event.id} /> */}
 
       {isSelectorOpen && (
-        <div className="modal-background">
+        <div >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h3>Selecciona una fecha y hora:</h3>
+            <h3 style={{color:"white",
+                marginBottom: "300px",
+                right: "500px"}}
+               >....Selecciona una fecha y hora :
+            </h3>
             <ul>
               {availablePresentations.map((presentation, index) => (
                 <li
@@ -691,7 +695,9 @@ const Detail = () => {
                     cursor: "pointer",
                     padding: "10px",
                     border: "1px solid #ccc",
-                    marginBottom: "5px",
+                    marginBottom: "-10px",
+                    left: "-150px",
+                    color: "black"
                   }}
                 >
                   <p>Zona: {Array.isArray(presentation.divisionName) ? presentation.divisionName.join(", ") : presentation.divisionName}</p>
@@ -700,7 +706,7 @@ const Detail = () => {
                 </li>
               ))}
             </ul>
-            <button onClick={() => setIsSelectorOpen(false)}>Cerrar</button>
+            {/* <button onClick={() => setIsSelectorOpen(false)}>Cerrar</button> */}
           </div>
         </div>
       )}
@@ -732,9 +738,9 @@ const Detail = () => {
 
         {user?.isAdmin && (
           <>
-            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Add Data</button>
+            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
             {isZoneEditorOpen && <ZoneEditor showId={id} />}
-            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Close</button>
+            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Cerrar</button>
           </>
         )}
 
@@ -758,7 +764,10 @@ const Detail = () => {
               height={canvasHeight}
             />
 
-            {selectedZone && <p>Selected Zone: {selectedZone}</p>}
+            {selectedZone && <p>Seleccionar Zona: {selectedZone}</p>}
+            <Link to="/">
+              <button className='Boton-inicio'>Ir a Inicio</button>
+             </Link>
           </div>
         )}
 

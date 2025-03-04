@@ -52,6 +52,9 @@ const EditShow = () => {
         icon: 'success',
         confirmButtonText: 'Ok',
         allowOutsideClick: false, // Permitir hacer clic fuera para cerrar el modal
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       }).then((result) => {
         if (result.isConfirmed) {
           setIsReadyToEdit(true); // Esto debería activar la carga de datos
@@ -118,7 +121,7 @@ const EditShow = () => {
 
          // Mostrar SweetAlert antes de redirigir
     await Swal.fire({
-      icon: 'Exito',
+      icon: 'success',
       title: 'Evento Modificado',
       text: 'El evento fue modificado correctamente!',
       confirmButtonText: 'OK',
@@ -155,7 +158,7 @@ const EditShow = () => {
   return (
     
     <div className="edit-show">
-      <h1>Edit Event</h1>
+      <h1>Editar evento</h1>
       <form className='form-stile' onSubmit={handleSubmit}>
         {/* Nombre del evento */}
         <div className="form-group">
@@ -232,7 +235,7 @@ const EditShow = () => {
 
         {/* Imagen de portada */}
         <div className="form-group">
-          <label htmlFor="coverImage">Imagen del Show:</label>
+          <label htmlFor="coverImage-edit">Imagen del Show:</label>
           <input
            type="text"
            id="coverImage"

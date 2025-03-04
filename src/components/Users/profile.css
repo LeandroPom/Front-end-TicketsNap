@@ -17,7 +17,7 @@
   }
   
   /* Título */
-  h2 {
+  .profile-title {
     font-family: "Poppins", sans-serif;
     font-size: 28px;
     color: #242424;
@@ -25,7 +25,7 @@
     transition: color 0.3s;
   }
   
-  .dark h2 {
+  .dark .profile-title {
     color: #f4f4f4;
   }
   
@@ -105,7 +105,7 @@
     font-family: "Inter", sans-serif;
     font-size: 14px;
     color: #000000;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     transition: color 0.3s;
   }
   

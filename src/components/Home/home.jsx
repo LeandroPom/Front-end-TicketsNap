@@ -171,7 +171,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
         <input
           type="text"
-          placeholder="Search by name..."
+          placeholder="Buscar por nombre..."
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
@@ -187,7 +187,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
           }}
         >
           
-          <option value="">All Genres</option>
+          <option value="">Todos los generos</option>
           {genres.map((genre) => (
             <option key={genre} value={genre}>
               {genre}
@@ -204,7 +204,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
           setFilteredShows(shows);
           setCurrentPage(1);
         }}>
-          <FaSyncAlt size={16} /> Reset Filters
+          <FaSyncAlt size={16} /> Resetear filtros
         </button>
       </div>
 
@@ -245,9 +245,9 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
           <img className="event-image-home" src={show.coverImage} alt={show.name} />
         )}
        
-          <h5> <FaMapMarkerAlt style={{ color: 'red' }} /> Location/Adress:{show.location}</h5>
-          <h5><FaMusic style={{ color: 'orange' }} /> Genres:{show.genre.join(', ')}</h5>
-          <h5><FaCalendarAlt style={{ color: 'green' }} /> Dates:{show.presentation.map((p) => p.date).join(', ')}</h5>
+          <h5> <FaMapMarkerAlt style={{ color: 'red' }} /> Dirección:{show.location}</h5>
+          <h5><FaMusic style={{ color: 'orange' }} /> Genero:{show.genre.join(', ')}</h5>
+          <h5><FaCalendarAlt style={{ color: 'green' }} /> Fecha:{show.presentation.map((p) => p.date).join(', ')}</h5>
         
 
         </div>
@@ -256,7 +256,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
       </li>
     ))
   ) : (
-    <div>No shows found</div>
+    <div>No se encontraron Eventos !!!. Resetea el filtrado y vuelve a intentar la busqueda</div>
   )}
 
   
