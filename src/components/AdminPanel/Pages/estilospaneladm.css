@@ -6,8 +6,11 @@
   margin-right: 200px;
 }
 
-.users-management h2 {
-  text-align: center;
+
+
+/* plaeces.css management */
+.places-management {
+  margin-left: -200px;
   margin-bottom: 20px;
 }
 
@@ -189,6 +192,7 @@
   padding: 20px;
   z-index: 999;
   margin-top: 70px; /* Ajustado para no solaparse con la navbar */
+  margin-left: -240px;
 }
 
 .dashboard h2 {

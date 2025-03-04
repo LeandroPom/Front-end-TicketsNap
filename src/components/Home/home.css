@@ -236,12 +236,12 @@ li p {
 }
 
 /* Imagen de los eventos */
-.event-image {
-  width: 100%;
+.event-image-home {
+  width: 250px;
   height: 160px;
   object-fit: cover;
   border-radius: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   transition: transform 0.3s ease-in-out;
 }
 
