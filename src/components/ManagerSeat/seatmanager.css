@@ -16,7 +16,7 @@
     padding: 20px;
     border-radius: 8px;
     z-index: 1001;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 3px black;
 }
 
 h2 {
@@ -30,7 +30,7 @@ h2 {
     left: 10px; 
     width: 160%;
     height: 180%;
-    background: rgba(0, 0, 0, 0.5);
+    background: black;
     z-index: 999;
     pointer-events: none; /* Bloquear clics */
 }
