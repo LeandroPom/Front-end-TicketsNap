@@ -20,7 +20,7 @@
   left: 0;
   width: 150%;
   height: 150%;
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  background-color: black; /* Fondo oscuro */
   z-index: 999; /* Asegura que el fondo esté debajo del modal */
 }
 
