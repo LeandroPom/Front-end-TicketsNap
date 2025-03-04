@@ -15,7 +15,7 @@ import { FaCalendarAlt } from 'react-icons/fa'; // Ícono para el botón del cal
 const ShowsList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state.user);
   const shows = useSelector((state) => state.shows); // Arreglo de shows
   const loading = useSelector((state) => state.loading); // Indicador de carga
   const error = useSelector((state) => state.error); // Errores
@@ -76,7 +76,11 @@ const eventDates = (shows || []).flatMap((show) =>
   }
 
   const handleViewDetails = (show) => {
-    if (show.isGeneral) {
+    if (!user) {
+      navigate(`/login`);
+   
+    }
+    else if (show.isGeneral) {
       navigate(`/event/general/${show.id}`);
     } else {
       navigate(`/event/${show.id}`);
