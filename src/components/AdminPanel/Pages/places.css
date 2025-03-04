@@ -28,6 +28,7 @@
   flex-direction: column;
   gap: 15px; /* Reducir el espacio entre los elementos del formulario */
   background-color: #FFB74D;
+  color: #000000;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -117,7 +118,7 @@
 }
 
 .places-management .botonedit-desactivated {
-  background-color: #FFB74D;
+  background-color: #FFE57F;
   color: rgb(0, 0, 0);
   padding: 8px 12px;
   border: none;

@@ -6,6 +6,7 @@
   margin: auto;
   overflow: hidden;
   margin-left: 280px; /* Este margen puede necesitar ajustes para móviles */
+  margin-top: 20px;
 }
 
 .carousel-images {
@@ -35,7 +36,8 @@
   z-index: 1;
   width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
   height: 100%; /* Asegura que la imagen ocupe toda la altura del contenedor */
-  object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+  object-fit:fill; /* Mantiene el ajuste adecuado de la imagen */
+  background-color: rgba(102, 102, 102, 0.5);
 
 }
 

@@ -175,7 +175,7 @@ const Login = () => {
               <FontAwesomeIcon 
                 icon={showPassword ? faEyeSlash : faEye} 
                 onClick={() => setShowPassword(!showPassword)} 
-                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '40px'}}
+                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '52px'}}
               />
             </div>
           </div>

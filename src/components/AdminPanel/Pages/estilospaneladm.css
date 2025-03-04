@@ -31,11 +31,11 @@
   
   .botonedit:hover {
     background-color: #bd6009; /* rojizo llamativo */
-    color: #ffffff;
+    color: #000000;
   }
   
   .dark .botonedit {
-    color: #ffffff
+    color: #000000
   
   }
 .boton-barra-adm{
@@ -76,7 +76,7 @@
 
 .dark .botoncreate {
   background-color: #f1b11a; /* Verde llamativo */
-  color: #fffefe;
+  color: #000000;
 }
 
 .export-button {
@@ -94,7 +94,7 @@
 
 .dark .export-button {
   background-color: #f7b317; /* Verde llamativo */
-  color: #fffbfb;
+  color: #000000;
  
 }
 
@@ -133,14 +133,14 @@
 
 .dark .botonedit-desactivated {
   
-  color: #fffefe;
+  color: #000000;
   top: -10px; /* Mueve el botón hacia arriba */
   }
 
 
 .botonedit-desactivated:hover {
   background-color: #bd6009; /* Rojizo llamativo */
-  color: #ffffff;
+  color: #000000;
 }
 .search-bar input {
   padding: 10px;
@@ -212,6 +212,8 @@
   /* background-color: #f8f9fa; */
   background-color: #FFFFFF;
   padding: 20px;
+  padding-left: 80px;
+  padding-right: 80px;
   text-align: center;
   border-radius: 10px;
   font-weight: bold;
@@ -362,7 +364,9 @@
   margin-left: -270px ;
 }
 
-
+.dark .admin-header {
+  background-color: #1D1D1D;
+}
 
 .dark .admin-header .logo h2 {
   color: #FFE57F;
