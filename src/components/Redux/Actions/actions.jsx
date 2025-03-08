@@ -30,7 +30,7 @@ export const SHOW_FAILURE="SHOW_FAILURE"
 export const UPDATE_SHOW_SUCCESS="UPDATE_SHOW_SUCCESS"
 export const DISABLE_SHOW="DISABLE_SHOW"
 
-const BASE_URL = 'http://localhost:3001';  // Asegúrate de que esta URL corresponda a tu backend
+const BASE_URL = 'https://ticketsol.loca.lt';  // Asegúrate de que esta URL corresponda a tu backend
 
 // Acción para crear un usuario
 export const createUser = (userData) => async (dispatch) => {
@@ -120,7 +120,7 @@ export const login = (email, password) => async (dispatch) => {
           type: LOGIN_FAILURE,
           payload: 'Tu cuenta ha sido deshabilitada.',
         });
-        return { error: 'Usuario bloqueado' }; // Retornar error explícito
+        return { error: 'Cuenta deshabilitada' }; // Cambié el mensaje a uno más claro
       }
 
       dispatch({
@@ -134,7 +134,7 @@ export const login = (email, password) => async (dispatch) => {
         type: LOGIN_FAILURE,
         payload: 'Usuario o contraseña incorrectos.',
       });
-      return { error: 'Credenciales incorrectas' }; // Retornar error explícito
+      return { error: 'Credenciales incorrectas' }; // Retornar error explícito para credenciales incorrectas
     }
   } catch (error) {
     dispatch({
@@ -144,6 +144,7 @@ export const login = (email, password) => async (dispatch) => {
     return { error: 'Error en el servidor' }; // Error general
   }
 };
+
 
 
 

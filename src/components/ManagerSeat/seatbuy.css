@@ -85,3 +85,118 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
+  /* Responsividad para pantallas de móvil (max-width: 511px) */
+@media (max-width: 511px) {
+  .modal-contenido {
+    max-width: 90%; /* Reduces el ancho del modal */
+    padding: 20px; /* Menos padding para ahorrar espacio */
+    max-height: 90vh; /* Limita la altura a un 90% de la pantalla */
+    overflow-y: auto; /* Permite desplazarse si el contenido excede la altura */
+  }
+
+  .dark .modal-contenido {
+    max-width: 90%;
+    padding: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .event-image-confirm {
+    width: 100%; /* Hace que la imagen ocupe todo el ancho disponible */
+    height: auto; /* Ajusta la altura proporcionalmente */
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+
+  .close-btn {
+    padding: 8px 16px; /* Reduces el tamaño del botón */
+    font-size: 14px;
+    background: #e09e0e;
+    color: rgb(15, 15, 15);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px; /* Espacio más pequeño */
+  }
+
+  .close-btn:hover {
+    background: #FFD166; /* Color más oscuro cuando el mouse pasa sobre el botón */
+  }
+
+  /* Botones */
+  .select-seats-btns {
+    padding: 12px 24px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 16px;
+    background: #FFB74D;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .dark .select-seats-btns {
+    padding: 12px 24px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 16px;
+    background: #FFE57F;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .dark .select-seats-btns:hover {
+    background: #FFD166;
+    color: rgb(0, 0, 0);
+  }
+}
+
+/* Responsividad para pantallas de tablet (max-width: 860px) */
+@media (max-width: 860px) {
+  .modal-contenido {
+    max-width: 80%; /* Modal ocupa el 80% del ancho */
+    padding: 30px;
+    max-height: 80vh; /* Limita la altura a un 80% de la pantalla */
+  }
+
+  .dark .modal-contenido {
+    max-width: 80%;
+    padding: 30px;
+    max-height: 80vh;
+  }
+
+  .event-image-confirm {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .close-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+
+  .select-seats-btns {
+    padding: 12px 24px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .dark .select-seats-btns {
+    padding: 12px 24px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .dark .select-seats-btns:hover {
+    background: #FFD166;
+    color: rgb(0, 0, 0);
+  }
+}

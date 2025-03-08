@@ -50,59 +50,83 @@ const Login = () => {
     setIsLoading(true);
   
     try {
+      // Ejecutamos la acción de login solo con email y password
       const response = await dispatch(login(email, password));
   
+      // Verificar si hubo un error en la respuesta
       if (response?.error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al iniciar sesión',
-          text: 'Por favor verifica correo y contraseña.',
-          customClass: {
-            popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
-          }
-        });
-        return;
+        if (response.error === 'Cuenta deshabilitada') {
+          // Si la cuenta está deshabilitada, mostramos un mensaje específico
+          Swal.fire({
+            icon: 'error',
+            title: 'Cuenta Deshabilitada',
+            text: 'Tu cuenta está deshabilitada. Por favor contacta con el administrador.',
+            customClass: {
+              popup: 'custom-popup-error',
+            }
+          });
+        } else {
+          // Si es otro tipo de error (como credenciales incorrectas), mostramos el error correspondiente
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al iniciar sesión',
+            text: response.error === 'Credenciales incorrectas' 
+              ? 'Por favor verifica correo y contraseña.'
+              : 'Correo o contraseña incorrectas.',
+            customClass: {
+              popup: 'custom-popup-error',
+            }
+          });
+        }
+        return; // Detenemos el flujo en caso de error
       }
   
+      // Si la cuenta no está deshabilitada, continuamos con el flujo normal
       const userData = {
         name: response.name,
         email: response.email,
-        isAdmin: response.isAdmin || false,  // Agregar isAdmin
-        cashier: response.cashier || false,  // Agregar cashier
-        image: response.image || '',  // Agregar image
-        disabled: response.disabled || false,  // Agregar disabled
-        id: response.id
+        isAdmin: response.isAdmin || false,
+        cashier: response.cashier || false,
+        image: response.image || '',
+        disabled: response.disabled || false,
+        id: response.id,
       };
+  
+      // Guardamos los datos del usuario en localStorage
       localStorage.setItem('user', JSON.stringify(userData));
   
+      // Realizamos la acción de login exitosa en Redux
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: userData,
       });
   
+      // Mostramos el mensaje de éxito
       Swal.fire({
         icon: 'success',
         title: 'Login exitoso',
         text: `Bienvenido, ${response.name}`,
         customClass: {
-          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          popup: 'custom-popup-success',
         }
       }).then(() => {
         navigate('/');
       });
     } catch (error) {
+      // Si ocurre algún error, mostramos el mensaje correspondiente
       Swal.fire({
         icon: 'error',
         title: 'Error al iniciar sesión',
         text: 'Por favor verifica tus credenciales.',
         customClass: {
-          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          popup: 'custom-popup-error',
         }
       });
     } finally {
       setIsLoading(false);
     }
   };
+  
 
  
 

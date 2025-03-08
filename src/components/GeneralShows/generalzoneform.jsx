@@ -69,7 +69,7 @@ const GeneralZoneForm = () => {
     console.log(data, "Data enviada al backend");
 
     try {
-      await axios.post('http://localhost:3001/zones/add/general', data);
+      await axios.post('/zones/add/general', data);
       Swal.fire({
         title: 'Zona creada con éxito',
         icon: 'success',

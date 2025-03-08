@@ -1,30 +1,29 @@
-/* Carrusel */
-.carousel {
+.carousel-home {
   position: relative;
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
+  width: 100%;  /* Ocupa todo el ancho de la pantalla */
+  height: 60vh; /* Ocupa toda la altura de la pantalla */
+  margin: 5px;
   overflow: hidden;
-  margin-left: 280px; /* Este margen puede necesitar ajustes para móviles */
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-left: 1px;
+  object-fit: cover;  /* Asegura que la imagen se ajuste bien */
 }
 
 .carousel-images {
   position: relative;
-  height: 260px; /* Ajusta al alto deseado */
-  width: 800px;
-  object-fit: cover; /* Aseguramos que la imagen se ajuste bien */
-  
+  height: 100%;   /* Ajusta a la altura total del contenedor */
+  width: 100%;    /* Se ajusta al 100% del ancho de la pantalla */
+  object-fit: cover;  /* Asegura que la imagen se ajuste bien */
 }
 
 .carousel-image,
 .event-videos {
   position: absolute;
   top: 0;
-  margin-left: 350px;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  left: 0; /* Asegura que la imagen se alinee al inicio de la pantalla */
+  width: 100%; /* Ocupa el 100% del ancho del contenedor */
+  height: 100%; /* Ocupa el 100% de la altura del contenedor */
+  object-fit: cover; /* Mantiene las proporciones sin distorsionar la imagen */
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   z-index: 0;
@@ -36,9 +35,8 @@
   z-index: 1;
   width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
   height: 100%; /* Asegura que la imagen ocupe toda la altura del contenedor */
-  object-fit:fill; /* Mantiene el ajuste adecuado de la imagen */
+  object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
   background-color: rgba(102, 102, 102, 0.5);
-
 }
 
 .event-videos.actives {
@@ -89,6 +87,8 @@
 .indicator.active {
   background-color: white;
 }
+
+
 
 /* Estilos responsivos */
 

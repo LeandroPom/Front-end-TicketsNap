@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import "./tribunegeneral.css"
 
 const Generaltribunes = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const Generaltribunes = () => {
       userId: user?.id,
       user: {
         "cashier": user?.cashier
-        },
+      },
       name: `${buyerDetails.firstName} ${buyerDetails.lastName}`,
       dni: buyerDetails.dni,
       mail: buyerDetails.email,
@@ -115,21 +116,21 @@ const Generaltribunes = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '80px' }}>
-      <h1>Tribunas Generales</h1>
-      <div style={{ border: '1px solid black', padding: '20px', display: 'inline-block', textAlign: 'left' }}>
-        <h2>{presentations}</h2>
-        <p><strong>Descripción:</strong> {eventdetail?.name}</p>
-        <p><strong>Fecha:</strong> {date}</p>
-        <p><strong>Hora:</strong> {time?.start} - {time?.end}</p>
-        <p><strong>Precio:</strong> ${price}</p>
-        <p><strong>Espacios Disponibles:</strong> {availableSpace}</p>
-        <p><strong>Espacios Ocupados:</strong> {occupied}</p>
+    <div className="general-tribunes">
+      <h1 className="tribune-title">Tribunas Generales</h1>
+      <div className="tribune-details">
+        <h2 className="tribune-presentation">{presentations}</h2>
+        <p className="tribune-description"><strong>Descripción:</strong> {eventdetail?.name}</p>
+        <p className="tribune-date"><strong>Fecha:</strong> {date}</p>
+        <p className="tribune-time"><strong>Hora:</strong> {time?.start} - {time?.end}</p>
+        <p className="tribune-price"><strong>Precio:</strong> ${price}</p>
+        <p className="tribune-available"><strong>Espacios Disponibles:</strong> {availableSpace}</p>
+        <p className="tribune-occupied"><strong>Espacios Ocupados:</strong> {occupied}</p>
 
-        <button onClick={() => handleOpenBuyerModal("sell")} style={{ marginTop: '20px', padding: '10px 20px' }}>
+        <button onClick={() => handleOpenBuyerModal("sell")} className="tribune-btn sell-btn">
           Vender Entrada
         </button>
-        <button onClick={() => handleOpenBuyerModal("buy")} style={{ marginTop: '20px', padding: '10px 20px' }}>
+        <button onClick={() => handleOpenBuyerModal("buy")} className="tribune-btn buy-btn">
           Comprar con Mercado Pago
         </button>
       </div>

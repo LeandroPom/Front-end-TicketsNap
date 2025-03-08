@@ -65,7 +65,7 @@ const SuccessPage = () => {
     };
   
     emailjs.send(
-      'service_ge28yza',  // Tu service ID
+      'service_72a1029',  // Tu service ID
       'template_dl2ctup', // Tu template ID
       templateParams,
       '5DeCesBmnqWIqrrla'  // Tu user ID

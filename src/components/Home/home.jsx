@@ -27,7 +27,7 @@ const ShowsList = () => {
   const [showCalendar, setShowCalendar] = useState(false); // Controla si se muestra el calendario
   const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Controlar si un video está activo
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [showsPerPage] = useState(3); // Número de shows por página
+  const [showsPerPage] = useState(4); // Número de shows por página
 
   useEffect(() => {
     dispatch(getShows());
@@ -161,9 +161,11 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="home">
-      {/* Reemplazar el título por el carrusel */}
-      <Carousel images={carouselImages} isVideoPlaying={isVideoPlaying} /> {/* Pasamos el estado al carrusel */}
+      
+      <div>
+    <Carousel images={carouselImages} isVideoPlaying={isVideoPlaying} /> {/* Pasamos el estado al carrusel */}
 
+    </div>
       {/* Barra de búsqueda y filtro */}
       <div className="search-container">
         {/* Botón de calendario */}
@@ -172,6 +174,8 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
             <FaCalendarAlt size={20} />
           </button>
         </div>
+
+        
 
         <input
           type="text"
@@ -320,11 +324,18 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
       className="whatsapp-link"
     >
       <FaWhatsapp size={30} color="#25D366" /> Contacto
+
+    
     </a>
     </div>
 
     
+    
+
+    
   );
+
+  
 
   
 };

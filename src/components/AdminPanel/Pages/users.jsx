@@ -29,23 +29,47 @@ const UsersManagement = () => {
   };
 
   const updateUser = async (id, updates) => {
-    try {
-      await axios.put(`/users/edit`, { id, updates });
-      fetchUsers();
-      Swal.fire({
-        icon: "success",
-        title: "Actualización exitosa",
-        text: `El usuario ha sido actualizado correctamente.`,
-      });
-    } catch (error) {
-      console.error("Error al actualizar el usuario:", error);
+    // Incluye el objeto 'user' que contiene la propiedad 'isAdmin'
+    if (user?.isAdmin) { // Verifica que el usuario que está haciendo la actualización sea administrador
+      try {
+        // Enviar el usuario actual (que tiene la propiedad 'isAdmin') al backend
+        await axios.put(`/users/edit`, { 
+          id, 
+          updates, 
+          user: { isAdmin: user.isAdmin } // Se incluye la propiedad 'isAdmin' del usuario que está realizando la acción
+        });
+        fetchUsers(); // Recarga los usuarios después de la actualización
+        Swal.fire({
+          icon: "success",
+          title: "Actualización exitosa",
+          text: `El usuario ha sido actualizado correctamente.`,
+          customClass: {
+            popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          }
+        });
+      } catch (error) {
+        console.error("Error al actualizar el usuario:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudo actualizar el usuario.",
+          customClass: {
+            popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+          }
+        });
+      }
+    } else {
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "No se pudo actualizar el usuario.",
+        title: "Permiso Denegado",
+        text: "Solo los administradores pueden realizar esta acción.",
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
       });
     }
   };
+  
 
   const handleRoleChange = (userId, role) => {
     const userToUpdate = users.find((u) => u.id === userId);
