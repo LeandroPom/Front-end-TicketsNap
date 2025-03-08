@@ -115,7 +115,7 @@ const CreateShowForm = () => {
       (error, result) => {
         if (result && result.event === 'success') {
           // Cuando la carga sea exitosa, actualizar el campo coverImage con la URL de la imagen
-          formData((prevState) => ({
+          setFormData((prevState) => ({
             ...prevState,
             coverImage: result.info.secure_url, // Aquí obtienes la URL segura de la imagen
           }));
