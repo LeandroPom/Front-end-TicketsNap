@@ -60,6 +60,7 @@ const Carousel = ({ images }) => {
 
   return (
     <div className="carousel-home">
+    
       <button
         className="carousel-button prev"
         onClick={goToPrevious}
@@ -89,6 +90,7 @@ const Carousel = ({ images }) => {
           />
         ))}
       </div>
+      
     </div>
   );
 };

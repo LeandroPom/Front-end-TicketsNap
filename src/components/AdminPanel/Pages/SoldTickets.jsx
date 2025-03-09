@@ -19,6 +19,7 @@ const SoldTickets = () => {
   const [canceledFilter, setCanceledFilter] = useState(null); // Filtro para tickets cancelados
   const [showFilter, setShowFilter] = useState(""); // Filtro para el nombre del show
   const [users, setUsers] = useState([]); // Para almacenar todos los usuarios que son cajeros
+  const [giftedFilter, setGiftedFilter] = useState(null); // Filtro para tickets regalados
 
   const user = useSelector((state) => state?.user);
 
@@ -70,10 +71,22 @@ const SoldTickets = () => {
   const filterTickets = () => {
     let filtered = tickets;
 
+        // Filtro por Tickets Regalados (price === 0)
+if (giftedFilter !== null) {
+  const filterGifted = giftedFilter === "true";
+  filtered = filtered.filter(ticket => 
+    (giftedFilter === "true" && ticket.price === 0) || 
+    (giftedFilter === "false" && ticket.price !== 0)
+  );
+}
+
     // Filtramos por división, estado de cancelación y nombre del show si se aplica
     if (divisionFilter) {
       filtered = filtered.filter(ticket => ticket.division === divisionFilter);
     }
+
+   
+
 
     if (canceledFilter !== null) {
       // Convertir canceledFilter a un valor booleano para la comparación
@@ -206,6 +219,43 @@ const handleDownloadExcel = () => {
   XLSX.writeFile(workbook, "tickets_no_cancelados.xlsx");
 };
 
+
+// Nueva función para regalar el ticket
+const giftTicket = async (ticket) => {
+  const result = await Swal.fire({
+    title: '¿Estás seguro de regalar este ticket?',
+    text: `El ticket con ID ${ticket.id} será marcado como "regalado".`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, regalar ticket',
+    cancelButtonText: 'No, volver',
+  });
+
+  if (result.isConfirmed) {
+    // No es necesario usar params aquí, solo poner el ID directamente en la URL
+    console.log("Datos a enviar al backend para regalar el ticket:", ticket.id);
+
+    try {
+      // Ahora pasamos el ticket ID directamente en la URL
+      const response = await axios.get(`/tickets/gift/${ticket.id}`);
+
+      Swal.fire({
+        icon: "success",
+        title: "Ticket Regalado",
+        text: `El ticket con ID ${ticket.id} ha sido regalado exitosamente.`,
+      });
+      fetchTickets(); // Volver a cargar los tickets
+    } catch (error) {
+      console.error("Error al regalar el ticket:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo regalar el ticket. Por favor, inténtalo de nuevo.",
+      });
+    }
+  }
+};
+
 return (
   <div className="container">
     <h2>Detalles de Tickets</h2>
@@ -287,6 +337,19 @@ return (
         </select>
       </div>
     </div>
+      {/* Filtro de Tickets Regalados */}
+<div>
+  <label>Filtrar por Regalado:</label>
+  <select
+    value={giftedFilter}
+    onChange={(e) => setGiftedFilter(e.target.value === "null" ? null : e.target.value)}
+  >
+    <option value="null">Ninguno</option>
+    <option value="true">Regalados</option>
+    {/* <option value="false">No Regalados</option> */}
+    
+  </select>
+</div>
 
     {/* Mostrar Tickets No Cancelados */}
     <h3>Tickets totales:</h3>
@@ -323,6 +386,14 @@ return (
                 >
                   Cancelar Ticket
                 </button>
+
+                {/* Botón Regalar Ticket */}
+          <button
+            onClick={() => giftTicket(ticket)}
+            className="cancel-button"
+          >
+            Regalar.  Ticket.
+          </button>
               </td>
             </tr>
           );

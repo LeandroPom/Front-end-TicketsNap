@@ -8,6 +8,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s, color 0.3s; /* Animación suave para el cambio de tema */
+  background-attachment: fixed; /* Hace que el fondo esté fijo mientras haces scroll */
+  background-size: cover; /* Asegura que el fondo cubra toda la pantalla */
   
 }
 
@@ -19,6 +21,9 @@ body.light {
   /* background-image: url('../public/images/solticket.png'); */
   background-repeat: repeat;
   background-size: 100px 100px;
+  background-attachment: fixed; /* Hace que el fondo esté fijo mientras haces scroll */
+  background-size: cover; /* Asegura que el fondo cubra toda la pantalla */
+  background-position: center;
 }
 
 body.dark {

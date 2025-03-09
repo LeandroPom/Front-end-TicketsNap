@@ -4,9 +4,10 @@
   height: 60vh; /* Ocupa toda la altura de la pantalla */
   margin: 5px;
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 30px;
   margin-left: 1px;
   object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+  z-index: 1;
 }
 
 .carousel-images {
@@ -14,6 +15,7 @@
   height: 100%;   /* Ajusta a la altura total del contenedor */
   width: 100%;    /* Se ajusta al 100% del ancho de la pantalla */
   object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+  z-index: 1;
 }
 
 .carousel-image,

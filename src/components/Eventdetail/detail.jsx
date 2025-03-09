@@ -328,27 +328,29 @@ const Detail = () => {
 
       } else {
         // Aquí va la lógica para detectar las zonas
-        if (rgb === "rgb(255, 199, 206)" || rgb === "rgb(247, 191, 203)") {
+        if (rgb === "rgb(232, 58, 61)" || rgb === "rgb(108, 41, 43)") {
           setSelectedZone("Preferencial");
           setZoneImage("/images/zona-roja.png");
           fetchSeatsForZone("Preferencial", event.id, selectedZoneId); // Recupera los asientos para Preferencial
-        } else if (rgb === "rgb(153, 190, 104)" || rgb === "rgb(198, 239, 206)") {
+        } else if (rgb === "rgb(0, 168, 89)" || rgb === "rgb(13, 50, 34)") {
           setSelectedZone("Vip");
           setZoneImage("/images/zona-verde.png");
           fetchSeatsForZone("Vip", event.id, selectedZoneId); // Recupera los asientos para VIP
-        } else if (rgb === "rgb(255, 235, 156)" || rgb === "rgb(201, 155, 0)") {
+        } else if (rgb === "rgb(245, 133, 52)" || rgb === "rgb(194, 74, 44)" || rgb === "rgb(245, 134, 52)"
+          || rgb === "rgb(212, 45, 49) " || rgb === "rgb(155, 33, 35)"
+        ) {
           setSelectedZone("Gold");
           setZoneImage("/images/zona-Gold.png");
           fetchSeatsForZone("Gold", event.id, selectedZoneId); // Recupera los asientos para Gold
-        } else if (rgb === "rgb(189, 215, 238)" || rgb === "rgb(118, 182, 238)") {
+        } else if (rgb === "rgb(255, 242, 18)" || rgb === "rgb(47, 48, 20)") {
           setSelectedZone("Platea Sur");
           setZoneImage("/images/Platea-Sur.png");
           fetchSeatsForZone("Platea Sur", event.id, selectedZoneId); // Recupera los asientos para Platea Sur
-        } else if (rgb === "rgb(162, 202, 238)" || rgb === "rgb(126, 185, 238)") {
+        } else if (rgb === "rgb(0, 175, 239)" || rgb === "rgb(17, 36, 60)") {
           setSelectedZone("Platea Norte");
           setZoneImage("/images/Platea-Norte.png");
           fetchSeatsForZone("Platea Norte", event.id, selectedZoneId); // Recupera los asientos para Platea-Norte
-        } else if (rgb === "rgb(255, 255, 204)" || rgb === "rgb(255, 255, 204))") {
+        } else if (rgb === "rgb(236, 38, 143)" || rgb === "rgb(70, 34, 57))") {
           setSelectedZone("Tribunas Generales");
           setZoneImage("/images/Popular-Alta.png");
           setAvailableSeats([]); // No dibujar asientos para Tribunas Generales
@@ -358,7 +360,7 @@ const Detail = () => {
         } else {
           setSelectedZone(null);
           setZoneImage("/images/zona-floresta.png");
-          // console.log(rgb, "COLORES DEL CLICK")
+          console.log(rgb, "COLORES DEL CLICK")
           // console.log("No se detectó una división válida canvas.");
         }
         
@@ -547,8 +549,8 @@ const Detail = () => {
   }, [zoneImage]);
 
 
-  const canvasWidth = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 2250 : 600; // Tamaño de canvas específico para Platea
-  const canvasHeight = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 600 : 800; // Tamaño de canvas específico para Platea
+  const canvasWidth = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 1160 : 600; // Tamaño de canvas específico para Platea
+  const canvasHeight = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 350 : 800; // Tamaño de canvas específico para Platea
 
 
   // Función para dibujar los asientos sobre la imagen de la zona
@@ -565,31 +567,38 @@ const Detail = () => {
         let scaleX, scaleY;
         let pointRadius = 9; // Valor por defecto para los puntos
         let fontSize = 12; // Tamaño por defecto para los números
-        let separationFactorX = 1; // Factor para separar los puntos horizontalmente
-        let separationFactorY = 1; // Factor para separar los puntos verticalmente
+        let separationFactorX = 2.40; // Factor para separar los puntos horizontalmente
+        let separationFactorY = 2.32; // Factor para separar los puntos verticalmente
   
         // Ajustes específicos para las diferentes zonas
         if (zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png") {
-          const specificWidth = 2780;
-          const specificHeight = 1280;
+          const specificWidth = 4800;
+          const specificHeight = 1100;
           scaleX = specificWidth / zoneImageObj.width;
           scaleY = specificHeight / zoneImageObj.height;
-          pointRadius = 24; // Tamaño de los puntos más grande para Platea-Norte y Platea-Sur
-          fontSize = 34; // Tamaño de la fuente más grande para los números en Platea-Norte y Platea-Sur
-          separationFactorX = 1.35; // Factor para separar los puntos horizontalmente
-          separationFactorY = 0.75;
+          pointRadius = 9; // Tamaño de los puntos más grande para Platea-Norte y Platea-Sur
+          fontSize = 11; // Tamaño de la fuente más grande para los números en Platea-Norte y Platea-Sur
+          separationFactorX = 1.60; // Factor para separar los puntos horizontalmente
+          separationFactorY = 0.60;
+  
+          // Desplazamiento hacia la izquierda para Platea-Sur y Platea-Norte
+          const offsetX = -15; // Puedes cambiar este valor según cuánto quieras mover la imagen a la izquierda
+  
+          // Limpiar canvas antes de dibujar
+          ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  
+          // Dibujar la imagen con el desplazamiento (offset)
+          ctx.drawImage(zoneImageObj, 0, 0, zoneImageObj.width, zoneImageObj.height, offsetX, 0, canvasWidth, canvasHeight);
+  
         } else if (zoneImage === "/images/zona-Gold.png" || zoneImage === "/images/zona-verde.png" || zoneImage === "/images/zona-roja.png") {
-          const specificWidth = 600;
-          const specificHeight = 800;
+          const specificWidth = 250;
+          const specificHeight = 350;
           scaleX = specificWidth / zoneImageObj.width;
           scaleY = specificHeight / zoneImageObj.height;
         } else {
           scaleX = canvasWidth / zoneImageObj.width;
           scaleY = canvasHeight / zoneImageObj.height;
         }
-  
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-        ctx.drawImage(zoneImageObj, 0, 0, zoneImageObj.width, zoneImageObj.height, 0, 0, canvasWidth, canvasHeight);
   
         // Reemplazar la imagen de la silla por círculos
         availableSeats.forEach((seatRow) => {
@@ -625,6 +634,7 @@ const Detail = () => {
       };
     }
   };
+  
   
   
   
@@ -840,25 +850,24 @@ useEffect(() => {
           </>
         )}
 
-        {/* Aquí se muestra el mapa debajo de los detalles del evento */}
-        {showMap && zoneImage && (
-          <div className="map-container" style={{
-            position: 'relative',
-            width: '50%',
-            height: '50%',
-            left: "25%"
-          }}>
-            <canvas
-              ref={canvasRef}
-              onClick={handleCanvasClick}
-              style={{
-                cursor: 'pointer',
-                width: '100%',
-                height: '100%',
-              }}
-              width={canvasWidth}
-              height={canvasHeight}
-            />
+{showMap && zoneImage && (
+  <div className="map-container" style={{
+    position: 'relative',
+    width: '100%',   // Ajustar según el tamaño deseado para el contenedor
+    height: '100%',  // Ajustar también según el tamaño deseado
+    left: 0,         // Asegúrate de que no haya margen
+    overflow: 'hidden' // Para evitar que el contenido se salga
+  }}>
+    <canvas
+      ref={canvasRef}
+      onClick={handleCanvasClick}
+      style={{
+        cursor: 'pointer',
+       
+      }}
+      width={canvasWidth}  // Tamaño real del canvas en píxeles
+      height={canvasHeight} // Tamaño real del canvas en píxeles
+    />
 
 
             {selectedZone && <p>Seleccionar Zona: {selectedZone}</p>}
@@ -871,7 +880,7 @@ useEffect(() => {
         <div
           className="image-preview"
           style={{
-            transform: `scale(${zoom})`,
+            // transform: `scale(${zoom})`,
             transformOrigin: "center",
           }}
         >

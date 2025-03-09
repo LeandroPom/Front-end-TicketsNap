@@ -6,7 +6,7 @@ import 'react-calendar/dist/Calendar.css'; // Importar los estilos predeterminad
 import { FaSyncAlt } from 'react-icons/fa';
 import { getShows } from '../Redux/Actions/actions';
 import '../Home/home.css'; // Asegúrate de que el archivo contenga estilos actualizados
-import { FaMusic, FaMapMarkerAlt, FaWhatsapp} from 'react-icons/fa';
+import { FaMusic, FaMapMarkerAlt, FaWhatsapp, FaTwitter, FaFacebook, FaInstagram} from 'react-icons/fa';
 
 import Carousel from './carrousel'; // Importar el carrusel
 
@@ -155,7 +155,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
   };
 
   // WhatsApp: Aquí definimos el número y mensaje
-  const whatsappNumber = '3584448512'; // Reemplazar con el número real
+  const whatsappNumber = '03816698011'; // Reemplazar con el número real
   const message = '¡Hola, tengo una consulta sobre mi compra!';
 
 
@@ -164,10 +164,23 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
       
       <div>
     <Carousel images={carouselImages} isVideoPlaying={isVideoPlaying} /> {/* Pasamos el estado al carrusel */}
-
+    <img
+      src="/images/mpticketsol.png"
+      alt="Sol Ticket"
+      style={{
+        position: 'absolute',
+        top: '490px', // O ajusta la posición según sea necesario
+        left: '50%',
+        transform: 'translateX(-50%)', // Centra la imagen
+        zIndex: '999', // Asegura que la imagen esté por encima de otros elementos
+        width: '1400px',
+        height: '100px',
+        margin: "1px",
+      }}
+    />
     </div>
       {/* Barra de búsqueda y filtro */}
-      <div className="search-container">
+      <div className="searchs-container">
         {/* Botón de calendario */}
         <div className="calendar-button-container">
           <button className="calendar-button" onClick={() => setShowCalendar(!showCalendar)}>
@@ -232,6 +245,9 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         </div>
       )}
 
+{/* <div className="scrolling-text-container">
+  <p className="scrollings-text">Solticket somos líder de venta de entradas a eventos en el Norte Argentino. Nos avalan más de 12 años trabajando con productores, teatros, municipios, clubes, empresas y bandas del NOA, NEA y todo el país.</p>
+</div> */}
 
 
       {/* Verificamos si hay shows filtrados y los mapeamos */}
@@ -317,11 +333,29 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         </button>
       </div>
 
+      {/* Enlaces de redes sociales en el fondo */}
+      <div className="social-links">
+      <a href="https://x.com/SolTicketShow" target="_blank" rel="noopener noreferrer">
+          <img 
+            src="/images/X-Logo.png" 
+            alt="X" 
+            style={{ width: '33px', height: '30px' }} 
+          />
+        </a>
+        <a href="https://facebook.com/profile.php?id=61574068944152" target="_blank" rel="noopener noreferrer">
+          <FaFacebook size={30} color="#3b5998" />
+        </a>
+        <a href="https://instagram.com/solticketshow" target="_blank" rel="noopener noreferrer">
+          <FaInstagram size={30} color="#E4405F" />
+        </a>
+      </div>
+
  <a
       href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
       target="_blank"
       rel="noopener noreferrer"
       className="whatsapp-link"
+      
     >
       <FaWhatsapp size={30} color="#25D366" /> Contacto
 
