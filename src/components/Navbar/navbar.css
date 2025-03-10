@@ -16,6 +16,17 @@
   color: var(--navbar-text);
 }
 
+.cabezadepagina{
+  position: absolute;
+        top: -36%; 
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1001; 
+        width: 1400px;
+        height: 40px;
+        margin: 1px;
+}
+
 /* Modo claro y oscuro */
 :root {
   --navbar-bg-light: #f8f9fa;
@@ -193,5 +204,20 @@
     font-size: 1.5em; 
     transform: none;
     margin-right: -200px;
+  }
+}
+
+/* Rango de 350px a 1069px (Pantallas medianas) */
+@media (min-width: 350px) and (max-width: 1069px) {
+
+  .cabezadepagina{
+    position: absolute;
+          top: -25%; 
+          left: 58%;
+          transform: translateX(-50%);
+          z-index: 1001; 
+          width: 120%;
+          height: auto;
+          margin: 1%;
   }
 }

@@ -172,19 +172,10 @@ const ShowsList = () => {
       <div>
         <Carousel images={carouselImages} isVideoPlaying={isVideoPlaying} /> {/* Pasamos el estado al carrusel */}
         <img
-          src="/images/mpticketsol.png"
-          alt="Sol Ticket"
-          style={{
-            position: 'absolute',
-            top: '490px', // O ajusta la posición según sea necesario
-            left: '50%',
-            transform: 'translateX(-50%)', // Centra la imagen
-            zIndex: '999', // Asegura que la imagen esté por encima de otros elementos
-            width: '1400px',
-            height: '100px',
-            margin: "1px",
-          }}
-        />
+  src="/images/mpticketsol.png"
+  alt="Sol Ticket"
+  class="ticket-image"
+/>
       </div>
       {/* Barra de búsqueda y filtro */}
       <div className="searchs-container">
@@ -294,7 +285,7 @@ const ShowsList = () => {
       </ul>
 
       {/* Paginación */}
-      <div >
+      <div className='paginate-container' >
         {/* Botón para ir al principio */}
         <button
           onClick={goToFirstPage}
@@ -369,7 +360,7 @@ const ShowsList = () => {
             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="whatsapp-link"
+            className="social-links"
           >
             <FaWhatsapp size={30} color="#25D366" />
           </a>

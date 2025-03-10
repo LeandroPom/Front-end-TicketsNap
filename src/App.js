@@ -20,7 +20,7 @@ import GeneralShow from "./components/GeneralShows/generaldetail"
 import GeneralZoneForm from './components/GeneralShows/generalzoneform';
 import axios from "axios";
 import TicketGeneral from './components/GeneralShows/ticketgeneral';
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://ticketsol.loca.lt";
 
 
 
