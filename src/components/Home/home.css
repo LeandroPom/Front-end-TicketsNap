@@ -300,7 +300,7 @@ li p {
 .event-image-home {
   width: 250px;
   height: 160px;
-  object-fit: cover;
+  object-fit:fill;
   border-radius: 12px;
   margin-bottom: 10px;
   transition: transform 0.3s ease-in-out;
