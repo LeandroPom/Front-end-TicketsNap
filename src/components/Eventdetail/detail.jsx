@@ -483,13 +483,6 @@ const Detail = () => {
   };
 
 
-  useEffect(() => {
-    if (zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png") {
-      setZoom(1); // Restablecer zoom para Platea
-    } else {
-      setZoom(1); // Restablecer zoom para otras imágenes si es necesario
-    }
-  }, [zoneImage]);
 
   useEffect(() => {
     if (modalData) {
@@ -520,24 +513,6 @@ const Detail = () => {
   }, [zoneImage, availableSeats]);  // Ejecutar cada vez que se cargue una zona o cambien los asientos disponibles
 
 
-  const handleZoomIn = () => {
-    setZoom((prevZoom) => {
-      if (zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png") {
-        return Math.min(prevZoom + 0.05, 1.5); // Límite máximo de zoom para Platea
-      }
-      return Math.min(prevZoom + 0.1, 2); // Límite general de zoom
-    });
-  };
-
-  const handleZoomOut = () => {
-    setZoom((prevZoom) => {
-      if (zoneImage === "/images/Platea-Sur.jpg" || zoneImage === "/images/Platea-Norte.png") {
-        return Math.max(prevZoom - 0.05, 0.5); // Límite mínimo de zoom para Platea
-      }
-      return Math.max(prevZoom - 0.1, 0.5); // Límite general de zoom
-    });
-  };
-
   useEffect(() => {
     loadImage();
   }, [selectedZone, zoom, availableSeats, seatsDrawn]);
@@ -556,7 +531,6 @@ const Detail = () => {
   // Función para dibujar los asientos sobre la imagen de la zona
   const drawSeats = (ctx) => {
     if (availableSeats && availableSeats.length > 0) {
-      // Asegurarse de que las imágenes estén cargadas antes de dibujar
       const zoneImageObj = new Image();
       zoneImageObj.src = zoneImage;
   
@@ -565,31 +539,25 @@ const Detail = () => {
         const canvasHeight = canvasRef.current.height;
   
         let scaleX, scaleY;
-        let pointRadius = 9; // Valor por defecto para los puntos
-        let fontSize = 12; // Tamaño por defecto para los números
-        let separationFactorX = 2.40; // Factor para separar los puntos horizontalmente
-        let separationFactorY = 2.32; // Factor para separar los puntos verticalmente
+        let pointRadius = 9; 
+        let fontSize = 12;
+        let separationFactorX = 2.40;
+        let separationFactorY = 2.32;
   
-        // Ajustes específicos para las diferentes zonas
         if (zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png") {
-          const specificWidth = 4800;
-          const specificHeight = 1100;
+          const specificWidth = 4800; 
+          const specificHeight = 1100; 
           scaleX = specificWidth / zoneImageObj.width;
           scaleY = specificHeight / zoneImageObj.height;
-          pointRadius = 9; // Tamaño de los puntos más grande para Platea-Norte y Platea-Sur
-          fontSize = 11; // Tamaño de la fuente más grande para los números en Platea-Norte y Platea-Sur
-          separationFactorX = 1.60; // Factor para separar los puntos horizontalmente
+          pointRadius = 9;
+          fontSize = 11;
+          separationFactorX = 1.60; 
           separationFactorY = 0.60;
   
-          // Desplazamiento hacia la izquierda para Platea-Sur y Platea-Norte
-          const offsetX = -15; // Puedes cambiar este valor según cuánto quieras mover la imagen a la izquierda
+          const offsetX = -15;
   
-          // Limpiar canvas antes de dibujar
           ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-  
-          // Dibujar la imagen con el desplazamiento (offset)
           ctx.drawImage(zoneImageObj, 0, 0, zoneImageObj.width, zoneImageObj.height, offsetX, 0, canvasWidth, canvasHeight);
-  
         } else if (zoneImage === "/images/zona-Gold.png" || zoneImage === "/images/zona-verde.png" || zoneImage === "/images/zona-roja.png") {
           const specificWidth = 250;
           const specificHeight = 350;
@@ -600,31 +568,24 @@ const Detail = () => {
           scaleY = canvasHeight / zoneImageObj.height;
         }
   
-        // Reemplazar la imagen de la silla por círculos
         availableSeats.forEach((seatRow) => {
           seatRow?.seats?.forEach((seat) => {
-            // Multiplicar las coordenadas por los factores de separación
-            const scaledX = seat.x * scaleX * separationFactorX;  // Separación horizontal
-            const scaledY = seat.y * scaleY * separationFactorY;  // Separación vertical
+            const scaledX = seat.x * scaleX * separationFactorX;
+            const scaledY = seat.y * scaleY * separationFactorY;
   
-            // Determinar el color del punto (verde si está libre, gris si está ocupado)
             const seatColor = seat.taken ? 'grey' : 'green';
   
-            // Dibujar el círculo (punto) en lugar de la imagen
             ctx.beginPath();
-            ctx.arc(scaledX, scaledY, pointRadius, 0, Math.PI * 2, false); // Usar el radio ajustado
-            ctx.fillStyle = seatColor; // Color dependiendo de si está ocupado o libre
+            ctx.arc(scaledX, scaledY, pointRadius, 0, Math.PI * 2, false);
+            ctx.fillStyle = seatColor;
             ctx.fill();
             ctx.closePath();
   
-            // Configurar el estilo para el texto (ID del asiento)
-            ctx.fillStyle = "white"; // Color del texto
-            ctx.font = `${fontSize}px Arial`; // Fuente con tamaño ajustado
-            ctx.textAlign = "center"; // Centrar el texto
-            ctx.textBaseline = "middle"; // Centrar el texto verticalmente
-  
-            // Dibujar el ID del asiento dentro del círculo
-            ctx.fillText(seat.id, scaledX, scaledY); // Dibujar el ID del asiento
+            ctx.fillStyle = "white";
+            ctx.font = `${fontSize}px Arial`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(seat.id, scaledX, scaledY);
   
             seat.drawingPosition = { x: scaledX, y: scaledY, radius: pointRadius };
           });
@@ -851,20 +812,10 @@ useEffect(() => {
         )}
 
 {showMap && zoneImage && (
-  <div className="map-container" style={{
-    position: 'relative',
-    width: '100%',   // Ajustar según el tamaño deseado para el contenedor
-    height: '100%',  // Ajustar también según el tamaño deseado
-    left: 0,         // Asegúrate de que no haya margen
-    overflow: 'hidden' // Para evitar que el contenido se salga
-  }}>
+  <div >
     <canvas
       ref={canvasRef}
       onClick={handleCanvasClick}
-      style={{
-        cursor: 'pointer',
-       
-      }}
       width={canvasWidth}  // Tamaño real del canvas en píxeles
       height={canvasHeight} // Tamaño real del canvas en píxeles
     />
@@ -877,14 +828,7 @@ useEffect(() => {
           </div>
         )}
 
-        <div
-          className="image-preview"
-          style={{
-            // transform: `scale(${zoom})`,
-            transformOrigin: "center",
-          }}
-        >
-        </div>
+       
 
          {/* Aquí se muestra el select con los asientos */}
          {/* <div>
