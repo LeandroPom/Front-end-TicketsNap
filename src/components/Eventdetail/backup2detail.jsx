@@ -43,7 +43,7 @@
 //   // Filtrar los asientos disponibles cuando se seleccione una zona
 //   const fetchSeatsForZone = async (divisionName, showId) => {
 //     try {
-//       const response = await axios.get("http://localhost:3001/zones");
+//       const response = await axios.get("/zones");
 //       if (response.status === 200) {
 //         const zones = response.data.zones;
   

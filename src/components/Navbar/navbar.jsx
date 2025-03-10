@@ -58,10 +58,25 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${isDarkMode ? 'dark' : 'light'}`}>
+       <img
+      src="/images/cabezadepaginasolticket.png"
+      alt="Sol Ticket"
+      style={{
+        position: 'absolute',
+        top: '-31px', // O ajusta la posición según sea necesario
+        left: '50%',
+        transform: 'translateX(-50%)', // Centra la imagen
+        zIndex: '1001', // Asegura que la imagen esté por encima de otros elementos
+        width: '1400px',
+        height: '40px',
+        margin: "1px",
+      }}
+    />
   <div className="navbar-logo">
     <a href="/">
     <img src="/images/solticket.png" alt="Sol Ticket" style={{ width: '180px', height: '70px' }} />
     </a>
+    
     {/* Ícono compacto para cambiar el tema */}
          {isDarkMode ? (
           <FaMoon

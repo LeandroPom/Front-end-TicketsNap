@@ -5,7 +5,65 @@
   margin-top: 60px;
   text-align: center;
   transition: background-color 0.3s, color 0.3s;
-  /* Animación */
+  /* No es necesario cambiar nada aquí */
+}
+
+
+/* Contenedor de texto que se desplaza */
+.scrolling-text-container {
+  position: relative;
+  width: 100%;
+  background-color: rgb(212, 207, 207); /* Fondo negro */
+  overflow: hidden; /* Esconde cualquier cosa fuera del contenedor */
+  height: 50px; /* Ajusta la altura según sea necesario */
+}
+
+.dark .scrolling-text-container {
+  position: relative;
+  width: 100%;
+  background-color: rgb(129, 129, 129); /* Fondo negro */
+  overflow: hidden; /* Esconde cualquier cosa fuera del contenedor */
+  height: 50px; /* Ajusta la altura según sea necesario */
+}
+
+.scrollings-text {
+  position: absolute;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  color: white;
+  font-size: 20px; /* Tamaño de fuente */
+  animation: scrollText 40s linear infinite; /* Animación que dura 10s y se repite infinitamente */
+  font-size: medium;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+/* Definir la animación */
+@keyframes scrollText {
+  0% {
+    transform: translateX(70%); /* Comienza fuera de la pantalla a la derecha */
+  }
+  100% {
+    transform: translateX(-100%); /* Termina fuera de la pantalla a la izquierda */
+  }
+}
+
+/* Estilos para los íconos de redes sociales */
+.social-links {
+  position: fixed;
+  bottom: 1px; /* Distancia desde el fondo */
+  left: 5%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px; /* Espacio entre los íconos */
+  z-index: 0; /* Asegura que los íconos estén por encima de otros elementos */
+}
+
+.social-links a {
+  color: inherit; /* Hereda el color de cada ícono */
+  text-decoration: none; /* Elimina el subrayado */
+}
+
+.social-links:hover {
+  opacity: 5; /* Efecto al pasar el mouse */
 }
 
 
@@ -23,29 +81,30 @@
 
 
 /* Estilos de la barra de búsqueda y select */
-.search-container {
+.searchs-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
   margin-left: 220px;
   padding: 5px 5px;
+  margin-top: 115px
 }
 
-.search-container input {
+.searchs-container input {
   padding: 2px 5px;
   margin: 3px;
   border: 2px solid #e9aa16;
   border-radius: 8px;
   font-size: 16px;
-  background-color: #FFD166;
+  background-color: #ffffff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
 
 }
 
 
-.search-container select {
+.searchs-container select {
   padding: 5px 25px;
   margin: 3px;
   border: 1px solid #e9aa16;
@@ -95,12 +154,13 @@
 /* Contenedor de eventos en columnas en Home/ Cards */
 .homecard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   justify-content: center;
   flex-wrap: wrap;
   gap: 25px;
   margin: 10px;
   margin-top: 65px;
+  z-index: 1;
 }
 
 .content {
@@ -126,8 +186,9 @@
   background: #ffffff;
   /* backgroud de las cards */
   max-height: 400px;
-  width: 330px;
+  width: 200px;
   display: flex;
+  z-index: 1;
 }
 
 .dark .cardshome {
@@ -327,7 +388,7 @@ li:hover .event-image {
   /* Quitar el subrayado del enlace */
   font-weight: bold;
   /* Hacer el texto más visible */
-  z-index: 999;
+  z-index: 0;
   /* Asegurar que esté por encima de otros elementos */
 }
 
@@ -350,8 +411,8 @@ li:hover .event-image {
   }
 
   /* Ajustes en la barra de búsqueda */
-  .search-container input,
-  .search-container select {
+  .search-containers input,
+  .search-containers select {
     font-size: 14px;
     padding: 6px 10px;
   }
@@ -449,7 +510,7 @@ li:hover .event-image {
   }
 
   /* Estilos para el contenedor del calendario y la barra de búsqueda RESPONSIVE */
-  .search-container {
+  .searchs-container {
     background-color: transparent;
     display: flex;
     justify-content: flex-start;
@@ -459,6 +520,7 @@ li:hover .event-image {
     margin-top: 50px;
     justify-content: flex-start;
     transform: translateX(-65px);
+    
     /* Desplaza el botón hacia la izquierda */
   }
 

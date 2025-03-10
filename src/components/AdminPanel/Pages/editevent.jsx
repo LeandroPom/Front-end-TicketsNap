@@ -155,10 +155,32 @@ const EditShow = () => {
     navigate('/admin/events'); // Redirigir al dashboard de eventos
   };
 
+   // Código para la carga de la imagen en Cloudinary
+   const handleImageUpload = () => {
+    const widget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: 'dyrag1fir', // Tu Cloud Name
+        uploadPreset: 'Solticket', // Tu Preset
+        sources: ['local', 'url', 'camera'], // Fuentes de carga (local, url, cámara)
+        showAdvancedOptions: true, // Mostrar opciones avanzadas si es necesario
+        cropping: true, // Habilitar el recorte de la imagen
+        multiple: false, // Solo permitir una imagen a la vez
+        folder: 'shows', // Carpeta en Cloudinary
+      },
+      (error, result) => {
+        if (result && result.event === 'success') {
+          // Cuando la carga sea exitosa, actualizar el campo coverImage con la URL de la imagen
+          setCoverImage(result.info.secure_url); // Actualizar directamente coverImage
+        }
+      }
+    );
+    widget.open(); // Abre el widget
+  };
+
   return (
 
     <div className="edit-show">
-      <h1>Editar evento</h1>
+      <h1>Edit Event</h1>
       <form className='form-stile' onSubmit={handleSubmit}>
         {/* Nombre del evento */}
         <div className="form-group">
@@ -237,27 +259,28 @@ const EditShow = () => {
         <div className="form-group">
           <label htmlFor="coverImage-edit">Imagen del Show:</label>
           <input
-            type="text"
-            id="coverImage"
-            value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
-          />
-        </div>
+           type="text"
+           id="coverImage"
+           value={coverImage}
+           onChange={(e) => setCoverImage(e.target.value)}
+           />
+           </div>
+           <button type="button" onClick={handleImageUpload}>Cargar Imagen</button>
 
-        {/* Mostrar un iframe si es un video de YouTube */}
-        {coverImage.includes('youtube.com') || coverImage.includes('youtu.be') ? (
-          <div className="video-preview">
-            <iframe
-              src={coverImage.replace("watch?v=", "embed/")}
-              title="Cover Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        ) : (
-          <div className="imagen-preview">
-            <img src={coverImage} alt="Cover" />
+          {/* Mostrar un iframe si es un video de YouTube */}
+           {coverImage.includes('youtube.com') || coverImage.includes('youtu.be') ? (
+            <div className="video-preview">
+           <iframe
+            src={coverImage.replace("watch?v=", "embed/")}
+            title="Cover Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+           />
+            </div>
+          ) : (
+           <div className="imagen-preview">
+           <img src={coverImage} alt="Cover" />
           </div>
         )}
 

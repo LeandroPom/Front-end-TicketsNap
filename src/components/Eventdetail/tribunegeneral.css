@@ -1,0 +1,99 @@
+/* Definir variables para colores */
+:root {
+    --white: #FFFFFF;
+    --light-orange: #FFB74D;
+    --light-yellow-orange: #e7a50b;
+    --dark-black: #1D1D1D;
+    --dark-yellow: #ffcc00;
+    --dark-yellow-orange: #e6ac25;
+  }
+  
+  /* Modo Claro */
+  .light-mode {
+    --primary-color: var(--light-orange);
+    --secondary-color: var(--light-yellow-orange);
+    --background-color: var(--white);
+    --text-color: #000000;
+  }
+  
+  /* Modo Oscuro */
+  .dark-mode {
+    --primary-color: var(--dark-yellow);
+    --secondary-color: var(--dark-yellow-orange);
+    --background-color: var(--dark-black);
+    --text-color: #FFFFFF;
+  }
+  
+  /* Estilos específicos para Generaltribunes */
+  .general-tribunes {
+    text-align: center;
+    margin-top: 80px;
+  }
+  
+  .tribune-title {
+    color: var(--primary-color);
+  }
+  
+  .tribune-details {
+    border: 1px solid #000;
+    padding: 20px;
+    display: inline-block;
+    text-align: left;
+    margin-top: 20px;
+  }
+  
+  .tribune-presentation {
+    margin-top: 0;
+  }
+  
+  .tribune-description, .tribune-date, .tribune-time, .tribune-price, .tribune-available, .tribune-occupied {
+    margin: 5px 0;
+  }
+  
+  .tribune-btn {
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--white);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .tribune-btn:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  /* Media queries para dispositivos */
+  @media (max-width: 768px) {
+    .general-tribunes {
+      margin-top: 40px;
+    }
+  
+    .tribune-details {
+      padding: 15px;
+    }
+  
+    .tribune-btn {
+      padding: 8px 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .tribune-title {
+      font-size: 24px;
+    }
+  
+    .tribune-presentation {
+      font-size: 20px;
+    }
+  
+    .tribune-details {
+      padding: 10px;
+    }
+  
+    .tribune-btn {
+      width: 100%;
+      padding: 12px;
+    }
+  }
+  
