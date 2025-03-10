@@ -127,12 +127,19 @@ const Generaltribunes = () => {
         <p className="tribune-available"><strong>Espacios Disponibles:</strong> {availableSpace}</p>
         <p className="tribune-occupied"><strong>Espacios Ocupados:</strong> {occupied}</p>
 
+        <div>
+      {user?.cashier ? (
+        // Si el usuario es 'cashier', muestra solo el botón para vender
         <button onClick={() => handleOpenBuyerModal("sell")} className="tribune-btn sell-btn">
           Vender Entrada
         </button>
+      ) : (
+        // Si no es 'cashier' (supuestamente un usuario común), muestra solo el botón para comprar
         <button onClick={() => handleOpenBuyerModal("buy")} className="tribune-btn buy-btn">
           Comprar con Mercado Pago
         </button>
+      )}
+    </div>
       </div>
     </div>
   );
