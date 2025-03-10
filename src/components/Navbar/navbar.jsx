@@ -61,16 +61,7 @@ const Navbar = () => {
        <img
       src="/images/cabezadepaginasolticket.png"
       alt="Sol Ticket"
-      style={{
-        position: 'absolute',
-        top: '-31px', // O ajusta la posición según sea necesario
-        left: '50%',
-        transform: 'translateX(-50%)', // Centra la imagen
-        zIndex: '1001', // Asegura que la imagen esté por encima de otros elementos
-        width: '1400px',
-        height: '40px',
-        margin: "1px",
-      }}
+      class= "cabezadepagina"
     />
   <div className="navbar-logo">
     <a href="/">

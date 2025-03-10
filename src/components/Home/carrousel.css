@@ -163,3 +163,20 @@
 
   }
 }
+
+
+@media (min-width: 350px) and (max-width: 1069px) {
+  .carousel-home {
+    position: relative;
+    width: 225%;  /* Ocupa todo el ancho de la pantalla */
+    min-height: 60%; /* La altura mínima será el 60% del contenedor */
+
+    margin: 5px;
+    overflow: hidden;
+    margin-top: 30px;
+    margin-left: -20px;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+
+}
