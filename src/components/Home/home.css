@@ -9,6 +9,85 @@
 }
 
 
+/* Estilos del Footer */
+.footer {
+  background-color: rgb(71, 71, 71); /* Fondo oscuro */
+  color: white; /* Texto blanco */
+  padding: 40px 0; /* Espaciado vertical */
+  text-align: center; /* Centrado del texto */
+  position: relative;
+  margin-top:200px;
+  width: 100%;
+  bottom: 0;
+}
+
+.footer a {
+  color: white; /* Enlaces blancos */
+  text-decoration: none; /* Sin subrayado en los enlaces */
+  margin: 0 15px; /* Espaciado horizontal entre los enlaces */
+  font-size: 14px;
+}
+
+.footer a:hover {
+  text-decoration: underline; /* Subrayado al pasar el ratón */
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+.close-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.modal-body {
+  margin-top: 20px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.footer-links a {
+  margin: 0 20px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+
+
 /* Contenedor de texto que se desplaza */
 .scrolling-text-container {
   position: relative;
@@ -48,13 +127,9 @@
 
 /* Estilos para los íconos de redes sociales */
 .social-links {
-  position: fixed;
-  bottom: 1px; /* Distancia desde el fondo */
-  left: 5%;
-  transform: translateX(-50%);
   display: flex;
-  gap: 20px; /* Espacio entre los íconos */
-  z-index: 0; /* Asegura que los íconos estén por encima de otros elementos */
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .social-links a {
@@ -362,34 +437,9 @@ li:hover .event-image {
 }
 
 .whatsapp-link {
-  position: fixed;
-  /* Fijar el enlace en la pantalla */
-  bottom: 20px;
-  /* A 20px del borde inferior */
-  right: 20px;
-  /* A 20px del borde derecho */
-  background-color: white;
-  /* Color de fondo para hacerlo visible */
-  color: rgb(0, 0, 0);
-  /* Color del texto */
-  padding: 10px;
-  /* Espaciado alrededor del texto */
-  border-radius: 16px;
-  /* Hacer el ícono circular */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* Sombra para darle un efecto */
   display: flex;
-  /* Centrar el ícono */
   justify-content: center;
-  /* Centrar el contenido horizontalmente */
-  align-items: center;
-  /* Centrar el contenido verticalmente */
-  text-decoration: none;
-  /* Quitar el subrayado del enlace */
-  font-weight: bold;
-  /* Hacer el texto más visible */
-  z-index: 0;
-  /* Asegurar que esté por encima de otros elementos */
+  margin-top: 20px;
 }
 
 .dark .whatsapp-link {

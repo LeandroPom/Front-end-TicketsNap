@@ -28,6 +28,8 @@ const ShowsList = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Controlar si un video está activo
   const [currentPage, setCurrentPage] = useState(1); // Página actual
   const [showsPerPage] = useState(4); // Número de shows por página
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
+  const [modalContent, setModalContent] = useState(''); // Estado para el contenido del modal
 
   useEffect(() => {
     dispatch(getShows());
@@ -142,7 +144,12 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
     setCurrentPage(1); // 🔹 Resetear paginación al aplicar filtros
   };
 
+  const openModal = (content) => {
+    setModalContent(content); // Establecer el contenido del modal según el enlace
+    setIsModalOpen(true); // Abrir el modal
+  };
 
+  const closeModal = () => setIsModalOpen(false); // Cerrar el modal
 
 
    // Determinamos si el video está siendo reproducido y pasamos ese estado al carrusel
@@ -333,45 +340,140 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         </button>
       </div>
 
-      {/* Enlaces de redes sociales en el fondo */}
-      <div className="social-links">
-      <a href="https://x.com/SolTicketShow" target="_blank" rel="noopener noreferrer">
-          <img 
-            src="/images/X-Logo.png" 
-            alt="X" 
-            style={{ width: '33px', height: '30px' }} 
-          />
-        </a>
-        <a href="https://facebook.com/profile.php?id=61574068944152" target="_blank" rel="noopener noreferrer">
-          <FaFacebook size={30} color="#3b5998" />
-        </a>
-        <a href="https://instagram.com/solticketshow" target="_blank" rel="noopener noreferrer">
-          <FaInstagram size={30} color="#E4405F" />
-        </a>
-      </div>
+      <div className="footer">
+  {/* Enlaces del footer */}
+  <div className="footer-links">
+    <a href="#" onClick={() => openModal('contacto')}>Contacto</a>
+    <a href="#" onClick={() => openModal('sobreNosotros')}>Sobre Nosotros</a>
+    <a href="#" onClick={() => openModal('politicas')}>Política de privacidad</a>
+  </div>
 
- <a
+  {/* Redes sociales dentro del footer */}
+  <div className="social-links">
+    <a href="https://x.com/SolTicketShow" target="_blank" rel="noopener noreferrer">
+      <img 
+        src="/images/X-Logo.png" 
+        alt="X" 
+        style={{ width: '33px', height: '30px' }} 
+      />
+    </a>
+    <a href="https://facebook.com/profile.php?id=61574068944152" target="_blank" rel="noopener noreferrer">
+      <FaFacebook size={30} color="#3b5998" />
+    </a>
+    <a href="https://instagram.com/solticketshow" target="_blank" rel="noopener noreferrer">
+      <FaInstagram size={30} color="#E4405F" />
+    </a>
+    {/* Enlace de WhatsApp */}
+    <a
       href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
       target="_blank"
       rel="noopener noreferrer"
       className="whatsapp-link"
-      
     >
-      <FaWhatsapp size={30} color="#25D366" /> Contacto
-
-    
+      <FaWhatsapp size={30} color="#25D366" />
     </a>
+  </div>
+
+  {/* Derechos reservados */}
+  <p style={{ color: "white", marginTop: "30px", }}>&copy; 2025 SolTicket. Todos los derechos reservados.</p>
+
+  
+</div>
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-button" onClick={closeModal}>X</button>
+            <div className="modal-body">
+              {modalContent === 'contacto' && (
+                <div>
+                  <h2>Contacto</h2>
+                  <p>Para contactarte con nosotros, utiliza los links directos de nuestras redes sociales que se encuentran debajo del link de contactos, o para una atención mas personalizada podes contactarte via wathssap a nuestro numero principal y comunicarte directamente con un gerente comercial. Gracias por confiar en Solticket.</p>
+                </div>
+              )}
+              {modalContent === 'sobreNosotros' && (
+                <div>
+                  <h2>Sobre Nosotros</h2>
+                  <p>¡Líderes en la venta de entradas a eventos en el Norte Argentino!
+
+                      Más de 12 años de experiencia nos avalan.
+                      Trabajamos de la mano con productores, teatros, municipios, clubes, empresas y bandas en todo el país.
+                      ¡Desde el NOA hasta el NEA, llevamos los mejores eventos a tu alcance!
+
+                      ¡Con Solticket, cada evento es una experiencia única!</p>
+                </div>
+              )}
+              {modalContent === 'politicas' && (
+                <div>
+                  <h2>Política de Privacidad</h2>
+                  <p
+  style={{
+    whiteSpace: "pre-line",
+    overflowY: "auto",
+    maxHeight: "50vh",
+    padding: "50px",
+    fontFamily: "Arial, sans-serif",
+    fontSize: "16px",
+    lineHeight: "1.6",
+    textAlign: "justify",
+    color: "#fff",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    borderRadius: "8px",
+    margin: "30px 0",
+  }}
+>
+  <strong>Política de Privacidad</strong><br />
+  Última actualización: [15/03/2025]<br /><br />
+  
+  En SolTicket nos tomamos muy en serio la privacidad de nuestros usuarios. Esta Política de Privacidad tiene como objetivo informarte sobre cómo recopilamos, usamos, protegemos y compartimos tu información personal. Al utilizar nuestro sitio web, aceptas los términos establecidos en esta política.<br /><br />
+
+  <strong>1. Información que Recopilamos</strong><br />
+  Recopilamos información personal cuando te registras en nuestro sitio, realizas una compra, o interactúas de alguna manera con nosotros. Los tipos de información que podemos recopilar incluyen:<br /><br />
+
+  • Información personal identificable: nombre, dirección de correo electrónico, número de teléfono, dirección de facturación.<br />
+  • Información no personal: datos sobre tu navegador.<br /><br />
+
+  <strong>2. Cómo Usamos Tu Información</strong><br />
+  Utilizamos la información que recopilamos para los siguientes fines:<br /><br />
+
+  • Procesar y gestionar tus compras: para completar tus pedidos de entradas y gestionar la comunicación relacionada con ellos.<br />
+  • Mejorar nuestro servicio: para mejorar la experiencia del usuario y personalizar el contenido que mostramos.<br />
+  • Enviarte promociones: podemos llegar a enviarte correos electrónicos relacionados con productos, servicios o eventos de interés.<br />
+  • Cumplir con obligaciones legales: cuando sea necesario para cumplir con leyes, regulaciones o procesos legales.<br /><br />
+
+  <strong>3. Protección de tu Información</strong><br />
+  Implementamos medidas de seguridad físicas, electrónicas y administrativas para proteger tu información personal. Sin embargo, ten en cuenta que ningún sistema de transmisión de datos por Internet o sistema de almacenamiento electrónico es completamente seguro, y no podemos garantizar la seguridad absoluta.<br /><br />
+
+  <strong>4. Uso de Cookies</strong><br />
+  Este sitio utiliza cookies para mejorar tu experiencia. Las cookies son pequeños archivos almacenados en tu dispositivo que nos permiten recopilar información sobre el uso de nuestra página web. Puedes configurar tu navegador para
+
+
+
+    <strong>9. Contacto</strong><br />
+    Si tienes preguntas sobre esta Política de Privacidad, puedes contactarnos en:<br /><br />
+    
+    Correo Electrónico: <a href="mailto:solticket.show@gmail.com" style={{color: "#fff; text-decoration: underline"}}>solticket.show@gmail.com</a><br />
+</p>
+
+                </div>
+              )}
+            </div>
+           
+          </div>
+        </div>
+      )}
+
     </div>
+);
 
-    
-    
-
-    
-  );
-
-  
-
-  
 };
 
 export default ShowsList;
+
+    
+    
+
+    
+
+  
+
