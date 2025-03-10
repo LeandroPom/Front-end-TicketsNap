@@ -16,6 +16,11 @@ body {
   }
 
 
+  .imagen-preview img {
+    width: 250px !important;
+    height: 200px !important;
+  }
+
 /* Estilo para el botón de cerrar y crear */
 .close-btn {
   position: absolute;

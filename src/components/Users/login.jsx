@@ -200,7 +200,7 @@ const Login = () => {
 
           <div>
             <button className='form-buttons' disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Ingresar'}
+              {isLoading ? 'Ingresando...' : 'Ingresar'}
             </button>
           </div>
             <div className="google-logins">

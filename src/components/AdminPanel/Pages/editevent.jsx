@@ -29,7 +29,7 @@ const EditShow = () => {
   const [address, setAddress] = useState('');
   const [presentations, setPresentations] = useState([]);
 
- 
+
 
   // Cargar los datos al inicio si es necesario
   useEffect(() => {
@@ -43,8 +43,8 @@ const EditShow = () => {
 
 
 
-   // SweetAlert después de cargar los datos iniciales
-   useEffect(() => {
+  // SweetAlert después de cargar los datos iniciales
+  useEffect(() => {
     if (shows?.length > 0 && tags?.length > 0 && !isReadyToEdit) {
       Swal.fire({
         title: 'Editar evento',
@@ -64,8 +64,8 @@ const EditShow = () => {
       });
     }
   }, [isReadyToEdit, dispatch, shows?.length, tags?.length, navigate]);
-       
-        
+
+
 
   // Cuando los shows estén disponibles, se encuentra el show a editar
   useEffect(() => {
@@ -89,11 +89,11 @@ const EditShow = () => {
   }, [isReadyToEdit, shows, showId]);
 
 
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const updates = {
       name,
       artists: artists.split(',').map((artist) => artist.trim()), // Asegúrate de dividir correctamente los artistas
@@ -101,39 +101,39 @@ const EditShow = () => {
       description,
       coverImage,
     };
-     
-    
-  
+
+
+
     const dataToSend = {
       id: showId, // El ID del show a actualizar
       updates: updates, // Los datos a actualizar
       user: {
         "isAdmin": user?.isAdmin
-        },
+      },
 
     };
-    
-  
+
+
     try {
       // Realiza la solicitud PUT enviando el ID en la URL y el objeto de actualizaciones en el cuerpo
       await dispatch(updateShow(showId, dataToSend)); // Aquí pasamos los datos correctos al backend
 
 
-         // Mostrar SweetAlert antes de redirigir
-    await Swal.fire({
-      icon: 'success',
-      title: 'Evento Modificado',
-      text: 'El evento fue modificado correctamente!',
-      confirmButtonText: 'OK',
-      customClass: {
-        popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
-      }
-    });
+      // Mostrar SweetAlert antes de redirigir
+      await Swal.fire({
+        icon: 'success',
+        title: 'Evento Modificado',
+        text: 'El evento fue modificado correctamente!',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+        }
+      });
 
       navigate('/admin/events'); // Redirigir después de la actualización exitosa
     } catch (error) {
       console.error('Error al actualizar el evento:', error);
-      
+
     }
   };
 
@@ -156,7 +156,7 @@ const EditShow = () => {
   };
 
   return (
-    
+
     <div className="edit-show">
       <h1>Editar evento</h1>
       <form className='form-stile' onSubmit={handleSubmit}>
@@ -207,18 +207,18 @@ const EditShow = () => {
 
         {/* Mostrar los géneros seleccionados */}
         <div className="selected-genres">
-  <h4>Selección de genero:</h4>
-  <ul>
-    {selectedTags.map((tag, index) => (
-      <li key={index}>
-        {tag}
-        <button className="botonremove" type="buttons" onClick={() => handleRemoveTag(tag)}>
-          &times;
-         </button>
-         </li>
+          <h4>Selección de genero:</h4>
+          <ul>
+            {selectedTags.map((tag, index) => (
+              <li key={index}>
+                {tag}
+                <button className="botonremove" type="buttons" onClick={() => handleRemoveTag(tag)}>
+                  &times;
+                </button>
+              </li>
             ))}
-         </ul>
-         </div>
+          </ul>
+        </div>
 
         {/* Descripción */}
         <div className="form-group">
@@ -231,50 +231,50 @@ const EditShow = () => {
           />
         </div>
 
-        
+
 
         {/* Imagen de portada */}
         <div className="form-group">
           <label htmlFor="coverImage-edit">Imagen del Show:</label>
           <input
-           type="text"
-           id="coverImage"
-           value={coverImage}
-           onChange={(e) => setCoverImage(e.target.value)}
-           />
-           </div>
+            type="text"
+            id="coverImage"
+            value={coverImage}
+            onChange={(e) => setCoverImage(e.target.value)}
+          />
+        </div>
 
-          {/* Mostrar un iframe si es un video de YouTube */}
-           {coverImage.includes('youtube.com') || coverImage.includes('youtu.be') ? (
-            <div className="video-preview">
-           <iframe
-            src={coverImage.replace("watch?v=", "embed/")}
-            title="Cover Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-           />
-            </div>
-          ) : (
-           <div className="image-preview">
-           <img src={coverImage} alt="Cover" />
+        {/* Mostrar un iframe si es un video de YouTube */}
+        {coverImage.includes('youtube.com') || coverImage.includes('youtu.be') ? (
+          <div className="video-preview">
+            <iframe
+              src={coverImage.replace("watch?v=", "embed/")}
+              title="Cover Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </div>
-           )}
+        ) : (
+          <div className="imagen-preview">
+            <img src={coverImage} alt="Cover" />
+          </div>
+        )}
 
-       
+
 
         {/* Presentaciones */}
         <div className="presentations">
-          
+
           {presentations.map((presentation, index) => (
             <div key={index} className="presentation-form">
               <div className="form-group">
-               
+
               </div>
 
-              
 
-           
+
+
             </div>
           ))}
         </div>
