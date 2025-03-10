@@ -59,7 +59,8 @@ const Carousel = ({ images }) => {
   const isSingleImage = images.length === 1;
 
   return (
-    <div className="carousel">
+    <div className="carousel-home">
+    
       <button
         className="carousel-button prev"
         onClick={goToPrevious}
@@ -89,6 +90,7 @@ const Carousel = ({ images }) => {
           />
         ))}
       </div>
+      
     </div>
   );
 };

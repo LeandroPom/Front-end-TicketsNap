@@ -100,6 +100,31 @@ const CreateShowForm = () => {
     }
   };
 
+   // Código para la carga de la imagen en Cloudinary
+   const handleImageUpload = () => {
+    const widget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: 'dyrag1fir', // Tu Cloud Name
+        uploadPreset: 'Solticket', // Tu Preset
+        sources: ['local', 'url', 'camera'], // Fuentes de carga (local, url, cámara)
+        showAdvancedOptions: true, // Mostrar opciones avanzadas si es necesario
+        cropping: true, // Habilitar el recorte de la imagen
+        multiple: false, // Solo permitir una imagen a la vez
+        folder: 'shows', // Carpeta en Cloudinary
+      },
+      (error, result) => {
+        if (result && result.event === 'success') {
+          // Cuando la carga sea exitosa, actualizar el campo coverImage con la URL de la imagen
+          setFormData((prevState) => ({
+            ...prevState,
+            coverImage: result.info.secure_url, // Aquí obtienes la URL segura de la imagen
+          }));
+        }
+      }
+    );
+    widget.open(); // Abre el widget
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -560,6 +585,8 @@ const CreateShowForm = () => {
             placeholder="Enter cover image URL"
           />
         </label>
+
+        <button type="button" onClick={handleImageUpload}>Cargar Imagen</button>
         <img
           src={formData.coverImage}
           alt="Cover"
