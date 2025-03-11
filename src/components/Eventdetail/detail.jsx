@@ -803,13 +803,18 @@ useEffect(() => {
         )}
 
 
-        {user?.isAdmin && (
-          <>
-            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
-            {isZoneEditorOpen && <ZoneEditor showId={id} />}
-            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Cerrar</button>
-          </>
-        )}
+           {user?.isAdmin && (
+            <>
+              <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
+    
+              {isZoneEditorOpen && (
+            <>
+              <ZoneEditor showId={id} />
+              <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Cerrar</button>
+            </>
+            )}
+            </>
+            )}
 
 {showMap && zoneImage && (
   <div >
