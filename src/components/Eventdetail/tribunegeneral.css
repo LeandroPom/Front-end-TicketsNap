@@ -1,99 +1,118 @@
 /* Definir variables para colores */
 :root {
-    --white: #FFFFFF;
-    --light-orange: #FFB74D;
-    --light-yellow-orange: #e7a50b;
-    --dark-black: #1D1D1D;
-    --dark-yellow: #ffcc00;
-    --dark-yellow-orange: #e6ac25;
-  }
-  
-  /* Modo Claro */
-  .light-mode {
-    --primary-color: var(--light-orange);
-    --secondary-color: var(--light-yellow-orange);
-    --background-color: var(--white);
-    --text-color: #000000;
-  }
-  
-  /* Modo Oscuro */
-  .dark-mode {
-    --primary-color: var(--dark-yellow);
-    --secondary-color: var(--dark-yellow-orange);
-    --background-color: var(--dark-black);
-    --text-color: #FFFFFF;
-  }
-  
-  /* Estilos específicos para Generaltribunes */
+  --white: #FFFFFF;
+  --black: #1D1D1D;
+  --pastel-yellow: #FFE57F;
+  --pastel-orange: #FFB74D;
+  --pastel-yellow-orange: #FFD166;
+}
+
+/* Modo Claro */
+.light {
+  --primary-color: var(--pastel-orange);
+  --secondary-color: var(--pastel-yellow-orange);
+  --accent-color: var(--pastel-yellow);
+  --background-color: var(--white);
+  --text-color: #000000;
+}
+
+/* Modo Oscuro */
+.dark {
+  --primary-color: var(--pastel-yellow);
+  --secondary-color: var(--pastel-yellow-orange);
+  --accent-color: var(--pastel-orange);
+  --background-color: var(--black);
+  --text-color: #FFFFFF;
+}
+
+/* Estilos específicos para General Tribunes */
+.general-tribunes {
+  text-align: center;
+  margin-top: 80px;
+  padding: 24px;
+  max-width: 800px;
+  color: var(--text-color);
+  border-radius: 12px;
+  transition: background 0.3s;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tribune-title {
+  color: var(--black);
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
+.dark .tribune-title {
+  color: var(--primary-color);
+}
+
+.tribune-details {
+  border: 2px solid var(--primary-color);
+  padding: 20px;
+  display: inline-block;
+  text-align: left;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: var(--background-color);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.tribune-description,
+.tribune-date,
+.tribune-time,
+.tribune-price,
+.tribune-available,
+.tribune-occupied {
+  margin: 8px 0;
+  font-family: "Inter", sans-serif;
+}
+
+.tribune-btn {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--black);
+  padding: 12px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: bold;
+}
+
+.tribune-btn:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+/* Media queries para dispositivos */
+@media (max-width: 768px) {
   .general-tribunes {
-    text-align: center;
-    margin-top: 80px;
+    margin-top: 40px;
+    padding: 16px;
   }
-  
-  .tribune-title {
-    color: var(--primary-color);
-  }
-  
+
   .tribune-details {
-    border: 1px solid #000;
-    padding: 20px;
-    display: inline-block;
-    text-align: left;
-    margin-top: 20px;
+    padding: 16px;
   }
-  
-  .tribune-presentation {
-    margin-top: 0;
-  }
-  
-  .tribune-description, .tribune-date, .tribune-time, .tribune-price, .tribune-available, .tribune-occupied {
-    margin: 5px 0;
-  }
-  
+
   .tribune-btn {
-    background-color: var(--primary-color);
-    border: none;
-    color: var(--white);
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 10px 14px;
   }
-  
-  .tribune-btn:hover {
-    background-color: var(--secondary-color);
+}
+
+@media (max-width: 480px) {
+  .tribune-title {
+    font-size: 22px;
   }
-  
-  /* Media queries para dispositivos */
-  @media (max-width: 768px) {
-    .general-tribunes {
-      margin-top: 40px;
-    }
-  
-    .tribune-details {
-      padding: 15px;
-    }
-  
-    .tribune-btn {
-      padding: 8px 16px;
-    }
+
+  .tribune-details {
+    padding: 12px;
+    border-radius: 8px;
   }
-  
-  @media (max-width: 480px) {
-    .tribune-title {
-      font-size: 24px;
-    }
-  
-    .tribune-presentation {
-      font-size: 20px;
-    }
-  
-    .tribune-details {
-      padding: 10px;
-    }
-  
-    .tribune-btn {
-      width: 100%;
-      padding: 12px;
-    }
+
+  .tribune-btn {
+    width: 100%;
+    padding: 14px;
   }
-  
+}
