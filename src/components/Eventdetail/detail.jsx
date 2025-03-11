@@ -767,9 +767,9 @@ useEffect(() => {
                     color: "black"
                   }}
                 >
-                  <p>Zona: {Array.isArray(presentation.divisionName) ? presentation.divisionName.join(", ") : presentation.divisionName}</p>
-                  <p>Fecha: {presentation.presentation.date}</p>
-                  <p>Hora: {presentation.presentation.time.start} - {presentation.presentation.time.end}</p>
+                  <p style={{color: "black"}}>Zona: {Array.isArray(presentation.divisionName) ? presentation.divisionName.join(", ") : presentation.divisionName}</p>
+                  <p style={{color: "black"}}>Fecha: {presentation.presentation.date}</p>
+                  <p style={{color: "black"}}>Hora: {presentation.presentation.time.start} - {presentation.presentation.time.end}</p>
                 </li>
               ))}
             </ul>

@@ -83,6 +83,10 @@
   border-radius: 16px;
 }
 
+.cancel-button:hover{
+  background-color: #FFB74D;
+}
+
 @media (max-width: 768px) {
   .cancel-button {
     padding: 8px;

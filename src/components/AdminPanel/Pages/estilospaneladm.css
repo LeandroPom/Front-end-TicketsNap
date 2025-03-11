@@ -2,7 +2,7 @@
 .users-management {
   padding: 20px;
   z-index: 20;
-  margin-top: 50px; /* Ajustado para no solaparse con la navbar */
+  margin-top: 5%; /* Ajustado para no solaparse con la navbar */
   margin-right: 200px;
 }
 
@@ -343,7 +343,7 @@
 .events-page {
   padding: 20px;
   z-index: 20;
-  margin-top: 125px; /* Ajustado para no solaparse con la navbar */
+  margin-top: 5%; /* Ajustado para no solaparse con la navbar */
   margin-right: 200px;
 
 }
@@ -359,7 +359,7 @@
   align-items: center;
   position: fixed;
   width: 100%;
-  top: 90px;
+  top: 18%;
   z-index: 1000; /* Asegura que la navbar esté siempre por encima de todo */
   margin-left: -270px ;
 }

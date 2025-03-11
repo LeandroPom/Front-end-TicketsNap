@@ -1,7 +1,7 @@
 /* Variables de color para modo claro y oscuro */
 :root {
   --color-dominante-light: #FFFFFF;
-  --color-dominante-dark: #000000;
+  --color-dominante-dark: #1d1d1d;
   --color-principal: #FFE57F;
   --color-secundario: #FFB74D;
   --color-intermedio: #FFD166;

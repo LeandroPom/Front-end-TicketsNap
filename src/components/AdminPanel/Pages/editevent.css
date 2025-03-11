@@ -93,7 +93,7 @@ body {
   /* Form Styles */
   .form-stile {
     max-width: 800px;
-    margin: 20px auto;
+    margin: 80px auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -102,7 +102,7 @@ body {
 
   .dark .form-stile {
     max-width: 800px;
-    margin: 20px auto;
+    margin: 80px auto;
     background-color: #1d1d1d;
     padding: 20px;
     border-radius: 8px;

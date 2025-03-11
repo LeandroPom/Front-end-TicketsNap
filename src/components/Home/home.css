@@ -365,7 +365,7 @@ li p {
 
 .calendar-popup {
   position: absolute;
-  top: 60px;
+  top: 110%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -376,7 +376,7 @@ li p {
 }
 
 .react-calendar__tile--hasActive {
-  color: green;
+  color: rgb(15, 187, 15);
   background: #fcdb8f;
 }
 
