@@ -31,6 +31,8 @@ const Dashboard = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
+
+  
   // Cargar métricas sin verificar si es admin
   useEffect(() => {
     fetchMetrics(); // Traemos las métricas sin importar si el usuario es admin o no

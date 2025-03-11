@@ -7,7 +7,7 @@ import "../AdminPanel/Pages/estilospaneladm.css";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state?.user);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -22,7 +22,7 @@ const Header = () => {
       </div>
       <nav>
         <ul>
-          {user?.isAdmin && (
+          
             <>
               
               <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/dashboard'}>
@@ -42,7 +42,7 @@ const Header = () => {
               </button>
              
             </>
-          )}
+       
 
           {/* Tanto admin como cashier pueden acceder a Tickets Vendidos */}
           
