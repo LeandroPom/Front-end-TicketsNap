@@ -44,17 +44,20 @@
 }
 
 /* Modal */
-.modal-overlay {
+.modal-overlays {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+  background-color: black; /* Fondo oscuro semitransparente */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  max-width: 200%;
+  max-height: 600%;
+ 
 }
 
 .modal-content {
@@ -64,6 +67,7 @@
   width: 400px;
   text-align: center;
   position: relative;
+  margin-top: 1%;
 }
 
 .close-button {
@@ -365,7 +369,7 @@ li p {
 
 .calendar-popup {
   position: absolute;
-  top: 60px;
+  top: 110%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -376,7 +380,7 @@ li p {
 }
 
 .react-calendar__tile--hasActive {
-  color: green;
+  color: rgb(15, 187, 15);
   background: #fcdb8f;
 }
 

@@ -2,7 +2,7 @@
 .places-management {
   font-family: Arial, sans-serif;
   max-width: 800px; /* Reducir el tamaño máximo del contenedor */
-  margin: 0 auto;
+  margin: 3% auto;
   padding: 20px;
   display: flex;
   flex-direction: column;

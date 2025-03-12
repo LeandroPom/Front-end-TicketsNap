@@ -198,20 +198,20 @@ const Login = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder="Ingresa tu email"
               required
             />
           </div>
 
           <div>
             <div className="password-container">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Contraseña</label>
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder="Ingresa tu contraseña"
                 required
               />
               <FontAwesomeIcon 
@@ -224,7 +224,7 @@ const Login = () => {
 
           <div>
             <button className='form-buttons' disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Login'}
+              {isLoading ? 'Ingresando...' : 'Ingresar'}
             </button>
           </div>
             <div className="google-logins">

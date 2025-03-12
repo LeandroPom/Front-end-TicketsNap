@@ -373,7 +373,7 @@ const ShowsList = () => {
       </div>
       {/* Modal */}
       {isModalOpen && (
-        <div className="modal-overlay">
+        <div className="modal-overlays">
           <div className="modal-content">
             <button className="close-button" onClick={closeModal}>X</button>
             <div className="modal-body">

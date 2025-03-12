@@ -140,7 +140,7 @@ const MisCompras = () => {
         </button>
       </div>
 
-      <button className="back-button" onClick={() => navigate('/profile')}>Back Profile</button>
+      <button className="back-button" onClick={() => navigate('/profile')}>Regresar</button>
     </div>
   );
 };

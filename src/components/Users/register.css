@@ -87,7 +87,8 @@
   font-size: 1em;
   box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
   box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
-  margin-top: 4px
+  margin-top: 4px;
+  background-color: rgb(245, 245, 245);
 }
 
 .password-container {

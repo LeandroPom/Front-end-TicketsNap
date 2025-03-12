@@ -509,7 +509,7 @@ const Register = () => {
 
             {/* Tercera fila: Phone */}
             <div className="form-group">
-              <label htmlFor="phone">Numero de celular completo (Optional)</label>
+              <label htmlFor="phone">Numero de celular completo (Opcional)</label>
               <input
                 type="text"
                 id="phone"
