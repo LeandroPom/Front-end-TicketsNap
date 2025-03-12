@@ -296,15 +296,15 @@ const EditShow = () => {
               </div>
 
 
+              {/* Botón para enviar el formulario */}
+              <button className='boton-enviar'>Modificar</button>
+              <button className="close-btn" onClick={handleClose}>Close</button> {/* Botón de cerrar */}
 
 
             </div>
           ))}
         </div>
 
-        {/* Botón para enviar el formulario */}
-        <button className='boton-enviar'>Modificar</button>
-        <button className="close-btn" onClick={handleClose}>Close</button> {/* Botón de cerrar */}
       </form>
     </div>
   );
