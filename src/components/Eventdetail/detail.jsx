@@ -92,7 +92,7 @@ const Detail = () => {
           const matchingZones = zones.filter((zone) => zone.showId === Number(id));
 
           if (matchingZones.length > 0) {
-            console.log("Zonas encontradas para el show:", matchingZones);
+            // console.log("Zonas encontradas para el show:", matchingZones);
 
             // Asignar imagen basada en zoneId
             matchingZones.forEach((zone) => {
@@ -170,11 +170,11 @@ const Detail = () => {
           });
 
 
-          console.log('Presentations:', presentations);
+          // console.log('Presentations:', presentations);
           setAvailablePresentations(presentations);
           setIsSelectorOpen(true);
         } else {
-          console.log("No se encontraron zonas para esta presentación.");
+          console.log("");
         }
       }
     } catch (error) {
@@ -206,30 +206,36 @@ const Detail = () => {
   }, [selectedZone, availableSeats]);
 
 
- // Esto lo agregamos en el useEffect donde recuperas los asientos de una zona específica
- useEffect(() => {
-  // Lógica que recupera los asientos para la zona seleccionada
-  const fetchSeatsForZone = async (zoneId) => {
-    try {
-      const response = await axios.get(`/zones/${zoneId}/seats`);  // Asegúrate de que esta URL sea correcta
-      if (response.status === 200) {
-        setAvailableSeats(response.data.seats);  // Aquí asignas los asientos disponibles a la variable availableSeats
-        const rows = response.data.seats.map(seat => ({
-          row: seat.row,
-          id: seat.id,
-          occupied: seat.taken  // Si está ocupado o no
-        }));
-        setRows(rows);  // Guardas las filas
+  useEffect(() => {
+    // Lógica que recupera los asientos para la zona seleccionada
+    const fetchSeatsForZone = async (zoneId) => {
+      try {
+        // Verifica si la zona tiene asientos antes de intentar cargar los datos
+        if (zoneId && selectedZone && selectedZone.hasSeats) {
+          const response = await axios.get(`/zones/${zoneId}/seats`);
+          if (response.status === 200) {
+            setAvailableSeats(response.data.seats);  // Aquí asignas los asientos disponibles a la variable availableSeats
+            const rows = response.data.seats.map(seat => ({
+              row: seat.row,
+              id: seat.id,
+              occupied: seat.taken  // Si está ocupado o no
+            }));
+            setRows(rows);  // Guardas las filas
+          }
+        } else {
+          // En caso de que no haya asientos, puedes limpiar las filas o simplemente dejarlo vacío
+          setAvailableSeats([]);
+          setRows([]);
+        }
+      } catch (error) {
+        console.error("Error al cargar los asientos:", error);
       }
-    } catch (error) {
-      console.error("Error al cargar los asientos:", error);
+    };
+  
+    if (selectedZone) {
+      fetchSeatsForZone(selectedZone.zoneId);
     }
-  };
-
-  if (selectedZone) {
-    fetchSeatsForZone(selectedZone);
-  }
-}, [selectedZone]);  // Cuando cambia la zona, se ejecuta nuevamente
+  }, [selectedZone]);  // Cuando cambia la zona, se ejecuta nuevamente
 
 
   const handleCanvasClick = (e) => {
@@ -314,7 +320,7 @@ const Detail = () => {
             showId: event.id,
           };
 
-          console.log("ENVIAR A SEATS", seatInfo);
+          // console.log("ENVIAR A SEATS", seatInfo);
           setSelectedSeats([seatInfo]);
           setSelectedSeats([seatInfo]);
           setIsSeatManagerOpen(true);
@@ -360,7 +366,7 @@ const Detail = () => {
         } else {
           setSelectedZone(null);
           setZoneImage("/images/zona-floresta.png");
-          console.log(rgb, "COLORES DEL CLICK")
+          // console.log(rgb, "COLORES DEL CLICK")
           // console.log("No se detectó una división válida canvas.");
         }
         
@@ -379,7 +385,7 @@ const Detail = () => {
       });
 
       let generalDivision = null;
-
+      
       // Buscar "Tribunas Generales" y verificar que `location` es un array
       if (Array.isArray(presentation.location)) {
         generalDivision = presentation.location.find(
@@ -395,6 +401,7 @@ const Detail = () => {
 
       if (presentation.divisionName === "Tribunas Generales") {
         if (generalDivision && generalDivision.space !== undefined) {
+        
           setModalData({
             space: generalDivision?.space || "No disponible",
             date: presentation.presentation.date,
@@ -404,24 +411,24 @@ const Detail = () => {
             state: {
               space: generalDivision?.space,
               presentations:
-                presentation?.divisionName,
+              presentation?.divisionName,
               date: presentation.presentation.date,
               time: presentation.presentation.time,
-              zoneId: selectedZoneId,
+              zoneId: presentation.zoneId,
               showId: event.id,
               users: user?.id,
               cashier: user?.cashier,
               price: generalDivision?.generalPrice,
               occupied: generalDivision?.occupied,
               eventdetail: event
-
+              
             }
           })
         } else {
           console.error("No se encontró la división 'Tribunas Generales' en location.");
         }
-
         // Evitar dibujar asientos para Tribunas Generales
+       
         setAvailableSeats([]);
         setSeatsDrawn(false);
 
@@ -451,7 +458,7 @@ const Detail = () => {
           );
         }
       }
-
+     
       // Mostrar el alert para todas las presentaciones
      
       Swal.fire({
@@ -476,9 +483,7 @@ const Detail = () => {
 
       });
 
-      setIsSelectorOpen(false); // Cierra el selector
-      // console.log("Presentación seleccionada:", presentation);
-      // console.log("modalData:", modalData);
+      setIsSelectorOpen(false); // Cierra el selector  
     }
   };
 

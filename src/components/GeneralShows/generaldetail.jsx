@@ -194,9 +194,15 @@ const GeneralDetail = () => {
           <p><strong>Fecha Presentación:</strong> {zone.presentation.date}</p>
           <p><strong>Horario:</strong> {zone.presentation.time.start} - {zone.presentation.time.end}</p>
           {zone.location.map((loc, index) => (
-            <p key={index}>
-              <strong>{loc.division}:</strong> Capacidad: {loc.space} | Disponible: {loc.space - loc.occupied} | <strong>Precio:</strong> ${loc.price}
+           <div key={index}>
+           <p>
+           <strong>{loc.division}:</strong> 
+          { (user?.isAdmin || user?.cashier) && (
+            <>Capacidad: {loc.space} | Disponible: {loc.space - loc.occupied} | </>
+          )}
+             <strong>Precio:</strong> ${loc.price}
             </p>
+            </div>
           ))}
           
           <h3 className="purchase-title">Comprar Entrada</h3>
@@ -209,6 +215,10 @@ const GeneralDetail = () => {
             </select>
           </div>
           <p><strong>Precio:</strong> ${selectedPrice}</p>
+
+          <p style={{color:"red"}}>
+          <strong>Recargo de servicios:</strong> ${((selectedPrice * 0.20).toFixed(2))}
+          </p>
           
           <button onClick={() => handleOpenBuyerModal(user?.cashier ? "sell" : "buy")} className="buy-button">
             {user?.cashier ? "Vender Entrada" : "Comprar con Mercado Pago"}

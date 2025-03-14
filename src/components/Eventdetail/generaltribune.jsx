@@ -8,9 +8,9 @@ import "./tribunegeneral.css"
 const Generaltribunes = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { eventdetail, generalDivision, presentations, price = 0, date, time, zoneId, showId, space, occupied } = location.state || {};
+  const { eventdetail, generalDivision, presentations,presentation, price = 0, date, time, zoneId, showId, space, occupied } = location.state || {};
   const user = useSelector((state) => state.user);
-
+  const [isLoading, setIsLoading] = useState(false);  // Nuevo estado para cargar
   const [availableSpace, setAvailableSpace] = useState(0);
   const [selectedSpaces, setSelectedSpaces] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -68,8 +68,10 @@ const Generaltribunes = () => {
       }
     });
   };
+  
 
   const handleConfirmPurchase = async (buyerDetails, paymentMethod) => {
+    setIsLoading(true);
     const ticketData = {
       showId,
       zoneId,
@@ -93,6 +95,12 @@ const Generaltribunes = () => {
       if (paymentMethod === "sell") {
         const response = await axios.post('/tickets/sell', ticketData);
         setAvailableSpace((prev) => prev - selectedSpaces);
+
+
+         // Desactiva el loading antes de mostrar el Swal
+      setIsLoading(false);
+
+
         Swal.fire({
           title: 'Compra finalizada con éxito',
           text: 'Tu ticket ha sido generado correctamente.',
@@ -106,6 +114,10 @@ const Generaltribunes = () => {
         window.location.href = response.data.init_point;
       }
     } catch (error) {
+
+       // Desactiva el loading en caso de error
+    setIsLoading(false);
+    
       Swal.fire({
         title: 'Error',
         text: 'No se pudo completar la venta. Intenta nuevamente.',
@@ -113,9 +125,27 @@ const Generaltribunes = () => {
         confirmButtonText: 'Aceptar',
       });
     }
+    
+    
   };
+  
+  if (isLoading) {
+    return (
+      <div className="loading-overlay">
+        <div className="corner-img top-left" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img top-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img bottom-left" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+        <div className="corner-img bottom-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
+  
+        <div className="spinner"></div>
+        <p>Procesando su compra...</p>
+      </div>
+    );
+  }
+  
 
   return (
+
     <div className="general-tribunes">
       <h1 className="tribune-title">Tribunas Generales</h1>
       <div className="tribune-details">
@@ -124,8 +154,19 @@ const Generaltribunes = () => {
         <p className="tribune-date"><strong>Fecha:</strong> {date}</p>
         <p className="tribune-time"><strong>Hora:</strong> {time?.start} - {time?.end}</p>
         <p className="tribune-price"><strong>Precio:</strong> ${price}</p>
+
+         {/* Calcular el precio con el 20% de recargo */}
+    <p style={{color:"red"}}>
+    <strong>Recargo de servicios:</strong> ${((price * 0.20).toFixed(2))}
+    </p>
+       
+        {/* Mostrar los espacios disponibles y ocupados solo si el usuario tiene isAdmin o cashier */}
+    {(user?.isAdmin || user?.cashier) && (
+      <>
         <p className="tribune-available"><strong>Espacios Disponibles:</strong> {availableSpace}</p>
         <p className="tribune-occupied"><strong>Espacios Ocupados:</strong> {occupied}</p>
+      </>
+    )}
 
         <div>
       {user?.cashier ? (
@@ -146,3 +187,5 @@ const Generaltribunes = () => {
 }
 
 export default Generaltribunes;
+
+    

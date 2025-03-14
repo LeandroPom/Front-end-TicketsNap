@@ -22,18 +22,17 @@ const AdminPanel = () => {
       setLoading(true);
     } else {
       // Una vez que el usuario esté cargado, verifica si es admin
-      if (!user.isAdmin) {
+      if (!user.isAdmin && !user.cashier) {
         Swal.fire({
           title: 'Acceso Denegado',
           text: 'No tienes permisos para acceder a este panel.',
           icon: 'error',
         });
         setError('Acceso Denegado'); // Opcional: puedes manejar el error
-        navigate("/")
+        navigate("/") // Redirige al home si no es admin ni cashier
       } else {
-        setLoading(false); // Si el usuario es admin, termina el loading
+        setLoading(false); // Si el usuario es admin o cajero, termina el loading
       }
-      
     }
   }, [user]); // Se ejecuta cada vez que cambia el usuario
 
@@ -54,7 +53,10 @@ const AdminPanel = () => {
           <Route path="/admin/events" element={<Events />} />
           <Route path="/admin/places" element={<Places />} />
           <Route path="/admin/users" element={<UsersManagement />} />
-          <Route path="/admin/tickets" element={<SoldTickets />} />
+          <Route 
+            path="/admin/tickets" 
+            element={user && (user.isAdmin || user.cashier) ? <SoldTickets /> : <Navigate to="/" />}
+          />
           <Route path="*" element={<Navigate to="/admin/dashboard" />} />
         </Routes>
       </div>

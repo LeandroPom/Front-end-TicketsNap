@@ -21,27 +21,41 @@ const MisCompras = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await axios.get('/tickets');
-        if (response.data?.tickets) {
-          const userTickets = response.data.tickets.filter(ticket => ticket.userId === user?.id && ticket.state === true); // Filtramos por state === true
-          setTickets(userTickets);
+        let userTickets = [];
 
-          // Si no hay tickets, muestra SweetAlert
-          if (userTickets.length === 0) {
-            Swal.fire({
-              title: '¡No tienes compras!',
-              text: 'No tienes tickets registrados. ¿Quieres ir a tu perfil?',
-              icon: 'info',
-              confirmButtonText: 'Aceptar',
-              customClass: {
-                popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
-              }
-            }).then((result) => {
-              if (result.isConfirmed) {
-                navigate('/profile');  // Redirige a la página de perfil al aceptar
-              }
-            });
+        if (user?.isAdmin || user?.cashier) {
+          // Si el usuario es admin o cajero, filtramos por precio === 0
+          if (user?.cashier) {
+            const response = await axios.get('/tickets');
+            if (response.data?.tickets) {
+              userTickets = response.data.tickets.filter(ticket => ticket.price === 0);  // Filtramos por precio === 0
+            }
           }
+        } else {
+          // Si el usuario no es admin ni cajero, mostramos los tickets normales
+          const response = await axios.get('/tickets');
+          if (response.data?.tickets) {
+            userTickets = response.data.tickets.filter(ticket => ticket.userId === user?.id && ticket.state === true); // Filtramos por state === true
+          }
+        }
+
+        setTickets(userTickets);
+
+        // Si no hay tickets, muestra SweetAlert
+        if (userTickets.length === 0) {
+          Swal.fire({
+            title: '¡No tienes compras!',
+            text: 'No tienes tickets registrados. ¿Quieres ir a tu perfil?',
+            icon: 'info',
+            confirmButtonText: 'Aceptar',
+            customClass: {
+              popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate('/profile');  // Redirige a la página de perfil al aceptar
+            }
+          });
         }
       } catch (err) {
         setError('Error al obtener los tickets. Intente nuevamente.');
@@ -55,15 +69,12 @@ const MisCompras = () => {
       dispatch(getShows());
     }
   }, [user, dispatch, navigate]);
-  
 
   const currentDateTime = new Date();
 
   if (loading) return <div className="loading">Cargando tus compras...</div>;
   if (error) return <div className="error">{error}</div>;
   if (tickets.length === 0) return <div className="no-compras">No tienes compras registradas.</div>;
-
-  
 
   // PAGINACIÓN: Obtener los tickets de la página actual
   const startIndex = (currentPage - 1) * ticketsPerPage;
@@ -91,20 +102,18 @@ const MisCompras = () => {
               <p><strong>Zona:</strong> {ticket.division}</p>
               <p><strong>Fecha y Hora:</strong> {ticket.date}</p>
 
-
-               {/* Mostrar Fila y Asiento solo si existen */}
-            {ticket.row && ticket.seat ? (
-              <>
-                <p><strong>Fila:</strong> {ticket.row}</p>
-                <p><strong>Asiento:</strong> {ticket.seat}</p>
-              </>
-            ) : (
-              <p>
-              <p><strong>Fila:</strong> No corresponde </p>
-              <p><strong>Asiento:</strong> No corresponde </p>
-               
-              </p>
-            )}
+              {/* Mostrar Fila y Asiento solo si existen */}
+              {ticket.row && ticket.seat ? (
+                <>
+                  <p><strong>Fila:</strong> {ticket.row}</p>
+                  <p><strong>Asiento:</strong> {ticket.seat}</p>
+                </>
+              ) : (
+                <p>
+                  <p><strong>Fila:</strong> No corresponde </p>
+                  <p><strong>Asiento:</strong> No corresponde </p>
+                </p>
+              )}
 
               <p><strong>Precio:</strong> ${ticket.price}</p>
 
@@ -112,6 +121,9 @@ const MisCompras = () => {
               <p className={`event-status ${isPastEvent ? "event-finalizado" : "event-activo"}`}>
                 {isPastEvent ? "Evento Finalizado" : "Evento Activo"}
               </p>
+
+              {/* Si el precio es 0, mostramos "Ticket Regalado" */}
+              {ticket.price === 0 && <p className="ticket-regalado">Ticket Regalado</p>}
 
               {ticket.qrCode && <img src={ticket.qrCode} alt="Código QR" className="qr-code" />}
             </li>

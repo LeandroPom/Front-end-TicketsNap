@@ -29,8 +29,34 @@ export const SHOW_SUCCESS="SHOW_SUCCES"
 export const SHOW_FAILURE="SHOW_FAILURE"
 export const UPDATE_SHOW_SUCCESS="UPDATE_SHOW_SUCCESS"
 export const DISABLE_SHOW="DISABLE_SHOW"
+export const UPDATE_TICKET_STATUS = "UPDATE_TICKET_STATUS";
 
 const BASE_URL = 'https://ticketsol.loca.lt';  // Asegúrate de que esta URL corresponda a tu backend
+
+
+// Acción para actualizar el estado del ticket
+export const updateTicketStatus = (ticketId) => {
+  return async (dispatch) => {
+    try {
+      // Realizar la solicitud PUT a la API
+      await axios.put(`/tickets/offQR/${ticketId}`);
+      
+      // Aquí puedes despachar otra acción si lo deseas
+      // dispatch({ type: UPDATE_TICKET_STATUS, payload: ticketId });
+
+      console.log(`Ticket con ID ${ticketId} marcado como usado`);
+      
+      // Si quieres manejar alguna actualización en el estado, puedes despachar algo aquí
+      // Ejemplo: dispatch({ type: 'UPDATE_TICKET_SUCCESS', payload: data });
+      
+    } catch (error) {
+      console.error("Error al marcar ticket como usado:", error.message);
+      
+      // Despachar una acción en caso de error
+      // dispatch({ type: 'UPDATE_TICKET_ERROR', payload: error.message });
+    }
+  };
+};
 
 // Acción para crear un usuario
 export const createUser = (userData) => async (dispatch) => {

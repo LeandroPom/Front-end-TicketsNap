@@ -61,7 +61,7 @@ const Navbar = () => {
        <img
       src="/images/cabezadepaginasolticket.png"
       alt="Sol Ticket"
-      class= "cabezadepagina"
+      className= "cabezadepagina"
     />
   <div className="navbar-logo">
     <a href="/">

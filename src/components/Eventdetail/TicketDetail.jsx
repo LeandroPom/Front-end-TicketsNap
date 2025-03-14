@@ -126,7 +126,7 @@ const TicketDetail = () => {
         mail: buyerDetails?.email || null,
         phone: buyerDetails?.phone || null,
         };
-  console.log(ticketData, "DATOS ENVIADOS AL BACK")
+  // console.log(ticketData, "DATOS ENVIADOS AL BACK")
     try {
       const response = await axios.post(endpoint, ticketData);
   
@@ -188,8 +188,8 @@ const TicketDetail = () => {
 
   const showAdress = shows.find(show => show.id === ticket.showId)?.location|| "Show ";
 
-  console.log(ticket,"Datos del tiket")
-  console.log(showAdress,"Datos de la cosntante")
+  // console.log(ticket,"Datos del tiket")
+  // console.log(showAdress,"Datos de la cosntante")
 
   if (loadingShows) {
     return <div className="loading">Cargando shows...</div>;
@@ -252,6 +252,9 @@ const TicketDetail = () => {
             </p>
             <p>
               <strong>Precio:</strong> ${selectedSeat.price}
+            </p>
+            <p style={{color:"red"}}>
+            <strong>Recargo de servicios:</strong> ${((selectedSeat.price * 0.20).toFixed(2))}
             </p>
           </>
         ) : (
