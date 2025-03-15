@@ -139,7 +139,8 @@ const GeneralDetail = () => {
     try {
       if (paymentMethod === "sell") {
         const response = await axios.post('/tickets/sell/general', ticketData);
-        Swal.fire({
+
+          Swal.fire({
           title: 'Compra finalizada con éxito',
           text: 'Tu ticket ha sido generado correctamente.',
           icon: 'success',
@@ -149,7 +150,8 @@ const GeneralDetail = () => {
         });
       } else if (paymentMethod === "buy") {
         const response = await axios.post('/tickets/buy/general', ticketData);
-        window.location.href = response.data.init_point;
+
+         window.location.href = response.data.init_point;
       }
     } catch (error) {
       Swal.fire({

@@ -18,7 +18,7 @@ const TicketDetail = () => {
   const [isLoading, setIsLoading] = useState(false);  // Nuevo estado para cargar
   const [errorShows, setErrorShows] = useState(null);
   const dispatch = useDispatch();
-  const ticket = location.state;
+  const ticket = location.state || JSON.parse(sessionStorage.getItem("ticketData"));
  
   useEffect(() => {
       if (shows.length === 0) {
@@ -129,6 +129,8 @@ const TicketDetail = () => {
   // console.log(ticketData, "DATOS ENVIADOS AL BACK")
     try {
       const response = await axios.post(endpoint, ticketData);
+
+      sessionStorage.setItem("ticketData", JSON.stringify(ticketData ));
   
       // Verificar la respuesta para depuración
       

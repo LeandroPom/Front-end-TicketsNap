@@ -1,55 +1,61 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { getShows } from '../Redux/Actions/actions';
 import emailjs from 'emailjs-com'; // Importar emailjs
-import styles from './succesbuy.css'
+import axios from 'axios';
+import styles from './succesbuy.css';
 
 const SuccessPage = () => {
+  const { id } = useParams();  // Obtener el id de la URL (si existe)
   const location = useLocation();
-  const ticket = location.state;
-
-  // Extraemos el correo de la URL si está disponible en `external_reference`
-  const [emailFromUrl, setEmailFromUrl] = useState('No disponible');
-
-  useEffect(() => {
-    // Si la URL tiene parámetros, extraemos el correo
-    const urlParams = new URLSearchParams(location.search);
-    const externalReference = urlParams.get('external_reference');
-    if (externalReference) {
-      const email = externalReference.match(/mail:([^,]+)/)?.[1]; // Extraemos el correo
-      if (email) {
-        setEmailFromUrl(email); // Establecemos el correo extraído
-      }
-    }
-  }, [location]);
+  const [ticket, setTicket] = useState(location.state || null); // Usamos location.state si existe
+  const [loading, setLoading] = useState(true); // Estado de carga
+  const [error, setError] = useState(null);  // Estado de error
+  const [sendTo, setSendTo] = useState(''); // Correo al que enviar el ticket
+  const [customEmail, setCustomEmail] = useState(''); // Correo personalizado
+  const [showCustomEmailInput, setShowCustomEmailInput] = useState(false); // Controlar el input
+  const user = useSelector((state) => state.user);  // Obtener el usuario actual del estado global de Redux
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const shows = useSelector((state) => state.shows);
-  const [loadingShows, setLoadingShows] = useState(true);
-  const [errorShows, setErrorShows] = useState(null);
-  const [sendTo, setSendTo] = useState(emailFromUrl || ticket.mail); // Usamos email extraído si está disponible
-  const [customEmail, setCustomEmail] = useState(''); // Estado para el correo personalizado
-  const [showCustomEmailInput, setShowCustomEmailInput] = useState(false); // Controlar si mostrar el input
 
+  // Cargar los shows si no están disponibles
   useEffect(() => {
     if (shows.length === 0) {
-      dispatch(getShows())
-        .then(() => setLoadingShows(false))
-        .catch((err) => {
-          setErrorShows('Error al obtener los shows');
-          setLoadingShows(false);
-        });
-    } else {
-      setLoadingShows(false);
+      dispatch(getShows());
     }
   }, [dispatch, shows]);
 
+  // Si hay un id en la URL, obtener el ticket desde el backend
+  useEffect(() => {
+    if (id && user && user.id) {  // Verifica si user está disponible y tiene un id
+      axios.get(`/tickets/${id}`)
+        .then((response) => {
+          const ticketData = response.data;
+          if (ticketData.userId !== user.id) {
+            setError('Acceso no autorizado');
+            setLoading(false);
+            navigate('/');
+          } else {
+            setTicket(ticketData);
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          setError('Error al obtener los datos del ticket');
+          setLoading(false);
+        });
+    } else {
+      setLoading(false); // Si no hay id o el usuario no está disponible, se detiene la carga
+    }
+  }, [id, user, navigate]); // Asegúrate de que el efecto dependa también de user.
+
   const sendTicketEmail = () => {
-    // Usamos sendTo en lugar de ticket.mail para que pueda enviar al correo seleccionado
     const templateParams = {
-      to_email: sendTo === 'custom' ? customEmail : sendTo,  // Si 'custom' es seleccionado, usamos customEmail
-      from_name: 'Tu Plataforma de Ventas',  // Nombre del remitente (esto puede ser fijo o dinámico)
+      to_email: sendTo === 'custom' ? customEmail : sendTo,  // Usamos customEmail si se elige "Otro correo"
+      from_name: 'Tu Plataforma de Ventas',
       name: ticket.name,
       email: ticket.mail,
       phone: ticket.phone,
@@ -58,21 +64,19 @@ const SuccessPage = () => {
       seat: ticket.seat,
       row: ticket.row,
       price: ticket?.price,
-     
       show: shows.find(show => show.id === ticket.showId)?.name || "Show desconocido",
       qrCode: ticket.qrCode,
       Direccion: ticket.location,
     };
-  
+
     emailjs.send(
-      'service_72a1029',  // Tu service ID
-      'template_dl2ctup', // Tu template ID
+      'service_72a1029',
+      'template_dl2ctup',
       templateParams,
-      '5DeCesBmnqWIqrrla'  // Tu user ID
+      '5DeCesBmnqWIqrrla'
     )
     .then((response) => {
       alert('Correo enviado correctamente!');
-     
     })
     .catch((error) => {
       console.error('Error al enviar el correo:', error);
@@ -99,19 +103,19 @@ const SuccessPage = () => {
     newWindow.print();
   };
 
+  if (loading) {
+    return <div className="loading">Cargando datos...</div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
   if (!ticket || !ticket.mail) {
     return <p>Datos del ticket no disponibles.</p>;
   }
 
   const showName = shows.find(show => show.id === ticket.showId)?.name || "Show desconocido";
-
-  if (loadingShows) {
-    return <div className="loading">Cargando shows...</div>;
-  }
-
-  if (errorShows) {
-    return <div className="error">{errorShows}</div>;
-  }
 
   return (
     <div className="ticket-container">

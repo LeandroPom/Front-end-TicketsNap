@@ -53,7 +53,9 @@ function App() {
         <Route path="/generaltribune" element={<Generaltribunes />} />
         <Route path="/profile/miscompras" element={<MisCompras />} />
         <Route path="/success" element={<SuccessPage />} />
+        <Route path="/success/:id" element={<SuccessPage />} />
         <Route path="/general/ticket/success" element={<TicketGeneral />} />
+        <Route path="/general/ticket/success/:id" element={<TicketGeneral />} />
         <Route path="/tickets/useQR/:ticketId" element={<Ticketscan />} />
         <Route path="/tickets/test" element={<h1>🚀 RUTA DETECTADA</h1>} />
         <Route path="*" element={<AdminPanel />} />

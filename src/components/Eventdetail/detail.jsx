@@ -58,6 +58,8 @@ const Detail = () => {
   const user = useSelector((state) => state.user);
   const [showMap, setShowMap] = useState(false); // El mapa está oculto por defecto
 
+   
+
 
 
   const openModal = (data) => {
@@ -69,6 +71,35 @@ const Detail = () => {
     setIsModalOpen(false);
     setModalData(null);
   };
+
+  useEffect(() => {
+    if (!showMap) return;  // Si showMap es falso, no hacer nada
+  
+    if (!id) {
+      console.error("id no está definido, no se puede cargar la imagen del mapa.");
+      return;
+    }
+    // Si el estado `showMap` es verdadero, cargamos el mapa
+        const loadMap = () => {
+      
+        const img = new Image();
+        img.src = `/images/zona-floresta.png?timestamp=${new Date().getTime()}`;
+  
+        img.onload = () => {
+        setZoneImage(img.src); 
+        console.log("Mapa cargado correctamente");
+      };
+      img.onerror = () => {
+        console.error("Error al cargar la imagen del mapa");
+      };
+    };
+    
+      loadMap();  // Llamar a la función para cargar el mapa cuando showMap cambie
+    }, [showMap, id]);  // Este useEffect se ejecutará cada vez que `showMap` cambie o `id` cambie
+  
+  
+        
+        
 
   useEffect(() => {
 
@@ -98,7 +129,7 @@ const Detail = () => {
             matchingZones.forEach((zone) => {
               switch (zone.id) {
                 case 1:
-                  setZoneImage("/images/zona-floresta.jpg");
+                  setZoneImage("/images/zona-floresta.png");
                   break;
                 case 2:
                   setZoneImage("/images/movistar-arena.jpg");
@@ -123,7 +154,7 @@ const Detail = () => {
   // Este efecto se ejecuta cuando zonesLoaded cambia, forzando la actualización del estado
   useEffect(() => {
     if (zonesLoaded) {
-      setZoneImage("/images/zona-floresta.jpg"); // Asegura que se establezca correctamente
+      setZoneImage("/images/zona-floresta.png"); // Asegura que se establezca correctamente
     }
   }, [zonesLoaded]);
 
@@ -530,10 +561,9 @@ const Detail = () => {
 
 
   const canvasWidth = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 1160 : 600; // Tamaño de canvas específico para Platea
-  const canvasHeight = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 350 : 800; // Tamaño de canvas específico para Platea
+  const canvasHeight = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 290 : 800; // Tamaño de canvas específico para Platea
 
 
-  // Función para dibujar los asientos sobre la imagen de la zona
   const drawSeats = (ctx) => {
     if (availableSeats && availableSeats.length > 0) {
       const zoneImageObj = new Image();
@@ -544,23 +574,34 @@ const Detail = () => {
         const canvasHeight = canvasRef.current.height;
   
         let scaleX, scaleY;
-        let pointRadius = 9; 
+        let pointRadius = 9;
         let fontSize = 12;
         let separationFactorX = 2.40;
         let separationFactorY = 2.32;
+        let horizontalOffset = 0;
+        let verticalOffset = -50; // Valor de referencia general para las demás zonas
   
+        // Condición específica para Platea Norte y Platea Sur
         if (zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png") {
-          const specificWidth = 4800; 
-          const specificHeight = 1100; 
+          const specificWidth = 4800;
+          const specificHeight = 1100;
           scaleX = specificWidth / zoneImageObj.width;
           scaleY = specificHeight / zoneImageObj.height;
           pointRadius = 9;
           fontSize = 11;
-          separationFactorX = 1.60; 
+          separationFactorX = 1.60;
           separationFactorY = 0.60;
   
-          const offsetX = -15;
+          // Ajustes específicos para Platea Norte y Platea Sur
+          if (zoneImage === "/images/Platea-Sur.png") {
+            horizontalOffset = -40; // Mueve las letras de las filas 20px a la derecha
+            verticalOffset = 2; // Mueve las letras de las filas un poco más abajo
+          } else if (zoneImage === "/images/Platea-Norte.png") {
+            horizontalOffset = -40; // Mueve las letras de las filas 20px a la izquierda
+            verticalOffset = 2; // Mueve las letras de las filas un poco más abajo
+          }
   
+          const offsetX = -15;
           ctx.clearRect(0, 0, canvasWidth, canvasHeight);
           ctx.drawImage(zoneImageObj, 0, 0, zoneImageObj.width, zoneImageObj.height, offsetX, 0, canvasWidth, canvasHeight);
         } else if (zoneImage === "/images/zona-Gold.png" || zoneImage === "/images/zona-verde.png" || zoneImage === "/images/zona-roja.png") {
@@ -572,6 +613,8 @@ const Detail = () => {
           scaleX = canvasWidth / zoneImageObj.width;
           scaleY = canvasHeight / zoneImageObj.height;
         }
+  
+        let currentRow = 1; // Usamos esto para contar las filas
   
         availableSeats.forEach((seatRow) => {
           seatRow?.seats?.forEach((seat) => {
@@ -594,12 +637,25 @@ const Detail = () => {
   
             seat.drawingPosition = { x: scaledX, y: scaledY, radius: pointRadius };
           });
+  
+          // Ajuste de la posición de las letras de las filas
+          const rowLabelY = seatRow.seats[0].y * scaleY * separationFactorY + verticalOffset;  // Ajuste vertical
+  
+          // Dibujar las letras de las filas
+          ctx.fillStyle = "black";
+          ctx.font = "14px Arial";  // Ajusta el tamaño del texto según sea necesario
+          ctx.textAlign = "center";
+          ctx.fillText(`Fila ${currentRow}`, seatRow.seats[0].x * scaleX * separationFactorX + horizontalOffset, rowLabelY);
+  
+          currentRow++; // Incrementa el número de la fila
         });
   
         setSeatsDrawn(true);
       };
     }
   };
+  
+  
   
   
   

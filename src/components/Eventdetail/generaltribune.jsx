@@ -90,17 +90,19 @@ const Generaltribunes = () => {
       mail: buyerDetails.email,
       phone: buyerDetails.phone,
     };
-
+  
     try {
+   
+      let response;
       if (paymentMethod === "sell") {
-        const response = await axios.post('/tickets/sell', ticketData);
+        response = await axios.post('/tickets/sell', ticketData);
         setAvailableSpace((prev) => prev - selectedSpaces);
-
-
-         // Desactiva el loading antes de mostrar el Swal
-      setIsLoading(false);
-
-
+  
+        
+  
+        // Desactiva el loading antes de mostrar el Swal
+        setIsLoading(false);
+  
         Swal.fire({
           title: 'Compra finalizada con éxito',
           text: 'Tu ticket ha sido generado correctamente.',
@@ -110,14 +112,13 @@ const Generaltribunes = () => {
           navigate('/success', { state: response.data });
         });
       } else if (paymentMethod === "buy") {
-        const response = await axios.post('/tickets/buy', ticketData);
+        response = await axios.post('/tickets/buy', ticketData);
         window.location.href = response.data.init_point;
       }
     } catch (error) {
-
-       // Desactiva el loading en caso de error
-    setIsLoading(false);
-    
+      // Desactiva el loading en caso de error
+      setIsLoading(false);
+  
       Swal.fire({
         title: 'Error',
         text: 'No se pudo completar la venta. Intenta nuevamente.',
@@ -125,6 +126,7 @@ const Generaltribunes = () => {
         confirmButtonText: 'Aceptar',
       });
     }
+  
     
     
   };
