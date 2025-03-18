@@ -203,12 +203,12 @@
 
   .cabezadepagina{
     position: absolute;
-          top: -35%; 
+          top: -49%; 
           left: 58%;
           transform: translateX(-50%);
           z-index: 1001; 
-          width: 120%;
-          height: 40%;
+          width: 125%;
+          height: 44%;
           margin: 1%;
   }
   .dropdown-menu {

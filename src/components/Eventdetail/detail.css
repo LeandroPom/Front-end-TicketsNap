@@ -108,6 +108,21 @@
   margin-left: 5px;
 }
 
+.presentations-info {
+  display: flex;               /* Usamos flexbox para distribuir los elementos */
+  flex-direction: column;      /* Organiza los elementos en columna (uno debajo del otro) */
+  align-items: flex-start;     /* Alinea los elementos a la izquierda */
+  gap: 15px;                   /* Espacio uniforme entre los elementos */
+  padding: 0.3rem 1rem;        /* Agregamos un poco de relleno para separar los textos del borde */
+  font-family: Arial, sans-serif;
+  margin-left: 230px;
+  box-shadow: #f8b524;
+  position: relative;          /* Para posicionar la línea vertical si la tienes */
+  width: 100%;                 /* Asegura que el contenedor de información ocupe todo el ancho disponible */
+  margin-left: 42%;
+  margin-top: -15%
+}
+
 
 .time-count {
   margin-top: -50px;                
@@ -411,6 +426,22 @@ box-shadow: 0 0 10px rgb(0, 0, 0);
 @media (min-width: 320px) and (max-width: 1069px) {
 
 .event-info {
+  display: flex;               /* Usamos flexbox para distribuir los elementos */
+  flex-direction: column;      /* Organiza los elementos en columna (uno debajo del otro) */
+  align-items: flex-start;     /* Alinea los elementos a la izquierda */
+  gap: 1%;                   /* Espacio uniforme entre los elementos */
+  padding: 0.3rem 1rem;        /* Agregamos un poco de relleno para separar los textos del borde */
+  font-family: Arial, sans-serif;
+  margin-left: 430%;
+  box-shadow: #f8b524;
+  position: relative;          /* Para posicionar la línea vertical si la tienes */
+  width: 100%;                 /* Asegura que el contenedor de información ocupe todo el ancho disponible */
+  margin-left: 5%;
+  margin-top: -15%;
+}
+
+
+.presentations-info {
   display: flex;               /* Usamos flexbox para distribuir los elementos */
   flex-direction: column;      /* Organiza los elementos en columna (uno debajo del otro) */
   align-items: flex-start;     /* Alinea los elementos a la izquierda */

@@ -27,7 +27,7 @@ const ShowsList = () => {
   const [showCalendar, setShowCalendar] = useState(false); // Controla si se muestra el calendario
   const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Controlar si un video está activo
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [showsPerPage] = useState(4); // Número de shows por página
+  const [showsPerPage] = useState(12); // Número de shows por página
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
   const [modalContent, setModalContent] = useState(''); // Estado para el contenido del modal
 
@@ -162,7 +162,7 @@ const ShowsList = () => {
   };
 
   // WhatsApp: Aquí definimos el número y mensaje
-  const whatsappNumber = '03816698011'; // Reemplazar con el número real
+  const whatsappNumber = '+5493813356799'; // Reemplazar con el número real
   const message = '¡Hola, tengo una consulta sobre mi compra!';
 
 
@@ -174,7 +174,12 @@ const ShowsList = () => {
         <img
   src="/images/mpticketsol.png"
   alt="Sol Ticket"
-  class="ticket-image"
+  className="ticket-image"
+/>
+<img
+  src="/images/MP-2.png"
+  alt="Sol Ticket"
+  className="ticket-image2"
 />
       </div>
       {/* Barra de búsqueda y filtro */}
@@ -271,10 +276,10 @@ const ShowsList = () => {
                 <h5><FaMusic style={{ color: 'orange' }} /> Genero:{show.genre.join(', ')}</h5>
                 <h5><FaCalendarAlt style={{ color: 'green' }} /> Fecha:{show.presentation.map((p) => p.date).join(', ')}</h5>
 
+              <a className='buttonhome' onClick={() => handleViewDetails(show)}>Comprar</a>
 
               </div>
 
-              <button className='buttonhome' onClick={() => handleViewDetails(show)}>Comprar</button>
             </li>
           ))
         ) : (

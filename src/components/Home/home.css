@@ -20,6 +20,17 @@
   margin: 1px;
 }
 
+.ticket-image2 {
+  position: absolute;
+  top: 595px; /* O ajusta la posición según sea necesario */
+  left: 50%;
+  transform: translateX(-50%); /* Centra la imagen */
+  z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+  width: 1400px;
+  height: 100px;
+  margin: 1px;
+}
+
 /* Estilos del Footer */
 .footer {
   background-color: rgb(71, 71, 71); /* Fondo oscuro */
@@ -178,7 +189,7 @@
   margin-bottom: 30px;
   margin-left: 220px;
   padding: 5px 5px;
-  margin-top: 115px
+  margin-top: 230px
 }
 
 .searchs-container input {
@@ -257,7 +268,11 @@
 }
 
 .content {
-  color: #030303
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Para distribuir los elementos de arriba a abajo */
+  flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible y empuje el botón hacia abajo */
 }
 
 .dark .content {
@@ -268,19 +283,19 @@
 
 .cardshome {
   border-radius: 12px;
-  padding: 15px;
+  padding: 25px;
   transition: all 0.3s ease-in-out;
-  justify-content: center;
+  justify-content: flex-start;  /* Aseguramos que el contenido se alinee en la parte superior */
   align-items: center;
   text-align: center;
   border: 5px solid #eca624;
   overflow: hidden;
   position: relative;
   background: #ffffff;
-  /* backgroud de las cards */
-  max-height: 400px;
+  min-height: 400px;  /* Establecemos una altura mínima constante para las cards */
   width: 200px;
   display: flex;
+  flex-direction: column;  /* Organiza los elementos en una columna */
   z-index: 1;
 }
 
@@ -295,16 +310,10 @@
 
 /* Titulo y efecto del mismo en cards */
 .titulo-card {
-  color: #141413;
-  /* Color negro que ya estás usando */
-  font-size: 35px;
-  /* Tamaño de fuente grande para destacar */
-  margin-bottom: 10px;
-  font-weight: 600;
-  /* Negrita */
-  letter-spacing: 0.5px;
-  /* Espaciado entre letras */
-  font-family: 'Roboto Slab', serif;
+  word-wrap: break-word;  /* Rompe las palabras largas para evitar que se desborden */
+  overflow-wrap: break-word;  /* Hace lo mismo que el anterior */
+  hyphens: auto;  /* Agrega guiones automáticamente si es necesario */
+  margin-top: -1%;  /* Añade un poco de espacio debajo del título */
 }
 
 .dark .titulo-card {
@@ -317,7 +326,7 @@
 li {
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(22, 121, 235, 0.1);
-  padding: 15px;
+  padding: 10px;
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
@@ -409,21 +418,15 @@ li:hover .event-image {
   color: #000000;
   font-family: monospace;
   font-weight: bold;
-  font-size: large;
-  padding: 8px 8px;
+  font-size: 18px;
+  padding: 8px 16px;
   border: 3px solid #eca624;
-  margin: 1px;
+  margin-top: 10px; /* Espacio superior para separar del contenido */
   border-radius: 0px;
   cursor: pointer;
-  font-size: 18px;
+  width: auto;
+  align-self: center; /* Centra el botón horizontalmente */
   transition: background-color 0.3s ease, transform 0.2s ease;
-  width: 100%;
-  margin-top: auto;
-  /* Asegura que el botón se quede al fondo */
-
-  /* Sombra adicional para mayor contraste */
-  transition: all 0.3s ease-in-out;
-  /* Efecto suave en el hover */
 }
 
 /* Efecto cuando el título se pasa por encima */
@@ -1018,6 +1021,17 @@ li:hover .event-image {
     margin-left: 55%; /* El margen izquierdo lo eliminamos para centrar la imagen */
   }
   
+  .ticket-image2 {
+    position: absolute;
+    top: 595px; /* O ajusta la posición según sea necesario */
+    left: 50%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 1400px;
+    height: 100px;
+    margin: 1px;
+  }
+
   .searchs-container input {
     padding: 15px 60vw;
     margin: 3px;

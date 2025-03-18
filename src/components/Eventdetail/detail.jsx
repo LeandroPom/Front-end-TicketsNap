@@ -58,6 +58,8 @@ const Detail = () => {
   const user = useSelector((state) => state.user);
   const [showMap, setShowMap] = useState(false); // El mapa está oculto por defecto
 
+   
+
 
 
   const openModal = (data) => {
@@ -69,6 +71,35 @@ const Detail = () => {
     setIsModalOpen(false);
     setModalData(null);
   };
+
+  useEffect(() => {
+    if (!showMap) return;  // Si showMap es falso, no hacer nada
+  
+    if (!id) {
+      console.error("id no está definido, no se puede cargar la imagen del mapa.");
+      return;
+    }
+    // Si el estado `showMap` es verdadero, cargamos el mapa
+        const loadMap = () => {
+      
+        const img = new Image();
+        img.src = `/images/zona-floresta.png?timestamp=${new Date().getTime()}`;
+  
+        img.onload = () => {
+        setZoneImage(img.src); 
+        console.log("Mapa cargado correctamente");
+      };
+      img.onerror = () => {
+        console.error("Error al cargar la imagen del mapa");
+      };
+    };
+    
+      loadMap();  // Llamar a la función para cargar el mapa cuando showMap cambie
+    }, [showMap, id]);  // Este useEffect se ejecutará cada vez que `showMap` cambie o `id` cambie
+  
+  
+        
+        
 
   useEffect(() => {
 
@@ -92,13 +123,13 @@ const Detail = () => {
           const matchingZones = zones.filter((zone) => zone.showId === Number(id));
 
           if (matchingZones.length > 0) {
-            console.log("Zonas encontradas para el show:", matchingZones);
+            // console.log("Zonas encontradas para el show:", matchingZones);
 
             // Asignar imagen basada en zoneId
             matchingZones.forEach((zone) => {
               switch (zone.id) {
                 case 1:
-                  setZoneImage("/images/zona-floresta.jpg");
+                  setZoneImage("/images/zona-floresta.png");
                   break;
                 case 2:
                   setZoneImage("/images/movistar-arena.jpg");
@@ -123,7 +154,7 @@ const Detail = () => {
   // Este efecto se ejecuta cuando zonesLoaded cambia, forzando la actualización del estado
   useEffect(() => {
     if (zonesLoaded) {
-      setZoneImage("/images/zona-floresta.jpg"); // Asegura que se establezca correctamente
+      setZoneImage("/images/zona-floresta.png"); // Asegura que se establezca correctamente
     }
   }, [zonesLoaded]);
 
@@ -170,11 +201,11 @@ const Detail = () => {
           });
 
 
-          console.log('Presentations:', presentations);
+          // console.log('Presentations:', presentations);
           setAvailablePresentations(presentations);
           setIsSelectorOpen(true);
         } else {
-          console.log("No se encontraron zonas para esta presentación.");
+          console.log("");
         }
       }
     } catch (error) {
@@ -206,30 +237,36 @@ const Detail = () => {
   }, [selectedZone, availableSeats]);
 
 
- // Esto lo agregamos en el useEffect donde recuperas los asientos de una zona específica
- useEffect(() => {
-  // Lógica que recupera los asientos para la zona seleccionada
-  const fetchSeatsForZone = async (zoneId) => {
-    try {
-      const response = await axios.get(`/zones/${zoneId}/seats`);  // Asegúrate de que esta URL sea correcta
-      if (response.status === 200) {
-        setAvailableSeats(response.data.seats);  // Aquí asignas los asientos disponibles a la variable availableSeats
-        const rows = response.data.seats.map(seat => ({
-          row: seat.row,
-          id: seat.id,
-          occupied: seat.taken  // Si está ocupado o no
-        }));
-        setRows(rows);  // Guardas las filas
+  useEffect(() => {
+    // Lógica que recupera los asientos para la zona seleccionada
+    const fetchSeatsForZone = async (zoneId) => {
+      try {
+        // Verifica si la zona tiene asientos antes de intentar cargar los datos
+        if (zoneId && selectedZone && selectedZone.hasSeats) {
+          const response = await axios.get(`/zones/${zoneId}/seats`);
+          if (response.status === 200) {
+            setAvailableSeats(response.data.seats);  // Aquí asignas los asientos disponibles a la variable availableSeats
+            const rows = response.data.seats.map(seat => ({
+              row: seat.row,
+              id: seat.id,
+              occupied: seat.taken  // Si está ocupado o no
+            }));
+            setRows(rows);  // Guardas las filas
+          }
+        } else {
+          // En caso de que no haya asientos, puedes limpiar las filas o simplemente dejarlo vacío
+          setAvailableSeats([]);
+          setRows([]);
+        }
+      } catch (error) {
+        console.error("Error al cargar los asientos:", error);
       }
-    } catch (error) {
-      console.error("Error al cargar los asientos:", error);
+    };
+  
+    if (selectedZone) {
+      fetchSeatsForZone(selectedZone.zoneId);
     }
-  };
-
-  if (selectedZone) {
-    fetchSeatsForZone(selectedZone);
-  }
-}, [selectedZone]);  // Cuando cambia la zona, se ejecuta nuevamente
+  }, [selectedZone]);  // Cuando cambia la zona, se ejecuta nuevamente
 
 
   const handleCanvasClick = (e) => {
@@ -314,7 +351,7 @@ const Detail = () => {
             showId: event.id,
           };
 
-          console.log("ENVIAR A SEATS", seatInfo);
+          // console.log("ENVIAR A SEATS", seatInfo);
           setSelectedSeats([seatInfo]);
           setSelectedSeats([seatInfo]);
           setIsSeatManagerOpen(true);
@@ -360,7 +397,7 @@ const Detail = () => {
         } else {
           setSelectedZone(null);
           setZoneImage("/images/zona-floresta.png");
-          console.log(rgb, "COLORES DEL CLICK")
+          // console.log(rgb, "COLORES DEL CLICK")
           // console.log("No se detectó una división válida canvas.");
         }
         
@@ -379,7 +416,7 @@ const Detail = () => {
       });
 
       let generalDivision = null;
-
+      
       // Buscar "Tribunas Generales" y verificar que `location` es un array
       if (Array.isArray(presentation.location)) {
         generalDivision = presentation.location.find(
@@ -395,6 +432,7 @@ const Detail = () => {
 
       if (presentation.divisionName === "Tribunas Generales") {
         if (generalDivision && generalDivision.space !== undefined) {
+        
           setModalData({
             space: generalDivision?.space || "No disponible",
             date: presentation.presentation.date,
@@ -404,24 +442,24 @@ const Detail = () => {
             state: {
               space: generalDivision?.space,
               presentations:
-                presentation?.divisionName,
+              presentation?.divisionName,
               date: presentation.presentation.date,
               time: presentation.presentation.time,
-              zoneId: selectedZoneId,
+              zoneId: presentation.zoneId,
               showId: event.id,
               users: user?.id,
               cashier: user?.cashier,
               price: generalDivision?.generalPrice,
               occupied: generalDivision?.occupied,
               eventdetail: event
-
+              
             }
           })
         } else {
           console.error("No se encontró la división 'Tribunas Generales' en location.");
         }
-
         // Evitar dibujar asientos para Tribunas Generales
+       
         setAvailableSeats([]);
         setSeatsDrawn(false);
 
@@ -451,7 +489,7 @@ const Detail = () => {
           );
         }
       }
-
+     
       // Mostrar el alert para todas las presentaciones
      
       Swal.fire({
@@ -476,9 +514,7 @@ const Detail = () => {
 
       });
 
-      setIsSelectorOpen(false); // Cierra el selector
-      // console.log("Presentación seleccionada:", presentation);
-      // console.log("modalData:", modalData);
+      setIsSelectorOpen(false); // Cierra el selector  
     }
   };
 
@@ -525,10 +561,9 @@ const Detail = () => {
 
 
   const canvasWidth = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 1160 : 600; // Tamaño de canvas específico para Platea
-  const canvasHeight = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 350 : 800; // Tamaño de canvas específico para Platea
+  const canvasHeight = zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png" ? 290 : 800; // Tamaño de canvas específico para Platea
 
 
-  // Función para dibujar los asientos sobre la imagen de la zona
   const drawSeats = (ctx) => {
     if (availableSeats && availableSeats.length > 0) {
       const zoneImageObj = new Image();
@@ -539,23 +574,34 @@ const Detail = () => {
         const canvasHeight = canvasRef.current.height;
   
         let scaleX, scaleY;
-        let pointRadius = 9; 
+        let pointRadius = 9;
         let fontSize = 12;
         let separationFactorX = 2.40;
         let separationFactorY = 2.32;
+        let horizontalOffset = 0;
+        let verticalOffset = -50; // Valor de referencia general para las demás zonas
   
+        // Condición específica para Platea Norte y Platea Sur
         if (zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png") {
-          const specificWidth = 4800; 
-          const specificHeight = 1100; 
+          const specificWidth = 4800;
+          const specificHeight = 1100;
           scaleX = specificWidth / zoneImageObj.width;
           scaleY = specificHeight / zoneImageObj.height;
           pointRadius = 9;
           fontSize = 11;
-          separationFactorX = 1.60; 
+          separationFactorX = 1.60;
           separationFactorY = 0.60;
   
-          const offsetX = -15;
+          // Ajustes específicos para Platea Norte y Platea Sur
+          if (zoneImage === "/images/Platea-Sur.png") {
+            horizontalOffset = -40; // Mueve las letras de las filas 20px a la derecha
+            verticalOffset = 2; // Mueve las letras de las filas un poco más abajo
+          } else if (zoneImage === "/images/Platea-Norte.png") {
+            horizontalOffset = -40; // Mueve las letras de las filas 20px a la izquierda
+            verticalOffset = 2; // Mueve las letras de las filas un poco más abajo
+          }
   
+          const offsetX = -15;
           ctx.clearRect(0, 0, canvasWidth, canvasHeight);
           ctx.drawImage(zoneImageObj, 0, 0, zoneImageObj.width, zoneImageObj.height, offsetX, 0, canvasWidth, canvasHeight);
         } else if (zoneImage === "/images/zona-Gold.png" || zoneImage === "/images/zona-verde.png" || zoneImage === "/images/zona-roja.png") {
@@ -567,6 +613,8 @@ const Detail = () => {
           scaleX = canvasWidth / zoneImageObj.width;
           scaleY = canvasHeight / zoneImageObj.height;
         }
+  
+        let currentRow = 1; // Usamos esto para contar las filas
   
         availableSeats.forEach((seatRow) => {
           seatRow?.seats?.forEach((seat) => {
@@ -589,12 +637,25 @@ const Detail = () => {
   
             seat.drawingPosition = { x: scaledX, y: scaledY, radius: pointRadius };
           });
+  
+          // Ajuste de la posición de las letras de las filas
+          const rowLabelY = seatRow.seats[0].y * scaleY * separationFactorY + verticalOffset;  // Ajuste vertical
+  
+          // Dibujar las letras de las filas
+          ctx.fillStyle = "black";
+          ctx.font = "14px Arial";  // Ajusta el tamaño del texto según sea necesario
+          ctx.textAlign = "center";
+          ctx.fillText(`Fila ${currentRow}`, seatRow.seats[0].x * scaleX * separationFactorX + horizontalOffset, rowLabelY);
+  
+          currentRow++; // Incrementa el número de la fila
         });
   
         setSeatsDrawn(true);
       };
     }
   };
+  
+  
   
   
   
@@ -700,58 +761,58 @@ useEffect(() => {
 
   return (
     <div className="event-detail">
-    <h1>{event.name}</h1>
+      <h1>{event.name}</h1>
   
-    {event.presentation.map((presentation, index) => (
-  <div className="event-container" key={index}>
-    {/* Contenedor para la imagen del evento */}
-    <div className="box-contenedor">
-      <div className="event-imagen">
-        {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
-        {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
-          <iframe
-            className="event-video"
-            src={event.coverImage.replace("watch?v=", "embed/")}
-            title={event.name}
-            frameBorder="0"
-            allowFullScreen
-          ></iframe>
-        ) : (
-          <img className="event-image" src={event.coverImage} alt={event.name} />
-        )}
-      </div>
-    </div>
-
-    {/* Contenedor para la información del evento */}
-    <div className="box-contenedor-info">
-      <div className="event-info">
-        <p><FaMusic style={{ color: 'black' }} /> <strong>Género:</strong> {event.genre.join(', ')}</p>
-        <p><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}</p>
-        <p><FaCalendarAlt style={{ color: 'green' }} /> <strong>Fecha:</strong> {presentation.date}</p>
-        <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentaciones:</strong> {presentation.performance}</p>
-        <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
-
-        {countdownStarted && (
-          <div className='time-count'>
-            <h2 >
-              {Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}
-            </h2> {/* Mostrar el tiempo restante */}
+      {/* Mostrar la información general del evento solo una vez */}
+      <div className="event-container">
+        <div className="box-contenedor">
+          <div className="event-imagen">
+            {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
+            {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
+              <iframe
+                className="event-video"
+                src={event.coverImage.replace("watch?v=", "embed/")}
+                title={event.name}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <img className="event-image" src={event.coverImage} alt={event.name} />
+            )}
           </div>
-        )}
+        </div>
+  
+        {/* Contenedor para la información básica del evento */}
+        <div className="box-contenedor-info">
+          <div className="event-info">
+            <p><FaMusic style={{ color: 'black' }} /> <strong>Género:</strong> {event.genre.join(', ')}</p>
+            <p><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}</p>
+            {event.presentation.map((presentation, index) => (
+          <div className="presentation-detail" key={index}>
+            <p><FaCalendarAlt style={{ color: 'green' }} /> <strong style={{ margileft:"50px" }}>Fecha:</strong> {presentation.date}</p>
+            {/* <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentación:</strong> {presentation.performance}</p> */}
+            <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
+          </div>
+        ))}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-))}
-
-      {/* <ZoneEditor showId={event.id} /> */}
-
+  
+      {/* Lógica para el countdown */}
+      {countdownStarted && (
+        <div className='time-count'>
+          <h2>
+            {Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}
+          </h2>
+        </div>
+      )}
+  
+      {/* Selector de zona y fecha/modal */}
       {isSelectorOpen && (
-        <div >
+        <div>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{color:"white",
-                marginBottom: "300px",
-                right: "500px"}}
-               >....Selecciona una fecha y hora :
+            <h3 style={{ color: "white", marginBottom: "300px", right: "500px" }}>
+              ....Selecciona una fecha y hora :
             </h3>
             <ul>
               {availablePresentations.map((presentation, index) => (
@@ -767,71 +828,68 @@ useEffect(() => {
                     color: "black"
                   }}
                 >
-                  <p style={{color: "black"}}>Zona: {Array.isArray(presentation.divisionName) ? presentation.divisionName.join(", ") : presentation.divisionName}</p>
-                  <p style={{color: "black"}}>Fecha: {presentation.presentation.date}</p>
-                  <p style={{color: "black"}}>Hora: {presentation.presentation.time.start} - {presentation.presentation.time.end}</p>
+                  <p style={{ color: "black" }}>
+                    Zona: {Array.isArray(presentation.divisionName) ? presentation.divisionName.join(", ") : presentation.divisionName}
+                  </p>
+                  <p style={{ color: "black" }}>Fecha: {presentation.presentation.date}</p>
+                  <p style={{ color: "black" }}>
+                    Hora: {presentation.presentation.time.start} - {presentation.presentation.time.end}
+                  </p>
                 </li>
               ))}
             </ul>
-            {/* <button onClick={() => setIsSelectorOpen(false)}>Cerrar</button> */}
           </div>
         </div>
       )}
-
-
-
-
-      {/* Aquí se muestra el mapa debajo de los detalles del evento */}
-
+  
+      {/* Aquí el resto de la lógica de tu página */}
       <div>
-        {/* Botón para mostrar el mapa */}
-
         {!showMap && (
           <button
             onClick={handleChooseSeats}
             style={{
               backgroundColor: '#FFD166',
               color: 'black',
-              padding: '12px 20px',  // Aumenta el tamaño del botón (más alto y ancho)
-              borderRadius: '15px',  // Redondea los bordes del botón
-              fontWeight: 'bold',  // Puedes agregar para que el texto se vea en negrita (opcional)
-              cursor: 'pointer'  // Cambia el cursor al pasar sobre el botón
+              padding: '12px 20px',  
+              borderRadius: '15px',  
+              fontWeight: 'bold',  
+              cursor: 'pointer'  
             }}
           >
             Elegir Asientos
           </button>
         )}
-
-
-           {user?.isAdmin && (
-            <>
-              <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
-    
-              {isZoneEditorOpen && (
-            <>
-              <ZoneEditor showId={id} />
-              <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Cerrar</button>
-            </>
+  
+        {user?.isAdmin && (
+          <>
+            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
+  
+            {isZoneEditorOpen && (
+              <>
+                <ZoneEditor showId={id} />
+                <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(false)}>Cerrar</button>
+              </>
             )}
-            </>
-            )}
-
-{showMap && zoneImage && (
-  <div >
-    <canvas
-      ref={canvasRef}
-      onClick={handleCanvasClick}
-      width={canvasWidth}  // Tamaño real del canvas en píxeles
-      height={canvasHeight} // Tamaño real del canvas en píxeles
-    />
-
-
+          </>
+        )}
+  
+        {showMap && zoneImage && (
+          <div>
+            <canvas
+              ref={canvasRef}
+              onClick={handleCanvasClick}
+              width={canvasWidth}  
+              height={canvasHeight} 
+            />
             {selectedZone && <p>Seleccionar Zona: {selectedZone}</p>}
             <Link to="/">
               <button className='Boton-inicio'>Ir a Inicio</button>
-             </Link>
+            </Link>
           </div>
         )}
+      
+  
+      
 
        
 
