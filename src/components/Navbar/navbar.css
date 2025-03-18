@@ -213,7 +213,7 @@
   }
   .dropdown-menu {
     width:  50%;
-    margin-right: 60%;
+    margin-right: 80%;
     top: 100%;
     
   }
@@ -225,8 +225,8 @@
     color: rgb(153, 147, 147);
     /* transform: translateX(-50px); */
     z-index: 1002;
-    margin-top: 20%;
-    margin-right: 500%;
+    margin-top: 25%;
+    margin-right: 5px;
   }
 
   .dropdown {
@@ -247,14 +247,14 @@
   font-size: 14px;
   transition: background-color 0.3s ease;
   width:  200%;
-    margin-right: -90%;
+    margin-right: 200px;
     top: 100%;
 }
 
-.user-name {
+/* .user-name {
   font-size: 1rem;
   margin-top: 50%;
-  margin-left: 4%;
-}
+  margin-left: 2300px;
+} */
 
 }
