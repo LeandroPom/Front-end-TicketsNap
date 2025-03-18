@@ -1,0 +1,87 @@
+/* ZoneEditor.css */
+.zone-editor-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark .zone-editor-container {
+  background-color: #818181;
+  }
+
+.zone-editor-container h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #FFD166;
+}
+
+.styled-title {
+  color: rgb(121, 118, 118);
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.zone-editor-container h3,
+.zone-editor-container h4 {
+  color: #d6a533;
+}
+
+.zone-editor-container label {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.zone-editor-container input,
+.zone-editor-container select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 3px solid #FFD166;
+  border-radius: 5px;
+}
+
+/* Ajustamos la apariencia de los labels e inputs en línea */
+.zone-editor-container .input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.zone-editor-container .input-group label {
+  width: 30%; /* Ajustamos el ancho de las etiquetas */
+  margin-right: 10px;
+}
+
+.zone-editor-container .input-group input,
+.zone-editor-container .input-group select {
+  width: 65%; /* Ajustamos el ancho de los inputs */
+}
+
+.zone-editor-container input[type="checkbox"] {
+  width: auto;
+}
+
+.zone-editor-container button {
+  background-color: #FFD166;
+  color: rgb(0, 0, 0);
+  padding: 12px 20px;
+  border: none;
+  border-radius: 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.zone-editor-container button:hover {
+  background-color: rgb(207, 146, 32);
+}

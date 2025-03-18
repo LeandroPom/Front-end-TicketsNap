@@ -1,0 +1,272 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+
+  /* estilos de url de la imagen */
+
+  .coverImage-edit {
+    width:200px;
+    height: 200px;
+  }
+
+
+  .imagen-preview img {
+    width: 250px !important;
+    height: 200px !important;
+  }
+  
+
+
+/* Estilo para el botón de cerrar y crear */
+.close-btn {
+  position: absolute;
+  margin-top: -2%;
+  right: 20%;
+  background-color: #FFB74D;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.boton-enviar {
+  position: absolute;
+  margin-top: -2%;
+  right: 73%;
+  background-color: #FFB74D;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+.dark .close-btn {
+  position: absolute;
+  margin-top: -2%;
+  right: 20%;
+  background-color: #FFE57F;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.dark .boton-enviar {
+  position: absolute;
+  margin-top: -2%;
+  right: 73%;
+  background-color: #FFE57F;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.close-btn:hover {
+  background-color: #ff9100;
+}
+
+.boton-enviar:hover {
+  background-color: #ff9100;
+}
+
+
+  .edit-event-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Styles */
+  .form-stile {
+    max-width: 800px;
+    margin: 80px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .form-stile {
+    max-width: 800px;
+    margin: 80px auto;
+    background-color: #1d1d1d;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  form div {
+    margin-bottom: 15px;
+  }
+  
+  .label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000000;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"] {
+    height: 40px;
+  }
+
+  .botonremove {
+    width: 25%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .selected-genres {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  textarea {
+    height: 120px;
+    resize: vertical;
+  }
+  
+  /* Layout and Alignment */
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  textarea {
+    margin-top: 5px;
+  }
+  
+  form .row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  form .row div {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  /* Form Inputs and Labels Alignment */
+  form .input-group {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  form .input-group label {
+    width: 25%;
+  }
+  
+  form .input-group input,
+  form .input-group textarea {
+    width: 70%;
+  }
+  
+  /* Error Messages */
+  p.error {
+    color: red;
+    font-size: 14px;
+  }
+
+  /* Estilos para los géneros seleccionados */
+.selected-genres {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.selected-genres ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.selected-genres li {
+  width: 15%;
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.dark .selected-genres li {
+  width: 15%;
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #8a8a8a;
+  border-radius: 20px;
+  margin-right: 10px;
+  text-decoration-color: #000000;
+}
+
+.selected-genres li button {
+  background-color: transparent;
+  color: #e53935;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 0;
+}
+
+.selected-genres li button:hover {
+  color: #726d6d;
+}
+
+ /* Personaliza el fondo para el popup de éxito del sweet alert */
+ .swal2-popup.custom-popup-success {
+  background-color: #f9fbfd ; /* Fondo azul claro */
+  color: #000; /* Color del texto */
+}
+
+.dark .swal2-popup.custom-popup-success {
+  background-color: #585858; /* Fondo azul claro */
+  color: #f0f0f0; /* Color del texto */
+}
+
+/* Personaliza el fondo para el popup de error del sweet alert */
+.swal2-popup.custom-popup-error {
+  background-color: #ffe6e6; /* Fondo rojo claro */
+  color: #d9534f; /* Color de texto para el error */
+}

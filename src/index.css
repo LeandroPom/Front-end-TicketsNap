@@ -1,0 +1,54 @@
+/* Estilos globales */
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s, color 0.3s; /* Animación suave para el cambio de tema */
+  background-attachment: fixed; /* Hace que el fondo esté fijo mientras haces scroll */
+  background-size: cover; /* Asegura que el fondo cubra toda la pantalla */
+  
+}
+
+
+
+body.light {
+  background-color: rgb(240, 240, 240) !important;
+  color: black !important;
+  /* background-image: url('../public/images/solticket.png'); */
+  background-repeat: repeat;
+  background-size: 100px 100px;
+  background-attachment: fixed; /* Hace que el fondo esté fijo mientras haces scroll */
+  background-size: cover; /* Asegura que el fondo cubra toda la pantalla */
+  background-position: center;
+}
+
+body.dark {
+  background-color: #656565 !important;
+  color: white !important;
+}
+
+/* Estilos de componentes que usarán los colores heredados */
+
+a, .navbar, .dropdown-menu, .dropdown-item {
+  color: inherit; /* Hereda el color del body (usará blanco o negro dependiendo del tema) */
+}
+
+button {
+  background-color: inherit;
+  color: inherit; 
+}
+
+.theme-toggle-btn {
+  background-color: inherit;
+  color: inherit;
+  border: 1px solid;
+}
+
+/* Otros estilos generales que puedes definir */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

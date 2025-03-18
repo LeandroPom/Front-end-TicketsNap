@@ -1,0 +1,182 @@
+.carousel-home {
+  position: relative;
+  width: 100%;  /* Ocupa todo el ancho de la pantalla */
+  height: 60vh; /* Ocupa toda la altura de la pantalla */
+  margin: 5px;
+  overflow: hidden;
+  margin-top: 30px;
+  margin-left: 1px;
+  object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+  z-index: 1;
+}
+
+.carousel-images {
+  position: relative;
+  height: 100%;   /* Ajusta a la altura total del contenedor */
+  width: 100%;    /* Se ajusta al 100% del ancho de la pantalla */
+  object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+  z-index: 1;
+}
+
+.carousel-image,
+.event-videos {
+  position: absolute;
+  top: 0;
+  left: 0; /* Asegura que la imagen se alinee al inicio de la pantalla */
+  width: 100%; /* Ocupa el 100% del ancho del contenedor */
+  height: 100%; /* Ocupa el 100% de la altura del contenedor */
+  object-fit: cover; /* Mantiene las proporciones sin distorsionar la imagen */
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 0;
+}
+
+.event-imagen.active,
+.event-videos.actives {
+  opacity: 1;
+  z-index: 1;
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+  height: 100%; /* Asegura que la imagen ocupe toda la altura del contenedor */
+  object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+  background-color: rgba(102, 102, 102, 0.5);
+}
+
+.event-videos.actives {
+  transform: scale(1.2);
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Botones del carrusel */
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+/* Indicadores */
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+}
+
+.indicator.active {
+  background-color: white;
+}
+
+
+
+/* Estilos responsivos */
+
+/* Móviles */
+@media (max-width: 600px) {
+  .carousel {
+    margin-left: 0; /* Eliminar el margen de 188px */
+    max-width: 130%; /* Ajustar al 100% del ancho */
+  }
+
+  .carousel-button {
+    font-size: 1.5rem; /* Reducir el tamaño de los botones */
+  }
+
+  .event-imagen {
+    height: 200px; /* Ajustar la altura para móviles */
+    width: 200px;
+    object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+    transform: translateX(10px); /* Desplaza el botón hacia la izquierda */
+  }
+    
+
+
+  .event-videos.actives {
+    transform: scale(1); /* No agrandar los videos en móviles */
+    object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+    transform: translateX(-10px); /* Desplaza el botón hacia la izquierda */
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .carousel {
+    max-width: 90%; /* Reducir el tamaño del carrusel en tabletas */
+  }
+
+  .carousel-button {
+    font-size: 1.8rem; /* Ajustar el tamaño de los botones para tabletas */
+  }
+
+  .event-imagen {
+    height: 250px; /* Ajustar la altura del carrusel en tabletas */
+    object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+
+  }
+
+  .carousel {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+    margin-left: 5px; /* Este margen puede necesitar ajustes para móviles */
+  }
+}
+
+/* Escritorios */
+@media (min-width: 1024px) {
+  .carousel {
+    max-width: 800px; /* Mantener el tamaño máximo en escritorios */
+  }
+
+  .carousel-button {
+    font-size: 2rem; /* Mantener el tamaño de los botones en escritorios */
+  }
+
+  .event-imagen {
+    height: 300px; /* Mantener la altura del carrusel en escritorios */
+    object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+
+  }
+}
+
+
+@media (min-width: 350px) and (max-width: 1069px) {
+  .carousel-home {
+    position: relative;
+    width: 225%;  /* Ocupa todo el ancho de la pantalla */
+    min-height: 60%; /* La altura mínima será el 60% del contenedor */
+
+    margin: 5px;
+    overflow: hidden;
+    margin-top: 30px;
+    margin-left: -20px;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+
+}

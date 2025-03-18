@@ -1,0 +1,151 @@
+/* ======= Fondo del Modal ======= */
+.login-modal {
+  /* background: url("../../../public/images/imagenlogin.jpg") no-repeat center center fixed; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  backdrop-filter: blur(8px);
+  flex-direction: column;
+}
+
+.Solticket-logo{
+  width: 200px;
+  margin-left: 120px;
+}
+
+/* ======= Contenedor del Formulario ======= */
+.login-container {
+  background: rgba(var(--bg-container-rgb), 0.8);
+  padding: 16px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  color: var(--color-texto-light);
+  margin-top: 150px;
+  box-sizing: border-box;
+  background-color: #ffffffff;
+}
+
+.dark .login-form{
+  background-color: hsl(0, 0%, 8%);
+  color: var(--color-texto-dark);
+}
+
+.dark .login-container {
+  background-color: hsl(0, 0%, 8%);
+}
+
+
+
+/* ======= Tema Claro/Oscuro ======= */
+:root {
+  --color-texto-light: #000000;
+  --color-texto-dark: #FFFFFF;
+  --bg-container-light-rgb: 255, 255, 255; /* Blanco */
+  --bg-container-dark-rgb: 0, 0, 0; /* Negro */
+  --form-bg-light: #FFFFFF;
+  --form-bg-dark: var(--color-secundario);
+  --color-principal: #FFE57F;
+  --color-intermedio: #FFD166;
+  --color-secundario: #fea623;
+}
+
+/* ======= Estilo de los campos de entrada ======= */
+.login-container input {
+  width: 100%;
+  padding: 11px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid var(--color-intermedio);
+  font-size: 1em;
+  background-color: var(--form-bg);
+  color: var(--color-texto);
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--color-principal);
+}
+
+/* ======= Botones ======= */
+.form-buttons {
+  background-color: var(--color-principal);
+  color: var(--color-texto-light);
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.form-buttons:hover {
+  background-color: var(--color-secundario);
+}
+
+.login-btn {
+  background-color: var(--color-principal);
+  color: var(--color-texto-light);
+}
+
+.login-btn:hover {
+  background-color: transparent;
+  border: 2px solid var(--color-secundario);
+  color: var(--color-texto);
+}
+
+.cancel-btn {
+  background-color: #FF9800;
+  color: var(--color-texto-dark);
+}
+
+.cancel-btn:hover {
+  background-color: red;
+  border-color: #b32e2e;
+  color: white;
+}
+
+/* ======= Etiquetas de los Inputs ======= */
+.password-container label {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+
+}
+.dark .password-container label {
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+.form-group label {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+
+}
+.dark .form-group label {
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+/* ======= Responsividad ======= */
+@media (max-width: 768px) {
+  .login-container {
+    width: 90%;
+    padding: 12px;
+  }
+  
+  .login-container h2 {
+    font-size: 20px;
+  }
+  
+  .login-container input {
+    font-size: 0.9em;
+  }
+  
+  .form-buttons {
+    flex-direction: column;
+    margin-top: 15px;
+  }
+}

@@ -1,0 +1,412 @@
+/* Fondo oscuro del modal */
+
+
+/* Estilo del modal */
+.register-modal {
+  position: fixed;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color:#ffffff; /* Fondo oscuro translúcido */
+  padding: 3%;
+  border-radius: 10px;
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.3);
+  color: #000000;
+  border:2px solid #FFB74D;
+  z-index: 1001; /* Asegura que esté por encima del overlay */
+  width: 500px; /* Establecer un tamaño fijo */
+  height: 500px; /* Establecer un tamaño fijo */
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.dark .register-modal {
+  position: fixed;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1D1D1D; /* Fondo oscuro translúcido */
+  padding: 3%;
+  border-radius: 10px;
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  z-index: 1001; /* Asegura que esté por encima del overlay */
+  width: 500px; /* Establecer un tamaño fijo */
+  height: 500px; /* Establecer un tamaño fijo */
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  border: 2px solid #ffffff;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Título del formulario */
+.register-title {
+  font-size: 1.6em; /* Reducido tamaño del título */
+  margin-bottom: 25px;
+  color: #FFB74D; /* Color naranja llamativo */
+}
+
+/* Estilos del formulario */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Reducida la separación entre campos */
+  overflow-y: auto; /* Permite desplazarse si el contenido es demasiado largo */
+  height: 85%; /* Ajusta la altura del formulario */
+}
+
+/* Grupo de cada campo */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px; /* Reducida la separación entre label y input */
+  text-decoration: black;
+}
+
+/* Etiquetas */
+.form-group label {
+  font-size: 1em;
+  font-weight: bold;
+  text-decoration: black;
+  color: black;
+}
+
+/* Campos de entrada */
+.form-group input {
+  width: calc(100% - 5px); /* Asegura que los inputs tengan un margen de 2px */
+  padding: 9px; /* Altura de los campos */
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+  margin-top: 4px;
+  background-color: rgb(245, 245, 245);
+}
+
+.password-container {
+  position: relative; /* Esto asegura que el ícono se posicione correctamente */
+  margin-top: -19px;
+}
+
+.password-container input {
+  padding-right: 30px; /* Proporciona espacio a la derecha para el ícono */
+}
+
+.password-eye {
+  position:absolute;
+  right: 80px;
+  top: 9%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-eye-confirm {
+  position:absolute;
+  right: 205px;
+  top: 9%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+.dark .password-eye {
+  position:absolute;
+  right: 80px;
+  top: 9%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color:#ffffff
+}
+
+.dark .password-eye-confirm {
+  position:absolute;
+  right: 205px;
+  top: 9%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color:#ffffff;
+}
+
+.dark .form-group input {
+  width: calc(100% - 5px); /* Asegura que los inputs tengan un margen de 2px */
+  padding: 9px; /* Altura de los campos */
+  border: 2px solid #FFB74D;
+  border-radius: 5px;
+  font-size: 1em;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+  margin-top: 4px
+}
+
+/* Botones del formulario */
+.form-buttons-register {
+  display: flex;
+  justify-content: space-between; /* Botones alineados a los extremos */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+
+
+/* Botón de Crear Cuenta */
+.create-btns {
+  background-color: #FFB74D; /* naranja llamativo */
+  color: #000000;
+  padding: 8px 16px; /* Aumentado el padding */
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  width: 48%; /* Asegura que el botón ocupe la mitad del espacio disponible */
+}
+
+.dark .create-btns {
+  background-color: #FFE57F; /* Verde llamativo */
+  color: #000000;
+  padding: 8px 16px; /* Aumentado el padding */
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  width: 48%; /* Asegura que el botón ocupe la mitad del espacio disponible */
+}
+
+.create-btns:hover {
+  background-color: #FFD166;
+  border: 2px solid #000000;
+  color: #000000;
+}
+
+.dark .create-btns:hover {
+  background-color: #FFD166;
+  border: 2px solid #000000;
+  color: #000000;
+}
+
+/* Botón de Cancelar */
+.cancel-btns {
+  background-color: #FFB74D; /* naranja llamativo */
+  color: #000000;
+  padding: 8px 16px; /* Aumentado el padding */
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  width: 48%; /* Asegura que el botón ocupe la mitad del espacio disponible */
+}
+
+.dark .cancel-btns{
+  background-color: #FFE57F; /* Verde llamativo */
+  color: #000000;
+}
+
+.cancel-btns:hover {
+  background-color: #FFD166;
+  border: 2px solid #000000;
+  color: #000000;
+}
+
+.dark .cancel-btns:hover{
+  background-color: #FFD166;
+  border: 2px solid #000000;
+  color: #000000;
+}
+
+/* Google Login */
+.google-login {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.google-login .google-button {
+  width: 100%; /* Asegura que el botón de Google ocupe el 100% del ancho */
+  height: auto; /* Ajusta la altura automáticamente */
+  padding: 8px 16px; /* Ajusta el relleno para que el botón sea más visible */
+}
+
+/* Nueva fila para inputs */
+.form-row {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los inputs se acomoden en varias filas */
+  gap: 10px; /* Espacio entre columnas */
+}
+
+/* Ajustar inputs para compartir el espacio */
+.form-row .form-group {
+  flex: 1 1 45%; /* Los inputs ocupan el 45% del espacio, permitiendo dos en cada fila */
+  min-width: 150px; /* Asegura que no se vuelvan demasiado pequeños */
+}
+
+/* Estilo para mensajes de error */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+
+
+/* Responsividad para pantallas con max-width 511px (smartphones) */
+@media (max-width: 511px) {
+  /* Estilo del modal */
+  /* Responsividad para pantallas con max-width 511px (smartphones) */
+@media (max-width: 511px) {
+  /* Estilo del modal */
+  .register-modal {
+    width: 90%; /* Modal ocupa el 85% del ancho */
+    max-width: 350px; /* Establece un límite de ancho */
+    height: auto; /* Ajusta la altura al contenido */
+    max-height: 80vh; /* Limita la altura para que no sea demasiado alto */
+    padding: 9%; /* Ajuste de padding para evitar que se vea muy apretado */
+    overflow-y: auto; /* Permite desplazarse si el contenido es demasiado largo */
+  }
+
+  /* Estilo del título */
+  .register-title {
+    font-size: 1.3em; /* Reduce aún más el tamaño del título */
+    margin-bottom: 10px;
+  }
+
+  /* Estilo del formulario */
+  .register-form {
+    height: auto; /* Permite que el formulario crezca según el contenido */
+    flex-grow: 1; /* Asegura que el formulario ocupe todo el espacio disponible */
+  }
+
+  /* Campos de entrada */
+  .form-group input {
+    width: 100%; /* Los inputs ahora ocupan el 100% del ancho */
+    padding: 10px; /* Ajuste de padding */
+    font-size: 1em; /* Tamaño de fuente ajustado para mejor legibilidad */
+    margin-top: 5px; /* Espaciado ajustado */
+  }
+
+  /* Ajustes en los botones */
+  .form-buttons-register {
+    flex-direction: column; /* Los botones se apilan verticalmente */
+    gap: 12px; /* Espacio más grande entre botones */
+  }
+
+  .create-btns,
+  .cancel-btns {
+    width: 100%; /* Los botones ocupan el 100% del ancho */
+    padding: 12px 20px; /* Más padding en los botones */
+  }
+
+  /* Ajustes en el contenedor de la contraseña */
+  .password-container input {
+    padding-right: 35px; /* Un poco más de espacio para el ícono */
+  }
+
+  .password-eye,
+  .password-eye-confirm {
+    right: 10px; /* Ajustar la posición del ícono */
+    top: 50%; /* Centrarlos verticalmente */
+    transform: translateY(-50%);
+  }
+}
+
+/* Estilo del modal MODO DARK */
+.dark .register-modal {
+  width: 90%; /* Modal ocupa el 85% del ancho */
+  max-width: 350px; /* Establece un límite de ancho */
+  height: auto; /* Ajusta la altura al contenido */
+  max-height: 80vh; /* Limita la altura para que no sea demasiado alto */
+  padding: 9%; /* Ajuste de padding para evitar que se vea muy apretado */
+  overflow-y: auto; /* Permite desplazarse si el contenido es demasiado largo */
+}
+
+/* Estilo del título */
+.dark .register-title {
+  font-size: 1.3em; /* Reduce aún más el tamaño del título */
+  margin-bottom: 10px;
+}
+
+/* Estilo del formulario */
+.dark .register-form {
+  height: auto; /* Permite que el formulario crezca según el contenido */
+  flex-grow: 1; /* Asegura que el formulario ocupe todo el espacio disponible */
+}
+
+/* Campos de entrada */
+.dark .form-group input {
+  width: 100%; /* Los inputs ahora ocupan el 100% del ancho */
+  padding: 10px; /* Ajuste de padding */
+  font-size: 1em; /* Tamaño de fuente ajustado para mejor legibilidad */
+  margin-top: 5px; /* Espaciado ajustado */
+}
+
+/* Ajustes en los botones */
+.dark .form-buttons-register {
+  flex-direction: column; /* Los botones se apilan verticalmente */
+  gap: 12px; /* Espacio más grande entre botones */
+}
+
+.dark .create-btns,
+.dark .cancel-btns {
+  width: 100%; /* Los botones ocupan el 100% del ancho */
+  padding: 12px 20px; /* Más padding en los botones */
+}
+
+/* Ajustes en el contenedor de la contraseña */
+.dark .password-container input {
+  padding-right: 35px; /* Un poco más de espacio para el ícono */
+}
+
+.dark .password-eye,
+.dark .password-eye-confirm {
+  right: 10px; /* Ajustar la posición del ícono */
+  top: 50%; /* Centrarlos verticalmente */
+  transform: translateY(-50%);
+}
+
+
+}
+
+/* Responsividad para pantallas con max-width 860px (tablets) */
+@media (max-width: 860px) {
+  /* Estilo del modal */
+  .register-modal {
+    width: 80%; /* Modal ocupa el 80% del ancho */
+    max-width: 400px; /* Establece un límite de ancho */
+    height: auto;
+    padding: 5%; /* Ajuste del padding */
+  }
+
+  /* Estilo del título */
+  .register-title {
+    font-size: 1.4em; /* Un tamaño de fuente ligeramente mayor */
+    margin-bottom: 12px;
+  }
+
+  /* Estilo del formulario */
+  .register-form {
+    height: auto;
+  }
+
+  .form-group input {
+    width: 100%; /* Los inputs ocupan el 100% del ancho */
+  }
+
+  /* Ajustes en los botones */
+  .form-buttons-register {
+    flex-direction: column; /* Los botones se apilan verticalmente */
+    gap: 12px; /* Ajuste en el espacio entre botones */
+  }
+
+  .create-btns,
+  .cancel-btns {
+    width: 100%; /* Los botones ocupan el 100% del ancho */
+  }
+}
+
+

@@ -1,0 +1,260 @@
+/* ======= Navbar General ======= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  height: 11%;
+  
+  z-index: 1000;
+  flex-wrap: wrap;
+  color: var(--navbar-text);
+}
+
+.cabezadepagina{
+  position: absolute;
+        top: -36%; 
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1001; 
+        width: 1400px;
+        height: 40px;
+        margin: 1px;
+}
+
+/* Modo claro y oscuro */
+:root {
+  --navbar-bg-light: #f8f9fa;
+  --navbar-text-light: #333;
+  --navbar-bg-dark: #222;
+  --navbar-text-dark: #FFE57F;
+}
+
+.navbar.light {
+  --navbar-bg: var(--navbar-bg-light);
+  --navbar-text: var(--navbar-text-light);
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.navbar.dark {
+  --navbar-bg: var(--navbar-bg-dark);
+  --navbar-text: var(--navbar-text-dark);
+  background-color: #222;
+  color: #FFE57F;
+}
+
+/* ======= Logo ======= */
+.navbar-logo a {
+  text-decoration: none;
+  flex: 1;
+}
+
+.navbar-logo img {
+  width: 180px;
+  height: 70px;
+  /* background-color:#FFE57F; */
+  border-radius: 16px;
+}
+
+/* ======= Botón de Cambio de Tema ======= */
+.theme-toggle-icon {
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: inherit;
+  margin-left: 30px;
+  margin-bottom: 26px;
+  transition: color 0.3s ease;
+}
+
+.theme-toggle-icon:hover {
+  color: #FFE57F;
+}
+
+/* ======= Nombre del Usuario ======= */
+.user-name {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-left: 750px; /* Mantiene la posición original */
+}
+
+/* ======= Ícono del Menú ======= */
+.dropdown-icon {
+  font-size: 1.8em;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  color: rgb(153, 147, 147);
+  transform: translateX(-50px);
+  z-index: 1002;
+  margin-top: 0px;
+}
+
+/* ======= Menú Desplegable ======= */
+.dropdown {
+  position: relative;
+  background-color: inherit;
+  color: #222;
+  margin-left: 50%
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 150%;
+  right: 0;
+  background-color: var(--navbar-bg);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1003;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.dropdown-item {
+  color: inherit;
+  text-decoration: none;
+  color: var(--navbar-text);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #ff990054;
+}
+
+/* ======= Modal para "Create Seats" ======= */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+}
+
+.close-modal-btn {
+  background-color: #d9534f;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.close-modal-btn:hover {
+  background-color: #c9302c;
+}
+
+/* ======= Responsividad ======= */
+@media (max-width: 1137px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .navbar-logo img {
+    width: 130px;
+  }
+
+  .user-name {
+    font-size: 0.9rem;
+    margin-top: 20%;
+    margin-left: 4%;
+  }
+
+ 
+}
+
+/* Rango de 350px a 1069px (Pantallas medianas) */
+@media (min-width: 350px) and (max-width: 1069px) {
+
+  .cabezadepagina{
+    position: absolute;
+          top: -49%; 
+          left: 58%;
+          transform: translateX(-50%);
+          z-index: 1001; 
+          width: 125%;
+          height: 44%;
+          margin: 1%;
+  }
+  .dropdown-menu {
+    width:  50%;
+    margin-right: 60%;
+    top: 100%;
+    
+  }
+
+  .dropdown-icon {
+    font-size: 1.8em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    color: rgb(153, 147, 147);
+    /* transform: translateX(-50px); */
+    z-index: 1002;
+    margin-top: 20%;
+    margin-right: 500%;
+  }
+
+  .dropdown {
+    position: relative;
+    background-color: inherit;
+    color: #222;
+    margin-left: -1000%;
+    margin-top: 95%
+  }
+
+  
+.dropdown-item {
+  color: inherit;
+  text-decoration: none;
+  color: var(--navbar-text);
+  padding: 5vw;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  width:  200%;
+    margin-right: -90%;
+    top: 100%;
+}
+
+.user-name {
+  font-size: 1rem;
+  margin-top: 50%;
+  margin-left: 4%;
+}
+
+}

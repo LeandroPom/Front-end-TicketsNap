@@ -1,0 +1,101 @@
+/* Modal base */
+.modal {
+    position: fixed;
+    top: 5%; /* Mueve el modal a la mitad de la pantalla verticalmente */
+    left: 10%; /* Mueve el modal a la mitad de la pantalla horizontalmente */
+    margin-left: -15%; /* Ajusta para centrar el modal de acuerdo con su ancho */
+    
+    width: 100%;
+    /* max-width: 600px; */
+    height: 100%;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos internos se apilen */
+    align-items: center;
+    justify-content: space-between; /* Acomoda botones y contenido */
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1001;
+    box-shadow: 0 2px 3px black;
+}
+
+h2 {
+    color: black;
+  }
+
+/* Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 10px; 
+    width: 160%;
+    height: 180%;
+    background: black;
+    z-index: 999;
+    pointer-events: none; /* Bloquear clics */
+}
+
+/* Botones */
+.select-seats-btn,
+.close-modal-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+
+/* Zona de los botones de control del mapa */
+.map-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Estilo de los asientos */
+.seating-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%; /* Asegura que ocupe el 100% del espacio disponible */
+    max-height: 60%; /* Limita la altura máxima de los asientos */
+    overflow-y: auto; /* Permite el desplazamiento si es necesario */
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.seat {
+    width: 40px;
+    height: 40px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .modal {
+        width: 90%;
+        height: auto;
+        max-height: 80%;
+        margin-left: -45%; /* Ajuste para dispositivos móviles */
+    }
+
+    .map-controls {
+        flex-direction: column;
+    }
+}

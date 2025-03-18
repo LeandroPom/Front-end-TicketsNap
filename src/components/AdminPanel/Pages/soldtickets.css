@@ -1,0 +1,193 @@
+/* SoldTickets.css */
+
+/* Estilos para el contenedor principal */
+.container {
+  padding: 20px;
+  color: black;
+  text-align: left;
+  margin-right: 210px;
+  margin-top: 60px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-right: 20px;
+  }
+}
+
+/* Estilo de los filtros */
+.filter-container {
+  margin-bottom: 18px;
+  margin-right: 180px;
+  max-width: 100%;
+}
+
+
+.filter-container input {
+  margin-left: -1px;
+  /* Mueve el input ligeramente hacia la izquierda */
+  padding: 5px;
+  max-width: 100%;
+}
+
+.filter-container select {
+  margin-left: 10px;
+  padding: 5px;
+}
+
+@media (max-width: 768px) {
+
+  .filter-container input,
+  .filter-container select {
+    width: 100%;
+    /* Hacer los filtros más anchos en pantallas pequeñas */
+    margin-left: 0;
+  }
+}
+
+/* Estilo de la tabla */
+.table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  border-radius: 16px;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+
+}
+
+@media (max-width: 768px) {
+
+  .table th,
+  .table td {
+    padding: 8px;
+    /* Reducir el padding en pantallas pequeñas */
+  }
+
+  .table {
+    font-size: 12px;
+    /* Ajustar el tamaño de la fuente en pantallas pequeñas */
+  }
+}
+
+/* Estilo del botón de cancelar */
+.cancel-button {
+  padding: 3px 3px;
+  background-color: #FFE57F;
+  color: black;
+  border-radius: 16px;
+}
+
+.cancel-button:hover{
+  background-color: #FFB74D;
+}
+
+@media (max-width: 768px) {
+  .cancel-button {
+    padding: 8px;
+    font-size: 12px;
+    /* Ajustar el tamaño de los botones en pantallas pequeñas */
+  }
+}
+
+/* Estilo del botón de descargar */
+.download-button {
+  padding: 10px;
+  background-color: #f1b11a;
+  color: rgb(0, 0, 0);
+  border: none;
+}
+
+.dark .download-button {
+  padding: 10px;
+  background-color: #dd9d09;
+  color: rgb(0, 0, 0);
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .download-button {
+    padding: 8px;
+    width: 100%;
+    /* Hacer que el botón ocupe todo el ancho en pantallas pequeñas */
+    font-size: 14px;
+  }
+}
+
+/* Estilo de la paginación */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  background-color: #FFE57F;
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    flex-direction: column;
+    /* Cambiar la dirección de los botones de paginación en pantallas pequeñas */
+    align-items: flex-start;
+  }
+
+  .pagination button {
+    width: 100%;
+    /* Hacer los botones de paginación más grandes en pantallas pequeñas */
+    margin-bottom: 10px;
+  }
+}
+
+.pagination button[disabled] {
+  cursor: not-allowed;
+}
+
+.pagination button.active {
+  background-color: #FFE57F;
+}
+
+.pagination button.inactive {
+  background-color: #FFD166;
+}
+
+/* Media query para pantallas extra pequeñas (móviles) */
+@media (max-width: 480px) {
+  .container {
+    margin-right: 0;
+    padding: 10px;
+  }
+
+  .filter-container {
+    margin-bottom: 15px;
+  }
+
+  .filter-container input,
+  .filter-container select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .table th,
+  .table td {
+    padding: 6px;
+  }
+
+  .pagination button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}

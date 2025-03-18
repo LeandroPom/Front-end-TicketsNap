@@ -1,0 +1,553 @@
+/* detail.css */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #757272; /* Fondo gris claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999; /* Asegúrate de que se muestre sobre otros elementos */
+  overflow: hidden; /* Evitar que el contenido se desborde */
+}
+
+/* Posición de las imágenes en las 4 esquinas */
+.loading-overlay .corner-img {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-size: contain;  /* Cambiado de 'cover' a 'contain' para evitar el recorte */
+  background-position: center;
+  background-repeat: no-repeat; /* Para que la imagen no se repita si es más pequeña */
+}
+
+
+
+
+.loading-overlay .top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.loading-overlay .top-right {
+  top: 10px;
+  right: 10px;
+}
+
+.loading-overlay .bottom-left {
+  bottom: 10px;
+  left: 10px;
+}
+
+.loading-overlay .bottom-right {
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Estilos para el spinner de carga */
+.spinner {
+  border: 4px solid rgba(247, 173, 15, 0.3); /* Borde exterior gris */
+  border-top: 4px solid #f3f725; /* Borde superior blanco para el spinner */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+/* Animación de rotación */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos para el texto */
+.loading-overlay p {
+  color: white;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* Fondo general */
+.event-detail {
+  margin-top: 5%;
+  text-align: center;
+  padding: 4rem;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos del título */
+.event-detail-title {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: #bd7202;
+  margin-right: 800px ;
+}
+
+.dark .event-detail-title {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: #fcff67;
+}
+
+
+
+.event-info {
+  display: flex;               /* Usamos flexbox para distribuir los elementos */
+  flex-direction: column;      /* Organiza los elementos en columna (uno debajo del otro) */
+  align-items: flex-start;     /* Alinea los elementos a la izquierda */
+  gap: 15px;                   /* Espacio uniforme entre los elementos */
+  padding: 0.3rem 1rem;        /* Agregamos un poco de relleno para separar los textos del borde */
+  font-family: Arial, sans-serif;
+  margin-left: 230px;
+  box-shadow: #f8b524;
+  position: relative;          /* Para posicionar la línea vertical si la tienes */
+  width: 100%;                 /* Asegura que el contenedor de información ocupe todo el ancho disponible */
+  margin-left: 5px;
+}
+
+.presentations-info {
+  display: flex;               /* Usamos flexbox para distribuir los elementos */
+  flex-direction: column;      /* Organiza los elementos en columna (uno debajo del otro) */
+  align-items: flex-start;     /* Alinea los elementos a la izquierda */
+  gap: 15px;                   /* Espacio uniforme entre los elementos */
+  padding: 0.3rem 1rem;        /* Agregamos un poco de relleno para separar los textos del borde */
+  font-family: Arial, sans-serif;
+  margin-left: 230px;
+  box-shadow: #f8b524;
+  position: relative;          /* Para posicionar la línea vertical si la tienes */
+  width: 100%;                 /* Asegura que el contenedor de información ocupe todo el ancho disponible */
+  margin-left: 42%;
+  margin-top: -15%
+}
+
+
+.time-count {
+  margin-top: -50px;                
+  margin-left: 600px;
+  color:black
+}
+
+.dark .time-count {
+  margin-top: -50px;                
+  margin-left: 600px;
+  color:white
+}
+
+.event-image {
+  margin-bottom: 0;    /* Elimina margen inferior para que no haya espacio */
+  font-size: 2.5rem;
+  color: #333;
+  width: 100%;         /* Hace que la imagen ocupe todo el ancho disponible */
+  height: 100%;        /* Hace que la imagen ocupe todo el alto disponible */
+  object-fit: cover;   /* La imagen cubre el área sin distorsionarse */
+  margin-top: 0;       /* Elimina el margen superior para ocupar todo el espacio */
+  margin-right: 0;     /* Elimina el margen derecho */
+  z-index: 0;
+}
+
+
+
+.event-container {
+  display: flex;
+  justify-content: space-between; /* Opcional: distribuir espacio */
+  gap: 5px; /* Espacio de 5px entre los contenedores */
+  flex-wrap: nowrap; /* Asegura que no se envuelvan */
+}
+
+.box-contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #ffffff; /* Fondo del box */
+  border: 3px solid #ccc;    /* Borde del box */
+  border-radius: 8px;         /* Bordes redondeados */
+  border-color: #f8b524;
+  box-shadow: 0px 4px 6px rgba(248, 176, 41, 0.1); /* Sombra alrededor del box */
+  width: 30%; /* Establece el ancho de este contenedor */
+  height: 250px; /* Establece un alto fijo para el contenedor */
+  margin: 5px;
+  
+}
+
+.box-contenedor-info {
+  display: flex;
+  flex-direction: column;    /* Organiza los elementos en columna (uno debajo del otro) */
+  justify-content: flex-start; /* Alinea los elementos al inicio del contenedor */
+  align-items: flex-start;    /* Alinea los elementos a la izquierda */
+  padding: 40px;
+  background-color: #ffffff; /* Fondo del box */
+  border: 3px solid #ccc;    /* Borde del box */
+  border-radius: 8px;        /* Bordes redondeados */
+  border-color: #f8b524;
+  box-shadow: 0px 4px 6px rgba(248, 176, 41, 0.1); /* Sombra alrededor del box */
+  width: 55%; /* Establece el ancho de este contenedor */
+  height: 250px; /* Establece un alto fijo para el contenedor */
+  gap: 10px; /* Espacio entre los elementos dentro del contenedor */
+  margin: 5px;
+  
+}
+
+
+
+
+.dark p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: #fffbfb;
+}
+
+.light p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+.dark .box-contenedor {
+  background-color: #1D1D1D; /* Fondo del box */
+  }
+
+  .dark .box-contenedor-info {
+    background-color: #1D1D1D; /* Fondo del box */
+    }
+
+/* Estilos del mensaje de advertencia */
+.warning-message {
+  background-color: #fff8e1;
+  padding: 1rem;
+  border: 1px solid #ffcc00;
+  margin: 2rem 0;
+  border-radius: 5px;
+}
+
+.warning-message p {
+  font-size: 1.1rem;
+}
+
+.warning-message button {
+  background-color: #ffcc00;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.warning-message button:hover {
+  background-color: #ff9900;
+}
+
+/* Estilos del modal */
+.modal-detail {
+position: fixed;
+top: 50%; /* Centra el modal verticalmente */
+left: 50%; /* Centra el modal horizontalmente */
+transform: translate( 0.4%, 16%); /* Ajusta la posición para que esté bien centrado */
+width: 200%; /* Aumenta el ancho del modal */
+max-width: 1500px; /* Limita el ancho máximo */
+max-height: 1500px;
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1005;
+overflow: auto; /* Permite scroll cuando el contenido excede el tamaño del contenedor */
+background: black;
+}
+
+
+
+/* Contenido del modal */
+.modal-content {
+background: rgb(0, 0, 0);
+padding: 40px;
+border-radius: 8px;
+width: 200%;
+max-width: 1500px;
+z-index: 1001;
+
+
+}
+
+
+
+.select-seats-btns:hover {
+background: #FFD166; /* Cambia el color al pasar el ratón */
+}
+
+.dark .select-seats-btns:hover {
+background: #FFD166; /* Cambia el color al pasar el ratón */
+}
+
+.boton-adddata {
+background-color: #FFB74D; /* Verde llamativo */
+color: #000000;
+padding: 10px 10px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
+border:0rem;
+border-radius: 10px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 23px;
+margin-left: 10px; /* Añade espacio entre los botones */
+}
+
+.boton-adddata:hover{
+  background: #FFD166; /* Cambia el color al pasar el ratón */
+}
+
+.Boton-inicio{
+background-color: #FFB74D; /* Verde llamativo */
+color: #000000;
+padding: 10px 10px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
+border:0rem;
+border-radius: 10px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.Boton-inicio:hover{
+  background: #FFD166; /* Cambia el color al pasar el ratón */
+}
+
+.close-modal-btns {
+padding: 12px 24px;
+font-size: 16px;
+background: #FFB74D;
+color: rgb(0, 0, 0);
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 15px; /* Espacio superior para el botón */
+}
+
+.close-modal-btns:hover {
+background: #FFD166; /* Cambia el color al pasar el ratón */
+}
+
+.dark .close-modal-btns {
+padding: 12px 24px;
+font-size: 16px;
+background: #FFE57F;
+color: rgb(0, 0, 0);
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 30px; /* Espacio superior para el botón */
+}
+
+.dark .close-modal-btns:hover {
+background: #FFD166; /* Cambia el color al pasar el ratón */
+}
+
+
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .seating-chart {
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas más pequeñas */
+  }
+
+  .modal {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .event-detail h1 {
+    font-size: 2rem;
+  }
+
+  .event-detail p {
+    font-size: 1rem;
+  }
+
+  .warning-message {
+    padding: 1rem;
+  }
+
+  .back-home-btn {
+    width: 100%;
+  }
+}
+.countdown h2 {
+  font-size: 24px;
+  color: red;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.custom-modal {
+background-color: white;
+border-radius: 8px;
+padding: 20px;
+max-width: 500px;
+margin: 0 auto;
+position: relative;
+}
+
+.custom-overlay {
+background-color: black;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.small-input {
+width: 80px;  /* Ajusta el ancho del input según lo necesites */
+font-size: 14px;  /* Tamaño de la fuente más pequeño */
+padding: 5px;  /* Reducir el padding */
+}
+
+
+.ReactModal__Overlay {
+z-index: 1000;
+}
+
+.ReactModal__Content {
+background: white;
+padding: 20px;
+border-radius: 5px;
+width: 500px;
+margin: 0 auto;
+max-width: 80%;
+box-shadow: 0 0 10px rgb(0, 0, 0);
+}
+
+
+@media (min-width: 320px) and (max-width: 1069px) {
+
+.event-info {
+  display: flex;               /* Usamos flexbox para distribuir los elementos */
+  flex-direction: column;      /* Organiza los elementos en columna (uno debajo del otro) */
+  align-items: flex-start;     /* Alinea los elementos a la izquierda */
+  gap: 1%;                   /* Espacio uniforme entre los elementos */
+  padding: 0.3rem 1rem;        /* Agregamos un poco de relleno para separar los textos del borde */
+  font-family: Arial, sans-serif;
+  margin-left: 430%;
+  box-shadow: #f8b524;
+  position: relative;          /* Para posicionar la línea vertical si la tienes */
+  width: 100%;                 /* Asegura que el contenedor de información ocupe todo el ancho disponible */
+  margin-left: 5%;
+  margin-top: -15%;
+}
+
+
+.presentations-info {
+  display: flex;               /* Usamos flexbox para distribuir los elementos */
+  flex-direction: column;      /* Organiza los elementos en columna (uno debajo del otro) */
+  align-items: flex-start;     /* Alinea los elementos a la izquierda */
+  gap: 1%;                   /* Espacio uniforme entre los elementos */
+  padding: 0.3rem 1rem;        /* Agregamos un poco de relleno para separar los textos del borde */
+  font-family: Arial, sans-serif;
+  margin-left: 430%;
+  box-shadow: #f8b524;
+  position: relative;          /* Para posicionar la línea vertical si la tienes */
+  width: 100%;                 /* Asegura que el contenedor de información ocupe todo el ancho disponible */
+  margin-left: 5%;
+  margin-top: -15%;
+}
+
+
+.time-count {
+  margin-top: -18%;                
+  margin-left: -15%;
+  color:black
+}
+
+.dark .time-count {
+  margin-top: -18%;                
+  margin-left: -15%;
+  color:white
+}
+
+.event-image {
+  margin-bottom: 0;    /* Elimina margen inferior para que no haya espacio */
+  font-size: 2.5rem;
+  color: #333;
+  width: 100%;         /* Hace que la imagen ocupe todo el ancho disponible */
+  height: 100%;        /* Hace que la imagen ocupe todo el alto disponible */
+  object-fit: cover;   /* La imagen cubre el área sin distorsionarse */
+  margin-top: 0;       /* Elimina el margen superior para ocupar todo el espacio */
+  margin-right: 0;     /* Elimina el margen derecho */
+  z-index: 0;
+  
+}
+
+
+
+.event-container {
+  display: flex;
+  justify-content: space-between; /* Opcional: distribuir espacio */
+  gap: 5%; /* Espacio de 5px entre los contenedores */
+  flex-wrap: nowrap; /* Asegura que no se envuelvan */
+  margin-left: -28%;
+
+}
+
+.box-contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 17%;
+  background-color: #ffffff; /* Fondo del box */
+  border: 3% solid #ccc;    /* Borde del box */
+  border-radius: 3%;         /* Bordes redondeados */
+  border-color: #f8b524;
+  box-shadow: 0px 4px 6px rgba(248, 176, 41, 0.1); /* Sombra alrededor del box */
+  width: 150%; /* Establece el ancho de este contenedor */
+  height: 250%; /* Establece un alto fijo para el contenedor */
+  margin: 5%;
+  margin-top: 1%;
+  
+}
+
+.box-contenedor-info {
+  display: flex;
+  flex-direction: column;    /* Organiza los elementos en columna (uno debajo del otro) */
+  justify-content: flex-start; /* Alinea los elementos al inicio del contenedor */
+  align-items: flex-start;    /* Alinea los elementos a la izquierda */
+  padding: 9%;
+  background-color: #ffffff; /* Fondo del box */
+  border: 3px solid #ccc;    /* Borde del box */
+  border-radius: 8px;        /* Bordes redondeados */
+  border-color: #f8b524;
+  box-shadow: 0px 4px 6px rgba(248, 176, 41, 0.1); /* Sombra alrededor del box */
+  width: 330%; /* Establece el ancho de este contenedor */
+  height: 7%; /* Establece un alto fijo para el contenedor */
+  gap: 1%; /* Espacio entre los elementos dentro del contenedor */
+  margin: 1%;
+  
+}
+
+
+
+
+.dark p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: #fffbfb;
+}
+
+.light p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+.dark .box-contenedor {
+  background-color: #1D1D1D; /* Fondo del box */
+  }
+
+  .dark .box-contenedor-info {
+    background-color: #1D1D1D; /* Fondo del box */
+    }
+  }

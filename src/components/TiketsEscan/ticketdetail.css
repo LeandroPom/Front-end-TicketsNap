@@ -1,0 +1,38 @@
+.ticket-detail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;  /* Ocupa el 80% de la altura de la pantalla */
+    margin-top: 20%; /* Márgenes superiores del 20% */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .ticket-detail-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .ticket-detail-container p {
+    font-size: 1.2rem;
+    margin: 5px 0;
+  }
+  
+  .ticket-detail-container p strong {
+    font-weight: bold;
+  }
+  
+  .ticket-detail-container .message {
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  .ticket-detail-container .message.green {
+    color: green;
+  }
+  
+  .ticket-detail-container .message.red {
+    color: red;
+  }
+  
