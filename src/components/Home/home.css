@@ -20,6 +20,17 @@
   margin: 1px;
 }
 
+.ticket-image2 {
+  position: absolute;
+  top: 595px; /* O ajusta la posición según sea necesario */
+  left: 50%;
+  transform: translateX(-50%); /* Centra la imagen */
+  z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+  width: 1400px;
+  height: 100px;
+  margin: 1px;
+}
+
 /* Estilos del Footer */
 .footer {
   background-color: rgb(71, 71, 71); /* Fondo oscuro */
@@ -178,7 +189,7 @@
   margin-bottom: 30px;
   margin-left: 220px;
   padding: 5px 5px;
-  margin-top: 115px
+  margin-top: 230px
 }
 
 .searchs-container input {
@@ -1010,6 +1021,17 @@ li:hover .event-image {
     margin-left: 55%; /* El margen izquierdo lo eliminamos para centrar la imagen */
   }
   
+  .ticket-image2 {
+    position: absolute;
+    top: 595px; /* O ajusta la posición según sea necesario */
+    left: 50%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 1400px;
+    height: 100px;
+    margin: 1px;
+  }
+
   .searchs-container input {
     padding: 15px 60vw;
     margin: 3px;

@@ -162,7 +162,7 @@ const ShowsList = () => {
   };
 
   // WhatsApp: Aquí definimos el número y mensaje
-  const whatsappNumber = '03816698011'; // Reemplazar con el número real
+  const whatsappNumber = '+5493813356799'; // Reemplazar con el número real
   const message = '¡Hola, tengo una consulta sobre mi compra!';
 
 
@@ -175,6 +175,11 @@ const ShowsList = () => {
   src="/images/mpticketsol.png"
   alt="Sol Ticket"
   className="ticket-image"
+/>
+<img
+  src="/images/MP-2.png"
+  alt="Sol Ticket"
+  className="ticket-image2"
 />
       </div>
       {/* Barra de búsqueda y filtro */}
