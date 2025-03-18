@@ -557,7 +557,7 @@ li:hover .event-image {
   margin-bottom: 30px;
   margin-left: 220px;
   padding: 5px 5px;
-  margin-top: 115px
+  margin-top: 200%;
 }
 
 .searchs-container input {
@@ -801,7 +801,7 @@ li:hover .event-image {
 
 @media (max-width: 360px) {
   .ticket-image {
-    width: 210%;  /* Ajustamos el tamaño a un porcentaje */
+    width: 230%;  /* Ajustamos el tamaño a un porcentaje */
     height: 20%; /* Mantiene la proporción */
     top: 85%;  /* Ajusta la posición según sea necesario */
     margin-left: 55%; /* El margen izquierdo lo eliminamos para centrar la imagen */
@@ -887,7 +887,7 @@ li:hover .event-image {
   margin-bottom: 30px;
   margin-left: 100%;
   padding: 5px 5px;
-  margin-top: 115px
+  margin-top: 90%;
 }
 
 .searchs-container input {
@@ -1011,7 +1011,7 @@ li:hover .event-image {
     margin-bottom: 30px;
     margin-left: 130%;
     padding: 5px 5px;
-    margin-top: 115px
+    margin-top: 300px;
   }
 
   .ticket-image {
@@ -1022,14 +1022,10 @@ li:hover .event-image {
   }
   
   .ticket-image2 {
-    position: absolute;
-    top: 595px; /* O ajusta la posición según sea necesario */
-    left: 50%;
-    transform: translateX(-50%); /* Centra la imagen */
-    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
-    width: 1400px;
-    height: 100px;
-    margin: 1px;
+    width: 220%;  /* Ajustamos el tamaño a un porcentaje */
+    height: 20%; /* Mantiene la proporción */
+    top: 107%;  /* Ajusta la posición según sea necesario */
+    margin-left: 55%; /* El margen izquierdo lo eliminamos para centrar la imagen */
   }
 
   .searchs-container input {
