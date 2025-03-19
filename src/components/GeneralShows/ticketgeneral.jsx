@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const TicketGeneral = () => {
   const { id } = useParams(); // Obtener id de la URL si existe
+  console.log('ID from useParams:', id);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const zoneId = queryParams.get('zoneId');
@@ -35,43 +36,48 @@ const TicketGeneral = () => {
     }
   }, [shows, dispatch]);
 
-  // useEffect para obtener el ticket
-  useEffect(() => {
-    const fetchTicket = async () => {
-      if (id && user && user.id) {  // Verifica si user está disponible y tiene un id
-        try {
-          let ticketData = null;
+
   
-          // Si hay un id en la URL, obtenemos el ticket desde el backend
-          const response = await axios.get(`/tickets/${id}`);
-          ticketData = response.data;
-  
-          // Verificar si el userId del ticket coincide con el userId actual
-          if (ticketData.userId !== user.id) {
-            setError('Acceso no autorizado');
+
+   // useEffect para esperar que el `id` esté disponible antes de realizar cualquier acción
+   useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        if (id && user && user.id) {  // Verifica si user está disponible y tiene un id
+          try {
+            let ticketData = null;
+    
+            // Si hay un id en la URL, obtenemos el ticket desde el backend
+            const response = await axios.get(`/tickets/${id}`);
+            ticketData = response.data;
+    
+            // Verificar si el userId del ticket coincide con el userId actual
+            if (ticketData.userId !== user.id) {
+              setError('Acceso no autorizado');
+              setLoading(false);
+              navigate('/');  // Redirige al inicio si el usuario no tiene acceso
+            } else {
+              setTicket(ticketData);
+              setLoading(false);
+            }
+    
+            // Buscar el nombre del show desde Redux si ya está cargado
+            const show = shows.find((show) => show.id === parseInt(showId));
+            if (show) {
+              setShowName(show.name); // Usamos el nombre del show desde Redux
+            }
+          } catch (err) {
+            setError('Error al obtener los datos del ticket');
             setLoading(false);
-            navigate('/');  // Redirige al inicio si el usuario no tiene acceso
-          } else {
-            setTicket(ticketData);
-            setLoading(false);
+            console.error(err);
           }
-  
-          // Buscar el nombre del show desde Redux si ya está cargado
-          const show = shows.find((show) => show.id === parseInt(showId));
-          if (show) {
-            setShowName(show.name); // Usamos el nombre del show desde Redux
-          }
-        } catch (err) {
-          setError('Error al obtener los datos del ticket');
-          setLoading(false);
-          console.error(err);
+        } else {
+          setLoading(false); // Si no hay id o el usuario no está disponible, se detiene la carga
         }
-      } else {
-        setLoading(false); // Si no hay id o el usuario no está disponible, se detiene la carga
-      }
-    };
+      };
   
-    fetchTicket();
+      fetchTicket();
+    }
   }, [id, user, navigate, showId, shows]); // Asegúrate de que el efecto dependa también de user, id y showId
 
   if (loading) return <p>Cargando ticket...</p>;
