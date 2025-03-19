@@ -87,7 +87,7 @@ const Detail = () => {
   
         img.onload = () => {
         setZoneImage(img.src); 
-        console.log("Mapa cargado correctamente");
+        
       };
       img.onerror = () => {
         console.error("Error al cargar la imagen del mapa");
