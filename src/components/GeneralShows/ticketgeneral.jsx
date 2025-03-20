@@ -162,13 +162,13 @@ const TicketGeneral = () => {
       <h2 style={styles.title}>Ticket para el show: {showName}</h2>
 
       <div style={styles.ticketDetails}>
-        <p><strong>Fecha:</strong> {ticket.date}</p>
-        <p><strong>Ubicación:</strong> {ticket.location}</p>
-        <p><strong>Precio:</strong> ${ticket?.price}</p>
-        <p><strong>Comprador:</strong> {ticket.name}</p>
-        <p><strong>DNI:</strong> {ticket.dni}</p>
-        <p><strong>Email:</strong> {ticket.mail}</p>
-        <p><strong>Teléfono:</strong> {ticket.phone}</p>
+        <p style={{color:"black"}}><strong>Fecha:</strong> {ticket.date}</p>
+        <p style={{color:"black"}}><strong>Ubicación:</strong> {ticket.location}</p>
+        <p style={{color:"black"}}><strong>Precio:</strong> ${ticket?.price}</p>
+        <p style={{color:"black"}}><strong>Comprador:</strong> {ticket.name}</p>
+        <p style={{color:"black"}}><strong>DNI:</strong> {ticket.dni}</p>
+        <p style={{color:"black"}}><strong>Email:</strong> {ticket.mail}</p>
+        <p style={{color:"black"}}><strong>Teléfono:</strong> {ticket.phone}</p>
         {isVIP && <p style={styles.vipTag}>¡Ticket VIP!</p>}
         {isGeneral && <p style={styles.generalTag}>¡Ticket General!</p>}
         {ticket.qrCode && <img src={ticket.qrCode} alt="QR Code" style={styles.qrCode} />}
@@ -199,7 +199,7 @@ const TicketGeneral = () => {
         )}
       </div>
 
-      <button onClick={sendTicketEmail}>Enviar Ticket por Email</button>
+     <button style={{color:"black"}} onClick={sendTicketEmail}>Enviar Ticket por Email</button>
     </div>
   );
 };
