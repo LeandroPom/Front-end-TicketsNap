@@ -87,7 +87,7 @@ const Detail = () => {
   
         img.onload = () => {
         setZoneImage(img.src); 
-        
+        console.log("Mapa cargado correctamente");
       };
       img.onerror = () => {
         console.error("Error al cargar la imagen del mapa");
@@ -785,13 +785,13 @@ useEffect(() => {
         {/* Contenedor para la información básica del evento */}
         <div className="box-contenedor-info">
           <div className="event-info">
-            <p><FaMusic style={{ color: 'black' }} /> <strong>Género:</strong> {event.genre.join(', ')}</p>
-            <p><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}</p>
+            <p style={{ marginLeft: '-50px' }}><FaMusic style={{ color: 'black' }} /> <strong>Género:</strong> {event.genre.join(', ')}</p>
+            <p style={{ marginLeft: '-50px' }}><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}</p>
             {event.presentation.map((presentation, index) => (
           <div className="presentation-detail" key={index}>
-            <p><FaCalendarAlt style={{ color: 'green' }} /> <strong style={{ margileft:"50px" }}>Fecha:</strong> {presentation.date}</p>
+            <p style={{ marginLeft: '-85px' }}><FaCalendarAlt style={{ color: 'green' }} /> <strong style={{ margileft:"50px" }}>Fecha:</strong> {presentation.date}</p>
             {/* <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentación:</strong> {presentation.performance}</p> */}
-            <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
+            <p style={{ marginLeft: '-50px' }}><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
           </div>
         ))}
           </div>
@@ -853,7 +853,8 @@ useEffect(() => {
               padding: '12px 20px',  
               borderRadius: '15px',  
               fontWeight: 'bold',  
-              cursor: 'pointer'  
+              cursor: 'pointer' , 
+              marginLeft: '100px'
             }}
           >
             Elegir Asientos
@@ -949,62 +950,3 @@ useEffect(() => {
 };
 
 export default Detail;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
