@@ -99,7 +99,7 @@
   position: relative;
   background-color: inherit;
   color: #222;
-  margin-left: 50%
+  margin-left: -40%
 }
 
 .dropdown-menu {
@@ -198,63 +198,54 @@
  
 }
 
+@media (max-width: 349px) {
+ 
+
+  .user-name {
+    font-size: 0.9rem;
+    margin-top: 20%;
+    margin-left: 4%;
+  }
+
+ 
+}
+
 /* Rango de 350px a 1069px (Pantallas medianas) */
 @media (min-width: 350px) and (max-width: 1069px) {
 
   .cabezadepagina{
     position: absolute;
           top: -49%; 
-          left: 58%;
+          left: 49%;
           transform: translateX(-50%);
           z-index: 1001; 
-          width: 125%;
+          width: 130%;
           height: 44%;
           margin: 1%;
   }
-  .dropdown-menu {
-    width:  50%;
-    margin-right: 80%;
-    top: 100%;
-    
-  }
 
-  .dropdown-icon {
+  
+  /* ======= Ícono del Menú ======= */
+  .container .dropdown-icon {
     font-size: 1.8em;
     cursor: pointer;
     transition: color 0.3s ease;
     color: rgb(153, 147, 147);
-    /* transform: translateX(-50px); */
+    transform: translateX(-50px);
     z-index: 1002;
-    margin-top: 25%;
-    margin-right: 5px;
+    margin-top: 0px;
+   
   }
-
+  
+  /* ======= Menú Desplegable ======= */
   .dropdown {
     position: relative;
     background-color: inherit;
     color: #222;
-    margin-left: -1000%;
-    margin-top: 95%
+    margin-left: 10%;
+    margin-top: 30%
   }
-
   
-.dropdown-item {
-  color: inherit;
-  text-decoration: none;
-  color: var(--navbar-text);
-  padding: 5vw;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-  width:  200%;
-    margin-right: 200px;
-    top: 100%;
-}
-
-/* .user-name {
-  font-size: 1rem;
-  margin-top: 50%;
-  margin-left: 2300px;
-} */
+  
 
 }
