@@ -5,6 +5,7 @@ import { getShows } from '../Redux/Actions/actions';
 import emailjs from 'emailjs-com'; // Importar emailjs
 import axios from 'axios';
 import styles from './succesbuy.css';
+import Swal from 'sweetalert2'; // Importa SweetAlert2
 
 const SuccessPage = () => {
   const { id } = useParams();  // Obtener el id de la URL (si existe)
@@ -30,27 +31,67 @@ const SuccessPage = () => {
 
   // Si hay un id en la URL, obtener el ticket desde el backend
   useEffect(() => {
-    if (id && user && user.id) {  // Verifica si user está disponible y tiene un id
-      axios.get(`/tickets/${id}`)
-        .then((response) => {
-          const ticketData = response.data;
-          if (ticketData.userId !== user.id) {
-            setError('Acceso no autorizado');
-            setLoading(false);
-            navigate('/');
-          } else {
-            setTicket(ticketData);
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          setError('Error al obtener los datos del ticket');
-          setLoading(false);
-        });
+    // Función para mostrar la alerta
+    const showAlert = () => {
+      if (!id || !user || !user.id) {
+        setError('ID no disponible o usuario no válido');
+        setLoading(false);  // Detenemos la carga si no hay id o usuario
+        return; // Si no hay id o usuario, no mostrar la alerta ni ejecutar la acción
+      }
+  
+      Swal.fire({
+        title: '¡Felicidades por tu compra!',
+        text: 'Estamos procesando tu ticket. Gracias por elegirnos.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+       
+        fetchTicket();  // Llamamos a `fetchTicket` solo después de hacer clic en OK
+      });
+    };
+  
+    // Función para obtener los datos del ticket
+    const fetchTicket = async () => {
+      if (!id || !user || !user.id) {
+        setError('ID no disponible o usuario no válido');
+        setLoading(false);  // Detenemos la carga si no hay id o usuario
+        return;
+      }
+  
+      try {
+        setLoading(true); // Iniciamos la carga
+      
+        const response = await axios.get(`/tickets/${id}`);
+        const ticketData = response.data;
+    
+  
+        // Verificamos si el userId del ticket coincide con el userId actual
+        if (ticketData.userId !== user.id) {
+          setError('Acceso no autorizado');
+      
+          navigate('/');  // Redirige al inicio si el usuario no tiene acceso
+          return;
+        }
+  
+        setTicket(ticketData);  // Actualizamos el estado con los datos del ticket
+      
+      } catch (err) {
+        setError('Error al obtener los datos del ticket');
+        console.error(err);
+      } finally {
+        setLoading(false);  // Aseguramos que loading siempre se ponga en false
+      
+      }
+    };
+  
+    // Llamamos a `showAlert` solo si el `id` y `user` están disponibles
+    if (id && user) {
+      showAlert();  // Llama a la alerta solo si el `id` y `user` están disponibles
     } else {
-      setLoading(false); // Si no hay id o el usuario no está disponible, se detiene la carga
+      setLoading(false); // Si no hay id o usuario, aseguramos que `loading` se detiene
     }
-  }, [id, user, navigate]); // Asegúrate de que el efecto dependa también de user.
+  
+  }, [id, user, navigate]);  // Dependencias: ejecuta cuando `id`, `user` o `navigate` cambian
 
   const sendTicketEmail = () => {
     const templateParams = {
