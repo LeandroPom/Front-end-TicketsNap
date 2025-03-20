@@ -1,11 +1,11 @@
 .carousel-home {
   position: relative;
-  width: 100%;  /* Ocupa todo el ancho de la pantalla */
+  width: 128%;  /* Ocupa todo el ancho de la pantalla */
   height: 60vh; /* Ocupa toda la altura de la pantalla */
   margin: 5px;
   overflow: hidden;
-  margin-top: 30px;
-  margin-left: 1px;
+  margin-top: -50px;
+  margin-left: -35px;
   object-fit: cover;  /* Asegura que la imagen se ajuste bien */
   z-index: 1;
 }
@@ -168,15 +168,21 @@
 @media (min-width: 350px) and (max-width: 1069px) {
   .carousel-home {
     position: relative;
-    width: 225%;  /* Ocupa todo el ancho de la pantalla */
-    min-height: 60%; /* La altura mínima será el 60% del contenedor */
+    width: 127%;  /* Ocupa todo el ancho de la pantalla */
+    height: 40%; /* La altura mínima será el 60% del contenedor */
 
     margin: 5px;
     overflow: hidden;
-    margin-top: 30px;
-    margin-left: -20px;
+    margin-top: -50px;
+    margin-left: -40px;
     object-fit: cover;  /* Asegura que la imagen se ajuste bien */
     z-index: 1;
+  }
+
+  .event-imagen {
+    height: 200px; /* Mantener la altura del carrusel en escritorios */
+    object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+
   }
 
 }
