@@ -801,10 +801,17 @@ li:hover .event-image {
 
 @media (max-width: 360px) {
   .ticket-image {
-    width: 230%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 20%; /* Mantiene la proporción */
+    width: 250%;  /* Ajustamos el tamaño a un porcentaje */
+    height: 15%; /* Mantiene la proporción */
     top: 85%;  /* Ajusta la posición según sea necesario */
-    margin-left: 55%; /* El margen izquierdo lo eliminamos para centrar la imagen */
+    margin-left: 70%; /* El margen izquierdo lo eliminamos para centrar la imagen */
+  }
+
+  .ticket-image2 {
+    width: 250%;  /* Ajustamos el tamaño a un porcentaje */
+    height: 15%; /* Mantiene la proporción */
+    top: 101%;  /* Ajusta la posición según sea necesario */
+    margin-left: 70%; /* El margen izquierdo lo eliminamos para centrar la imagen */
   }
 }
 
