@@ -1,11 +1,22 @@
 /* General Styles */
 .edit-show {
     font-family: Arial, sans-serif;
-    background-color: #f4f7fc;
+    background-color: #fff;
     color: #333;
     margin: 0;
-    padding: 25px;
-    margin-left: 200px
+    padding: 0;
+    margin-left: 200px;
+    margin-top: 5%
+  }
+
+  .dark .edit-show {
+    font-family: Arial, sans-serif;
+    background-color: #1d1d1d;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    margin-left: 200px;
+    margin-top: 5%
   }
   
 
