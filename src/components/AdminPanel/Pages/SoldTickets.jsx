@@ -211,6 +211,7 @@ const handleDownloadExcel = () => {
     Division: ticket.division,
     Row: ticket.row,
     Seat: ticket.seat,
+    Price: ticket.price,
     Cashier: users.find(user => user.id === ticket.userId)?.name || "Cajero Desconocido",
     Date: ticket.date.split(" || ")[0] || "Fecha no disponible",
     Time: ticket.date.split(" || ")[1] || "Hora no disponible",
@@ -316,20 +317,22 @@ return (
       <div>
   <label>Filtrar por Usuario:</label>
   <select
-    value={cashierFilter}
-    onChange={(e) => setCashierFilter(e.target.value)}
-  >
-    <option value="">Todos los usuarios</option>
-    {users.length > 0 ? (
-      users.map((user) => (
+  value={cashierFilter}
+  onChange={(e) => setCashierFilter(e.target.value)}
+>
+  <option value="">Todos los usuarios</option>
+  {users.length > 0 ? (
+    users
+      .filter((user) => !user.cashier) // Filtra solo los usuarios no cajeros
+      .map((user) => (
         <option key={user.id} value={user.name}>
-          {user.name} {user.cashier ? "(Cajero)" : "(Usuario Común)"}
+          {user.name}(Usuario)
         </option>
       ))
-    ) : (
-      <option value="">No hay usuarios disponibles</option>
-    )}
-  </select>
+  ) : (
+    <option value="">No hay usuarios disponibles</option>
+  )}
+</select>
 </div>
 
 
@@ -488,7 +491,15 @@ return (
                   <td>{ticket.division}</td>
                   <td>{ticket.row}</td>
                   <td>{ticket.seat}</td>
-                  <td>{ticket.userId ? users.find(user => user.id === ticket.userId)?.name : "Cajero Desconocido"}</td>
+                  <td>
+                  {ticket ? (
+                   <>
+                   {ticket.name} {ticket.cashier ? "" : "(Usuario)"}
+                  </>
+                    ) : (
+                    "Cajero Desconocido"
+                    )}
+                  </td>
                   <td>{date}</td>
                   <td>{time}</td>
                   <td style={{ color: 'red' }}>Cancelado</td>
