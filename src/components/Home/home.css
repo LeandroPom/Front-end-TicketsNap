@@ -9,6 +9,8 @@
 }
 
 
+
+
 .ticket-image {
   position: absolute;
   top: 490px; /* O ajusta la posición según sea necesario */
@@ -1158,4 +1160,25 @@ li:hover .event-image {
     text-decoration: underline;
   }
 }
+
+
+@media (min-width: 1366px) and (max-width: 1440px) {
+
+  .ticket-image{
+    width: 105%;  /* Ajustamos el tamaño a un porcentaje */
+    height: 10%; /* Mantiene la proporción */
+    margin-top: 14%;
+   margin-left: 3%
+  }
+  .ticket-image2 {
+    width: 105%;  /* Ajustamos el tamaño a un porcentaje */
+    height: 10%; /* Mantiene la proporción */
+    margin-top: 13%;
+    margin-left: 3%
+    
+  }
+
+}
+
+
 
