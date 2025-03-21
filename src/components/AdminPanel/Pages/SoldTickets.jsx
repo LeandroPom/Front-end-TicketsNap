@@ -53,20 +53,28 @@ const SoldTickets = () => {
   };
 
   // Llamada a la API para obtener los usuarios (cajeros)
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get("/users");
-      const cashierUsers = response.data?.filter((user) => user.cashier); // Filtrar solo los cajeros
-      setUsers(cashierUsers || []); // Guardar los cajeros en el estado
-    } catch (error) {
-      console.error("Error al cargar los usuarios:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudieron cargar los usuarios.",
-      });
-    }
-  };
+  // Llamada a la API para obtener los usuarios
+const fetchUsers = async () => {
+  try {
+    const response = await axios.get("/users");
+    const allUsers = response.data || []; // Obtener todos los usuarios
+
+    // Filtrar solo los cajeros (los que tienen 'cashier' en true)
+    const cashierUsers = allUsers.filter(user => user.cashier);
+    // Filtrar solo los usuarios comunes (los que no son 'cashier' ni 'isAdmin')
+    const commonUsers = allUsers.filter(user => !user.cashier && !user.isAdmin);
+
+    // Combinar los usuarios comunes y cajeros
+    setUsers([...cashierUsers, ...commonUsers]);
+  } catch (error) {
+    console.error("Error al cargar los usuarios:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "No se pudieron cargar los usuarios.",
+    });
+  }
+};
 
   const filterTickets = () => {
     let filtered = tickets;
@@ -305,6 +313,26 @@ return (
         </select>
       </div>
 
+      <div>
+  <label>Filtrar por Usuario:</label>
+  <select
+    value={cashierFilter}
+    onChange={(e) => setCashierFilter(e.target.value)}
+  >
+    <option value="">Todos los usuarios</option>
+    {users.length > 0 ? (
+      users.map((user) => (
+        <option key={user.id} value={user.name}>
+          {user.name} {user.cashier ? "(Cajero)" : "(Usuario Común)"}
+        </option>
+      ))
+    ) : (
+      <option value="">No hay usuarios disponibles</option>
+    )}
+  </select>
+</div>
+
+
       {/* Filtro de Cajero */}
       <div>
         <label>Filtrar por Cajero:</label>
@@ -327,7 +355,7 @@ return (
 
       {/* Filtro de Estado */}
       <div>
-        <label>Filtrar por Estado:</label>
+        <label>Filtrar/Estado:</label>
         <select
           value={canceledFilter}
           onChange={(e) => setCanceledFilter(e.target.value === "null" ? null : e.target.value)}
