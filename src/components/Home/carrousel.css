@@ -111,8 +111,6 @@
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
     transform: translateX(10px); /* Desplaza el botón hacia la izquierda */
   }
-    
-
 
   .event-videos.actives {
     transform: scale(1); /* No agrandar los videos en móviles */
@@ -134,7 +132,6 @@
   .event-imagen {
     height: 250px; /* Ajustar la altura del carrusel en tabletas */
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
-
   }
 
   .carousel {
@@ -160,29 +157,76 @@
   .event-imagen {
     height: 300px; /* Mantener la altura del carrusel en escritorios */
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
-
   }
 }
 
+/* Resoluciones de Netbook (Pantallas pequeñas de 15, 16, 17 pulgadas) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .carousel {
+    width: 100%; /* Ajustar el carrusel para que ocupe el 100% del ancho */
+    max-width: 90%; /* Reducir ligeramente el tamaño máximo */
+    margin-left: 0; /* Alinear correctamente */
+  }
 
-@media (min-width: 350px) and (max-width: 1069px) {
-  .carousel-home {
-    position: relative;
-    width: 127%;  /* Ocupa todo el ancho de la pantalla */
-    height: 40%; /* La altura mínima será el 60% del contenedor */
-
-    margin: 5px;
-    overflow: hidden;
-    margin-top: -50px;
-    margin-left: -40px;
-    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
-    z-index: 1;
+  .carousel-button {
+    font-size: 1.7rem; /* Tamaño de botón ligeramente más pequeño */
   }
 
   .event-imagen {
-    height: 200px; /* Mantener la altura del carrusel en escritorios */
+    height: 250px; /* Ajustar la altura para netbooks */
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
-
   }
+
+  .carousel-home {
+    position: relative;
+    width: 105%;  /* Ocupa todo el ancho de la pantalla */
+    height: 40%; /* Mantener la altura proporcional */
+    margin: 5px;
+    overflow: hidden;
+    margin-top: -50px;
+    margin-left: 0;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+}
+
+/* Pantallas más pequeñas como netbooks (15", 16", 17" pulgadas) */
+@media (min-width: 1366px) and (max-width: 1440px) {
+  .carousel-home {
+    position: relative;
+    width: 255%;  /* Ocupa todo el ancho de la pantalla */
+    height: 70vh; /* Ocupa toda la altura de la pantalla */
+    margin: 5px;
+    overflow: hidden;
+    margin-top: -50px;
+    margin-left: -35px;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+  .carousel-button {
+    font-size: 1.9rem; /* Tamaño de botón más pequeño para pantallas medianas */
+  }
+
+  .event-imagen {
+    height: 275px; /* Ajustar la altura de las imágenes para pantallas medianas */
+    object-fit: cover; /* Asegura que la imagen se ajuste adecuadamente */
+  }
+
+  .carousel-home {
+    position: relative;
+    width: 130%; /* Ocupa casi todo el ancho */
+    margin-left: -5%;
+    margin-top: -30px;
+  }
+
+  .event-imagen.active,
+.event-videos.actives {
+  opacity: 1;
+  z-index: 1;
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+  height: 100%; /* Asegura que la imagen ocupe toda la altura del contenedor */
+  object-fit: fill; /* Mantiene el ajuste adecuado de la imagen */
+  background-color: rgba(102, 102, 102, 0.5);
+}
 
 }
