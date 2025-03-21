@@ -201,11 +201,11 @@ const GeneralDetail = () => {
       <p><strong>Ubicación:</strong> {show.location}</p>
       
       <div className="zone-selection">
-  <label>Selecciona una Zona:</label>
+  <label>Selecciona una presentación:</label>
   <select value={selectedZoneIndex} onChange={handleZoneChange} className="zone-select">
     {zones.map((zone, index) => (
       <option key={zone.id} value={index}>
-        {zone.presentation.date} - {zone.presentation.time.start} - {zone.presentation.time.end}
+        {zone.presentation.date} | {zone.presentation.time.start} - {zone.presentation.time.end}
       </option>
     ))}
   </select>
