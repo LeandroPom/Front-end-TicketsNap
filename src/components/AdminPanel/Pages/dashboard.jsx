@@ -110,7 +110,7 @@ const Dashboard = () => {
 
       <div className="charts-container">
         <div className="chart">
-          <h3>Diatribucion de recursos</h3>
+          <h3>Distribucion de recursos</h3>
           <Bar data={barData} />
         </div>
         <div className="chart">
