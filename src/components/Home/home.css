@@ -1,6 +1,6 @@
 /* Estilos para la página Home */
 .home {
-  padding: 30px 20px;
+  padding: 30px 1px;
   font-family: 'Arial', sans-serif;
   margin-top: 60px;
   text-align: center;
@@ -263,9 +263,9 @@
 /* Contenedor de eventos en columnas en Home/ Cards */
 .container .homecard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   justify-content: center;
-  gap: 30px; /* Aumenta el gap para separar más las cards */
+  gap: 70px; /* Aumenta el gap para separar más las cards */
   /* margin: 5px; */
   margin-left: 5%;
   margin-top: 65px;
