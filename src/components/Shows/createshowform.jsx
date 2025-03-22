@@ -173,19 +173,12 @@ const CreateShowForm = () => {
 
   const handlePresentationChange = (index, field, value) => {
     const newPresentation = [...formData.presentation];
-
-    // if (price) {
-    //   // Si el campo es precio, aseguramos que el valor no sea negativo
-    //   if (parseFloat(value) <= 0) {
-    //     return; // No actualizamos el estado si el valor es negativo
-    //   }
-    // }
-
+  
     // Si no existe la presentación en ese índice, inicializa el objeto
     if (!newPresentation[index]) {
       newPresentation[index] = { date: '', performance: formData.performance || 1, time: { start: '', end: '' } };
     }
-
+  
     // Si estamos modificando la fecha (solo para la primera presentación)
     if (field === 'date') {
       // Aplicar la misma fecha a todas las presentaciones si es la primera vez que se selecciona una fecha
@@ -193,22 +186,27 @@ const CreateShowForm = () => {
         newPresentation.forEach((presentation) => {
           presentation.date = value;
         });
+      } else {
+        newPresentation[index].date = value;  // Si ya hay una fecha, solo actualiza la del índice específico
       }
     } else if (field === 'performance') {
-      newPresentation[index].performance = value || formData.performance || 1;  // Asignar el valor de performance
+      // Si estamos modificando el número de presentaciones, ajustamos el arreglo de presentaciones
+      newPresentation[index].performance = value || formData.performance || 1;
     } else {
+      // Para otros campos (start, end, etc.), solo actualizamos el campo correspondiente en el índice
       newPresentation[index].time = {
         ...newPresentation[index].time,
         [field]: value, // Actualiza el tiempo (start o end)
       };
     }
-
+  
     // Actualiza el estado de formData con las nuevas presentaciones
     setFormData((prevState) => ({
       ...prevState,
       presentation: newPresentation,
     }));
   };
+  
 
   const handlePerformanceChange = (e) => {
     const newPerformance = parseInt(e.target.value, 10);
@@ -232,6 +230,8 @@ const CreateShowForm = () => {
 
   const handleTimeDisplay = (index) => {
     const presentation = formData.presentation[index];
+
+
     return (
       <div>
         {presentation.time.start && (
@@ -272,7 +272,12 @@ const CreateShowForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
+const handleDateChange = (date) => {
+  setFormData((prevState) => ({
+    ...prevState,
+    presentationDate: date,  // Actualiza la fecha de presentación correctamente
+  }));
+};
 
     // Validar que haya un lugar seleccionado
     if (!selectedLocation || !selectedLocation.name) {
