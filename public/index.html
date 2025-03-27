@@ -25,13 +25,18 @@
           overflow-x: hidden;
         }
         .container {
-          padding: 10px;
+          padding: 0;
         }
+  
       }
+
+      
+    
       /* Estilos para pantallas grandes */
       @media (min-width: 601px) {
+              /* Estilos específicos para la imagen y los componentes */
         .container {
-          padding: 40px;
+          padding: 0;
         }
       }
     </style>
@@ -45,19 +50,21 @@
           const width = window.innerWidth;
           const height = window.innerHeight;
 
-          // Mostrar el tamaño de la ventana para depuración
-          console.log(`Ancho: ${width}, Alto: ${height}`);
-
           // Ajustar meta viewport según el tamaño de la ventana
           let viewportContent = 'width=device-width, initial-scale=1';
 
           // Para dispositivos móviles con pantalla pequeña (menor a 600px)
-          if (width < 600) {
+          if (width <= 650) {
             viewportContent = 'width=device-width, initial-scale=1, maximum-scale=4, user-scalable=yes';
+            document.body.style.overflowX = 'visible'; // Evitar desbordamiento horizontal
+          } else if (width >= 1366) {
+            // Para pantallas medianas como 1366x768
+            viewportContent = 'width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes';
             document.body.style.overflowX = 'hidden'; // Evitar desbordamiento horizontal
-          } else {
-            document.body.style.overflowX = 'visible'; // Restauramos comportamiento en pantallas grandes
-          }
+           }
+          //   // Para pantallas grandes
+          //   viewportContent = 'width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes';
+          // }
 
           // Cambiar el atributo meta viewport
           document.querySelector('meta[name="viewport"]').setAttribute('content', viewportContent);
