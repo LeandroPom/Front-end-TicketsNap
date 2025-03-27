@@ -1,36 +1,48 @@
 /* Estilos para la página Home */
 .home {
-  padding: 30px 1px;
+  padding: 30px 20px;  /* Ajusta los valores de padding según lo necesario */
   font-family: 'Arial', sans-serif;
   margin-top: 60px;
-  text-align: center;
+  text-align: left; /* Si quieres que el texto y los elementos estén alineados a la izquierda */
   transition: background-color 0.3s, color 0.3s;
-  /* No es necesario cambiar nada aquí */
+  max-width: 100vw; /* Limita el ancho máximo al 100% del viewport */
+}
+
+html, body {
+  overflow-x: hidden; /* Evita el desplazamiento horizontal */
+  margin: 0; /* Elimina los márgenes predeterminados */
 }
 
 
 
-
-.ticket-image {
-  position: absolute;
-  top: 490px; /* O ajusta la posición según sea necesario */
-  left: 50%;
+.ticket-imagemp {
+  position: relative;
+  top: 50%; /* O ajusta la posición según sea necesario */
+  left: 35%;
   transform: translateX(-50%); /* Centra la imagen */
   z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
-  width: 1400px;
+  width: 210%;
   height: 100px;
   margin: 1px;
 }
 
-.ticket-image2 {
-  position: absolute;
-  top: 595px; /* O ajusta la posición según sea necesario */
-  left: 50%;
+.imagenmp {
+  position: relative;
+  top: 50%; /* O ajusta la posición según sea necesario */
+  margin-left: 39% ;
+  width: auto;
+}
+
+.ticket-imagemp2 {
+  position: relative;
+  top: 50%; /* O ajusta la posición según sea necesario */
+  left: 35%;
   transform: translateX(-50%); /* Centra la imagen */
   z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
-  width: 1400px;
+  width: 210%;
   height: 100px;
   margin: 1px;
+
 }
 
 /* Estilos del Footer */
@@ -186,13 +198,14 @@
 
 /* Estilos de la barra de búsqueda y select */
 .searchs-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
   margin-left: 220px;
   padding: 5px 5px;
-  margin-top: 230px
+  margin-top: 85px
 }
 
 .searchs-container input {
@@ -263,9 +276,9 @@
 /* Contenedor de eventos en columnas en Home/ Cards */
 .container .homecard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   justify-content: center;
-  gap: 70px; /* Aumenta el gap para separar más las cards */
+  gap: 95px; /* Aumenta el gap para separar más las cards */
   /* margin: 5px; */
   margin-left: 5%;
   margin-top: 65px;
@@ -479,6 +492,9 @@ li:hover .event-image {
 
 /* Estilo responsivo */
 @media (max-width: 350px) {
+
+
+  
   /* Home Section */
   .home {
     padding: 20px 15px;
@@ -517,6 +533,7 @@ li:hover .event-image {
     background: #ffffff;
     max-height: 400px;
     width: 100%;  /* Ajustamos el ancho al 100% para que se ajuste mejor en pantallas pequeñas */
+    margin-left: -35px;  /* Elimina el margen izquierdo para evitar el desbordamiento */
     
   }
 
@@ -553,9 +570,9 @@ li:hover .event-image {
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;  /* Reducimos el margen inferior */
-    margin-left: -9%;  /* Elimina el margen izquierdo innecesario */
+    margin-left: -30px;  /* Elimina el margen izquierdo innecesario */
     padding: 5px;
-    margin-top: 10px;  /* Ajustamos para que no se desplace demasiado hacia abajo */
+    margin-top: 20px;  /* Ajustamos para que no se desplace demasiado hacia abajo */
     width: 100%;  /* Aseguramos que ocupe todo el ancho disponible */
   }
 
@@ -656,22 +673,19 @@ li:hover .event-image {
   .reset-button:hover {
     background-color: #d32f2f;
   }
-
-
-
   /* Estilos del Footer */
 /* Footer */
-.footer {
+.container .footer {
   background-color: rgb(71, 71, 71); /* Fondo oscuro */
   color: white; /* Texto blanco */
   padding: 40px 0; /* Espaciado vertical */
   text-align: center; /* Centrado del texto */
   position: relative;
   margin-top: 50px; /* Ajustado el margen superior */
-  width: 98%; /* Aseguramos que el ancho sea 100% */
+  width: 125%; /* Aseguramos que el ancho sea 100% */
   bottom: 0;
   box-sizing: border-box;
-  margin-left: -30px; /* Elimina el margen izquierdo innecesario */
+  margin-left: -40px; /* Elimina el margen izquierdo innecesario */
 }
 
 .footer a {
@@ -781,24 +795,42 @@ li:hover .event-image {
 
 /* Media Query para pantallas pequeñas */
 @media (max-width: 360px) {
-  .ticket-image{
-    width: 100%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 10%; /* Mantiene la proporción */
-    margin-top: -40%;
-   margin-left: 10%
+  
+  .ticket-imagemp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 35%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 210%;
+    height: 100px;
+    margin: 1px;
   }
-  .ticket-image2 {
-    width: 100%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 10%; /* Mantiene la proporción */
-    margin-top: -82%;
-   margin-left: 10%
-    
+  
+  .imagenmp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    margin-left: 39% ;
+    width: auto;
+  }
+  
+  .ticket-imagemp2 {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 35%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 210%;
+    height: 100px;
+    margin: 1px;
+  
   }
 }
 }
 
 /* Media Query para pantallas medianas */
 @media (max-width: 1069px) {
+
   .home {
     padding: 30px 20px;
   }
@@ -830,16 +862,13 @@ li:hover .event-image {
     width: 100%;
     
   }
-
   .event-image {
     height: 120px;
   }
-
   .buttonhome {
     font-size: 12px;
     padding: 6px 10px;
   }
-
   .searchs-container {
     display: flex;
     justify-content: center;
@@ -848,7 +877,6 @@ li:hover .event-image {
     margin-top: 50%; /* Reducido el margen superior */
     padding: 5px;
   }
-
   .searchs-container input {
     padding: 15px 20px; /* Ajuste más flexible */
     margin: 5px;
@@ -859,7 +887,6 @@ li:hover .event-image {
     width: 100%;
     box-sizing: border-box;
   }
-
   .searchs-container select {
     padding: 5px 25px;
     margin: 5px;
@@ -870,13 +897,11 @@ li:hover .event-image {
     width: 100%;
     box-sizing: border-box;
   }
-
   .calendar-button-container {
     display: flex;
     justify-content: flex-start;
     margin: 5px;
   }
-
   .calendar-button {
     background-color: transparent;
     color: #e9b118;
@@ -886,12 +911,10 @@ li:hover .event-image {
     align-items: center;
     gap: 10px;
   }
-
   .react-calendar {
     background: transparent;
     border: none;
   }
-
   .reset-button {
     color: rgb(153, 20, 20);
     border: none;
@@ -901,15 +924,67 @@ li:hover .event-image {
     font-size: 16px;
     transition: background-color 0.3s ease;
   }
-
   .reset-button:hover {
     background-color: #d32f2f;
   }
 }
-
-
 /* Estilos para pantallas pequeñas (menores a 600px) */
 @media (max-width: 600px) {
+
+  /* Efecto hover: al pasar el mouse sobre el botón */
+.container .paginate-boton:hover {
+  background-color: #FFB74D; /* Naranja pastel brillante */
+  transform: scale(1.05);     /* Efecto de agrandar ligeramente */
+ 
+}
+
+/* Efecto active: cuando el botón está presionado */
+.container .paginate-botonact {
+  background-color: #df9d23; /* Amarillo-naranja pastel brillante */
+  transform: scale(0.60);    /* Efecto de reducir el tamaño cuando se presiona */
+  padding: 8px 1vw;        /* Tamaño del padding cuando está presionado */
+  border-radius: 120%;
+  color: black; 
+}
+  .container .paginate-boton {
+    padding: 10px 1vw;
+    font-size: 0.8rem;           /* Tamaño del texto normal */
+    background-color: #FFE57F; /* Amarillo pastel brillante */
+    color: #333;               /* Color oscuro para el texto */
+    border: 2px solid #FFD166; /* Amarillo-naranja pastel brillante */
+    border-radius: 12%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 1%;
+    margin-left: 2%  
+  }
+  .ticket-imagemp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 21%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 200%;
+    height: 50px;
+    margin: 1px;
+  }
+  .imagenmp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    margin-left: 39% ;
+    width: auto;
+  }
+  .ticket-imagemp2 {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 21%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 200%;
+    height: 50px;
+    margin: 1px;
+  
+  }
   .searchs-container {
     display: flex;
     justify-content: center;
@@ -917,24 +992,8 @@ li:hover .event-image {
     margin-bottom: 30px;
     padding: 5px 15px;
     flex-direction: column;
-    margin-left: 5%
+    margin-left: -8%
   }
-
-  .container .ticket-image{
-    width: 120%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 10%; /* Mantiene la proporción */
-    margin-top: -50%;
-   margin-left: 2%
-  }
-  .container .ticket-image2 {
-    width: 120%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 10%; /* Mantiene la proporción */
-    margin-top: -58%;
-   margin-left: 2%
-    
-  }
-  
-
   .searchs-container input {
     padding: 15px 20px;
     margin: 10px 0;
@@ -944,12 +1003,8 @@ li:hover .event-image {
     background-color: #ffffff;
     width: 100%;
     box-sizing: border-box;
-    margin-left: 5%;
-    
-    
-    
+    margin-left: 5%;  
   }
-
   .searchs-container select {
     padding: 5px 25px;
     margin: 10px 0;
@@ -959,9 +1014,8 @@ li:hover .event-image {
     background-color: #FFD166;
     width: 100%;
     box-sizing: border-box;
-    margin-left: 15%
+    margin-left: 5%
   }
-
   .homecard {
     display: grid;
     grid-template-columns: 1fr; /* Una tarjeta por fila */
@@ -969,7 +1023,6 @@ li:hover .event-image {
     margin: 0 auto; /* Centrado de las tarjetas */
     margin-left: -10%
   }
-
   .cardshome {
     border-radius: 12px;
     padding: 15px;
@@ -982,33 +1035,26 @@ li:hover .event-image {
     position: relative;
     background: #ffffff;
     width: 90%;
-  
+    margin-left: -16%
   }
-
   .dark .cardshome {
     background: #000000;
   }
-
-  .footer {
+  .container .footer {
     background-color: rgb(71, 71, 71);
     color: white;
     padding: 20px 0;
     text-align: center;
     width: 120%;
     margin-top: 20px;
-    margin-left: -40%
-    
+    margin-left: -27px   
   }
-
   .footer a {
     color: white;
     text-decoration: none;
     margin: 0 15px;
-    font-size: 14px;
-    
-   
+    font-size: 14px; 
   }
-
   .footer a:hover {
     text-decoration: underline;
   }
@@ -1016,8 +1062,8 @@ li:hover .event-image {
 
 /* Estilos para pantallas medianas (de 361px a 1069px) */
 @media (min-width: 361px) and (max-width: 1069px) {
-  .searchs-container {
-     
+
+.searchs-container {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -1025,22 +1071,14 @@ li:hover .event-image {
       margin-top: 50%; /* Reducido el margen superior */
       padding: 5px;
     }
-  
-
-    .ticket-image{
-      width: auto;  /* Ajustamos el tamaño a un porcentaje */
-      height: 10%; /* Mantiene la proporción */
-      
-     
-    }
-    .ticket-image2 {
-      width: auto;  /* Ajustamos el tamaño a un porcentaje */
-      height: 10%; /* Mantiene la proporción */
-     
-     
+    .ticket-imagemp{
+      width: 235%;  /* Ajustamos el tamaño a un porcentaje */
       
     }
-
+    .ticket-imagemp2 {
+      width: 235%;  /* Ajustamos el tamaño a un porcentaje */
+     
+    }
   .searchs-container input {
     padding: 15px 40px;
     margin: 5px;
@@ -1061,16 +1099,13 @@ li:hover .event-image {
     font-size: 12px;
     background-color: #FFD166;
     width: 100%;
-    box-sizing: border-box;
-    
+    box-sizing: border-box;  
   }
-
   .homecard {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Dos tarjetas por fila */
     gap: 16px;
   }
-
   .cardshome {
     border-radius: 12px;
     padding: 15px;
@@ -1082,45 +1117,37 @@ li:hover .event-image {
     overflow: hidden;
     position: relative;
     background: #ffffff;
-    width: 100%;
-   
+    width: 100%; 
   }
-
   .dark .cardshome {
     background: #000000;
   }
-
   .footer {
     background-color: rgb(71, 71, 71);
     color: white;
     padding: 30px 0;
     text-align: center;
     margin-top: 40px;
-    width: 100%;
-    margin-left: -20%
+    width: 120%;
+    margin-left: -25px
   
   }
-
   .footer a {
     color: white;
     text-decoration: none;
     margin: 0 10px;
-    font-size: 14px;
-    
+    font-size: 14px;  
   }
-
   .footer a:hover {
     text-decoration: underline;
   }
 }
-
 /* Estilos para pantallas grandes (más de 1069px) */
 @media (min-width: 1069px) {
   .homecard {
     grid-template-columns: repeat(3, 1fr); /* Tres tarjetas por fila */
     gap: 16px;
   }
-
   .cardshome {
     border-radius: 12px;
     padding: 15px;
@@ -1135,50 +1162,25 @@ li:hover .event-image {
     width: 90%;
     /* margin: 0 auto; */
   }
-
   .dark .cardshome {
     background: #000000;
   }
-
   .footer {
     background-color: rgb(71, 71, 71);
     color: white;
     padding: 40px 0;
     text-align: center;
     margin-top: 100px;
-    width: 100%;
+    width: 190%;
+    margin-left: -25px
   }
-
   .footer a {
     color: white;
     text-decoration: none;
     margin: 0 15px;
     font-size: 14px;
   }
-
   .footer a:hover {
     text-decoration: underline;
   }
 }
-
-
-@media (min-width: 1366px) and (max-width: 1440px) {
-
-  .ticket-image{
-    width: 105%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 10%; /* Mantiene la proporción */
-    margin-top: 14%;
-   margin-left: 3%
-  }
-  .ticket-image2 {
-    width: 105%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 10%; /* Mantiene la proporción */
-    margin-top: 13%;
-    margin-left: 3%
-    
-  }
-
-}
-
-
-
