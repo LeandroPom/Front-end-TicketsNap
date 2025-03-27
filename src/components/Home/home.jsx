@@ -171,16 +171,24 @@ const ShowsList = () => {
 
       <div>
         <Carousel images={carouselImages} isVideoPlaying={isVideoPlaying} /> {/* Pasamos el estado al carrusel */}
+
+            
+  
+
+        <div className='imagenmp'>
+
         <img
   src="/images/mpticketsol.png"
   alt="Sol Ticket"
-  className="ticket-image"
+  className="ticket-imagemp"
 />
 <img
   src="/images/MP-2.png"
   alt="Sol Ticket"
-  className="ticket-image2"
+  className="ticket-imagemp2"
 />
+
+        </div>
       </div>
       {/* Barra de búsqueda y filtro */}
       <div className="searchs-container">
@@ -650,13 +658,3 @@ const ShowsList = () => {
 };
 
 export default ShowsList;
-
-
-
-
-
-
-
-
-
-
