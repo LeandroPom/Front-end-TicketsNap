@@ -1,31 +1,41 @@
 /* ======= Navbar General ======= */
-.navbar {
+.container .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   position: fixed;
-  top: 30px;
-  left: 0;
-  width: 100%;
-  height: 11%;
-  
+  top: 4vh;
+  left: -1px;
+  width: 101%;
+  height: 20%;
   z-index: 1000;
   flex-wrap: wrap;
   color: var(--navbar-text);
 }
+  
 
-.cabezadepagina{
-  position: absolute;
-        top: -36%; 
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1001; 
-        width: 1400px;
-        height: 40px;
-        margin: 1px;
+.container .cabezadepaginanav {
+  position: relative;
+  top: -99px;  /* Mantén la posición fija */
+  left: -2%;  /* Centrado horizontalmente */
+  
+  z-index: 1000;
+  width: 50%;  /* Ajuste de ancho para pantallas grandes */
+  height: 8px;
+  margin: 1px;
 }
+
+.container .paginaimagen11 {
+  z-index: 1000;
+  width: 205%;  /* Ajuste de ancho para pantallas grandes */
+  height: 45px;
+  margin: 1px;
+  top: 16px;
+}
+
+
 
 /* Modo claro y oscuro */
 :root {
@@ -53,23 +63,34 @@
 .navbar-logo a {
   text-decoration: none;
   flex: 1;
+  text-align: right;
 }
 
-.navbar-logo img {
-  width: 180px;
-  height: 70px;
-  /* background-color:#FFE57F; */
-  border-radius: 16px;
+
+
+.navbar-logo {
+  position: absolute;
+  
+  margin-right: 50%; /* Elimina el margen negativo */
+  margin-top: 1%;
+  width: 20%;
+  max-width: 20%;
+  
 }
 
 /* ======= Botón de Cambio de Tema ======= */
 .theme-toggle-icon {
+  position: absolute;
   cursor: pointer;
   font-size: 1.3rem;
   color: inherit;
   margin-left: 30px;
   margin-bottom: 26px;
   transition: color 0.3s ease;
+  transform: translateX(-50%); /* Esto lo mantiene centrado respecto a su contenedor */
+  margin-top: 10%;
+  width: 10%;
+  max-width: 10%;
 }
 
 .theme-toggle-icon:hover {
@@ -77,45 +98,42 @@
 }
 
 /* ======= Nombre del Usuario ======= */
-.user-name {
+.container .user-name {
+  position: absolute;
   font-weight: bold;
   font-size: 0.9rem;
-  margin-left: 750px; /* Mantiene la posición original */
+  margin-left: auto; /* Para alinearlo a la derecha */
+  margin-top: -10px; /* Eliminar margen extra */
+  margin-right: 100%; /* Ajustar el espacio a la derecha */
+  transform: translateX(-50%); /* Esto lo mantiene centrado respecto a su contenedor */
 }
 
-/* ======= Ícono del Menú ======= */
-.dropdown-icon {
-  font-size: 1.8em;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  color: rgb(153, 147, 147);
-  transform: translateX(-50px);
-  z-index: 1002;
-  margin-top: 0px;
-}
+
+
 
 /* ======= Menú Desplegable ======= */
 .dropdown {
-  position: relative;
+  position: absolute;
   background-color: inherit;
   color: #222;
-  margin-left: -40%
+  margin-left: -40%;
+  margin-top: 10%;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 150%;
-  right: 0;
+  top: 10%;
+  left: 10px;
   background-color: var(--navbar-bg);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   z-index: 1003;
-  padding: 10px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  min-width: 150px;
+  gap: 5px;
+ 
 }
 
 .dropdown-item {
@@ -150,7 +168,7 @@
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  width: 400px;
+  width: 100%;
   max-width: 90%;
 }
 
@@ -177,91 +195,340 @@
   background-color: #c9302c;
 }
 
-/* ======= Responsividad ======= */
-@media (max-width: 1137px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 15px;
-  }
 
-  .navbar-logo img {
-    width: 130px;
-  }
-
-  .user-name {
-    font-size: 0.9rem;
-    margin-top: 20%;
-    margin-left: 4%;
-  }
-
- 
-}
-
-@media (max-width: 349px) {
- 
-
-  .user-name {
-    font-size: 0.9rem;
-    margin-top: 20%;
-    margin-left: 4%;
-  }
-
- 
-}
-
-/* Rango de 350px a 1069px (Pantallas medianas) */
-@media (min-width: 350px) and (max-width: 1069px) {
-
-  .cabezadepagina{
-    position: absolute;
-          top: -49%; 
-          left: 49%;
-          transform: translateX(-50%);
-          z-index: 1001; 
-          width: 130%;
-          height: 44%;
-          margin: 1%;
-  }
-
-  
   /* ======= Ícono del Menú ======= */
-  .container .dropdown-icon {
-    font-size: 1.8em;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    color: rgb(153, 147, 147);
-    transform: translateX(-50px);
-    z-index: 1002;
-    margin-top: 0px;
-   
-  }
+/* ======= Ícono del Menú ======= */
+.dropdown-icon {
+  position: absolute; /* Mantén el ícono en una posición absoluta */
+  font-size: 1.8em;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  color: rgb(153, 147, 147);
+  transform: translateX(-50%); /* Esto lo mantiene centrado respecto a su contenedor */
+  z-index: 1002;
+  margin-top: -45px; /* Si quieres controlarlo, ajusta este valor */
+  left: 50%; /* Esto centrará el ícono con respecto a su contenedor */
+}
+
+/* ======= Menú Desplegable ======= */
+.container .dropdown {
+  position: relative; /* Lo dejé como estaba, pero ajusté algunos valores para asegurarme de que no se muevan juntos */
+  background-color: inherit;
+  color: #222;
+  margin-left: -155px; /* Mantengo la posición como estaba */
+  margin-top: 100px; /* Lo mantengo igual */
+  width: 13%;
+}
+
+@media (max-width: 600px) {
+
+  /* ======= Navbar General ======= */
+.container .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: -13px;
+  left: -1px;
+  width: 101%;
+  height: 15%;
+  z-index: 1000;
+  flex-wrap: wrap;
+  color: var(--navbar-text);
+}
+.dropdown {
+  position: relative;
+  background-color: inherit;
+  color: #222;
+  margin-left: -150px;
+  margin-top: 200px;
+}
+.paginaimagen11 {
+  margin-top: 0; /* Elimina el margen superior para que no baje demasiado */
+  position: absolute; /* Fija la imagen en su contenedor */
   
-  /* ======= Menú Desplegable ======= */
+  width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+  height: 10px; /* Mantén la altura de la imagen constante */
+  left: -8%; /* Centra la imagen en el contenedor */
+  
+}
+}
+
+@media (min-width: 350px) and (max-width: 408px) {
+
+  /* ======= Navbar General ======= */
+.container .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  /* margin-top: -80px; */
+  left: -1px;
+  width: 101%;
+  height: 15%;
+  z-index: 1000;
+  flex-wrap: wrap;
+  color: var(--navbar-text);
+  margin-top: -16px;
+}
+
+  
+}
+
+/* ESTILOS PARA IMAGEN VIOLETA PRINCIPAL SUPERIOR */
+
+/* Media query para pantallas pequeñas (móviles) */
+@media (max-width: 800px) {
+  .paginaimagen11 {
+    position: relative; /* Fija la imagen en su contenedor */
+    margin-top: 30px; /* Ajusta la posición hacia arriba */
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 25px; /* Mantén la altura de la imagen constante */
+    left: -2%; /* Centra la imagen en el contenedor */
+    
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: fixed;
+   
+    left: -1px;
+    width: 101%;
+    height: 10%;
+    z-index: 1000;
+    flex-wrap: wrap;
+    color: var(--navbar-text);
+    margin-top: -8vh;
+  }
+}
+
+@media (max-width: 1069px) {
+  .paginaimagen11 {
+   
+    position: relative; /* Fija la imagen en su contenedor */
+   
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 25px; /* Mantén la altura de la imagen constante */
+    left: -2%; /* Centra la imagen en el contenedor */
+    
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+    /* margin-top: -80px; */
+    left: -1px;
+    width: 101%;
+    height: 13%;
+    z-index: 1000;
+    flex-wrap: wrap;
+    color: var(--navbar-text);
+    margin-top: -5vh;
+  }
+}
+
+@media (min-width: 1070px) and (max-width: 1359px) {
+ 
+  .paginaimagen11 {
+    
+    position: relative; /* Fija la imagen en su contenedor */
+    margin-top: 30px; /* Ajusta la posición hacia arriba */
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 25px; /* Mantén la altura de la imagen constante */
+    left: -2%; /* Centra la imagen en el contenedor */
+    
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    /* margin-top: -65px; */
+    left: -1px;
+    width: 101%;
+    height: 13%;
+    z-index: 1000;
+    flex-wrap: wrap;
+    color: var(--navbar-text);
+    margin-top: -4vh;
+  }
   .dropdown {
     position: relative;
     background-color: inherit;
     color: #222;
-    margin-left: 10%;
-    margin-top: 30%
+    margin-left: -150px;
+    margin-top: 200px;
   }
-  
+}
+
+@media (max-width: 1366px) {
+ 
+  .paginaimagen11 {
+    
+    position: relative; /* Fija la imagen en su contenedor */
+    margin-top: 30px; /* Ajusta la posición hacia arriba */
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 25px; /* Mantén la altura de la imagen constante */
+    left: -2%; /* Centra la imagen en el contenedor */
+    
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    /* margin-top: -65px; */
+    left: -1px;
+    width: 101%;
+    height: 13%;
+    z-index: 1000;
+    flex-wrap: wrap;
+    color: var(--navbar-text);
+    margin-top: -4vh;
+  }
+ 
+}
+
+
+
+@media (min-width: 1370px) and (max-width: 2400px) {
+ 
+  .paginaimagen11 {
+    margin-top: 0;
+    position: relative; /* Fija la imagen en su contenedor */
+    top: -30px;
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 25px; /* Mantén la altura de la imagen constante */
+    left: -2%; /* Centra la imagen en el contenedor */
+    
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    margin-top: -50px;
+    left: -1px;
+    width: 101%;
+    height: 13%;
+    z-index: 1000;
+    flex-wrap: wrap;
+    color: var(--navbar-text);
+    margin-top: -7vh;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 768px) {
+ 
+  .paginaimagen11 {
+    
+    position: relative; /* Fija la imagen en su contenedor */
+    margin-top: 30px; /* Ajusta la posición hacia arriba */
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 25px; /* Mantén la altura de la imagen constante */
+    left: -2%; /* Centra la imagen en el contenedor */
+    
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    margin-top: -15px;
+    left: -1px;
+    width: 101%;
+    height: 13%;
+    z-index: 1000;
+    flex-wrap: wrap;
+    color: var(--navbar-text);
+    /* margin-top: 38px; */
+  }
+}
+
+/* Media query para pantallas aún más pequeñas (hasta 600px) */
+@media (max-width: 600px) {
+  .paginaimagen11 {
+    margin-top: 0; /* Elimina el margen superior para que no baje demasiado */
+    position: absolute; /* Fija la imagen en su contenedor */
+    top: 50%; /* Ajusta la posición hacia arriba */
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 18px; /* Mantén la altura de la imagen constante */
+    left: -8%; /* Centra la imagen en el contenedor */
+  }
+}
+
+/* Media query para pantallas muy pequeñas (hasta 360px) */
+@media (max-width: 360px) {
+  .paginaimagen11 {
+    margin-top: 0; /* Elimina el margen superior para que no baje demasiado */
+    position: absolute; /* Fija la imagen en su contenedor */
+    top: 50%; /* Ajusta la posición hacia arriba */
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 18px; /* Mantén la altura de la imagen constante */
+    left: -8%; /* Centra la imagen en el contenedor */
+  }
   
 
 }
 
-@media (min-width: 1366px) and (max-width: 1440px) {
-
-  .cabezadepagina{
-    position: absolute;
-          top: -36%; 
-          left: 48%;
-          transform: translateX(-50%);
-          z-index: 1001; 
-          width: 1460px;
-          height: 40px;
-          margin: 1px;
+/* Ajustes específicos para pantallas más pequeñas */
+@media (max-width: 600px) {
+  .paginaimagen11 {
+    margin-top: 0; /* Elimina el margen superior para que no baje demasiado */
+    position: absolute; /* Fija la imagen en su contenedor */
+    top: 50px; /* Ajusta la posición hacia arriba */
+    width: 100%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 5%; /* Mantén la altura de la imagen constante */
+    left: -8%; /* Centra la imagen en el contenedor */
+  }
+  .dropdown {
+    position: relative;
+    background-color: inherit;
+    color: #222;
+    margin-left: -150px;
+    margin-top: 150px;
   }
   
+}
+
+/* Ajustes aún más pequeños para pantallas hasta 350px */
+@media (max-width: 350px) {
+  .paginaimagen11 {
+  
+    position: relative; /* Fija la imagen en su contenedor */
+    top: 15px; /* Ajusta la posición hacia arriba */
+    width: 50%;  /* Ajusta el ancho de la imagen al 100% */
+    height: 5px; /* Mantén la altura de la imagen constante */
+    left: -8%; /* Centra la imagen en el contenedor */
+    
+  }
+  
+
+  .dropdown {
+    position: relative;
+    background-color: inherit;
+    color: #222;
+    margin-left: -150px;
+    margin-top: 150px;
+  }
 
 }
