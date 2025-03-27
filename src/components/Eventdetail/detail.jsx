@@ -789,7 +789,7 @@ useEffect(() => {
             <p style={{ marginLeft: '-50px' }}><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}</p>
             {event.presentation.map((presentation, index) => (
           <div className="presentation-detail" key={index}>
-            <p style={{ marginLeft: '-85px' }}><FaCalendarAlt style={{ color: 'green' }} /> <strong style={{ margileft:"50px" }}>Fecha:</strong> {presentation.date}</p>
+            <p style={{ marginLeft: '-50px' }}><FaCalendarAlt style={{ color: 'green' }} /> <strong style={{ margileft:"50px" }}>Fecha:</strong> {presentation.date}</p>
             {/* <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentación:</strong> {presentation.performance}</p> */}
             <p style={{ marginLeft: '-50px' }}><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
           </div>
