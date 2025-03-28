@@ -52,7 +52,10 @@ const ShowsList = () => {
   }, [searchQuery, selectedGenre, selectedDate, shows]);
 
   // Extraer las imágenes de los shows para el carrusel
-  const carouselImages = shows.map((show) => show.coverImage).filter(Boolean);
+  const carouselImages = shows
+  .filter((show) => show.state !== false)  // Solo muestra shows activos o sin estado definido
+  .map((show) => show.coverImage)          // Extrae las imágenes de los shows activos
+  .filter(Boolean);
 
   // Obtener todas las fechas de presentaciones sin paginación
   const eventDates = (shows || []).flatMap((show) =>
