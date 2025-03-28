@@ -21,6 +21,15 @@ import axios from "axios";
 import TicketGeneral from './components/GeneralShows/ticketgeneral';
 
 axios.defaults.baseURL = "https://solticket.com/api"; 
+// axios.defaults.baseURL = "http://localhost:3001"; 
+
+
+
+
+
+
+
+axios.defaults.baseURL = "https://solticket.com/api"; 
 
 function App() {
   Modal.setAppElement('#root');
