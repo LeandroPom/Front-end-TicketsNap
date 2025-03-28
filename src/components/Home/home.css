@@ -1,46 +1,61 @@
 /* Estilos para la página Home */
 .home {
-  padding: 30px 20px;
+  padding: 30px 20px;  /* Ajusta los valores de padding según lo necesario */
   font-family: 'Arial', sans-serif;
   margin-top: 60px;
-  text-align: center;
+  text-align: left; /* Si quieres que el texto y los elementos estén alineados a la izquierda */
   transition: background-color 0.3s, color 0.3s;
-  /* No es necesario cambiar nada aquí */
+  max-width: 100vw; /* Limita el ancho máximo al 100% del viewport */
+}
+
+html, body {
+  overflow-x: hidden; /* Evita el desplazamiento horizontal */
+  margin: 0; /* Elimina los márgenes predeterminados */
 }
 
 
-.ticket-image {
-  position: absolute;
-  top: 490px; /* O ajusta la posición según sea necesario */
-  left: 50%;
+
+.ticket-imagemp {
+  position: relative;
+  top: 50%; /* O ajusta la posición según sea necesario */
+  left: 35%;
   transform: translateX(-50%); /* Centra la imagen */
   z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
-  width: 1400px;
+  width: 210%;
   height: 100px;
   margin: 1px;
 }
 
-.ticket-image2 {
-  position: absolute;
-  top: 595px; /* O ajusta la posición según sea necesario */
-  left: 50%;
+.imagenmp {
+  position: relative;
+  top: 50%; /* O ajusta la posición según sea necesario */
+  margin-left: 39% ;
+  width: auto;
+}
+
+.ticket-imagemp2 {
+  position: relative;
+  top: 50%; /* O ajusta la posición según sea necesario */
+  left: 35%;
   transform: translateX(-50%); /* Centra la imagen */
   z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
-  width: 1400px;
+  width: 210%;
   height: 100px;
   margin: 1px;
+
 }
 
 /* Estilos del Footer */
-.footer {
+.container .footer {
   background-color: rgb(71, 71, 71); /* Fondo oscuro */
   color: white; /* Texto blanco */
   padding: 40px 0; /* Espaciado vertical */
   text-align: center; /* Centrado del texto */
   position: relative;
   margin-top:200px;
-  width: 100%;
+  width: 128%;
   bottom: 0;
+  margin-left: -4%
 }
 
 .footer a {
@@ -183,13 +198,14 @@
 
 /* Estilos de la barra de búsqueda y select */
 .searchs-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
   margin-left: 220px;
   padding: 5px 5px;
-  margin-top: 230px
+  margin-top: 85px
 }
 
 .searchs-container input {
@@ -217,17 +233,17 @@
 
 
 /* Contenedor de los botones */
-.paginate-container {
+.container .paginate-container {
   display: flex;
   justify-content: center;  /* Centra los botones horizontalmente */
   flex-wrap: wrap;          /* Permite que los botones se ajusten en varias filas si no hay suficiente espacio */
   gap: 1px;                /* Espacio entre los botones */
   margin-top: 20px;         /* Espacio superior */
-  
+  margin-left: 28%;
 }
 
 /* Estilos para los botones de paginación */
-.paginate-boton {
+.container .paginate-boton {
   padding: 10px 1vw;
   font-size: 0.8rem;           /* Tamaño del texto normal */
   background-color: #FFE57F; /* Amarillo pastel brillante */
@@ -237,6 +253,7 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   margin: 1%;
+ 
 }
 
 /* Efecto hover: al pasar el mouse sobre el botón */
@@ -252,17 +269,18 @@
   padding: 8px 1vw;        /* Tamaño del padding cuando está presionado */
   border-radius: 120%;
   color: black;
+  
 }
 
 
 /* Contenedor de eventos en columnas en Home/ Cards */
-.homecard {
+.container .homecard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin: 10px;
+  gap: 95px; /* Aumenta el gap para separar más las cards */
+  /* margin: 5px; */
+  margin-left: 5%;
   margin-top: 65px;
   z-index: 1;
 }
@@ -281,7 +299,8 @@
 
 /* Cards color de fondo y tamaño de la misma */
 
-.cardshome {
+/* Cards color de fondo y tamaño de la misma */
+.container .cardshome {
   border-radius: 12px;
   padding: 25px;
   transition: all 0.3s ease-in-out;
@@ -292,7 +311,7 @@
   overflow: hidden;
   position: relative;
   background: #ffffff;
-  min-height: 400px;  /* Establecemos una altura mínima constante para las cards */
+  min-height: 300px;  /* Establecemos una altura mínima constante para las cards */
   width: 200px;
   display: flex;
   flex-direction: column;  /* Organiza los elementos en una columna */
@@ -472,7 +491,11 @@ li:hover .event-image {
 
 
 /* Estilo responsivo */
-@media (max-width: 360px) {
+@media (max-width: 350px) {
+
+
+  
+  /* Home Section */
   .home {
     padding: 20px 15px;
   }
@@ -481,28 +504,22 @@ li:hover .event-image {
     font-size: 24px;
   }
 
-/* Contenedor de los botones */
-.paginate-container {
-  display: flex;
-  justify-content: center;  /* Centra los botones horizontalmente */
-  flex-wrap: wrap;          /* Permite que los botones se ajusten en varias filas si no hay suficiente espacio */
-  gap: 10px;                /* Espacio entre los botones */
-  margin-top: 20px;         /* Espacio superior */
-  margin-right: -70%;
-}
+  /* Contenedor de los botones */
+  .paginate-container {
+    display: flex;
+    justify-content: center;  /* Centra los botones horizontalmente */
+    flex-wrap: wrap;          /* Permite que los botones se ajusten en varias filas si no hay suficiente espacio */
+    gap: 10px;                /* Espacio entre los botones */
+    margin-top: 20px;         /* Espacio superior */
+  }
 
-
-
-  
-
+  /* Ubicación de las cards responsivas */
   .homecard {
     grid-template-columns: repeat(2, 1fr); /* Dos tarjetas por fila */
     gap: 16px; /* Espacio entre las tarjetas */
-    margin-left: 100%;
+    margin-left: 0;  /* Elimina el margen izquierdo para evitar el desbordamiento */
   }
 
-  
-  /* UBICACION DE LAS CARDS RESPONSIVAS */
   .cardshome {
     border-radius: 12px;
     padding: 15px;
@@ -514,11 +531,10 @@ li:hover .event-image {
     overflow: hidden;
     position: relative;
     background: #ffffff;
-    /* backgroud de las cards */
     max-height: 400px;
-    width: 300px;
-    margin-left: -59px;
-    /* margen por defecto */
+    width: 100%;  /* Ajustamos el ancho al 100% para que se ajuste mejor en pantallas pequeñas */
+    margin-left: -35px;  /* Elimina el margen izquierdo para evitar el desbordamiento */
+    
   }
 
   li {
@@ -548,48 +564,44 @@ li:hover .event-image {
     width: 50%;
   }
 
-
   /* Estilos de la barra de búsqueda y select */
-.searchs-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 30px;
-  margin-left: 220px;
-  padding: 5px 5px;
-  margin-top: 200%;
-}
+  .searchs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;  /* Reducimos el margen inferior */
+    margin-left: -30px;  /* Elimina el margen izquierdo innecesario */
+    padding: 5px;
+    margin-top: 20px;  /* Ajustamos para que no se desplace demasiado hacia abajo */
+    width: 100%;  /* Aseguramos que ocupe todo el ancho disponible */
+  }
 
-.searchs-container input {
-  padding: 10px 150px;
-  margin: 3px;
-  border: 2px solid #e9aa16;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: #ffffff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  .searchs-container input {
+    padding: 10px 20px;  /* Reducimos el padding para un ajuste más adecuado */
+    margin: 3px;
+    border: 2px solid #e9aa16;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #ffffff;
+    width: 100%;  /* Ajustamos para que ocupe todo el ancho disponible */
+    box-sizing: border-box;
+  }
 
-
-}
-
-
-.searchs-container select {
-  padding: 5px 25px;
-  margin: 3px;
-  border: 1px solid #e9aa16;
-  border-radius: 8px;
-  font-size: 12px;
-  background-color: #FFD166;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
+  .searchs-container select {
+    padding: 5px 20px;  /* Ajustamos el padding */
+    margin: 3px;
+    border: 1px solid #e9aa16;
+    border-radius: 8px;
+    font-size: 12px;
+    background-color: #FFD166;
+    width: 100%;  /* Ajustamos para que ocupe todo el ancho disponible */
+    box-sizing: border-box;
+  }
 
   /* Estilo para el botón del calendario RESPONSIVE */
   .calendar-button-container {
     display: flex;
     justify-content: flex-start;
-    transform: translateX(-5px);
-    /* Desplaza el botón hacia la izquierda */
     margin: 3px;
   }
 
@@ -600,7 +612,7 @@ li:hover .event-image {
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
   }
 
   .calendar-popup {
@@ -653,7 +665,7 @@ li:hover .event-image {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    margin-left: 10px;
+    margin-left: 9px;
     width: auto;
     display: inline-block;
   }
@@ -661,18 +673,19 @@ li:hover .event-image {
   .reset-button:hover {
     background-color: #d32f2f;
   }
-
-
   /* Estilos del Footer */
-.footer {
+/* Footer */
+.container .footer {
   background-color: rgb(71, 71, 71); /* Fondo oscuro */
   color: white; /* Texto blanco */
   padding: 40px 0; /* Espaciado vertical */
   text-align: center; /* Centrado del texto */
   position: relative;
-  margin-top:200px;
-  width: 235%;
+  margin-top: 50px; /* Ajustado el margen superior */
+  width: 125%; /* Aseguramos que el ancho sea 100% */
   bottom: 0;
+  box-sizing: border-box;
+  margin-left: -40px; /* Elimina el margen izquierdo innecesario */
 }
 
 .footer a {
@@ -704,7 +717,8 @@ li:hover .event-image {
   background-color: #fff;
   padding: 30px;
   border-radius: 8px;
-  width: 400px;
+  width: 80%; /* Ajustado a un porcentaje más flexible */
+  max-width: 400px; /* Para evitar que sea demasiado grande */
   text-align: center;
   position: relative;
 }
@@ -725,22 +739,6 @@ li:hover .event-image {
 .modal-body {
   margin-top: 20px;
 }
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.footer-links a {
-  margin: 0 20px;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-
 
 /* Contenedor de texto que se desplaza */
 .scrolling-text-container {
@@ -764,7 +762,7 @@ li:hover .event-image {
   white-space: nowrap; /* Evita que el texto se divida en varias líneas */
   color: white;
   font-size: 20px; /* Tamaño de fuente */
-  animation: scrollText 40s linear infinite; /* Animación que dura 10s y se repite infinitamente */
+  animation: scrollText 40s linear infinite;
   font-size: medium;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
@@ -791,28 +789,48 @@ li:hover .event-image {
   text-decoration: none; /* Elimina el subrayado */
 }
 
-.social-links:hover {
-  opacity: 5; /* Efecto al pasar el mouse */
+.social-links a:hover {
+  opacity: 0.8; /* Efecto al pasar el mouse */
 }
 
-}
-
-
-
+/* Media Query para pantallas pequeñas */
 @media (max-width: 360px) {
-  .ticket-image {
-    width: 230%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 20%; /* Mantiene la proporción */
-    top: 85%;  /* Ajusta la posición según sea necesario */
-    margin-left: 55%; /* El margen izquierdo lo eliminamos para centrar la imagen */
+  
+  .ticket-imagemp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 35%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 210%;
+    height: 100px;
+    margin: 1px;
+  }
+  
+  .imagenmp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    margin-left: 39% ;
+    width: auto;
+  }
+  
+  .ticket-imagemp2 {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 35%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 210%;
+    height: 100px;
+    margin: 1px;
+  
   }
 }
+}
 
-
-
-
-/* Estilo responsivo */
+/* Media Query para pantallas medianas */
 @media (max-width: 1069px) {
+
   .home {
     padding: 30px 20px;
   }
@@ -821,17 +839,13 @@ li:hover .event-image {
     font-size: 24px;
   }
 
-
-  /* Contenedor de los botones */
-.paginate-container {
-  display: flex;
-  justify-content: center;  /* Centra los botones horizontalmente */
-  flex-wrap: wrap;          /* Permite que los botones se ajusten en varias filas si no hay suficiente espacio */
-  gap: 10px;                /* Espacio entre los botones */
-  margin-top: 20px;         /* Espacio superior */
-  margin-right: -100%;
-}
-
+  .paginate-container {
+    display: flex;
+    justify-content: center;  /* Centra los botones horizontalmente */
+    flex-wrap: wrap;          /* Permite que los botones se ajusten en varias filas si no hay suficiente espacio */
+    gap: 10px;                /* Espacio entre los botones */
+    margin-top: 20px;         /* Espacio superior */
+  }
 
   /* UBICACION DE LAS CARDS RESPONSIVAS */
   .cardshome {
@@ -845,84 +859,49 @@ li:hover .event-image {
     overflow: hidden;
     position: relative;
     background: #ffffff;
-    /* backgroud de las cards */
-    max-height: 400px;
-    width: 200px;
-    margin-left: -5%;
-    /* margen por defecto */
+    width: 100%;
+    
   }
-
-  li {
-    padding: 12px;
-  }
-
-  li h3 {
-    font-size: 18px;
-  }
-
-  li p {
-    font-size: 13px;
-  }
-
   .event-image {
     height: 120px;
   }
-
   .buttonhome {
     font-size: 12px;
     padding: 6px 10px;
   }
-
-  .buttonhomereset {
-    font-size: 12px;
-    padding: 6px 10px;
-    width: 50%;
+  .searchs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 50%; /* Reducido el margen superior */
+    padding: 5px;
   }
-
-  /* Estilos de la barra de búsqueda y select */
-.searchs-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 30px;
-  margin-left: 100%;
-  padding: 5px 5px;
-  margin-top: 90%;
-}
-
-.searchs-container input {
-  padding: 15px 150px;
-  margin: 3px;
-  border: 2px solid #e9aa16;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: #ffffff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-
-
-}
-
-
-.searchs-container select {
-  padding: 5px 25px;
-  margin: 3px;
-  border: 1px solid #e9aa16;
-  border-radius: 8px;
-  font-size: 12px;
-  background-color: #FFD166;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-
-  /* Estilo para el botón del calendario RESPONSIVE */
+  .searchs-container input {
+    padding: 15px 20px; /* Ajuste más flexible */
+    margin: 5px;
+    border: 2px solid #e9aa16;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .searchs-container select {
+    padding: 5px 25px;
+    margin: 5px;
+    border: 1px solid #e9aa16;
+    border-radius: 8px;
+    font-size: 12px;
+    background-color: #FFD166;
+    width: 100%;
+    box-sizing: border-box;
+  }
   .calendar-button-container {
     display: flex;
     justify-content: flex-start;
-    transform: translateX(-5px);
-    /* Desplaza el botón hacia la izquierda */
-    margin: 3px;
+    margin: 5px;
   }
-
   .calendar-button {
     background-color: transparent;
     color: #e9b118;
@@ -930,51 +909,12 @@ li:hover .event-image {
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
   }
-
-  .calendar-popup {
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    background-color: #fcdb8f;
-    padding: 0;
-    border-radius: 8px;
-    color: #000000;
-  }
-
   .react-calendar {
     background: transparent;
     border: none;
   }
-
-  .react-calendar__navigation button {
-    color: black !important;
-  }
-
-  .react-calendar__navigation__label {
-    color: black !important;
-  }
-
-  .react-calendar__tile {
-    color: rgb(255, 0, 0);
-  }
-
-  .react-calendar__tile--now {
-    background: transparent;
-  }
-
-  .react-calendar__tile--active {
-    background: transparent;
-  }
-
-  .react-calendar__tile--hasActive {
-    color: green;
-    background: #fcdb8f;
-  }
-
   .reset-button {
     color: rgb(153, 20, 20);
     border: none;
@@ -983,82 +923,106 @@ li:hover .event-image {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    margin-left: 10px;
-    width: auto;
-    display: inline-block;
   }
-
   .reset-button:hover {
     background-color: #d32f2f;
   }
+}
+/* Estilos para pantallas pequeñas (menores a 600px) */
+@media (max-width: 600px) {
 
-
-
-  .dark .whatsapp-link {
-    color: white;
-    /* Color del texto */
-  }
-
-
+  /* Efecto hover: al pasar el mouse sobre el botón */
+.container .paginate-boton:hover {
+  background-color: #FFB74D; /* Naranja pastel brillante */
+  transform: scale(1.05);     /* Efecto de agrandar ligeramente */
+ 
 }
 
-/* Rango de 360px a 1069px (Pantallas medianas) */
-@media (min-width: 361px) and (max-width: 1069px) {
+/* Efecto active: cuando el botón está presionado */
+.container .paginate-botonact {
+  background-color: #df9d23; /* Amarillo-naranja pastel brillante */
+  transform: scale(0.60);    /* Efecto de reducir el tamaño cuando se presiona */
+  padding: 8px 1vw;        /* Tamaño del padding cuando está presionado */
+  border-radius: 120%;
+  color: black; 
+}
+  .container .paginate-boton {
+    padding: 10px 1vw;
+    font-size: 0.8rem;           /* Tamaño del texto normal */
+    background-color: #FFE57F; /* Amarillo pastel brillante */
+    color: #333;               /* Color oscuro para el texto */
+    border: 2px solid #FFD166; /* Amarillo-naranja pastel brillante */
+    border-radius: 12%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 1%;
+    margin-left: 2%  
+  }
+  .ticket-imagemp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 21%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 200%;
+    height: 50px;
+    margin: 1px;
+  }
+  .imagenmp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    margin-left: 39% ;
+    width: auto;
+  }
+  .ticket-imagemp2 {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 21%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 200%;
+    height: 50px;
+    margin: 1px;
+  
+  }
   .searchs-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
-    margin-left: 130%;
-    padding: 5px 5px;
-    margin-top: 300px;
+    padding: 5px 15px;
+    flex-direction: column;
+    margin-left: -8%
   }
-
-  .ticket-image {
-    width: 220%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 20%; /* Mantiene la proporción */
-    top: 85%;  /* Ajusta la posición según sea necesario */
-    margin-left: 55%; /* El margen izquierdo lo eliminamos para centrar la imagen */
-  }
-  
-  .ticket-image2 {
-    width: 220%;  /* Ajustamos el tamaño a un porcentaje */
-    height: 20%; /* Mantiene la proporción */
-    top: 107%;  /* Ajusta la posición según sea necesario */
-    margin-left: 55%; /* El margen izquierdo lo eliminamos para centrar la imagen */
-  }
-
   .searchs-container input {
-    padding: 15px 60vw;
-    margin: 3px;
+    padding: 15px 20px;
+    margin: 10px 0;
     border: 2px solid #e9aa16;
     border-radius: 8px;
     font-size: 16px;
     background-color: #ffffff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  
-  
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 5%;  
   }
-  
-  
   .searchs-container select {
     padding: 5px 25px;
-    margin: 3px;
+    margin: 10px 0;
     border: 1px solid #e9aa16;
     border-radius: 8px;
     font-size: 12px;
     background-color: #FFD166;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 5%
   }
-
   .homecard {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Máximo de 4 tarjetas por fila */
-    gap: 16px; /* Espacio entre las tarjetas */
-    margin-left: 110%; /* Considera revisar este valor de margen */
+    grid-template-columns: 1fr; /* Una tarjeta por fila */
+    gap: 16px;
+    margin: 0 auto; /* Centrado de las tarjetas */
+    margin-left: -10%
   }
-
-
   .cardshome {
     border-radius: 12px;
     padding: 15px;
@@ -1070,159 +1034,153 @@ li:hover .event-image {
     overflow: hidden;
     position: relative;
     background: #ffffff;
-    /* backgroud de las cards */
-    max-height: 400px;
-    width: 200px;
-    display: flex;
-    z-index: 1;
+    width: 90%;
+    margin-left: -16%
   }
-  
   .dark .cardshome {
     background: #000000;
-    /* backgroud de las cards */
+  }
+  .container .footer {
+    background-color: rgb(71, 71, 71);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    width: 120%;
+    margin-top: 20px;
+    margin-left: -27px   
+  }
+  .footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 14px; 
+  }
+  .footer a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Estilos para pantallas medianas (de 361px a 1069px) */
+@media (min-width: 361px) and (max-width: 1069px) {
+
+.searchs-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+      margin-top: 50%; /* Reducido el margen superior */
+      padding: 5px;
+    }
+    .ticket-imagemp{
+      width: 235%;  /* Ajustamos el tamaño a un porcentaje */
+      
+    }
+    .ticket-imagemp2 {
+      width: 235%;  /* Ajustamos el tamaño a un porcentaje */
+     
+    }
+  .searchs-container input {
+    padding: 15px 40px;
+    margin: 5px;
+    border: 2px solid #e9aa16;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 100%;
   }
 
+  .searchs-container select {
+    padding: 5px 25px;
+    margin: 5px;
+    border: 1px solid #e9aa16;
+    border-radius: 8px;
+    font-size: 12px;
+    background-color: #FFD166;
+    width: 100%;
+    box-sizing: border-box;  
+  }
+  .homecard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos tarjetas por fila */
+    gap: 16px;
+  }
+  .cardshome {
+    border-radius: 12px;
+    padding: 15px;
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 5px solid #eca624;
+    overflow: hidden;
+    position: relative;
+    background: #ffffff;
+    width: 100%; 
+  }
+  .dark .cardshome {
+    background: #000000;
+  }
+  .footer {
+    background-color: rgb(71, 71, 71);
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 40px;
+    width: 120%;
+    margin-left: -25px
   
-
-  /* Estilos del Footer */
-.footer {
-  background-color: rgb(71, 71, 71); /* Fondo oscuro */
-  color: white; /* Texto blanco */
-  padding: 40px 0; /* Espaciado vertical */
-  text-align: center; /* Centrado del texto */
-  position: relative;
-  margin-top: 200px;
-  width: 250%;
-  bottom: 0;
-}
-
-.footer a {
-  color: white; /* Enlaces blancos */
-  text-decoration: none; /* Sin subrayado en los enlaces */
-  margin: 0 15px; /* Espaciado horizontal entre los enlaces */
-  font-size: 14px;
-}
-
-.footer a:hover {
-  text-decoration: underline; /* Subrayado al pasar el ratón */
-}
-
-/* Modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  width: 400px;
-  text-align: center;
-  position: relative;
-}
-
-.close-button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 50%;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.modal-body {
-  margin-top: 20px;
-}
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.footer-links a {
-  margin: 0 20px;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-
-
-/* Contenedor de texto que se desplaza */
-.scrolling-text-container {
-  position: relative;
-  width: 100%;
-  background-color: rgb(212, 207, 207); /* Fondo negro */
-  overflow: hidden; /* Esconde cualquier cosa fuera del contenedor */
-  height: 50px; /* Ajusta la altura según sea necesario */
-}
-
-.dark .scrolling-text-container {
-  position: relative;
-  width: 100%;
-  background-color: rgb(129, 129, 129); /* Fondo negro */
-  overflow: hidden; /* Esconde cualquier cosa fuera del contenedor */
-  height: 50px; /* Ajusta la altura según sea necesario */
-}
-
-.scrollings-text {
-  position: absolute;
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-  color: white;
-  font-size: 20px; /* Tamaño de fuente */
-  animation: scrollText 40s linear infinite; /* Animación que dura 10s y se repite infinitamente */
-  font-size: medium;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-
-/* Definir la animación */
-@keyframes scrollText {
-  0% {
-    transform: translateX(70%); /* Comienza fuera de la pantalla a la derecha */
   }
-  100% {
-    transform: translateX(-100%); /* Termina fuera de la pantalla a la izquierda */
+  .footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;  
+  }
+  .footer a:hover {
+    text-decoration: underline;
   }
 }
-
-/* Estilos para los íconos de redes sociales */
-.social-links {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.social-links a {
-  color: inherit; /* Hereda el color de cada ícono */
-  text-decoration: none; /* Elimina el subrayado */
-}
-
-.social-links:hover {
-  opacity: 5; /* Efecto al pasar el mouse */
-}
-  
-}
-
-/* Media Query para pantallas más grandes (más de 1069px) */
+/* Estilos para pantallas grandes (más de 1069px) */
 @media (min-width: 1069px) {
   .homecard {
-    grid-template-columns: repeat(4, 1fr); /* Máximo de 4 tarjetas por fila */
-    gap: 16px; /* Espacio entre las tarjetas */
+    grid-template-columns: repeat(3, 1fr); /* Tres tarjetas por fila */
+    gap: 16px;
+  }
+  .cardshome {
+    border-radius: 12px;
+    padding: 15px;
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 5px solid #eca624;
+    overflow: hidden;
+    position: relative;
+    background: #ffffff;
+    width: 90%;
+    /* margin: 0 auto; */
+  }
+  .dark .cardshome {
+    background: #000000;
+  }
+  .footer {
+    background-color: rgb(71, 71, 71);
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    margin-top: 100px;
+    width: 190%;
+    margin-left: -25px
+  }
+  .footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 14px;
+  }
+  .footer a:hover {
+    text-decoration: underline;
   }
 }
-

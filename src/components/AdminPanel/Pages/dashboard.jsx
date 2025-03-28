@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [metrics, setMetrics] = useState({
     users: 0,
     shows: 0,
-    places: 0,
+    tickets: 0,
     seats: 0,
   });
   const [loading, setLoading] = useState(true);
@@ -42,10 +42,12 @@ const Dashboard = () => {
     try {
       const response = await axios.get("/analitics/");
       const data = response.data;
+
+      console.log(response.data, " datos de los tickets")
       setMetrics({
         users: data.users?.length,
         shows: data.shows?.length,
-        places: data.places?.length,
+        tickets: data.tickets?.length,
         seats: data.seats?.reduce((acc, seat) => acc + seat, 0), // Sumar los asientos si es necesario
       });
       setLoading(false);
@@ -57,21 +59,21 @@ const Dashboard = () => {
   };
 
   const barData = {
-    labels: ["Usuarios", "Shows", "Lugares", "Asientos"],
+    labels: ["Usuarios", "Shows", "Tickets", "Asientos"],
     datasets: [
       {
         label: "Cantidad",
-        data: [metrics.users, metrics.shows, metrics.places, metrics.seats],
+        data: [metrics.users, metrics.shows, metrics.tickets, metrics.seats],
         backgroundColor: ["#007bff", "#28a745", "#ffc107", "#dc3545"],
       },
     ],
   };
 
   const doughnutData = {
-    labels: ["Usuarios", "Shows", "Lugares", "Asientos"],
+    labels: ["Usuarios", "Shows", "Tickets", "Asientos"],
     datasets: [
       {
-        data: [metrics.users, metrics.shows, metrics.places, metrics.seats],
+        data: [metrics.users, metrics.shows, metrics.tickets, metrics.seats],
         backgroundColor: ["#007bff", "#28a745", "#ffc107", "#dc3545"],
       },
     ],
@@ -99,8 +101,8 @@ const Dashboard = () => {
           <p>{metrics.shows}</p>
         </div>
         <div className="metric-card">
-          <h3>Lugares</h3>
-          <p>{metrics.places}</p>
+          <h3>Tickets</h3>
+          <p>{metrics.tickets}</p>
         </div>
         <div className="metric-card">
           <h3>Asientos</h3>
@@ -110,7 +112,7 @@ const Dashboard = () => {
 
       <div className="charts-container">
         <div className="chart">
-          <h3>Diatribucion de recursos</h3>
+          <h3>Distribucion de recursos</h3>
           <Bar data={barData} />
         </div>
         <div className="chart">

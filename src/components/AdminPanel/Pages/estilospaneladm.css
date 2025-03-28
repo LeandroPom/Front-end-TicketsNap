@@ -14,6 +14,11 @@
   margin-bottom: 20px;
 }
 
+.create-place-form {
+  margin-left: 150px;
+  margin-bottom: 20px;
+}
+
 .botonedit{
   background-color: #f1b11a; /* naranja llamativo */
   color: #000000;
@@ -107,7 +112,7 @@
   font-weight: bold;
   cursor: pointer;
   margin-top: 23px;
-  margin-left: 10px; /* Añade espacio entre los botones */
+  margin-left: 150px; /* Añade espacio entre los botones */
   font-weight: bold;
 }
 
@@ -206,6 +211,7 @@
   justify-content: space-around;
   margin-bottom: 40px;
   z-index: 999;
+  margin-left: 15%
 }
 
 .metric-card {
@@ -218,6 +224,7 @@
   border-radius: 10px;
   font-weight: bold;
   z-index: 999;
+  
 }
 
 .dark .metric-card{
@@ -245,6 +252,7 @@
   z-index: 999;
   background-color: #FFFFFF;
   border-radius: 16px;
+  margin-left: 18%
 }
 
 .dark .charts-container {
@@ -252,7 +260,7 @@
 }
 
 .chart {
-  width: 45%;
+  width: 60%;
 }
 
 /* EventManager.css */
@@ -260,7 +268,7 @@
   padding: 20px;
   z-index: 20;
   margin-top: 125px; /* Ajustado para no solaparse con la navbar */
-  margin-right: 200px;
+  margin-left: 20%;
 
 }
 
@@ -359,9 +367,9 @@
   align-items: center;
   position: fixed;
   width: 100%;
-  top: 18%;
+  top: 20%;
   z-index: 1000; /* Asegura que la navbar esté siempre por encima de todo */
-  margin-left: -270px ;
+  margin-left: -290px ;
 }
 
 .dark .admin-header {
@@ -616,5 +624,22 @@ tr:nth-child(even) {
 
 .pagination-button.active {
   background-color: #db9c28;
+}
+
+
+@media (max-width: 600px) {
+  .admin-header {
+    background-color: #FFFFFF;
+    /* color: rgb(0, 0, 0); */
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 14%;
+    z-index: 1000; /* Asegura que la navbar esté siempre por encima de todo */
+    margin-left: -30px ;
+  }
 }
 

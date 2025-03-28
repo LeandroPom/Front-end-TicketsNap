@@ -77,7 +77,7 @@ const GeneralZoneForm = () => {
         customClass: {
           popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
         }
-      }).then(() => navigate('/'));
+      }).then();
     } catch (error) {
       Swal.fire({
         title: 'Error al crear la zona',
@@ -137,6 +137,11 @@ const GeneralZoneForm = () => {
       )}
 
       <button type="submit" className="custom-button">Guardar Zona</button>
+       {/* Botón para cerrar el formulario y redirigir al home */}
+    <button
+      type="button"
+      onClick={() => navigate('/')}
+      className="custom-button">Cerrar</button>
     </form>
   );
 };

@@ -52,7 +52,10 @@ const ShowsList = () => {
   }, [searchQuery, selectedGenre, selectedDate, shows]);
 
   // Extraer las imágenes de los shows para el carrusel
-  const carouselImages = shows.map((show) => show.coverImage).filter(Boolean);
+  const carouselImages = shows
+  .filter((show) => show.state !== false)  // Solo muestra shows activos o sin estado definido
+  .map((show) => show.coverImage)          // Extrae las imágenes de los shows activos
+  .filter(Boolean);
 
   // Obtener todas las fechas de presentaciones sin paginación
   const eventDates = (shows || []).flatMap((show) =>
@@ -171,16 +174,24 @@ const ShowsList = () => {
 
       <div>
         <Carousel images={carouselImages} isVideoPlaying={isVideoPlaying} /> {/* Pasamos el estado al carrusel */}
+
+            
+  
+
+        <div className='imagenmp'>
+
         <img
   src="/images/mpticketsol.png"
   alt="Sol Ticket"
-  className="ticket-image"
+  className="ticket-imagemp"
 />
 <img
   src="/images/MP-2.png"
   alt="Sol Ticket"
-  className="ticket-image2"
+  className="ticket-imagemp2"
 />
+
+        </div>
       </div>
       {/* Barra de búsqueda y filtro */}
       <div className="searchs-container">
@@ -650,13 +661,3 @@ const ShowsList = () => {
 };
 
 export default ShowsList;
-
-
-
-
-
-
-
-
-
-

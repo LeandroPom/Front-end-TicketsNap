@@ -230,7 +230,7 @@ const TicketDetail = () => {
           <strong>Fecha:</strong> {eventDetails.presentation?.date}
         </p>
         <p>
-          <strong>Ubicación:</strong> Floresta
+          {/* <strong>Ubicación:</strong> Floresta */}
         </p>
         <p>
           <strong>Hora de inicio:</strong> {eventDetails.presentation?.time?.start}

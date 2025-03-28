@@ -103,6 +103,7 @@ const Ticketscan = () => {
 
       <p><strong>Nombre:</strong> {ticket.name}</p>
       <p><strong>Email:</strong> {ticket.mail}</p>
+      <p><strong>DNI:</strong> {ticket.dni}</p>
       <p><strong>Teléfono:</strong> {ticket.phone}</p>
       <p><strong>Fecha:</strong> {eventDate}</p>
       <p><strong>Hora:</strong> {eventTime}</p>
