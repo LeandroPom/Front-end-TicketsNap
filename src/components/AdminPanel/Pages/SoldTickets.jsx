@@ -411,6 +411,9 @@ return (
               <td>{date}</td>
               <td>{time}</td>
               <td>
+                {/* Mostrar botones solo si el usuario es administrador */}
+            {user.isAdmin && (
+              <>
                 <button
                   onClick={() => cancelTicket(ticket)}
                   className="cancel-button"
@@ -418,13 +421,14 @@ return (
                   Cancelar Ticket
                 </button>
 
-                {/* Botón Regalar Ticket */}
-          <button
-            onClick={() => giftTicket(ticket)}
-            className="cancel-button"
-          >
-            Regalar.  Ticket.
-          </button>
+                <button
+                  onClick={() => giftTicket(ticket)}
+                  className="cancel-button"
+                >
+                  Regalar Ticket
+                </button>
+              </>
+            )}
               </td>
             </tr>
           );
