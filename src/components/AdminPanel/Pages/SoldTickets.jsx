@@ -76,74 +76,62 @@ const fetchUsers = async () => {
   }
 };
 
-  const filterTickets = () => {
-    let filtered = tickets;
+const filterTickets = () => {
+  let filtered = tickets;
 
-        // Filtro por Tickets Regalados (price === 0)
-if (giftedFilter !== null) {
-  const filterGifted = giftedFilter === "true";
-  filtered = filtered.filter(ticket => 
-    (giftedFilter === "true" && ticket.price === 0) || 
-    (giftedFilter === "false" && ticket.price !== 0)
-  );
-}
+  // Filtro por Tickets Regalados (price === 0)
+  if (giftedFilter !== null) {
+    const filterGifted = giftedFilter === "true";
+    filtered = filtered.filter(ticket => 
+      (giftedFilter === "true" && ticket.price === 0) || 
+      (giftedFilter === "false" && ticket.price !== 0)
+    );
+  }
 
-    // Filtramos por división, estado de cancelación y nombre del show si se aplica
-    if (divisionFilter) {
-      filtered = filtered.filter(ticket => ticket.division === divisionFilter);
-    }
+  // Filtro por división (para tribunas generales)
+  if (divisionFilter) {
+    filtered = filtered.filter(ticket => ticket.division === divisionFilter);
+  }
 
-   
+  // Si el ticket no tiene fila ni asiento (caso de tribunas generales), no agrupamos
+  const tribunasGenerales = filtered.filter(ticket => !ticket.row && !ticket.seat);
 
+  // Filtro por cancelación si se aplica
+  if (canceledFilter !== null) {
+    const filterState = canceledFilter === "true";
+    filtered = filtered.filter(ticket => ticket.state === filterState);
+  }
 
-    if (canceledFilter !== null) {
-      // Convertir canceledFilter a un valor booleano para la comparación
-      const filterState = canceledFilter === "true";
-      filtered = filtered.filter(ticket => ticket.state === filterState);
-    }
+  // Filtro por fecha
+  if (dateFilter) {
+    filtered = filtered.filter(ticket => ticket.date === dateFilter);
+  }
 
-    if (dateFilter) {
-      filtered = filtered.filter(ticket => ticket.date === dateFilter);
-    }
-    if (cashierFilter) {
-      // Filtrar tickets por el cajero que ha vendido el ticket (comparing ticket.userId with cashierFilter)
-      filtered = filtered.filter(ticket => ticket.userId === users.find(user => user.name === cashierFilter)?.id);
-    }
+  // Filtro por cajero
+  if (cashierFilter) {
+    filtered = filtered.filter(ticket => ticket.userId === users.find(user => user.name === cashierFilter)?.id);
+  }
 
-    if (showFilter) {
-      filtered = filtered.filter(ticket => {
-        const show = shows.find((show) => show.id === ticket.showId);
-        return show && show.name.toLowerCase().includes(showFilter.toLowerCase());
-      });
-    }
-
-    // Agrupar tickets por combinación de division, row y seat
-    const groupedTickets = {};
-
-    filtered.forEach(ticket => {
-      const key = `${ticket.division}_${ticket.row}_${ticket.seat}`;
-
-      // Si no existe un ticket con esa combinación, lo añadimos
-      if (!groupedTickets[key]) {
-        groupedTickets[key] = ticket;
-      } else {
-        // Si ya existe un ticket con esa combinación, comprobamos el estado
-        // Solo si el ticket tiene state: true, se reemplaza
-        if (ticket.state === true && groupedTickets[key].state === false) {
-          groupedTickets[key] = ticket;
-        }
-      }
+  // Filtro por nombre del show
+  if (showFilter) {
+    filtered = filtered.filter(ticket => {
+      const show = shows.find((show) => show.id === ticket.showId);
+      return show && show.name.toLowerCase().includes(showFilter.toLowerCase());
     });
+  }
 
-    // Ahora, separo los tickets en no cancelados y cancelados
-    const noCancelled = Object.values(groupedTickets).filter(ticket => ticket.state === true);
-    const cancelled = Object.values(groupedTickets).filter(ticket => ticket.state === false);
+  // Agrupar los tickets que son para tribunas generales sin filas ni asientos
+  const noCancelled = tribunasGenerales.filter(ticket => ticket.state === true);
+  const cancelled = tribunasGenerales.filter(ticket => ticket.state === false);
 
-    // Aseguramos que los tickets cancelados que tienen el mismo row y seat
-    // no aparezcan en la lista de cancelados si ya existen tickets no cancelados.
-    setNoCancelledTickets(noCancelled);
-    setCancelledTickets(cancelled);
-  };
+  // Aquí agregamos los tickets normales que sí tienen fila y asiento
+  const noCancelledWithSeats = filtered.filter(ticket => ticket.row && ticket.seat && ticket.state === true);
+  const cancelledWithSeats = filtered.filter(ticket => ticket.row && ticket.seat && ticket.state === false);
+
+  // Ahora combinamos los resultados
+  setNoCancelledTickets([...noCancelled, ...noCancelledWithSeats]);
+  setCancelledTickets([...cancelled, ...cancelledWithSeats]);
+};
 
   // Obtener las divisiones disponibles
   const divisions = [...new Set(tickets.map(ticket => ticket.division))];
@@ -401,12 +389,14 @@ return (
         {currentTickets.map((ticket, index) => {
           const show = shows.find((show) => show.id === ticket.showId);
           const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
+            // Si es una tribuna general, asignar valores placeholder
+          const isTribunaGeneral = !ticket.row && !ticket.seat;
           return (
             <tr key={ticket.id}>
               <td>{show ? show.name : "Cargando..."}</td>
               <td>{ticket.division}</td>
-              <td>{ticket.row}</td>
-              <td>{ticket.seat}</td>
+              <td>{isTribunaGeneral ? "Libre" : ticket.row}</td>
+              <td>{isTribunaGeneral ? "Libre" : ticket.seat}</td>
               <td>{ticket.userId ? users.find(user => user.id === ticket.userId)?.name : "Cajero Desconocido"}</td>
               <td>{date}</td>
               <td>{time}</td>
