@@ -107,9 +107,9 @@ const filterTickets = () => {
     filtered = filtered.filter(ticket => ticket.date === dateFilter);
   }
 
-  // Filtro por cajero
   if (cashierFilter) {
-    filtered = filtered.filter(ticket => ticket.userId === users.find(user => user.name === cashierFilter)?.id);
+    // Filtrar tickets por el userId del cajero seleccionado
+    filtered = filtered.filter(ticket => ticket.userId === cashierFilter);
   }
 
   // Filtro por nombre del show
@@ -132,6 +132,8 @@ const filterTickets = () => {
   setNoCancelledTickets([...noCancelled, ...noCancelledWithSeats]);
   setCancelledTickets([...cancelled, ...cancelledWithSeats]);
 };
+
+
 
   // Obtener las divisiones disponibles
   const divisions = [...new Set(tickets.map(ticket => ticket.division))];
@@ -168,13 +170,18 @@ const filterTickets = () => {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const ticketsPerPage = 5;
-  const totalPages = Math.ceil(noCancelledTickets.length / ticketsPerPage);
-  const currentTickets = noCancelledTickets.slice(
-    (currentPage - 1) * ticketsPerPage, 
-    currentPage * ticketsPerPage
-  );
+   // Paginación
+   const [currentPage, setCurrentPage] = useState(1);
+   const ticketsPerPage = 5;
+   // Paginación
+   const ticketsToDisplay = cashierFilter ? noCancelledTickets.filter(ticket => ticket.userId === cashierFilter) : noCancelledTickets;
+
+   const totalPages = Math.ceil(ticketsToDisplay.length / ticketsPerPage);
+   const currentTickets = ticketsToDisplay.slice((currentPage - 1) * ticketsPerPage, currentPage * ticketsPerPage);
+   
+  
+
+  
 
 // Lógica para definir el rango de páginas visibles
 const maxVisiblePages = 3;
@@ -185,11 +192,13 @@ if (endPage - startPage + 1 < maxVisiblePages) {
   startPage = Math.max(1, endPage - maxVisiblePages + 1);
 }
 
-const handlePageChange = (pageNumber) => {
-  if (pageNumber >= 1 && pageNumber <= totalPages) {
-    setCurrentPage(pageNumber);
-  }
-
+  // Cambiar de página
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  
+    
 
 }
 const handleDownloadExcel = () => {
@@ -250,7 +259,17 @@ const giftTicket = async (ticket) => {
         text: "No se pudo regalar el ticket. Por favor, inténtalo de nuevo.",
       });
     }
+ 
   }
+};
+
+const resetFilters = () => {
+  setDivisionFilter("");
+  setDateFilter("");
+  setCashierFilter("");
+  setCanceledFilter(null);
+  setShowFilter("");
+  setGiftedFilter(null);
 };
 
 return (
@@ -327,22 +346,21 @@ return (
       {/* Filtro de Cajero */}
       <div>
         <label>Filtrar por Cajero:</label>
-        <select
-          value={cashierFilter}
-          onChange={(e) => setCashierFilter(e.target.value)}
-        >
-          <option value="">Todos los cajeros</option>
-          {users.length > 0 ? (
-            users.map((user) => (
-              <option key={user.id} value={user.name}>
-                {user.name}
-              </option>
-            ))
-          ) : (
-            <option value="">No hay cajeros disponibles</option>
-          )}
-        </select>
+        <select value={cashierFilter} onChange={(e) => setCashierFilter(e.target.value ? Number(e.target.value) : "")}>
+  <option value="">Todos los cajeros</option>
+  {users.length > 0 ? (
+    users.map((user) => (
+      <option key={user.id} value={user.id}>
+        {user.name}
+      </option>
+    ))
+  ) : (
+    <option value="">No hay cajeros disponibles</option>
+  )}
+</select>
       </div>
+    
+
 
       {/* Filtro de Estado */}
       <div>
@@ -354,8 +372,17 @@ return (
           <option value="true"> Activos</option>
           <option value="false">Cancelados</option>
         </select>
+     
       </div>
+            {/* Botón para resetear los filtros */}
+  <div>
+    <button onClick={resetFilters} className="cancel-button">
+      Resetear Filtros
+    </button>
+  </div>
     </div>
+    
+    
       {/* Filtro de Tickets Regalados */}
 <div>
   <label>Filtrar por Regalado:</label>
@@ -386,20 +413,19 @@ return (
         </tr>
       </thead>
       <tbody>
-        {currentTickets.map((ticket, index) => {
-          const show = shows.find((show) => show.id === ticket.showId);
-          const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
-            // Si es una tribuna general, asignar valores placeholder
-          const isTribunaGeneral = !ticket.row && !ticket.seat;
-          return (
-            <tr key={ticket.id}>
-              <td>{show ? show.name : "Cargando..."}</td>
-              <td>{ticket.division}</td>
-              <td>{isTribunaGeneral ? "Libre" : ticket.row}</td>
-              <td>{isTribunaGeneral ? "Libre" : ticket.seat}</td>
-              <td>{ticket.userId ? users.find(user => user.id === ticket.userId)?.name : "Cajero Desconocido"}</td>
-              <td>{date}</td>
-              <td>{time}</td>
+      {currentTickets.map((ticket, index) => {
+    const show = shows.find((show) => show.id === ticket.showId);
+    const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
+    const isTribunaGeneral = !ticket.row && !ticket.seat;
+    return (
+      <tr key={ticket.id}>
+        <td>{show ? show.name : "Cargando..."}</td>
+        <td>{ticket.division}</td>
+        <td>{isTribunaGeneral ? "Libre" : ticket.row}</td>
+        <td>{isTribunaGeneral ? "Libre" : ticket.seat}</td>
+        <td>{ticket.userId ? users.find(user => user.id === ticket.userId)?.name : "Cajero Desconocido"}</td>
+        <td>{date}</td>
+        <td>{time}</td>
               <td>
                 {/* Mostrar botones solo si el usuario es administrador */}
             {user.isAdmin && (
@@ -431,33 +457,34 @@ return (
       📥 Descargar Excel
     </button>
 
-    {/* Paginación */}
     <div className="pagination">
+    {/* Botón para la página anterior */}
+    <button
+      onClick={() => handlePageChange(currentPage - 1)}
+      disabled={currentPage === 1}
+    >
+      ◀ Anterior
+    </button>
+
+    {/* Páginas visibles */}
+    {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
       <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
+        key={startPage + index}
+        onClick={() => handlePageChange(startPage + index)}
+        className={currentPage === startPage + index ? "active" : "inactive"}
       >
-        ◀ Anterior
+        {startPage + index}
       </button>
+    ))}
 
-      {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
-        <button
-          key={startPage + index}
-          onClick={() => handlePageChange(startPage + index)}
-          className={currentPage === startPage + index ? "active" : "inactive"}
-        >
-          {startPage + index}
-        </button>
-      ))}
-
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
-        Siguiente ▶
-      </button>
-    </div>
-
+    {/* Botón para la página siguiente */}
+    <button
+      onClick={() => handlePageChange(currentPage + 1)}
+      disabled={currentPage === totalPages}
+    >
+      Siguiente ▶
+    </button>
+  </div>
     {/* Mostrar Tickets Cancelados */}
     {canceledFilter !== "true" && canceledFilter !== null && (
       <div>
@@ -509,5 +536,3 @@ return (
 };
 
 export default SoldTickets;
-                    
-                      
