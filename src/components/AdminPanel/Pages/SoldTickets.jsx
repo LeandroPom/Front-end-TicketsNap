@@ -169,7 +169,6 @@ const filterTickets = () => {
       }
     }
   };
-
    // Paginación
    const [currentPage, setCurrentPage] = useState(1);
    const ticketsPerPage = 5;
@@ -202,17 +201,81 @@ if (endPage - startPage + 1 < maxVisiblePages) {
 
 }
 const handleDownloadExcel = () => {
-  // Prepara los datos que quieres exportar
-  const data = noCancelledTickets.map((ticket) => ({
-    Show: shows.find(show => show.id === ticket.showId)?.name || "Cargando...",
-    Division: ticket.division,
-    Row: ticket.row,
-    Seat: ticket.seat,
-    Price: ticket.price,
-    Cashier: users.find(user => user.id === ticket.userId)?.name || "Cajero Desconocido",
-    Date: ticket.date.split(" || ")[0] || "Fecha no disponible",
-    Time: ticket.date.split(" || ")[1] || "Hora no disponible",
-  }));
+  // Filtra los tickets con los mismos filtros que usas en la interfaz
+  let filteredData = tickets;
+
+  // Filtro por Tickets Regalados (price === 0)
+  if (giftedFilter !== null) {
+    const filterGifted = giftedFilter === "true";
+    filteredData = filteredData.filter(ticket => 
+      (giftedFilter === "true" && ticket.price === 0) || 
+      (giftedFilter === "false" && ticket.price !== 0)
+    );
+  }
+
+  // Filtro por división (para tribunas generales)
+  if (divisionFilter) {
+    filteredData = filteredData.filter(ticket => ticket.division === divisionFilter);
+  }
+
+  // Filtro por cancelación si se aplica
+  if (canceledFilter !== null) {
+    const filterState = canceledFilter === "true";
+    filteredData = filteredData.filter(ticket => ticket.state === filterState);
+  }
+
+  // Asegurarse de que nunca se exporten tickets cancelados, incluso si el filtro de cancelación no está activado
+  filteredData = filteredData.filter(ticket => ticket.state === true); // Excluir siempre tickets cancelados
+
+  // Filtro por fecha
+  if (dateFilter) {
+    filteredData = filteredData.filter(ticket => ticket.date === dateFilter);
+  }
+
+  // Filtro por cajero
+  if (cashierFilter) {
+    filteredData = filteredData.filter(ticket => ticket.userId === cashierFilter);
+  }
+
+  // Filtro por nombre del show
+  if (showFilter) {
+    filteredData = filteredData.filter(ticket => {
+      const show = shows.find((show) => show.id === ticket.showId);
+      return show && show.name.toLowerCase().includes(showFilter.toLowerCase());
+    });
+  }
+
+  // Prepara los datos para exportar con el 20% incluido en el precio
+  const data = filteredData.map((ticket) => {
+    // Calcular el precio con el 20% añadido
+    const priceWithTax = ticket.price * 1.20; // 20% adicional
+
+    return {
+      Show: shows.find(show => show.id === ticket.showId)?.name || "Cargando...",
+      Division: ticket.division,
+      Row: ticket.row,
+      Seat: ticket.seat,
+      Price: priceWithTax.toFixed(2), // Usamos el precio con el 20% ya incluido
+      Cashier: users.find(user => user.id === ticket.userId)?.name || "Cajero Desconocido",
+      Date: ticket.date.split(" || ")[0] || "Fecha no disponible",
+      Time: ticket.date.split(" || ")[1] || "Hora no disponible",
+    };
+  });
+
+  // Calcular el total con los precios ya con el 20% añadido
+  const totalPrice = data.reduce((acc, ticket) => acc + parseFloat(ticket.Price), 0); // Usar el precio con el 20%
+
+  // Añadir una fila al final con el total
+  data.push({
+    Show: "Total",
+    Division: "",
+    Row: "",
+    Seat: "",
+    Price: totalPrice.toFixed(2),  // El total ya con el 20% incluido
+    Cashier: "",
+    Date: "",
+    Time: "",
+  });
 
   // Crea la hoja de Excel
   const worksheet = XLSX.utils.json_to_sheet(data);
