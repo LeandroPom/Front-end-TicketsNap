@@ -28,7 +28,7 @@ const TicketGeneral = () => {
   const [hasFetched, setHasFetched] = useState(false);
   const [isFetching, setIsFetching] = useState(false);  // Estado para marcar si la petición está en curso
   const shows = useSelector((state) => state.shows); // Estado de shows desde Redux
-  const priceWithTax = ticket.price * 1.2;
+  const priceWithTax = ticket?.price * 1.2;
   
 
   
