@@ -224,93 +224,47 @@ if (endPage - startPage + 1 < maxVisiblePages) {
 
 }
 const handleDownloadExcel = () => {
-  // Filtra los tickets con los mismos filtros que usas en la interfaz
   let filteredData = tickets;
 
-  // Filtro por Tickets Regalados (price === 0)
   if (giftedFilter !== null) {
     const filterGifted = giftedFilter === "true";
-    filteredData = filteredData.filter(ticket => 
+    filteredData = filteredData.filter(ticket =>
       (giftedFilter === "true" && ticket.price === 0) || 
       (giftedFilter === "false" && ticket.price !== 0)
     );
   }
 
-  // Filtro por división (para tribunas generales)
-  if (divisionFilter) {
-    filteredData = filteredData.filter(ticket => ticket.division === divisionFilter);
-  }
-
-  // Filtro por cancelación si se aplica
-  if (canceledFilter !== null) {
-    const filterState = canceledFilter === "true";
-    filteredData = filteredData.filter(ticket => ticket.state === filterState);
-  }
-
-  // Asegurarse de que nunca se exporten tickets cancelados, incluso si el filtro de cancelación no está activado
-  filteredData = filteredData.filter(ticket => ticket.state === true); // Excluir siempre tickets cancelados
-
-  // Filtro por fecha
-  if (dateFilter) {
-    filteredData = filteredData.filter(ticket => ticket.date === dateFilter);
-  }
-
-  // Filtro por cajero
-  if (cashierFilter) {
-    filteredData = filteredData.filter(ticket => ticket.userId === cashierFilter);
-  }
-
-  // Filtro por usuario común (solo si se aplica el filtro de usuario común)
-  if (userFilter) {
-    filteredData = filteredData.filter(ticket => ticket.userId === userFilter); // Filtro por usuario seleccionado
-  }
-
-  // Filtro por nombre del show
-  if (showFilter) {
-    filteredData = filteredData.filter(ticket => {
-      const show = shows.find((show) => show.id === ticket.showId);
-      return show && show.name.toLowerCase().includes(showFilter.toLowerCase());
-    });
-  }
-
-  // Filtra los tickets en dos grupos: cajeros y usuarios comunes
-  const cashierTickets = filteredData.filter(ticket => {
-    const user = users.find(user => user.id === ticket.userId);
-    return user && user.cashier;
-  });
-
-  const userTickets = filteredData.filter(ticket => {
-    const user = users.find(user => user.id === ticket.userId);
-    return user && !user.cashier;
-  });
+  if (divisionFilter) filteredData = filteredData.filter(ticket => ticket.division === divisionFilter);
+  if (canceledFilter !== null) filteredData = filteredData.filter(ticket => ticket.state === canceledFilter === "true");
+  if (dateFilter) filteredData = filteredData.filter(ticket => ticket.date === dateFilter);
+  if (cashierFilter) filteredData = filteredData.filter(ticket => ticket.userId === cashierFilter);
+  if (userFilter) filteredData = filteredData.filter(ticket => ticket.userId === userFilter);  // Filter by user
+  
+  filteredData = filteredData.filter(ticket => ticket.state === true);
 
   // Función para preparar los datos con el 20% de aumento
   const prepareDataForExport = (data) => {
-    return data.map((ticket) => {
-      // Calcular el precio con el 20% añadido
-      const priceWithTax = ticket.price * 1.20; // 20% adicional
-
-      // Buscar el usuario asociado al ticket
+    return data.map(ticket => {
+      const priceWithTax = ticket.price * 1.20;
       const user = users.find(user => user.id === ticket.userId);
       const userName = user ? user.name : "Cajero Desconocido";
-      const userType = user && user.cashier ? `Cajero: ${userName}` : `Usuario: ${userName}`;  // Verificamos si es cajero o usuario común
+      const userType = user && user.cashier ? `Cajero: ${userName}` : `Usuario: ${userName}`;
 
       return {
         Show: shows.find(show => show.id === ticket.showId)?.name || "Cargando...",
-        Division: ticket.division,
-        Row: ticket.row,
-        Seat: ticket.seat,
-        Price: priceWithTax.toFixed(2), // Usamos el precio con el 20% ya incluido
-        Usuario: userType,  // Ahora está en la columna "Usuario" con la etiqueta Cajero/Usuario
+        Division: ticket.division || "Desconocido",
+        Row: ticket.row || "Desconocido",
+        Seat: ticket.seat || "Desconocido",
+        Price: priceWithTax.toFixed(2),
+        Usuario: userType,
         Date: ticket.date.split(" || ")[0] || "Fecha no disponible",
         Time: ticket.date.split(" || ")[1] || "Hora no disponible",
       };
     });
   };
 
-  // Preparar los datos para cajeros y usuarios comunes
-  const dataForCashiers = prepareDataForExport(cashierTickets);
-  const dataForUsers = prepareDataForExport(userTickets);
+  const dataForCashiers = prepareDataForExport(filteredData.filter(ticket => users.find(user => user.id === ticket.userId && user.cashier)));
+  const dataForUsers = prepareDataForExport(filteredData.filter(ticket => users.find(user => user.id === ticket.userId && !user.cashier)));
 
   // Calcular el total con los precios ya con el 20% añadido para cada grupo
   const totalPriceCashiers = dataForCashiers.reduce((acc, ticket) => acc + parseFloat(ticket.Price), 0);
@@ -339,21 +293,21 @@ const handleDownloadExcel = () => {
     Time: "",
   });
 
-  // Crea el libro de trabajo de Excel
+  // Crear el libro de trabajo de Excel
   const workbook = XLSX.utils.book_new();
 
-  // Añadir las hojas de datos: una para Cajeros y otra para Usuarios
-  if (cashierTickets.length > 0) {
+  // Agregar las hojas de datos: una para Cajeros y otra para Usuarios
+  if (dataForCashiers.length > 0) {
     const cashierSheet = XLSX.utils.json_to_sheet(dataForCashiers);
     XLSX.utils.book_append_sheet(workbook, cashierSheet, "Cajeros");
   }
 
-  if (userTickets.length > 0) {
+  if (dataForUsers.length > 0) {
     const userSheet = XLSX.utils.json_to_sheet(dataForUsers);
     XLSX.utils.book_append_sheet(workbook, userSheet, "Usuarios");
   }
 
-  // Descarga el archivo Excel
+  // Descargar el archivo Excel
   XLSX.writeFile(workbook, "tickets_no_cancelados.xlsx");
 };
 
