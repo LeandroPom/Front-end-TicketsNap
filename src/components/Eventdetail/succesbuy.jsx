@@ -19,7 +19,7 @@ const SuccessPage = () => {
   const [showCustomEmailInput, setShowCustomEmailInput] = useState(false); // Controlar el input
   const user = useSelector((state) => state.user);  // Obtener el usuario actual del estado global de Redux
   const navigate = useNavigate();
-  const priceWithTax = ticket.price * 1.2;
+  const priceWithTax = ticket?.price * 1.2;
 
   const dispatch = useDispatch();
   const shows = useSelector((state) => state.shows);
