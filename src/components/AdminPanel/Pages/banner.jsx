@@ -12,7 +12,7 @@ const Banner = () => {
   const [currentPage, setCurrentPage] = useState(1);  // Página actual de la paginación
   const [totalPages, setTotalPages] = useState(1);  // Total de páginas disponibles
 
-  const itemsperpage = 3;  // Limitar a 3 banners por página
+  const itemsperpage =10;  // Limitar a 3 banners por página
 
   // Abre el modal
   const openModal = () => {
