@@ -78,6 +78,7 @@ const fetchUsers = async () => {
 };
 
 const filterTickets = () => {
+ 
   let filtered = tickets;
 
   // Filtro por Tickets Regalados (price === 0)
@@ -175,35 +176,48 @@ const filterTickets = () => {
         });
       }
     }
+    
   };
-  // Paginación
+// Paginación
 const [currentPage, setCurrentPage] = useState(1);
 const ticketsPerPage = 5;
 
-// Filtrar tickets por cajero, si se aplica el filtro de cajero
-const ticketsByCashier = cashierFilter 
-  ? noCancelledTickets.filter(ticket => ticket.userId === cashierFilter) 
-  : noCancelledTickets;
+// Aplicamos todos los filtros sobre los tickets
 
-// Filtrar tickets por usuario, si se aplica el filtro de usuario
-const ticketsByUser = userFilter 
-  ? noCancelledTickets.filter(ticket => ticket.userId === userFilter) 
-  : noCancelledTickets;
+const ticketsFiltered = noCancelledTickets.filter(ticket => {
+  // Filtro por Tickets Regalados (price === 0)
+  if (giftedFilter !== null) {
+    if (giftedFilter === "true" && ticket.price !== 0) return false;
+    if (giftedFilter === "false" && ticket.price === 0) return false;
+  }
 
-// Combinamos ambos filtros: si ambos filtros están activos, se filtran primero por cajero y luego por usuario
-const ticketsFiltered = userFilter 
-  ? noCancelledTickets.filter(ticket => ticket.userId === userFilter) 
-  : cashierFilter 
-    ? noCancelledTickets.filter(ticket => ticket.userId === cashierFilter) 
-    : noCancelledTickets; // Si ninguno está activado, muestra todos los tickets
+  // Filtro por división
+  if (divisionFilter && ticket.division !== divisionFilter) return false;
+
+  // Filtro por cancelación
+  if (canceledFilter !== null && ticket.state !== canceledFilter) return false;
+
+  // Filtro por fecha
+  if (dateFilter && ticket.date !== dateFilter) return false;
+
+  // Filtrar por Cajero
+  if (cashierFilter && ticket.userId !== cashierFilter) return false;
+
+  // Filtrar por usuario
+  if (userFilter && ticket.userId !== userFilter) return false;
+
+  // Filtro por nombre del show
+  if (showFilter && shows) {
+    const show = shows.find(show => show.id === ticket.showId);
+    if (!show || !show.name.toLowerCase().includes(showFilter.toLowerCase())) return false;
+  }
+
+  return true;
+});
+
 // Paginación sobre los tickets filtrados
 const totalPages = Math.ceil(ticketsFiltered.length / ticketsPerPage);
 const currentTickets = ticketsFiltered.slice((currentPage - 1) * ticketsPerPage, currentPage * ticketsPerPage);
-
-   
-  
-
-  
 
 // Lógica para definir el rango de páginas visibles
 const maxVisiblePages = 3;
@@ -214,15 +228,13 @@ if (endPage - startPage + 1 < maxVisiblePages) {
   startPage = Math.max(1, endPage - maxVisiblePages + 1);
 }
 
-  // Cambiar de página
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  
-    
+// Cambiar de página
+const handlePageChange = (pageNumber) => {
+  if (pageNumber >= 1 && pageNumber <= totalPages) {
+    setCurrentPage(pageNumber);
+  }
+};
 
-}
 const handleDownloadExcel = () => {
   let filteredData = tickets;
 
@@ -239,6 +251,14 @@ const handleDownloadExcel = () => {
   if (dateFilter) filteredData = filteredData.filter(ticket => ticket.date === dateFilter);
   if (cashierFilter) filteredData = filteredData.filter(ticket => ticket.userId === cashierFilter);
   if (userFilter) filteredData = filteredData.filter(ticket => ticket.userId === userFilter);  // Filter by user
+
+  // Aplicar el filtro por nombre del show para generar el excel
+  if (showFilter && shows) {
+    filteredData = filteredData.filter(ticket => {
+      const show = shows.find(show => show.id === ticket.showId);
+      return show && show.name.toLowerCase().includes(showFilter.toLowerCase());
+    });
+  }
   
   filteredData = filteredData.filter(ticket => ticket.state === true);
 
@@ -247,14 +267,14 @@ const handleDownloadExcel = () => {
     return data.map(ticket => {
       const priceWithTax = ticket.price * 1.20;
       const user = users.find(user => user.id === ticket.userId);
-      const userName = user ? user.name : "Cajero Desconocido";
+      const userName = user ? user.name : "Sin Cajero";
       const userType = user && user.cashier ? `Cajero: ${userName}` : `Usuario: ${userName}`;
 
       return {
         Show: shows.find(show => show.id === ticket.showId)?.name || "Cargando...",
-        Division: ticket.division || "Desconocido",
-        Row: ticket.row || "Desconocido",
-        Seat: ticket.seat || "Desconocido",
+        Division: ticket.division || "Desconocida",
+        Row: ticket.row || "Libre",
+        Seat: ticket.seat || "Libre",
         Price: priceWithTax.toFixed(2),
         Usuario: userType,
         Date: ticket.date.split(" || ")[0] || "Fecha no disponible",
