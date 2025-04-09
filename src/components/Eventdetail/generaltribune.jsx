@@ -32,30 +32,36 @@ const Generaltribunes = () => {
   };
 
   const handleOpenBuyerModal = (paymentMethod) => {
+    // Intentar cargar los datos de sessionStorage si existen
+    const storedData = JSON.parse(sessionStorage.getItem('buyerData')) || { dni: '', firstName: '', lastName: '', email: '', phone: '' };
+    const { dni, firstName, lastName, email, phone } = storedData;
+  
     Swal.fire({
       title: 'Debe cargar los datos del comprador',
       html: `
         <div>
           <label>DNI:</label><br/>
-          <input type="text" id="dni" class="swal2-input" placeholder="Ingrese el DNI"/>
+          <input type="text" id="dni" class="swal2-input" placeholder="Ingrese el DNI" value="${dni || ''}"/>
           <label>Nombre:</label><br/>
-          <input type="text" id="firstName" class="swal2-input" placeholder="Ingrese el nombre"/>
+          <input type="text" id="firstName" class="swal2-input" placeholder="Ingrese el nombre" value="${firstName || ''}"/>
           <label>Apellido:</label><br/>
-          <input type="text" id="lastName" class="swal2-input" placeholder="Ingrese el apellido"/>
+          <input type="text" id="lastName" class="swal2-input" placeholder="Ingrese el apellido" value="${lastName || ''}"/>
           <label>Correo:</label><br/>
-          <input type="email" id="email" class="swal2-input" placeholder="Ingrese el correo"/>
+          <input type="email" id="email" class="swal2-input" placeholder="Ingrese el correo" value="${email || ''}"/>
           <label>Teléfono:</label><br/>
-          <input type="text" id="phone" class="swal2-input" placeholder="Ingrese el teléfono"/>
+          <input type="text" id="phone" class="swal2-input" placeholder="Ingrese el teléfono" value="${phone || ''}"/>
         </div>
       `,
       focusConfirm: false,
+      showCancelButton: true, // Habilita el botón de cancelar
+      cancelButtonText: 'Borrar datos', // Texto del botón de borrar
       preConfirm: () => {
         const dni = document.getElementById('dni').value;
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
         const email = document.getElementById('email').value;
         const phone = document.getElementById('phone').value;
-
+  
         if (!dni || !firstName || !lastName || !email || !phone) {
           Swal.showValidationMessage('Todos los campos son obligatorios');
           return null;
@@ -64,7 +70,22 @@ const Generaltribunes = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
+        // Guardar los datos en el estado
+        sessionStorage.setItem('buyerData', JSON.stringify(result.value)); // Guardar los datos en sessionStorage
         handleConfirmPurchase(result.value, paymentMethod);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Limpiar los datos almacenados en sessionStorage si el usuario hizo clic en "Borrar datos"
+        sessionStorage.removeItem('buyerData');
+        
+        // Limpiar los campos en el modal
+        Swal.fire({
+          title: 'Datos borrados',
+          text: 'Los datos se han borrado, puedes ingresar nuevos.',
+          icon: 'info',
+          confirmButtonText: 'Aceptar',
+        }).then(() => {
+          handleOpenBuyerModal(paymentMethod); // Reabrir el modal para que el usuario ingrese nuevos datos
+        });
       }
     });
   };
