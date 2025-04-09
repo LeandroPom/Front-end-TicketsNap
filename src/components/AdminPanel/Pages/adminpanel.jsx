@@ -9,6 +9,7 @@ import SoldTickets from './SoldTickets';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
 import './estilospaneladm.css';
+import Banner from './banner';
 
 const AdminPanel = () => {
   const user = useSelector((state) => state.user); // Obtener el usuario desde Redux
@@ -51,6 +52,7 @@ const AdminPanel = () => {
         <Routes>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/events" element={<Events />} />
+          <Route path="/admin/banner" element={<Banner />} />
           <Route path="/admin/places" element={<Places />} />
           <Route path="/admin/users" element={<UsersManagement />} />
           <Route 
