@@ -622,8 +622,14 @@ tr:nth-child(even) {
   cursor: not-allowed;
 }
 
-.pagination-button.active {
-  background-color: #db9c28;
+.paginations-buttons.actives {
+  background-color: #c28222;
+}
+
+.pagination-ellipsis {
+  padding: 0 6px;
+  font-size: 18px;
+  color: #888;
 }
 
 
