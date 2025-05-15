@@ -622,8 +622,31 @@ tr:nth-child(even) {
   cursor: not-allowed;
 }
 
-.pagination-button.active {
-  background-color: #db9c28;
+.paginations-buttons.actives {
+  background-color: #c28222;
+}
+
+.pagination-ellipsis {
+  padding: 0 6px;
+  font-size: 18px;
+  color: #888;
+}
+
+
+@media (max-width: 600px) {
+  .admin-header {
+    background-color: #FFFFFF;
+    /* color: rgb(0, 0, 0); */
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 14%;
+    z-index: 1000; /* Asegura que la navbar esté siempre por encima de todo */
+    margin-left: -30px ;
+  }
 }
 
 

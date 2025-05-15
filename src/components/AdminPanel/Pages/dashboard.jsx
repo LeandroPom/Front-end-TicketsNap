@@ -23,7 +23,7 @@ const Dashboard = () => {
     users: 0,
     shows: 0,
     tickets: 0,
-    seats: 0,
+    blockedUsers: 0, // Para el conteo de usuarios bloqueados
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,8 +31,6 @@ const Dashboard = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-
-  
   // Cargar métricas sin verificar si es admin
   useEffect(() => {
     fetchMetrics(); // Traemos las métricas sin importar si el usuario es admin o no
@@ -43,12 +41,19 @@ const Dashboard = () => {
       const response = await axios.get("/analitics/");
       const data = response.data;
 
-      console.log(response.data, " datos de los tickets")
+      console.log(response.data, " datos de los tickets");
+
+      // Filtrar solo los tickets con "state": true y "qrToken": true
+      const validTickets = data.tickets?.filter(ticket => ticket.state === true && ticket.qrToken === true);
+
+      // Contar los usuarios bloqueados
+      const blockedUsers = data.users?.filter(user => user.disabled === true).length;
+
       setMetrics({
         users: data.users?.length,
         shows: data.shows?.length,
-        tickets: data.tickets?.length,
-        seats: data.seats?.reduce((acc, seat) => acc + seat, 0), // Sumar los asientos si es necesario
+        tickets: validTickets.length, // Solo los tickets válidos
+        blockedUsers: blockedUsers,  // Contar los usuarios bloqueados
       });
       setLoading(false);
     } catch (error) {
@@ -59,22 +64,32 @@ const Dashboard = () => {
   };
 
   const barData = {
-    labels: ["Usuarios", "Shows", "Tickets", "Asientos"],
+    labels: ["Usuarios", "Shows", "Tickets", "Usuarios bloqueados"],
     datasets: [
       {
         label: "Cantidad",
-        data: [metrics.users, metrics.shows, metrics.tickets, metrics.seats],
+        data: [metrics.users, metrics.shows, metrics.tickets, metrics.blockedUsers], // Cambié el total del mes por usuarios bloqueados
         backgroundColor: ["#007bff", "#28a745", "#ffc107", "#dc3545"],
       },
     ],
   };
 
   const doughnutData = {
-    labels: ["Usuarios", "Shows", "Tickets", "Asientos"],
+    labels: ["Usuarios", "Shows", "Tickets", "Usuarios bloqueados"],
     datasets: [
       {
-        data: [metrics.users, metrics.shows, metrics.tickets, metrics.seats],
-        backgroundColor: ["#007bff", "#28a745", "#ffc107", "#dc3545"],
+        data: [
+          metrics.users,
+          metrics.shows,
+          metrics.tickets,
+          metrics.blockedUsers,  // Agregué usuarios bloqueados
+        ],
+        backgroundColor: [
+          "#007bff",  // Azul para usuarios
+          "#28a745",  // Verde para shows
+          "#ffc107",  // Amarillo para tickets
+          "#dc3545",  // Rojo para usuarios bloqueados
+        ],
       },
     ],
   };
@@ -93,26 +108,26 @@ const Dashboard = () => {
 
       <div className="metrics-container">
         <div className="metric-card">
-          <h3>Usuarios</h3>
+          <h3>Usuarios Totales</h3>
           <p>{metrics.users}</p>
         </div>
         <div className="metric-card">
-          <h3>Eventos</h3>
+          <h3>Eventos Totales</h3>
           <p>{metrics.shows}</p>
         </div>
         <div className="metric-card">
-          <h3>Tickets</h3>
+          <h3>Tickets Totales</h3>
           <p>{metrics.tickets}</p>
         </div>
         <div className="metric-card">
-          <h3>Asientos</h3>
-          <p>{metrics.seats}</p>
+          <h3>Usuarios Bloqueados</h3>
+          <p>{metrics.blockedUsers}</p> {/* Muestra la cantidad de usuarios bloqueados */}
         </div>
       </div>
 
       <div className="charts-container">
         <div className="chart">
-          <h3>Distribucion de recursos</h3>
+          <h3>Distribución de recursos</h3>
           <Bar data={barData} />
         </div>
         <div className="chart">

@@ -19,6 +19,7 @@ const SuccessPage = () => {
   const [showCustomEmailInput, setShowCustomEmailInput] = useState(false); // Controlar el input
   const user = useSelector((state) => state.user);  // Obtener el usuario actual del estado global de Redux
   const navigate = useNavigate();
+  const priceWithTax = ticket?.price * 1.2;
 
   const dispatch = useDispatch();
   const shows = useSelector((state) => state.shows);
@@ -147,7 +148,7 @@ const SuccessPage = () => {
     doc.text(`División: ${ticket.division}`, 10, 50);
     doc.text(`Asiento: ${ticket.seat || "No asignado"}`, 10, 60);
     doc.text(`Fila: ${ticket.row || "No asignada"}`, 10, 70);
-    doc.text(`Precio: ${ticket.price || "No disponible"}`, 10, 80);
+    doc.text(`Precio: ${priceWithTax.toFixed(2) || "No disponible"}`, 10, 80);
     doc.text(`Evento: ${shows.find(show => show.id === ticket.showId)?.name || "Show desconocido"}`, 10, 90);
     doc.text(`Dirección: ${ticket.location}`, 10, 100);
 
@@ -187,7 +188,8 @@ const SuccessPage = () => {
       <p><strong>División:</strong> {ticket.division}</p>
       {ticket.seat && <p><strong>Asiento:</strong> {ticket.seat}</p>}
       {ticket.row && <p><strong>Fila:</strong> {ticket.row}</p>}
-      <p><strong>Precio:</strong> ${ticket.totalPrice || ticket.price}</p>
+      <p><strong>Precio:</strong> ${priceWithTax.toFixed(2)}</p> {/* Precio con el 20% añadido */}
+
       <p><strong>Evento:</strong> {showName}</p>
       <p><strong>Dirección:</strong> {ticket.location}</p>
   

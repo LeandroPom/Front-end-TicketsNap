@@ -55,7 +55,7 @@ const ShowsList = () => {
   const carouselImages = shows
   .filter((show) => show.state !== false)  // Solo muestra shows activos o sin estado definido
   .map((show) => show.coverImage)          // Extrae las imágenes de los shows activos
-  .filter(Boolean);
+  .filter(Boolean);           
 
   // Obtener todas las fechas de presentaciones sin paginación
   const eventDates = (shows || []).flatMap((show) =>
@@ -661,3 +661,13 @@ const ShowsList = () => {
 };
 
 export default ShowsList;
+
+
+
+
+
+
+
+
+
+

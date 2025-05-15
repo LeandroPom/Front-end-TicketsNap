@@ -422,7 +422,7 @@ li p {
   width: 250px;
   height: 160px;
   object-fit: fill;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   margin-bottom: 10px;
   transition: transform 0.3s ease-in-out;
 }

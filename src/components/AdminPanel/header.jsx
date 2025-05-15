@@ -49,6 +49,10 @@ const Header = () => {
               <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/tickets'}>
                 Tickets Vendidos
               </button>
+
+              <button className="boton-barra-adm" onClick={() => window.location.href = '/admin/banner'}>
+                Banner
+              </button>
             </>
           ) : user?.cashier ? (
             // Si es cashier, solo mostramos el botón de "Tickets Vendidos"

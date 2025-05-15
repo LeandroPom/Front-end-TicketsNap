@@ -20,7 +20,7 @@ const Ticketscan = () => {
   const [isFirstScan, setIsFirstScan] = useState(true); // Para controlar si es el primer escaneo
 
   // Verificar si el usuario tiene permisos
-  const isAuthorized = user?.isAdmin || user?.isCashier;
+  const isAuthorized = user?.isAdmin || user?.cashier;
 
   useEffect(() => {
     if (!isAuthorized) return;  // Si el usuario no está autorizado, no intentamos obtener el ticket.
@@ -102,6 +102,7 @@ const Ticketscan = () => {
       {!isFirstScan && message && <p style={{ color: "red", fontWeight: "bold" }}>{message}</p>}
 
       <p><strong>Nombre:</strong> {ticket.name}</p>
+      <p><strong>DNI:</strong> {ticket.dni}</p>
       <p><strong>Email:</strong> {ticket.mail}</p>
       <p><strong>DNI:</strong> {ticket.dni}</p>
       <p><strong>Teléfono:</strong> {ticket.phone}</p>
