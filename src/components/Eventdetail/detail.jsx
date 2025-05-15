@@ -41,9 +41,9 @@ const Detail = () => {
   const [rows, setRows] = useState([]); // Para almacenar las filas disponibles de una zona
   const [seatsInRow, setSeatsInRow] = useState([]); // Para almacenar los asientos disponibles en la fila seleccionada
   const [isZoneEditorOpen, setIsZoneEditorOpen] = useState(false);
-  
+
   const [selectedSeat, setSelectedSeat] = useState(null);  // El asiento seleccionado desde el select
-  
+
   const [presentation, setPresentations] = useState([]); // Fechas y horarios obtenidos de la acción
   const [selectedPresentation, setSelectedPresentation] = useState({
     date: '',
@@ -58,7 +58,7 @@ const Detail = () => {
   const user = useSelector((state) => state.user);
   const [showMap, setShowMap] = useState(false); // El mapa está oculto por defecto
 
-   
+
 
 
 
@@ -74,32 +74,32 @@ const Detail = () => {
 
   useEffect(() => {
     if (!showMap) return;  // Si showMap es falso, no hacer nada
-  
+
     if (!id) {
       console.error("id no está definido, no se puede cargar la imagen del mapa.");
       return;
     }
     // Si el estado `showMap` es verdadero, cargamos el mapa
-        const loadMap = () => {
-      
-        const img = new Image();
-        img.src = `/images/zona-floresta.png?timestamp=${new Date().getTime()}`;
-  
-        img.onload = () => {
-        setZoneImage(img.src); 
-        console.log("Mapa cargado correctamente");
+    const loadMap = () => {
+
+      const img = new Image();
+      img.src = `/images/zona-floresta.png?timestamp=${new Date().getTime()}`;
+
+      img.onload = () => {
+        setZoneImage(img.src);
+
       };
       img.onerror = () => {
         console.error("Error al cargar la imagen del mapa");
       };
     };
-    
-      loadMap();  // Llamar a la función para cargar el mapa cuando showMap cambie
-    }, [showMap, id]);  // Este useEffect se ejecutará cada vez que `showMap` cambie o `id` cambie
-  
-  
-        
-        
+
+    loadMap();  // Llamar a la función para cargar el mapa cuando showMap cambie
+  }, [showMap, id]);  // Este useEffect se ejecutará cada vez que `showMap` cambie o `id` cambie
+
+
+
+
 
   useEffect(() => {
 
@@ -110,7 +110,7 @@ const Detail = () => {
       return;
     }
 
-   
+
 
 
     const fetchZones = async () => {
@@ -217,7 +217,7 @@ const Detail = () => {
   const handleRowChange = (e) => {
     const selectedRow = e.target.value;
     setSelectedRow(selectedRow);
-  
+
     // Encontrar los asientos en la fila seleccionada
     const rowData = rows.find((row) => row.row === selectedRow);
     if (rowData) {
@@ -225,7 +225,7 @@ const Detail = () => {
     }
   };
 
-  
+
 
   useEffect(() => {
     if (selectedZone && availableSeats.length > 0) {
@@ -262,7 +262,7 @@ const Detail = () => {
         console.error("Error al cargar los asientos:", error);
       }
     };
-  
+
     if (selectedZone) {
       fetchSeatsForZone(selectedZone.zoneId);
     }
@@ -270,7 +270,7 @@ const Detail = () => {
 
 
   const handleCanvasClick = (e) => {
-    
+
     const canvas = canvasRef.current;
     if (canvas) {
       const rect = canvas.getBoundingClientRect();
@@ -400,13 +400,13 @@ const Detail = () => {
           // console.log(rgb, "COLORES DEL CLICK")
           // console.log("No se detectó una división válida canvas.");
         }
-        
+
       }
     }
   };
 
   const handleConfirmSelection = (presentation) => {
-   
+
 
     if (presentation) {
       // Establecer la presentación seleccionada
@@ -416,7 +416,7 @@ const Detail = () => {
       });
 
       let generalDivision = null;
-      
+
       // Buscar "Tribunas Generales" y verificar que `location` es un array
       if (Array.isArray(presentation.location)) {
         generalDivision = presentation.location.find(
@@ -432,7 +432,7 @@ const Detail = () => {
 
       if (presentation.divisionName === "Tribunas Generales") {
         if (generalDivision && generalDivision.space !== undefined) {
-        
+
           setModalData({
             space: generalDivision?.space || "No disponible",
             date: presentation.presentation.date,
@@ -442,7 +442,7 @@ const Detail = () => {
             state: {
               space: generalDivision?.space,
               presentations:
-              presentation?.divisionName,
+                presentation?.divisionName,
               date: presentation.presentation.date,
               time: presentation.presentation.time,
               zoneId: presentation.zoneId,
@@ -452,14 +452,14 @@ const Detail = () => {
               price: generalDivision?.generalPrice,
               occupied: generalDivision?.occupied,
               eventdetail: event
-              
+
             }
           })
         } else {
           console.error("No se encontró la división 'Tribunas Generales' en location.");
         }
         // Evitar dibujar asientos para Tribunas Generales
-       
+
         setAvailableSeats([]);
         setSeatsDrawn(false);
 
@@ -489,11 +489,11 @@ const Detail = () => {
           );
         }
       }
-     
+
       // Mostrar el alert para todas las presentaciones
-     
+
       Swal.fire({
-        
+
         title: "Tienes 10 minutos para elegir un asiento y realizar la compra",
         text: "¡Presiona OK para comenzar!",
         icon: "info",
@@ -510,7 +510,7 @@ const Detail = () => {
             return prevTimer - 1;
           });
         }, 1000); // Actualizar cada segundo
-       
+
 
       });
 
@@ -535,7 +535,7 @@ const Detail = () => {
   }, [availableSeats]);  // Este useEffect se ejecuta cuando los asientos están disponibles
 
   useEffect(() => {
-    
+
     if (zoneImage) {
       loadImage();
       if (availableSeats.length > 0) {
@@ -544,7 +544,7 @@ const Detail = () => {
         const ctx = canvas.getContext('2d');
         drawSeats(ctx);  // Dibuja los asientos con el canvas
       }
-     
+
     }
   }, [zoneImage, availableSeats]);  // Ejecutar cada vez que se cargue una zona o cambien los asientos disponibles
 
@@ -568,11 +568,11 @@ const Detail = () => {
     if (availableSeats && availableSeats.length > 0) {
       const zoneImageObj = new Image();
       zoneImageObj.src = zoneImage;
-  
+
       zoneImageObj.onload = () => {
         const canvasWidth = canvasRef.current.width;
         const canvasHeight = canvasRef.current.height;
-  
+
         let scaleX, scaleY;
         let pointRadius = 9;
         let fontSize = 12;
@@ -580,7 +580,7 @@ const Detail = () => {
         let separationFactorY = 2.32;
         let horizontalOffset = 0;
         let verticalOffset = -50; // Valor de referencia general para las demás zonas
-  
+
         // Condición específica para Platea Norte y Platea Sur
         if (zoneImage === "/images/Platea-Sur.png" || zoneImage === "/images/Platea-Norte.png") {
           const specificWidth = 4800;
@@ -591,7 +591,7 @@ const Detail = () => {
           fontSize = 11;
           separationFactorX = 1.60;
           separationFactorY = 0.60;
-  
+
           // Ajustes específicos para Platea Norte y Platea Sur
           if (zoneImage === "/images/Platea-Sur.png") {
             horizontalOffset = -40; // Mueve las letras de las filas 20px a la derecha
@@ -600,7 +600,7 @@ const Detail = () => {
             horizontalOffset = -40; // Mueve las letras de las filas 20px a la izquierda
             verticalOffset = 2; // Mueve las letras de las filas un poco más abajo
           }
-  
+
           const offsetX = -15;
           ctx.clearRect(0, 0, canvasWidth, canvasHeight);
           ctx.drawImage(zoneImageObj, 0, 0, zoneImageObj.width, zoneImageObj.height, offsetX, 0, canvasWidth, canvasHeight);
@@ -613,62 +613,62 @@ const Detail = () => {
           scaleX = canvasWidth / zoneImageObj.width;
           scaleY = canvasHeight / zoneImageObj.height;
         }
-  
+
         let currentRow = 1; // Usamos esto para contar las filas
-  
+
         availableSeats.forEach((seatRow) => {
           seatRow?.seats?.forEach((seat) => {
             const scaledX = seat.x * scaleX * separationFactorX;
             const scaledY = seat.y * scaleY * separationFactorY;
-  
+
             const seatColor = seat.taken ? 'grey' : 'green';
-  
+
             ctx.beginPath();
             ctx.arc(scaledX, scaledY, pointRadius, 0, Math.PI * 2, false);
             ctx.fillStyle = seatColor;
             ctx.fill();
             ctx.closePath();
-  
+
             ctx.fillStyle = "white";
             ctx.font = `${fontSize}px Arial`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(seat.id, scaledX, scaledY);
-  
+
             seat.drawingPosition = { x: scaledX, y: scaledY, radius: pointRadius };
           });
-  
+
           // Ajuste de la posición de las letras de las filas
           const rowLabelY = seatRow.seats[0].y * scaleY * separationFactorY + verticalOffset;  // Ajuste vertical
-  
+
           // Dibujar las letras de las filas
           ctx.fillStyle = "black";
           ctx.font = "14px Arial";  // Ajusta el tamaño del texto según sea necesario
           ctx.textAlign = "center";
           ctx.fillText(`Fila ${currentRow}`, seatRow.seats[0].x * scaleX * separationFactorX + horizontalOffset, rowLabelY);
-  
+
           currentRow++; // Incrementa el número de la fila
         });
-  
+
         setSeatsDrawn(true);
       };
     }
   };
-  
-  
-  
-  
-  
-  
 
 
-useEffect(() => {
-  if (canvasRef.current && availableSeats.length > 0) {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    loadImage(ctx);
-  }
-}, [availableSeats, zoneImage, selectedZone]); // Asegúrate de que el efecto se ejecute cuando cambian los asientos, la zona o la imagen
+
+
+
+
+
+
+  useEffect(() => {
+    if (canvasRef.current && availableSeats.length > 0) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      loadImage(ctx);
+    }
+  }, [availableSeats, zoneImage, selectedZone]); // Asegúrate de que el efecto se ejecute cuando cambian los asientos, la zona o la imagen
 
 
 
@@ -704,7 +704,7 @@ useEffect(() => {
           drawSeats(ctx);  // Redibuja los asientos con la nueva escala
           // setIsLoading(false); 
         }
-        
+
       };
     }
   };
@@ -749,7 +749,7 @@ useEffect(() => {
         <div className="corner-img top-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
         <div className="corner-img bottom-left" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
         <div className="corner-img bottom-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
-  
+
         <div className="spinner"></div>
         <p>Procesando su compra...</p>
       </div>
@@ -762,51 +762,63 @@ useEffect(() => {
   return (
     <div className="event-detail">
       <h1>{event.name}</h1>
-  
-      {/* Mostrar la información general del evento solo una vez */}
-      <div className="event-container">
-        <div className="box-contenedor">
-          <div className="event-imagen">
-            {/* Verifica si la URL es de YouTube para renderizar un iframe en lugar de una imagen */}
-            {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
-              <iframe
-                className="event-video"
-                src={event.coverImage.replace("watch?v=", "embed/")}
-                title={event.name}
-                frameBorder="0"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <img className="event-image" src={event.coverImage} alt={event.name} />
-            )}
+
+      {/* Contenedor único para la imagen y la información */}
+      <div className="event-main-container">
+        {/* Imagen o video */}
+        <div className="event-imagen">
+          {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
+            <iframe
+              className="event-video"
+              src={event.coverImage.replace("watch?v=", "embed/")}
+              title={event.name}
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <img className="event-image" src={event.coverImage} alt={event.name} />
+          )}
+        </div>
+
+        {/* Información del evento */}
+        <div className="event-info">
+          <div className="event-info-left">
+            <p>
+              <FaMusic style={{ color: 'black' }} /> <strong>Género:</strong> {event.genre.join(', ')}
+            </p>
+          </div>
+          <div className="event-info-right">
+            <p>
+              <FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}
+            </p>
           </div>
         </div>
-  
-        {/* Contenedor para la información básica del evento */}
-        <div className="box-contenedor-info">
-          <div className="event-info">
-            <p><FaMusic style={{ color: 'black' }} /> <strong>Género:</strong> {event.genre.join(', ')}</p>
-            <p><FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}</p>
-            {event.presentation.map((presentation, index) => (
-          <div className="presentation-detail" key={index}>
-            <p><FaCalendarAlt style={{ color: 'green' }} /> <strong style={{ margileft:"50px" }}>Fecha:</strong> {presentation.date}</p>
-            {/* <p><FaTheaterMasks style={{ color: 'blue' }} /> <strong>Presentación:</strong> {presentation.performance}</p> */}
-            <p><FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
+
+        {event.presentation.map((presentation, index) => (
+          <div className="presentation-info" key={index}>
+            <div className="presentation-left">
+              <p>
+                <FaCalendarAlt style={{ color: 'green' }} /> <strong>Fecha:</strong> {presentation.date}
+              </p>
+            </div>
+            <div className="presentation-right">
+              <p>
+                <FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}
+              </p>
+            </div>
           </div>
         ))}
-          </div>
-        </div>
       </div>
-  
+
       {/* Lógica para el countdown */}
       {countdownStarted && (
-        <div className='time-count'>
+        <div className="time-count">
           <h2>
             {Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}
           </h2>
         </div>
       )}
-  
+
       {/* Selector de zona y fecha/modal */}
       {isSelectorOpen && (
         <div>
@@ -841,7 +853,7 @@ useEffect(() => {
           </div>
         </div>
       )}
-  
+
       {/* Aquí el resto de la lógica de tu página */}
       <div>
         {!showMap && (
@@ -850,20 +862,21 @@ useEffect(() => {
             style={{
               backgroundColor: '#FFD166',
               color: 'black',
-              padding: '12px 20px',  
-              borderRadius: '15px',  
-              fontWeight: 'bold',  
-              cursor: 'pointer'  
+              padding: '12px 20px',
+              borderRadius: '15px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              marginLeft: '100px'
             }}
           >
             Elegir Asientos
           </button>
         )}
-  
+
         {user?.isAdmin && (
           <>
             <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
-  
+
             {isZoneEditorOpen && (
               <>
                 <ZoneEditor showId={id} />
@@ -872,14 +885,14 @@ useEffect(() => {
             )}
           </>
         )}
-  
+
         {showMap && zoneImage && (
           <div>
             <canvas
               ref={canvasRef}
               onClick={handleCanvasClick}
-              width={canvasWidth}  
-              height={canvasHeight} 
+              width={canvasWidth}
+              height={canvasHeight}
             />
             {selectedZone && <p>Seleccionar Zona: {selectedZone}</p>}
             <Link to="/">
@@ -887,14 +900,14 @@ useEffect(() => {
             </Link>
           </div>
         )}
-      
-  
-      
 
-       
 
-         {/* Aquí se muestra el select con los asientos */}
-         {/* <div>
+
+
+
+
+        {/* Aquí se muestra el select con los asientos */}
+        {/* <div>
           <label htmlFor="seat-select">Selecciona un asiento:</label>
           <select 
             id="seat-select" 
@@ -917,8 +930,8 @@ useEffect(() => {
           </div>
         )}
        */}
-    
-  
+
+
 
       </div>
 
@@ -949,62 +962,3 @@ useEffect(() => {
 };
 
 export default Detail;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

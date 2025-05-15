@@ -16,7 +16,7 @@ const initialLocations = [
 const ZoneEditor = ({ showId }) => {
   const [zoneData, setZoneData] = useState({
     zoneName: "Floresta",
-    generalTicket: false,
+    generalTicket: true,
     presentation: { date: "", time: { start: "", end: "" }, performance: 0 },
     location: initialLocations,
   });

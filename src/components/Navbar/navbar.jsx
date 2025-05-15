@@ -58,16 +58,22 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${isDarkMode ? 'dark' : 'light'}`}>
-       <img
-      src="/images/cabezadepaginasolticket.png"
-      alt="Sol Ticket"
-      className= "cabezadepagina"
-    />
+
+<div className='cabezadepaginanav'>
+
+<img
+src="/images/cabezadepaginasolticket.png"
+alt="Sol Ticket"
+className= "paginaimagen11"
+/>
+
+</div>
+
+
   <div className="navbar-logo">
     <a href="/">
-    <img src="/images/solticket.png" alt="Sol Ticket" style={{ width: '180px', height: '70px' }} />
+    <img src="/images/solticket.png" alt="Sol Ticket" style={{ width: '180px', height: '70px', marginLeft: 'auto'  }} />
     </a>
-    
     {/* Ícono compacto para cambiar el tema */}
          {isDarkMode ? (
           <FaMoon
@@ -81,20 +87,28 @@ const Navbar = () => {
           />
         )}
       </div>
+
+    
           
           
-        {user && user.name && (
+        {/* {user && user.name && (
           <a href='/profile'>
             <span className="user-name">
-              {user.name}
+              {user.email}
             </span>
           </a>
-        )}
+        )} */}
           
       <div className="navbar-links">
         <div className="dropdown">
          <p>
-          
+         {user && user.name && (
+          <a href='/profile'>
+            <span className="user-name">
+              {user.email}
+            </span>
+          </a>
+        )}
          </p>
          <FaBars className="dropdown-icon" onClick={toggleDropdown} />
           {dropdownOpen && (
@@ -135,7 +149,11 @@ const Navbar = () => {
          
         </div>
       )}
+
+      
     </nav>
+
+    
   );
 };
 

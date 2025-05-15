@@ -226,6 +226,12 @@ const Login = () => {
             <button className='form-buttons' disabled={isLoading}>
               {isLoading ? 'Ingresando...' : 'Ingresar'}
             </button>
+            <button 
+             className='form-buttons' 
+             onClick={() => navigate('/register')} // Usando navigate para redirigir
+             >
+             Registrarse
+            </button>
           </div>
             <div className="google-logins">
              <GoogleOAuthProvider clientId= {process.env.REACT_APP_GOOGLE_CLIENT_ID}>

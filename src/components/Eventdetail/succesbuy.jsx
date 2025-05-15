@@ -5,6 +5,8 @@ import { getShows } from '../Redux/Actions/actions';
 import emailjs from 'emailjs-com'; // Importar emailjs
 import axios from 'axios';
 import styles from './succesbuy.css';
+import Swal from 'sweetalert2'; // Importa SweetAlert2
+import jsPDF from 'jspdf'; // Importa jsPDF
 
 const SuccessPage = () => {
   const { id } = useParams();  // Obtener el id de la URL (si existe)
@@ -17,6 +19,7 @@ const SuccessPage = () => {
   const [showCustomEmailInput, setShowCustomEmailInput] = useState(false); // Controlar el input
   const user = useSelector((state) => state.user);  // Obtener el usuario actual del estado global de Redux
   const navigate = useNavigate();
+  const priceWithTax = ticket?.price * 1.2;
 
   const dispatch = useDispatch();
   const shows = useSelector((state) => state.shows);
@@ -30,27 +33,67 @@ const SuccessPage = () => {
 
   // Si hay un id en la URL, obtener el ticket desde el backend
   useEffect(() => {
-    if (id && user && user.id) {  // Verifica si user está disponible y tiene un id
-      axios.get(`/tickets/${id}`)
-        .then((response) => {
-          const ticketData = response.data;
-          if (ticketData.userId !== user.id) {
-            setError('Acceso no autorizado');
-            setLoading(false);
-            navigate('/');
-          } else {
-            setTicket(ticketData);
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          setError('Error al obtener los datos del ticket');
-          setLoading(false);
-        });
+    // Función para mostrar la alerta
+    const showAlert = () => {
+      if (!id || !user || !user.id) {
+        setError('ID no disponible o usuario no válido');
+        setLoading(false);  // Detenemos la carga si no hay id o usuario
+        return; // Si no hay id o usuario, no mostrar la alerta ni ejecutar la acción
+      }
+  
+      Swal.fire({
+        title: '¡Felicidades por tu compra!',
+        text: 'Estamos procesando tu ticket. Gracias por elegirnos.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+       
+        fetchTicket();  // Llamamos a `fetchTicket` solo después de hacer clic en OK
+      });
+    };
+  
+    // Función para obtener los datos del ticket
+    const fetchTicket = async () => {
+      if (!id || !user || !user.id) {
+        setError('ID no disponible o usuario no válido');
+        setLoading(false);  // Detenemos la carga si no hay id o usuario
+        return;
+      }
+  
+      try {
+        setLoading(true); // Iniciamos la carga
+      
+        const response = await axios.get(`/tickets/${id}`);
+        const ticketData = response.data;
+    
+  
+        // Verificamos si el userId del ticket coincide con el userId actual
+        if (ticketData.userId !== user.id) {
+          setError('Acceso no autorizado');
+      
+          navigate('/');  // Redirige al inicio si el usuario no tiene acceso
+          return;
+        }
+  
+        setTicket(ticketData);  // Actualizamos el estado con los datos del ticket
+      
+      } catch (err) {
+        setError('Error al obtener los datos del ticket');
+        console.error(err);
+      } finally {
+        setLoading(false);  // Aseguramos que loading siempre se ponga en false
+      
+      }
+    };
+  
+    // Llamamos a `showAlert` solo si el `id` y `user` están disponibles
+    if (id && user) {
+      showAlert();  // Llama a la alerta solo si el `id` y `user` están disponibles
     } else {
-      setLoading(false); // Si no hay id o el usuario no está disponible, se detiene la carga
+      setLoading(false); // Si no hay id o usuario, aseguramos que `loading` se detiene
     }
-  }, [id, user, navigate]); // Asegúrate de que el efecto dependa también de user.
+  
+  }, [id, user, navigate]);  // Dependencias: ejecuta cuando `id`, `user` o `navigate` cambian
 
   const sendTicketEmail = () => {
     const templateParams = {
@@ -93,15 +136,33 @@ const SuccessPage = () => {
     setShowCustomEmailInput(event.target.value === 'custom'); // Mostrar input si se elige 'custom'
   };
 
-  const printTicket = () => {
-    const printContent = document.getElementById('ticket-info').innerHTML;
-    const newWindow = window.open('', '', 'width=600,height=600');
-    newWindow.document.write('<html><head><title>Imprimir Ticket</title></head><body>');
-    newWindow.document.write(printContent);
-    newWindow.document.write('</body></html>');
-    newWindow.document.close();
-    newWindow.print();
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+
+    // Agregar contenido al PDF
+    doc.setFontSize(16);
+    doc.text(`Nombre: ${ticket.name}`, 10, 10);
+    doc.text(`Email: ${ticket.mail || "Correo no disponible"}`, 10, 20);
+    doc.text(`Teléfono: ${ticket.phone}`, 10, 30);
+    doc.text(`Fecha y Hora: ${ticket.date}`, 10, 40);
+    doc.text(`División: ${ticket.division}`, 10, 50);
+    doc.text(`Asiento: ${ticket.seat || "No asignado"}`, 10, 60);
+    doc.text(`Fila: ${ticket.row || "No asignada"}`, 10, 70);
+    doc.text(`Precio: ${priceWithTax.toFixed(2) || "No disponible"}`, 10, 80);
+    doc.text(`Evento: ${shows.find(show => show.id === ticket.showId)?.name || "Show desconocido"}`, 10, 90);
+    doc.text(`Dirección: ${ticket.location}`, 10, 100);
+
+    // Agregar código QR si lo tienes
+    const qrImg = new Image();
+    qrImg.src = ticket.qrCode;
+    qrImg.onload = function() {
+      doc.addImage(qrImg, 'JPEG', 10, 110, 80, 80);  // Ajusta las coordenadas y tamaño según sea necesario
+
+      // Después de agregar la imagen, descargar el archivo PDF
+      doc.save('ticket.pdf');
+    };
   };
+
 
   if (loading) {
     return <div className="loading">Cargando datos...</div>;
@@ -127,7 +188,8 @@ const SuccessPage = () => {
       <p><strong>División:</strong> {ticket.division}</p>
       {ticket.seat && <p><strong>Asiento:</strong> {ticket.seat}</p>}
       {ticket.row && <p><strong>Fila:</strong> {ticket.row}</p>}
-      <p><strong>Precio:</strong> ${ticket.totalPrice || ticket.price}</p>
+      <p><strong>Precio:</strong> ${priceWithTax.toFixed(2)}</p> {/* Precio con el 20% añadido */}
+
       <p><strong>Evento:</strong> {showName}</p>
       <p><strong>Dirección:</strong> {ticket.location}</p>
   
@@ -135,34 +197,41 @@ const SuccessPage = () => {
         <img src={ticket.qrCode} alt="QR Code" className="qr-image" />
       </div>
   
-      {/* Selector de correo */}
-      <div className="email-select-container">
-        <label>
-          Enviar a:
-          <select value={sendTo} onChange={handleSendToChange} className="email-select">
-            <option value={ticket.mail || "Correo no disponible"}>
-              Mi correo ({ticket.mail || "Correo no disponible"})
-            </option>
-            <option value="custom">Otro correo</option>
-          </select>
-        </label>
-  
-        {/* Input para ingresar el correo si se elige 'Otro correo' */}
-        {showCustomEmailInput && (
-          <div className="custom-email-container">
-            <input 
-              type="email" 
-              value={customEmail} 
-              onChange={handleEmailChange} 
-              placeholder="Ingresa el correo"
-              className="email-input"
-            />
+       {/* Solo mostrar el selector de correo y los botones si el usuario es cajero */}
+       {user.cashier === true && (
+        <>
+          {/* Selector de correo */}
+          <div className="email-select-container">
+            <label>
+              Enviar a:
+              <select value={sendTo} onChange={handleSendToChange} className="email-select">
+                <option value={ticket.mail || "Correo no disponible"}>
+                  Mi correo ({ticket.mail || "Correo no disponible"})
+                </option>
+                <option value="custom">Otro correo</option>
+              </select>
+            </label>
+
+            {/* Input para correo personalizado */}
+            {showCustomEmailInput && (
+              <div className="custom-email-container">
+                <input 
+                  type="email" 
+                  value={customEmail} 
+                  onChange={handleEmailChange} 
+                  placeholder="Ingresa el correo"
+                  className="email-input"
+                />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+          
+          <button onClick={sendTicketEmail} className="btn-primary">Enviar Ticket por Email</button>
+          <button onClick={downloadPDF} className="btn-secondary">Descargar PDF</button>
+        </>
+      )}
   
-      <button onClick={sendTicketEmail} className="btn-primary">Enviar Ticket por Email</button>
-      <button onClick={printTicket} className="btn-secondary">Imprimir Ticket</button>
+    
   
       {/* Contenido a imprimir */}
       <div id="ticket-info" className="print-ticket">
@@ -176,7 +245,7 @@ const SuccessPage = () => {
         <p><strong>Fila:</strong> {ticket.row}</p>
         <p><strong>Precio:</strong> ${ticket.price}</p>
         <p><strong>Evento:</strong> {showName}</p>
-        <p><strong>Dirección:</strong> {shows.location}</p>
+        <p><strong>Dirección:</strong> {ticket.location}</p>
         <div className="qr-container">
           <img src={ticket.qrCode} alt="QR Code" className="qr-image" />
         </div>

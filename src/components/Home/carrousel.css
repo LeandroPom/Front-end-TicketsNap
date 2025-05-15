@@ -1,14 +1,16 @@
 .carousel-home {
   position: relative;
-  width: 100%;  /* Ocupa todo el ancho de la pantalla */
+  width: 130%;  /* Ocupa todo el ancho de la pantalla */
   height: 60vh; /* Ocupa toda la altura de la pantalla */
   margin: 5px;
   overflow: hidden;
-  margin-top: 30px;
-  margin-left: 1px;
+  margin-top: -26px;
+  margin-left: -5%;
   object-fit: cover;  /* Asegura que la imagen se ajuste bien */
   z-index: 1;
 }
+
+
 
 .carousel-images {
   position: relative;
@@ -37,7 +39,7 @@
   z-index: 1;
   width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
   height: 100%; /* Asegura que la imagen ocupe toda la altura del contenedor */
-  object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
+  object-fit:fill;/* Mantiene el ajuste adecuado de la imagen */
   background-color: rgba(102, 102, 102, 0.5);
 }
 
@@ -64,7 +66,7 @@
 }
 
 .carousel-button.next {
-  right: 10px;
+  right: 42px;
 }
 
 /* Indicadores */
@@ -96,9 +98,22 @@
 
 /* Móviles */
 @media (max-width: 600px) {
+  .carousel-home {
+    position: relative;
+    width: 140%;  /* Ocupa todo el ancho de la pantalla */
+    height: 15%; /* Ocupa toda la altura de la pantalla */
+    margin: 5px;
+    overflow: hidden;
+    margin-top: -50px;
+    margin-left: -50px;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+
   .carousel {
     margin-left: 0; /* Eliminar el margen de 188px */
     max-width: 130%; /* Ajustar al 100% del ancho */
+    height: 15%; /* Ocupa toda la altura de la pantalla */
   }
 
   .carousel-button {
@@ -111,14 +126,14 @@
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
     transform: translateX(10px); /* Desplaza el botón hacia la izquierda */
   }
-    
-
 
   .event-videos.actives {
     transform: scale(1); /* No agrandar los videos en móviles */
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
     transform: translateX(-10px); /* Desplaza el botón hacia la izquierda */
   }
+
+  
 }
 
 /* Tablets */
@@ -134,7 +149,6 @@
   .event-imagen {
     height: 250px; /* Ajustar la altura del carrusel en tabletas */
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
-
   }
 
   .carousel {
@@ -160,23 +174,169 @@
   .event-imagen {
     height: 300px; /* Mantener la altura del carrusel en escritorios */
     object-fit: cover; /* Mantiene el ajuste adecuado de la imagen */
-
   }
 }
 
-
-@media (min-width: 350px) and (max-width: 1069px) {
-  .carousel-home {
+/* Resoluciones de Netbook (Pantallas pequeñas de 15, 16, 17 pulgadas) */
+@media (min-width: 350px) and (max-width: 1024px) {
+ 
+  .container .carousel-home {
     position: relative;
-    width: 225%;  /* Ocupa todo el ancho de la pantalla */
-    min-height: 60%; /* La altura mínima será el 60% del contenedor */
-
+    width: 130%;  /* Ocupa todo el ancho de la pantalla */
+    height: 70%; /* Ocupa toda la altura de la pantalla */
     margin: 5px;
     overflow: hidden;
-    margin-top: 30px;
-    margin-left: -20px;
+    margin-top: -48px;
+    margin-left: -50px;
     object-fit: cover;  /* Asegura que la imagen se ajuste bien */
     z-index: 1;
   }
 
+  .carousel-button.prev {
+    left: 10px;
+  }
+  
+  .carousel-button.next {
+    margin-right: -70px;
+  }
+
+  .footer {
+    background-color: rgb(71, 71, 71);
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    margin-top: 100px;
+    width: 190%;
+    margin-left: -40px
+  }
+ 
+ 
+}
+
+/* Pantallas más pequeñas como netbooks (15", 16", 17" pulgadas) */
+@media (min-width: 1366px) and (max-width: 1440px) {
+
+  .carousel-home {
+    position: relative;
+    width: 130%;  /* Ocupa todo el ancho de la pantalla */
+    height: 60vh; /* Ocupa toda la altura de la pantalla */
+    margin: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: -5%;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+
+  .event-imagen {
+    height: 275px; /* Ajustar la altura de las imágenes para pantallas medianas */
+    object-fit: cover; /* Asegura que la imagen se ajuste adecuadamente */
+  }
+
+ 
+
+  .event-imagen.active,
+.event-videos.actives {
+  opacity: 1;
+  z-index: 1;
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+  height: 100%; /* Asegura que la imagen ocupe toda la altura del contenedor */
+  object-fit: fill; /* Mantiene el ajuste adecuado de la imagen */
+  background-color: rgba(102, 102, 102, 0.5);
+}
+
+}
+
+@media (min-width: 1360px) {
+
+ .container .carousel-home {
+    position: relative;
+    width: 130%;  /* Ocupa todo el ancho de la pantalla */
+    height: 60vh; /* Ocupa toda la altura de la pantalla */
+    margin: 5px;
+    overflow: hidden;
+    margin-top: -28px;
+    margin-left: -5%;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+
+
+
+}
+
+@media (min-width: 1366px) {
+
+ .container .carousel-home {
+    position: relative;
+    width: 130%;  /* Ocupa todo el ancho de la pantalla */
+    height: 60vh; /* Ocupa toda la altura de la pantalla */
+    margin: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: -5%;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+
+
+
+}
+
+
+@media (max-width: 1069px) {
+
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .carousel-button.prev {
+    left: 15px;
+  }
+  
+  .carousel-button.next {
+    right: 80px;
+  }
+
+
+
+  .carousel-home {
+    position: relative;
+    width: 150%;  /* Ocupa todo el ancho de la pantalla */
+    height: 60vh; /* Ocupa toda la altura de la pantalla */
+    margin: 5px;
+    overflow: hidden;
+    margin-top: -50px;
+    margin-left: -12%;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+
+
+
+}
+
+@media (min-width: 1441px) and (max-width: 1920px) {
+ 
+  .container .carousel-home {
+    position: relative;
+    width: 120%;  /* Ocupa todo el ancho de la pantalla */
+    height: 70%; /* Ocupa toda la altura de la pantalla */
+    margin: 5px;
+    overflow: hidden;
+    margin-top: 43px;
+    margin-left: -50px;
+    object-fit: cover;  /* Asegura que la imagen se ajuste bien */
+    z-index: 1;
+  }
+
+ 
 }

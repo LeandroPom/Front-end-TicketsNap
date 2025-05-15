@@ -22,25 +22,30 @@ const MisCompras = () => {
     const fetchTickets = async () => {
       try {
         let userTickets = [];
-
+  
         if (user?.isAdmin || user?.cashier) {
           // Si el usuario es admin o cajero, filtramos por precio === 0
           if (user?.cashier) {
             const response = await axios.get('/tickets');
             if (response.data?.tickets) {
-              userTickets = response.data.tickets.filter(ticket => ticket.price === 0);  // Filtramos por precio === 0
+              // Solo se filtran los tickets con precio igual a 0 para cajeros
+              userTickets = response.data.tickets.filter(ticket => ticket.price === 0);
             }
           }
         } else {
-          // Si el usuario no es admin ni cajero, mostramos los tickets normales
+          // Si el usuario es común (no admin ni cajero), mostramos los tickets normales
           const response = await axios.get('/tickets');
           if (response.data?.tickets) {
-            userTickets = response.data.tickets.filter(ticket => ticket.userId === user?.id && ticket.state === true); // Filtramos por state === true
+            // Filtramos por userId (tickets del usuario) y state === true (tickets activos)
+            userTickets = response.data.tickets.filter(ticket => ticket.userId === user?.id && ticket.state === true);
+            
+            // Solo mostramos tickets con precio mayor a 0 para usuarios comunes
+            userTickets = userTickets.filter(ticket => ticket.price > 0);
           }
         }
-
+  
         setTickets(userTickets);
-
+  
         // Si no hay tickets, muestra SweetAlert
         if (userTickets.length === 0) {
           Swal.fire({
@@ -63,7 +68,7 @@ const MisCompras = () => {
         setLoading(false);
       }
     };
-
+  
     if (user) {
       fetchTickets();
       dispatch(getShows());
