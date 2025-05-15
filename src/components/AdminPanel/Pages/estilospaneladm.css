@@ -649,3 +649,20 @@ tr:nth-child(even) {
   }
 }
 
+
+@media (max-width: 600px) {
+  .admin-header {
+    background-color: #FFFFFF;
+    /* color: rgb(0, 0, 0); */
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 14%;
+    z-index: 1000; /* Asegura que la navbar esté siempre por encima de todo */
+    margin-left: -30px ;
+  }
+}
+
