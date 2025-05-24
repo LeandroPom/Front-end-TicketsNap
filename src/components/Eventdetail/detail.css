@@ -459,7 +459,7 @@ box-shadow: 0 0 10px rgb(0, 0, 0);
 }
 
 
-@media (min-width: 320px) and (max-width: 350px) {
+@media (min-width: 320px) and (max-width: 1024px) {
   
     .container .event-info,
     .container .presentation-info {
