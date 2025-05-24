@@ -22,7 +22,7 @@ html, body {
   transform: translateX(-50%); /* Centra la imagen */
   z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
   width: 210%;
-  height: 100px;
+  height: 1%;
   margin: 1px;
 }
 
@@ -31,6 +31,8 @@ html, body {
   top: 50%; /* O ajusta la posición según sea necesario */
   margin-left: 39% ;
   width: auto;
+  height: 1%;
+  
 }
 
 .ticket-imagemp2 {
@@ -40,8 +42,8 @@ html, body {
   transform: translateX(-50%); /* Centra la imagen */
   z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
   width: 210%;
-  height: 100px;
-  margin: 1px;
+  height: 0.50%;;
+  margin: 0px;
 
 }
 
@@ -784,6 +786,37 @@ li:hover .event-image {
   margin-top: 20px;
 }
 
+.ticket-imagemp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 35%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 210%;
+    height: 2%;
+    margin: 1px;
+  }
+  
+  .imagenmp {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    margin-left: 39% ;
+    width: auto;
+    height: 2%;
+  }
+  
+  .ticket-imagemp2 {
+    position: relative;
+    top: 50%; /* O ajusta la posición según sea necesario */
+    left: 35%;
+    transform: translateX(-50%); /* Centra la imagen */
+    z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
+    width: 210%;
+    height: 2%;
+    margin: 1px;
+  
+  }
+
 .social-links a {
   color: inherit; /* Hereda el color de cada ícono */
   text-decoration: none; /* Elimina el subrayado */
@@ -803,7 +836,7 @@ li:hover .event-image {
     transform: translateX(-50%); /* Centra la imagen */
     z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
     width: 210%;
-    height: 100px;
+    height: 2%;
     margin: 1px;
   }
   
@@ -812,6 +845,7 @@ li:hover .event-image {
     top: 50%; /* O ajusta la posición según sea necesario */
     margin-left: 39% ;
     width: auto;
+    height: 2%;
   }
   
   .ticket-imagemp2 {
@@ -821,7 +855,7 @@ li:hover .event-image {
     transform: translateX(-50%); /* Centra la imagen */
     z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
     width: 210%;
-    height: 100px;
+    height: 2%;
     margin: 1px;
   
   }
@@ -965,7 +999,7 @@ li:hover .event-image {
     transform: translateX(-50%); /* Centra la imagen */
     z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
     width: 200%;
-    height: 50px;
+    height: 2%;
     margin: 1px;
   }
   .imagenmp {
@@ -973,6 +1007,7 @@ li:hover .event-image {
     top: 50%; /* O ajusta la posición según sea necesario */
     margin-left: 39% ;
     width: auto;
+    height: 2%;
   }
   .ticket-imagemp2 {
     position: relative;
@@ -981,7 +1016,7 @@ li:hover .event-image {
     transform: translateX(-50%); /* Centra la imagen */
     z-index: 999; /* Asegura que la imagen esté por encima de otros elementos */
     width: 200%;
-    height: 50px;
+   height: 2%;
     margin: 1px;
   
   }
@@ -1073,10 +1108,12 @@ li:hover .event-image {
     }
     .ticket-imagemp{
       width: 235%;  /* Ajustamos el tamaño a un porcentaje */
+      height: 2%;
       
     }
     .ticket-imagemp2 {
       width: 235%;  /* Ajustamos el tamaño a un porcentaje */
+      height: 2%;
      
     }
   .searchs-container input {
@@ -1183,4 +1220,38 @@ li:hover .event-image {
   .footer a:hover {
     text-decoration: underline;
   }
+}
+
+
+
+@media (min-width: 1720px) and (max-width: 1920px) {
+
+
+    .ticket-imagemp{
+      width: 193%;  /* Ajustamos el tamaño a un porcentaje */
+      margin-left: -6%;
+      height: 2%;
+    }
+    .ticket-imagemp2 {
+    width: 193%;  /* Ajustamos el tamaño a un porcentaje */
+      margin-left: -6%;
+      height: 2%;
+    }
+ 
+}
+
+@media (min-width: 2375px) and (max-width: 2600px) {
+
+
+    .ticket-imagemp{
+      width: 193%;  /* Ajustamos el tamaño a un porcentaje */
+      margin-left: -6%;
+      height: 2%;
+    }
+    .ticket-imagemp2 {
+    width: 193%;  /* Ajustamos el tamaño a un porcentaje */
+      margin-left: -6%;
+      height: 2%;
+    }
+ 
 }
