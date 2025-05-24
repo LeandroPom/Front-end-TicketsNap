@@ -268,17 +268,21 @@ const handleDownloadExcel = () => {
       const priceWithTax = ticket.price * 1.20;
       const user = users.find(user => user.id === ticket.userId);
       const userName = user ? user.name : "Sin Cajero";
-      const userType = user && user.cashier ? `Cajero: ${userName}` : `Usuario: ${userName}`;
+      const userEmail = user ? user.email : "Sin correo";
+      const userPhone = user ? user.phone : "Sin Celular";
+      const userType = user && user.cashier ? `Cajero: ${userName}` : `Nombre: ${userName}`;
 
       return {
         Show: shows.find(show => show.id === ticket.showId)?.name || "Cargando...",
         Division: ticket.division || "Desconocida",
-        Row: ticket.row || "Libre",
-        Seat: ticket.seat || "Libre",
+        Fila: ticket.row || "Libre",
+        Asiento: ticket.seat || "Libre",
         Price: priceWithTax.toFixed(2),
         Usuario: userType,
-        Date: ticket.date.split(" || ")[0] || "Fecha no disponible",
-        Time: ticket.date.split(" || ")[1] || "Hora no disponible",
+        Email: userEmail,
+        Telefono: userPhone,
+        Fecha: ticket.date.split(" || ")[0] || "Fecha no disponible",
+        Hora: ticket.date.split(" || ")[1] || "Hora no disponible",
       };
     });
   };
@@ -294,23 +298,23 @@ const handleDownloadExcel = () => {
   dataForCashiers.push({
     Show: "Total",
     Division: "",
-    Row: "",
-    Seat: "",
+    Fila: "",
+    Asiento: "",
     Price: totalPriceCashiers.toFixed(2),  // El total ya con el 20% incluido
     Usuario: "",
-    Date: "",
-    Time: "",
+    Fecha: "",
+    Hora: "",
   });
 
   dataForUsers.push({
     Show: "Total",
     Division: "",
-    Row: "",
-    Seat: "",
+    Fila: "",
+    Asiento: "",
     Price: totalPriceUsers.toFixed(2),  // El total ya con el 20% incluido
     Usuario: "",
-    Date: "",
-    Time: "",
+    Fecha: "",
+    Hora: "",
   });
 
   // Crear el libro de trabajo de Excel
