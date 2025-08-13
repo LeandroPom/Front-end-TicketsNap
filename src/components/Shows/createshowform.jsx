@@ -132,9 +132,7 @@ const CreateShowForm = () => {
       [name]: value,
     });
   };
-
-
-  const handleGeneralChange = () => {
+    const handleGeneralChange = () => {
     if (!isGeneral) {
       // Si ya está marcado, mostrar la advertencia
       Swal.fire({
@@ -155,10 +153,7 @@ const CreateShowForm = () => {
       setIsGeneral(true);  // Si no está marcado, simplemente lo marca como General
     }
   };
-
-
-
-  const handlePriceChange = (e) => {
+    const handlePriceChange = (e) => {
     const value = e.target.value;
 
     // Validate that the input contains only numbers and is not empty
@@ -207,8 +202,7 @@ const CreateShowForm = () => {
     }));
   };
   
-
-  const handlePerformanceChange = (e) => {
+const handlePerformanceChange = (e) => {
     const newPerformance = parseInt(e.target.value, 10);
 
     // Si cambiamos la cantidad de presentaciones, re-inicializamos las fechas y tiempos
@@ -226,9 +220,7 @@ const CreateShowForm = () => {
       };
     });
   };
-
-
-  const handleTimeDisplay = (index) => {
+ const handleTimeDisplay = (index) => {
     const presentation = formData.presentation[index];
 
 
@@ -261,8 +253,7 @@ const CreateShowForm = () => {
     }
   };
 
-
-  const handleRemoveGenre = (index) => {
+ const handleRemoveGenre = (index) => {
     setFormData((prevState) => ({
       ...prevState,
       genre: prevState.genre.filter((_, i) => i !== index),
@@ -303,10 +294,7 @@ const handleDateChange = (date) => {
         setErrorMessage(`Presentation ${i + 1} is missing required fields (date, performance, start time, end time).`);
         return;
       }
-
-
-
-      // Validar que las horas estén en el formato HH:mm
+     // Validar que las horas estén en el formato HH:mm
       const timePattern = /^([0-9]{2}):([0-9]{2})$/;
       if (!timePattern.test(item.time.start) || !timePattern.test(item.time.end)) {
         setErrorMessage(`Presentation ${i + 1} has invalid time format. Please use HH:mm.`);
@@ -344,10 +332,6 @@ const handleDateChange = (date) => {
       price: price,  // Asegúrate de que price tenga un valor numérico
       isGeneral: isGeneral ? true : '', // Si el checkbox está marcado, isGeneral será true, sino será un string vacío
     };
-
-
-    // Aquí podrías enviar los datos al backend
-
     // Llamar a la acción de crear show
     dispatch(createShow(formattedData))
       .then(() => {
@@ -367,243 +351,278 @@ const handleDateChange = (date) => {
 
   }
   return (
-    <div className="create-show-form">
-      <h2>Crear Evento</h2>
-      <form onSubmit={handleSubmit}>
-        {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+  <div
+    className="min-h-screen p-4 md:p-6 text-white max-w-3xl mx-auto relative rounded-md"
+    style={{
+      background: "rgba(86, 86, 190, 0.4)",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+      top: "180px",
+      zIndex: 10,
+      // left: "-20px",  // removido para evitar desplazamiento horizontal
+      borderRadius: "8px",
+    }}
+  >
+    <h2 className="text-3xl font-bold mb-6">Crear Evento</h2>
 
-        <label>
-          Es un Show General? ¡¡Marca la casilla!!
-          <input
-            type="checkbox"
-            checked={isGeneral}  // El estado del checkbox refleja el valor de isGeneral
-            onChange={handleGeneralChange}  // Cambiar a nuestra función personalizada
-          />
-        </label>
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+      {errorMessage && <div className="text-red-500">{errorMessage}</div>}
 
-        <label>
-          Nombre:
+     <label className="flex items-center gap-3 cursor-pointer">
+       {/* Texto descriptivo fijo */}
+  <span className="text-white font-semibold">Activa el Switch, si deseas que el show sea "General"</span>
+  <span className="text-white font-semibold">
+    {isGeneral ? "Activado" : "Desactivado"}
+  </span>
+ {/* Switch más pequeño */}
+{/* Switch más pequeño y responsive */}
+<div
+  onClick={() => handleGeneralChange({ target: { checked: !isGeneral } })}
+  className={`relative w-10 min-w-[2.5rem] h-5 min-h-[1.25rem] rounded-full transition-colors duration-300 flex-shrink-0 mt-[5px] ${
+    isGeneral ? "bg-green-500" : "bg-gray-400"
+  }`}
+>
+  <span
+    className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+      isGeneral ? "translate-x-[1.25rem]" : "translate-x-0"
+    }`}
+  />
+</div>
+</label>
+
+      <label className="flex flex-col">
+        <span className="mb-1 font-semibold">Nombre:</span>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </label>
+
+      <label className="flex flex-col">
+        <span className="mb-1 font-semibold">Artistas (separado por coma si es mas de uno):</span>
+        <input
+          type="text"
+          name="artists"
+          value={formData.artists}
+          onChange={handleChange}
+          required
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </label>
+
+      <label className="flex flex-col">
+        <span className="mb-1 font-semibold">Genero:</span>
+        <select
+          name="genre"
+          value={selectedTag}
+          onChange={handleGenreSelect}
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">Seleccionar genero</option>
+          {loading ? (
+            <option disabled>Loading...</option>
+          ) : tags && tags.length >= 0 ? (
+            tags.map((tag) => (
+              <option
+                key={tag.id}
+                value={tag.name}
+                className="bg-[rgba(50,50,110,0.8)] text-white"
+              >
+                {tag.name}
+              </option>
+            ))
+          ) : (
+            <option disabled>No hay generos</option>
+          )}
+        </select>
+
+        <div className="flex mt-2 gap-2">
           <input
             type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
+            placeholder="Create a new tag"
+            value={newTag}
+            onChange={handleTagChange}
+            className="flex-1 p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-        </label>
-
-        <label>
-          Artistas (separado por coma si es mas de uno):
-          <input
-            type="text"
-            name="artists"
-            value={formData.artists}
-            onChange={handleChange}
-            required
-          />
-        </label>
-
-        <label>
-
-          Genero:
-          <select
-            name="genre"
-            value={selectedTag}
-            onChange={handleGenreSelect}
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            type="button"
+            onClick={handleCreateTag}
           >
-            <option value="">Seleccionar genero</option>
-            {loading ? (
-              <option disabled>Loading...</option>
-            ) : (
-              tags && tags.length >= 0 ? (
-                tags.map((tag) => (
-                  <option key={tag.id} value={tag.name}>
-                    {tag.name}
-                  </option>
-                ))
-              ) : (
-                <option disabled>No hay generos</option>
-              )
-            )}
-          </select>
+            Agregar nuevo genero
+          </button>
+        </div>
+      </label>
 
-          <div className="input-with-button">
-            <input
-              type="text"
-              placeholder="Create a new tag"
-              value={newTag}
-              onChange={handleTagChange}
-            />
-            <button
-              className="add-link"
-              type="button"
-              onClick={handleCreateTag}
-            >
-              Agregar nuevo genero
-            </button>
-          </div>
-        </label>
-
-        <div className="selected-genres">
-          {formData.genre.length > 0 && (
-            <div>
-              <p>Genero seleccionado:</p>
-              <div className="genres-container">
-                {formData.genre.map((genre, index) => (
-                  <div key={index} className="genre-tag">
-                    {genre.name}
-                    <button
-                      type="button"
-                      className="remove-genre-button"
-                      style={{ fontSize: '10px', marginLeft: '3px', padding: '0', lineHeight: '1' }}
-                      onClick={() => handleRemoveGenre(index)}
-                    >
-                      ❌
-                    </button>
-                  </div>
-                ))}
-              </div>
+      <div className="selected-genres mt-4">
+        {formData.genre.length > 0 && (
+          <>
+            <p className="mb-2 font-semibold">Genero seleccionado:</p>
+            <div className="flex flex-wrap gap-2">
+              {formData.genre.map((genre, index) => (
+                <div
+                  key={index}
+                  className="flex items-center bg-[rgba(70,70,140,0.7)] text-white rounded px-3 py-1"
+                >
+                  {genre.name}
+                  <button
+                    type="button"
+                    className="ml-2 text-red-500 hover:text-red-700 text-sm font-bold"
+                    onClick={() => handleRemoveGenre(index)}
+                  >
+                    ❌
+                  </button>
+                </div>
+              ))}
             </div>
-          )}
-        </div>
-
-
-        <label>
-          Dirección:
-          <select onChange={handleLocationSelect} value={formData.locationId || ''} required>
-            <option value="" disabled>Dirección seleccionada</option>
-            {places.length > 0 ? (
-              places.map((place) => (
-                <option key={place.id} value={place.id}>
-                  {place.name}
-                </option>
-              ))
-            ) : (
-              <option disabled>No hay lugares disponibles</option>
-            )}
-          </select>
-        </label>
-
-        <div>
-          {formData.locationId && (
-            <p>
-              Dirección seleccionada: <strong>{formData.locationId}</strong>
-            </p>
-          )}
-        </div>
-
-        <div>
-          {selectedLocation && (
-            <p>
-
-            </p>
-          )}
-        </div>
-
-        <label>
-          Presentación:
-          <input
-            type="number"
-            name="performance"
-            value={formData.performance}
-            onChange={handlePerformanceChange}
-            required
-            min="1"
-          />
-        </label>
-        {formData.performance > 0 && (
-          <div>
-            {Array.from({ length: formData.performance }).map((_, index) => (
-              <div key={index}>
-                {index === 0 && (  // Solo mostrar el campo de fecha para la primera presentación
-                  <label>
-                    Fecha {index + 1}:
-                    <input
-                      type="date"
-                      value={formData.presentation[0]?.date || ''}  // Asegurarse de que siempre se use el valor de la primera presentación
-                      onChange={(e) => handlePresentationChange(index, 'date', e.target.value)}
-                      required
-                    />
-                  </label>
-                )}
-
-                {/* Mostrar la fecha seleccionada debajo */}
-                {formData.presentation[0]?.date && (
-                  <p>
-                    {/* Selected Date: <strong>{formData.presentation[0].date}</strong> */}
-                  </p>
-                )}
-
-                <label>
-                  Comienzo {index + 1}:
-                  <input
-                    type="time"
-                    value={formData.presentation[index]?.time?.start || ''}
-                    onChange={(e) => handlePresentationChange(index, 'start', e.target.value)}
-                    required
-                  />
-                </label>
-
-                {/* Mostrar el tiempo de inicio seleccionado debajo */}
-                {formData.presentation[index]?.time?.start && (
-                  <p>
-                    {/* Selected Start Time {index + 1}: <strong>{formData.presentation[index].time.start}</strong> */}
-                  </p>
-                )}
-
-                <label>
-                  Finalización {index + 1}:
-                  <input
-                    type="time"
-                    value={formData.presentation[index]?.time?.end || ''}
-                    onChange={(e) => handlePresentationChange(index, 'end', e.target.value)}
-                    required
-                  />
-                </label>
-
-                {/* Mostrar el tiempo de fin seleccionado debajo */}
-                {formData.presentation[index]?.time?.end && (
-                  <p>
-                    {/* Selected End Time {index + 1}: <strong>{formData.presentation[index].time.end}</strong> */}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
+          </>
         )}
+      </div>
 
-        <label>
-          Descripción:
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Imagen del Evento:
-          <input
-            type="text"
-            name="coverImage"
-            value={formData.coverImage}
-            onChange={handleChange}
-            placeholder="Enter cover image URL"
-          />
-        </label>
+      <label className="flex flex-col">
+        <span className="mb-1 font-semibold">Dirección:</span>
+        <select
+          onChange={handleLocationSelect}
+          value={formData.locationId || ""}
+          required
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="" disabled>
+            Dirección seleccionada
+          </option>
+          {places.length > 0 ? (
+            places.map((place) => (
+              <option key={place.id} value={place.id}>
+                {place.name}
+              </option>
+            ))
+          ) : (
+            <option disabled>No hay lugares disponibles</option>
+          )}
+        </select>
+      </label>
 
-        <button type="button" onClick={handleImageUpload}>Cargar Imagen</button>
+      {formData.locationId && (
+        <p className="mb-4">
+          Dirección seleccionada:{" "}
+          <strong>{formData.locationId}</strong>
+        </p>
+      )}
+
+      <label className="flex flex-col">
+        <span className="mb-1 font-semibold">Presentación:</span>
+        <input
+          type="number"
+          name="performance"
+          value={formData.performance}
+          onChange={handlePerformanceChange}
+          required
+          min="1"
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </label>
+
+      {formData.performance > 0 && (
+        <div className="flex flex-col gap-4">
+          {Array.from({ length: formData.performance }).map((_, index) => (
+            <div key={index} className="flex flex-col gap-2">
+              {index === 0 && (
+                <label className="flex flex-col">
+                  <span className="mb-1 font-semibold">Fecha {index + 1}:</span>
+                  <input
+                    type="date"
+                    value={formData.presentation[0]?.date || ""}
+                    onChange={(e) =>
+                      handlePresentationChange(index, "date", e.target.value)
+                    }
+                    required
+                    className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </label>
+              )}
+
+              <label className="flex flex-col">
+                <span className="mb-1 font-semibold">Comienzo {index + 1}:</span>
+                <input
+                  type="time"
+                  value={formData.presentation[index]?.time?.start || ""}
+                  onChange={(e) =>
+                    handlePresentationChange(index, "start", e.target.value)
+                  }
+                  required
+                  className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </label>
+
+              <label className="flex flex-col">
+                <span className="mb-1 font-semibold">Finalización {index + 1}:</span>
+                <input
+                  type="time"
+                  value={formData.presentation[index]?.time?.end || ""}
+                  onChange={(e) =>
+                    handlePresentationChange(index, "end", e.target.value)
+                  }
+                  required
+                  className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </label>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <label className="flex flex-col">
+        <span className="mb-1 font-semibold">Descripción:</span>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+        />
+      </label>
+
+      <label className="flex flex-col">
+        <span className="mb-1 font-semibold">Imagen del Evento:</span>
+        <input
+          type="text"
+          name="coverImage"
+          value={formData.coverImage}
+          onChange={handleChange}
+          placeholder="Enter cover image URL"
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </label>
+
+      <button
+        type="button"
+        onClick={handleImageUpload}
+        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mt-2 w-max"
+      >
+        Cargar Imagen
+      </button>
+
+      {formData.coverImage && (
         <img
           src={formData.coverImage}
           alt="Cover"
-          style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+          className="mt-4 rounded shadow-lg object-cover"
+          style={{ width: "200px", height: "200px" }}
         />
+      )}
 
+      <button
+        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded mt-6 self-center"
+        type="submit"
+      >
+        Finalizar
+      </button>
+    </form>
+  </div>
+);
 
-
-        <button className='create-show-boton' type="submits">Finalizar</button>
-      </form>
-    </div>
-  );
 };
-
 export default CreateShowForm;

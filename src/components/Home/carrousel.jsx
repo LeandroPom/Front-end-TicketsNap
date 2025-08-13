@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';  // Si usas axios para la petición al servidor
+import axios from 'axios';
 import './carrousel.css';
 
 const Carousel = () => {
@@ -7,12 +7,11 @@ const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
-  // Obtención de banners desde el servidor
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await axios.get('/banners');  // Asegúrate de usar la URL correcta para los banners
-        setBanners(response.data.bannerArray);  // Asumiendo que bannerArray contiene las URLs
+        const response = await axios.get('/banners');
+        setBanners(response.data.bannerArray);
       } catch (error) {
         console.error('Error al obtener los banners:', error);
       }
@@ -21,7 +20,6 @@ const Carousel = () => {
     fetchBanners();
   }, []);
 
-  // Funciones para ir a la imagen anterior o siguiente
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? banners.length - 1 : prevIndex - 1));
   };
@@ -30,73 +28,61 @@ const Carousel = () => {
     setCurrentIndex((prevIndex) => (prevIndex === banners.length - 1 ? 0 : prevIndex + 1));
   };
 
-  const goToIndex = (index) => {
-    setCurrentIndex(index);
-  };
-
-  // Controlar si es un video o una imagen (dependiendo de la URL)
   const renderContent = (url, index) => {
     const isActiveVideo = url?.includes("youtube.com") || url?.includes("youtu.be");
     return isActiveVideo ? (
       <iframe
-        className={`event-videos ${index === currentIndex ? 'actives' : ''}`}
+        className={`w-screen max-w-none h-auto aspect-video ${index === currentIndex ? 'block' : 'hidden'}`}
         src={url?.replace("watch?v=", "embed/")}
         title="Event Video"
         frameBorder="0"
         allowFullScreen
-        onPlay={() => setIsVideoPlaying(true)} // Cuando se empieza a reproducir, se cambia el estado
-        onPause={() => setIsVideoPlaying(false)} // Cuando se pausa, se cambia el estado
       ></iframe>
     ) : (
-      <img className={`event-imagen ${index === currentIndex ? 'active' : ''}`} src={url} alt="Event" />
+      <img
+        className={`w-screen max-w-none h-auto object-cover ${index === currentIndex ? 'block' : 'hidden'}`}
+        src={url}
+        alt="Event"
+      />
     );
   };
 
-  // Cambio automático de imágenes (solo si no hay video reproduciéndose)
   useEffect(() => {
-    if (!isVideoPlaying && banners.length > 1) { // Solo cambia si hay más de una imagen
+    if (!isVideoPlaying && banners.length > 1) {
       const interval = setInterval(() => {
         goToNext();
-      }, 15000); // Cambia la imagen cada 15 segundos
+      }, 15000);
 
-      return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
+      return () => clearInterval(interval);
     }
   }, [currentIndex, isVideoPlaying, banners.length]);
 
-  // Determina si solo hay una imagen para desactivar los botones
   const isSingleImage = banners.length === 1;
 
   return (
-    <div className="carousel-home">
+    <div className="relative top-[80px] left-0 w-screen h-auto overflow-hidden bg-gray-100 m-0 p-0 z-10">
+      {/* Botón anterior */}
       <button
-        className="carousel-button prev"
         onClick={goToPrevious}
         disabled={isSingleImage}
+        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 disabled:opacity-30 disabled:cursor-not-allowed z-20"
       >
         &#8249;
       </button>
 
-      <div className="carousel-images">
+      {/* Contenido */}
+      <div className="w-screen flex justify-center items-center">
         {renderContent(banners[currentIndex]?.url, currentIndex)}
       </div>
 
+      {/* Botón siguiente */}
       <button
-        className="carousel-button next"
         onClick={goToNext}
         disabled={isSingleImage}
+        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 disabled:opacity-30 disabled:cursor-not-allowed z-20"
       >
         &#8250;
       </button>
-
-      <div className="carousel-indicators">
-        {banners.map((_, index) => (
-          <button
-            key={index}
-            className={`indicator ${index === currentIndex ? 'actives' : ''}`}
-            onClick={() => goToIndex(index)}
-          />
-        ))}
-      </div>
     </div>
   );
 };

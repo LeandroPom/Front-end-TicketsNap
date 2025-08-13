@@ -66,13 +66,13 @@
 }
 
 .carousel-button.next {
-  right: 42px;
+  right: 15px;
 }
 
 /* Indicadores */
 .carousel-indicators {
   position: absolute;
-  bottom: 10px;
+  bottom: 7px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -81,16 +81,16 @@
 
 .indicator {
   width: 10px;
-  height: 10px;
+  height: 7px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   cursor: pointer;
 }
 
-.indicator.active {
+/* .indicator.active {
   background-color: white;
-}
+} */
 
 
 
@@ -186,7 +186,7 @@
     height: 70%; /* Ocupa toda la altura de la pantalla */
     margin: 5px;
     overflow: hidden;
-    margin-top: -48px;
+    margin-top: -5px;
     margin-left: -50px;
     object-fit: cover;  /* Asegura que la imagen se ajuste bien */
     z-index: 1;
@@ -337,6 +337,11 @@
     object-fit: cover;  /* Asegura que la imagen se ajuste bien */
     z-index: 1;
   }
+
+   .carousel-button.next {
+    right: 30px;
+  }
+
 
  
 }

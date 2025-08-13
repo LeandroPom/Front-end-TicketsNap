@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Agregamos useNavigate para redirigir
-import './register.css';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
@@ -406,155 +405,184 @@ const Register = () => {
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
 
-  return (
-    <div>
-      {isModalOpen && (
-        <div ></div>
-      )}
+return (
+  <div>
+    {isModalOpen && (
+      <div className="mt-[90px] fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-[rgba(86,86,190,0.45)] backdrop-blur-lg rounded-2xl shadow-2xl p-6 w-full max-w-4xl max-h-[80vh] overflow-y-auto mt-[40px]">
+          
+          {/* Título */}
+          <h2 className="text-3xl font-bold text-center text-white mb-6">
+            Crea tu cuenta
+          </h2>
 
-      {isModalOpen && (
-        <div className="register-modal">
-          <h2 className="register-title">CREA TU CUENTA</h2>
-          <form className="register-form" onSubmit={handleSubmit}>
-            {/* Primera fila: First Name y Email */}
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="firstName">Nombre</label>
+          {/* Formulario */}
+          <form className="space-y-5" onSubmit={handleSubmit}>
+
+            {/* Nombre y Correo */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="firstName" className="block text-white font-semibold mb-2">
+                  Nombre
+                </label>
                 <input
                   type="text"
                   id="firstName"
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleInputChange}
-                  // placeholder="Enter your first name"
                   required
+                  className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
-                {errors.firstName && <small>{errors.firstName}</small>}
+                {errors.firstName && <small className="text-red-400">{errors.firstName}</small>}
               </div>
-              <div className="form-group">
-                <label htmlFor="email">Correo</label>
+
+              <div>
+                <label htmlFor="email" className="block text-white font-semibold mb-2">
+                  Correo
+                </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="Coloca tu correo real, para recibir tu entrada"
+                  placeholder="Coloca tu correo real"
                   required
+                  className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
-                {errors.email && <small>{errors.email}</small>}
+                {errors.email && <small className="text-red-400">{errors.email}</small>}
               </div>
             </div>
 
-
-            {/* Segunda fila: Last Name y Password */}
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="lastName">Apellido</label>
+            {/* Apellido y Teléfono */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="lastName" className="block text-white font-semibold mb-2">
+                  Apellido
+                </label>
                 <input
                   type="text"
                   id="lastName"
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
-                  // placeholder="Enter your last name"
                   required
+                  className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
-                {errors.lastName && <small>{errors.lastName}</small>}
+                {errors.lastName && <small className="text-red-400">{errors.lastName}</small>}
               </div>
-              <div className="form-group">
-                <label htmlFor="password">Contraseña</label>
-                <div className="password-container"></div>
-                <input
-                  type={showPassword ? 'text' : 'password'} // Mostrar u ocultar la contraseña
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  // placeholder="Enter your password"
-                  required
-                />
-                <FontAwesomeIcon
-                  icon={showPassword ? faEyeSlash : faEye} // Cambiar ícono
-                  className="password-eye"
-                  onClick={togglePasswordVisibility} // Cambiar visibilidad de la contraseña
-                />
-                <div>
-                {errors.password && <small className="error-message">{errors.password}</small>}
-                </div>
 
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Confirmar contraseña</label>
+              <div>
+                <label htmlFor="phone" className="block text-white font-semibold mb-2">
+                  Número de celular
+                </label>
                 <input
-                  type={showConfirmPassword ? 'text' : 'password'} // Mostrar u ocultar la confirmación de contraseña
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
                   onChange={handleInputChange}
-                  // placeholder="Enter your password"
-                  required
+                  placeholder="Ej: 38115403286"
+                  maxLength="12"
+                  className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
-                <FontAwesomeIcon
-                  icon={showConfirmPassword ? faEyeSlash : faEye} // Cambiar ícono
-                  className="password-eye-confirm"
-                  onClick={toggleConfirmPasswordVisibility} // Cambiar visibilidad de la confirmación
-                />
-                <div>
-                {errors.confirmPassword && <small className="error-message">{errors.confirmPassword}</small>}
-                </div>
-
               </div>
             </div>
 
-            {/* Tercera fila: Phone */}
-            <div className="form-group">
-              <label htmlFor="phone">Numero de celular completo</label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="Ej: Tucuman: 381-15403286, sin guiones/espacios"
-                maxLength="12"  // Limita la longitud a 12 caracteres
-              />
+            {/* Contraseña y Confirmar */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+              <div className="flex items-center gap-2">
+                <div className="flex-1">
+                  <label htmlFor="password" className="block text-white font-semibold mb-2">
+                    Contraseña
+                  </label>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  />
+                  {errors.password && <small className="text-red-400">{errors.password}</small>}
+                </div>
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="text-white mt-6 p-1 hover:text-blue-300 ml-[-20px]"
+                  aria-label="Mostrar/Ocultar contraseña"
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} size="lg" />
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="flex-1">
+                  <label htmlFor="confirmPassword" className="block text-white font-semibold mb-2">
+                    Confirmar
+                  </label>
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  />
+                  {errors.confirmPassword && <small className="text-red-400">{errors.confirmPassword}</small>}
+                </div>
+                <button
+                  type="button"
+                  onClick={toggleConfirmPasswordVisibility}
+                  className="text-white mt-6 p-1 hover:text-blue-300 ml-[-20px]"
+                  aria-label="Mostrar/Ocultar confirmar contraseña"
+                >
+                  <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} size="lg" />
+                </button>
+              </div>
             </div>
 
             {/* Botones */}
-            <div>
+            <div className="flex flex-col md:flex-row gap-4 pt-4">
               <button
-
-                className="create-btns"
-              // disabled={isLoading || Object.keys(errors).length > 0 || !formData.password || !formData.confirmPassword}
+                type="submit"
+                className="bg-blue-700 hover:bg-blue-900 text-white px-4 py-2 rounded-md font-semibold transition-colors"
               >
                 Crear Cuenta
               </button>
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="bg-blue-700 hover:bg-blue-900 text-white px-4 py-2 rounded-md font-semibold transition-colors"
+              >
+                Cancelar
+              </button>
+            </div>
 
+            {/* Google Login */}
+            <div className="flex justify-center pt-2">
+              <GoogleOAuthProvider clientId={clientId}>
+                <GoogleLogin
+                  onSuccess={handleGoogleRegister}
+                  onError={() => console.log('Login failed')}
+                  useOneTap
+                  theme="outline"
+                  size="medium"
+                />
+              </GoogleOAuthProvider>
             </div>
           </form>
-          <div className='google-login'>
-          </div>
-          <div>
-            <button className="cancel-btns" onClick={handleCancel} >
-              Cancelar
-            </button>
-          </div>
-          <GoogleOAuthProvider clientId={clientId}>
-            <GoogleLogin
-
-              onSuccess={handleGoogleRegister}
-              onError={() => console.log('Login failed')}
-              useOneTap
-              theme="outline"
-              size="medium"
-            />
-          </GoogleOAuthProvider>
-
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
+
+
+
 };
 
 export default Register;

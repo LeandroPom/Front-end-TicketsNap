@@ -1,38 +1,24 @@
-import React, { useState,useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useSelector,useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
+import { useSelector, useDispatch } from 'react-redux';
 import { getShows } from '../Redux/Actions/actions';
 import './ticketdetail.css';
-
 
 const TicketDetail = () => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
-  const {eventDetails,selectedSeat,selectedGeneral,selectedtribunes} = location.state || {};
-  const navigate = useNavigate(); // Hook para redireccionar
+  const navigate = useNavigate();
   const shows = useSelector((state) => state.shows);
-  const [loadingShows, setLoadingShows] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);  // Nuevo estado para cargar
-  const [errorShows, setErrorShows] = useState(null);
   const dispatch = useDispatch();
-  const ticket = location.state || JSON.parse(sessionStorage.getItem("ticketData"));
- 
-  useEffect(() => {
-      if (shows.length === 0) {
-        dispatch(getShows())
-          .then(() => setLoadingShows(false))
-          .catch((err) => {
-            setErrorShows('Error al obtener los shows');
-            setLoadingShows(false);
-          });
-      } else {
-        setLoadingShows(false);
-      }
-    }, [dispatch, shows]);
 
+  // Ahora recibimos un array de tickets
+  const { tickets } = location.state || JSON.parse(sessionStorage.getItem("ticketData")) || {};
+
+  const [loadingShows, setLoadingShows] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorShows, setErrorShows] = useState(null);
   const [buyerData, setBuyerData] = useState({
     dni: '',
     firstName: '',
@@ -41,179 +27,183 @@ const TicketDetail = () => {
     phone: '',
   });
 
-  if (!eventDetails || (!selectedSeat && !selectedGeneral && !selectedtribunes)) {
-    return <p>Error: No hay datos disponibles para este ticket.</p>;
+  useEffect(() => {
+    if (shows.length === 0) {
+      dispatch(getShows())
+        .then(() => setLoadingShows(false))
+        .catch(() => {
+          setErrorShows('Error al obtener los shows');
+          setLoadingShows(false);
+        });
+    } else {
+      setLoadingShows(false);
+    }
+  }, [dispatch, shows]);
+
+  // Validación simple para no seguir si no hay tickets
+  if (!tickets || tickets.length === 0) {
+    return <p>Error: No hay tickets seleccionados.</p>;
   }
 
- 
+  // Sacamos el eventDetails del primer ticket para mostrar info general (asumiendo todos son del mismo evento)
+  const eventDetails = tickets[0]?.eventDetails || {};
 
   const handleOpenBuyerModal = () => {
-    // Intentar cargar los datos de sessionStorage si existen
-    const storedData = JSON.parse(sessionStorage.getItem('buyerData')) || buyerData;
-    const { dni, firstName, lastName, email, phone } = storedData;
-  
-    Swal.fire({
-      title: 'Debe cargar los datos del comprador',
-      html: `
-        <div>
-          <label>DNI:</label><br/>
-          <input type="text" id="dni" class="swal2-input" placeholder="Ingrese el DNI" value="${dni || ''}" />
-          <label>Nombre:</label><br/>
-          <input type="text" id="firstName" class="swal2-input" placeholder="Ingrese el nombre" value="${firstName || ''}" />
-          <label>Apellido:</label><br/>
-          <input type="text" id="lastName" class="swal2-input" placeholder="Ingrese el apellido" value="${lastName || ''}" />
-          <label>Correo:</label><br/>
-          <input type="email" id="email" class="swal2-input" placeholder="Ingrese el correo" value="${email || ''}" />
-          <label>Teléfono:</label><br/>
-          <input type="text" id="phone" class="swal2-input" placeholder="Ingrese el teléfono" value="${phone || ''}" />
-        </div>
-      `,
-      focusConfirm: false,
-      showCancelButton: true, // Habilita el botón de cancelar
-      cancelButtonText: 'Borrar datos', // Texto del botón de borrar
-      preConfirm: () => {
-        const dni = document.getElementById('dni').value;
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-  
-        if (!dni || !firstName || !lastName || !email || !phone) {
-          Swal.showValidationMessage('Todos los campos son obligatorios');
-          return null;
-        }
-  
-        return { dni, firstName, lastName, email, phone };
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setBuyerData(result.value); // Guardar los datos ingresados en el estado
-        // Guardar los datos también en sessionStorage para persistir entre aperturas
-        sessionStorage.setItem('buyerData', JSON.stringify(result.value));
-  
-        handleConfirmPurchase(result.value, user?.cashier ? 'sell' : 'buy');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-              // Limpiar los datos almacenados en sessionStorage si el usuario hizo clic en "Borrar datos"
-              sessionStorage.removeItem('buyerData');
-              
-              // Limpiar los campos en el modal
-              Swal.fire({
-                title: 'Datos borrados',
-                text: 'Los datos se han borrado, puedes ingresar nuevos.',
-                icon: 'info',
-                confirmButtonText: 'Aceptar',
-              }).then(() => {
-                handleOpenBuyerModal(buyerData); // Reabrir el modal para que el usuario ingrese nuevos datos
-              });
-            }
-          });
-        };
+  const storedData = JSON.parse(sessionStorage.getItem('buyerData')) || buyerData;
+  const { dni, firstName, lastName, email, phone } = storedData;
+
+  Swal.fire({
+    title: 'Debe cargar los datos del comprador',
+     html: `
+      <div style="padding: 24px; max-width: 400px; margin: auto; background-color: #2a378fff; border-radius: 10px; font-family: 'Inter', sans-serif;">
+        <label style="display: block; font-weight: bold; color: white; margin-bottom: 8px;">DNI:</label>
+        <input type="text" id="dni" value="${dni || ''}" style="width: 100%; padding: 10px; margin-bottom: 16px;" />
+        <label style="display: block; font-weight: bold; color: white; margin-bottom: 8px;">Nombre:</label>
+        <input type="text" id="firstName" value="${firstName || ''}" style="width: 100%; padding: 10px; margin-bottom: 16px;" />
+        <label style="display: block; font-weight: bold; color: white; margin-bottom: 8px;">Apellido:</label>
+        <input type="text" id="lastName" value="${lastName || ''}" style="width: 100%; padding: 10px; margin-bottom: 16px;" />
+        <label style="display: block; font-weight: bold; color: white; margin-bottom: 8px;">Correo:</label>
+        <input type="email" id="email" value="${email || ''}" style="width: 100%; padding: 10px; margin-bottom: 16px;" />
+        <label style="display: block; font-weight: bold; color: white; margin-bottom: 8px;">Teléfono:</label>
+        <input type="text" id="phone" value="${phone || ''}" style="width: 100%; padding: 10px;" />
+        <button id="autoFillBtn" style="margin-top: 16px; background-color: #3949ab; color: white; padding: 10px 16px; border: none; border-radius: 5px; cursor: pointer;">
+          Autocompletar con mis datos
+        </button>
+      </div>
+    `,
+    focusConfirm: false,
+    showCancelButton: true,
+    cancelButtonText: 'Borrar datos',
+    didOpen: () => {
+      // Agregar funcionalidad al botón "Autocompletar"
+      document.getElementById('autoFillBtn').addEventListener('click', () => {
+        const [first = '', last = ''] = (user?.name || '').split(' ');
+        document.getElementById('firstName').value = first;
+        document.getElementById('lastName').value = last;
+        document.getElementById('email').value = user?.email || '';
+        document.getElementById('dni').value = '';
+        document.getElementById('phone').value = '';
+      });
+    },
+    preConfirm: () => {
+      const dni = document.getElementById('dni').value;
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      if (!dni || !firstName || !lastName || !email || !phone) {
+        Swal.showValidationMessage('Todos los campos son obligatorios');
+        return null;
+      }
+
+      return { dni, firstName, lastName, email, phone };
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      setBuyerData(result.value);
+      sessionStorage.setItem('buyerData', JSON.stringify(result.value));
+      handleConfirmPurchase(result.value, user?.cashier ? 'sell' : 'buy');
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      sessionStorage.removeItem('buyerData');
+      Swal.fire({
+        title: 'Datos borrados',
+        text: 'Los datos se han borrado, puedes ingresar nuevos.',
+        icon: 'info',
+        confirmButtonText: 'Aceptar',
+      }).then(() => {
+        handleOpenBuyerModal();
+      });
+    }
+  });
+};
+
 
   const handleConfirmPurchase = async (buyerDetails = null, action = 'buy') => {
-    setIsLoading(true);  // Activar el loading cuando comience la compra/venta
-    // Cambiar el endpoint dinámicamente dependiendo de si es compra o venta
-    const endpoint = action === 'sell' ? '/tickets/sell' : '/tickets/buy';
-  
-    const ticketData = selectedGeneral
-      ? {
-          showId: eventDetails.id,
-          division: selectedGeneral.division,
-          seatsCount: selectedGeneral.seatsCount,
-          totalPrice: selectedGeneral.totalPrice,
-          Direccion: shows.find(show => show.id === ticket.showId)?.location || "direccion desconocida",
-          userId: user?.id,
-          user: {
-          "cashier": user?.cashier
-          },
-          name: buyerDetails ? `${buyerDetails.firstName} ${buyerDetails.lastName}` : null,
-          dni: buyerDetails?.dni || null,
-          mail: buyerDetails?.email || null,
-          phone: buyerDetails?.phone || null,
-        }
-      : {
-        showId: selectedSeat.showId,
-        zoneId: selectedSeat?.zoneId,
-        division: selectedSeat?.division,
-        row: selectedSeat?.row,
-        seatId: selectedSeat?.id,
-        price: selectedSeat?.price,
-        location: `Floresta`,
-        Direccion: shows.find(show => show.id === ticket.showId)?.location || "direccion desconocida",
+    console.log("📦 Ejecutando handleConfirmPurchase con:");
+console.log("buyerDetails:", buyerDetails);
+console.log("action:", action);
+    setIsLoading(true);
+
+    // Aquí armamos un array con los asientos que se compran o venden
+    // Si es asiento numerado, cada objeto debe tener showId, zoneId, division, row, seatId, price, etc.
+    // Si es general, debes adaptar a la estructura que uses para general (aquí asumo asientos numerados)
+
+    // Ejemplo: mapeamos tickets para armar un array para backend
+    const ticketsPayload = tickets.map((ticket) => {
+      const seat = ticket.selectedSeat;
+
+      return {
+        showId: seat.showId,
+        zoneId: seat.zoneId,
+        division: seat.division,
+        row: seat.row,
+        seatId: seat.id,
+        price: seat.price,
         userId: user?.id,
-        user: {
-          "cashier": user?.cashier
-          },
         name: buyerDetails ? `${buyerDetails.firstName} ${buyerDetails.lastName}` : null,
         dni: buyerDetails?.dni || null,
         mail: buyerDetails?.email || null,
         phone: buyerDetails?.phone || null,
-        };
-  // console.log(ticketData, "DATOS ENVIADOS AL BACK")
-    try {
-      const response = await axios.post(endpoint, ticketData);
-
-      sessionStorage.setItem("ticketData", JSON.stringify(ticketData ));
-  
-      // Verificar la respuesta para depuración
-      
-  
-      const { init_point, qrCode, date, showId, division, price, row, seat, location } = response.data;
-  
-      if (init_point) {
-        // Si es una compra, redirigir al usuario a MercadoPago
-        window.location.href = init_point;
-      } else if (action === 'buy') {
-        // Para compras exitosas, mostrar el ticket con detalles
-        Swal.fire({
-          title: 'Compra Confirmada',
-          text: `El pago se ha completado con éxito.`,
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        });
-        // Redirigir al success page con los detalles del ticket
-        navigate('/success', {
-          state: { qrCode, showId, division, price, date, seat, location, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone },
-        });
-      } else if (action === 'sell') {
-        // Para ventas en efectivo, mostrar confirmación sin MercadoPago
-        Swal.fire({
-          title: 'Venta Confirmada',
-          text: `La venta se ha procesado con éxito`,
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        });
-        // Redirigir a la página de éxito con el ticket generado
-        navigate('/success', {
-          state: { qrCode, showId, division, price, date, seat, location, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone },
-        });
-      } else {
-        // Si no se recibe un 'init_point' ni un 'ticketId', significa que hubo un error
-        Swal.fire({
-          title: 'Error',
-          text: 'Hubo un problema al procesar la compra/venta. Intenta nuevamente.',
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-        });
-      }
-      
+       
+      };
+    });
  
-      if (response.success) {
-        navigate('/success', { state: { qrCode, showId, division, price, location, date, seat, row, mail: buyerDetails?.email, name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`, phone: buyerDetails?.phone } }); // Asegurar que SIEMPRE redirige
-        setIsLoading(false);  // Desactivar el loading cuando finalice la compra/venta
-      } else {
-        
-      }
-    } catch (error) {
-      console.error("Error en la compra:", error);
-      
-    }
-  
+
+    // Elegimos el endpoint según acción
+    const endpoint = '/tickets/sales';
+
+    try {
+  const serviceType = action === 'sell' ? 'CASH' : 'MP';
+
+  const response = await axios.post(endpoint, {
+    tickets: ticketsPayload,
+    service: serviceType,
+  });
+
+  const ticketsResponse = response.data; // array de tickets retornados por el backend
+console.log(response.data)
+  // Guardamos en sessionStorage
+  sessionStorage.setItem("ticketData", JSON.stringify({ tickets: ticketsResponse }));
+
+  // Si es compra y hay init_point (MercadoPago), redirigir
+  if (response.data.init_point && action === 'buy') {
+    window.location.href = response.data.init_point;
+    return;
+  }
+
+  // Mostrar alerta de éxito
+  Swal.fire({
+    title: action === 'buy' ? 'Compra Confirmada' : 'Venta Confirmada',
+    text: action === 'buy'
+      ? 'El pago se ha completado con éxito.'
+      : 'La venta se ha procesado con éxito',
+    icon: 'success',
+    confirmButtonText: 'Aceptar',
+  });
+
+  // Navegamos al /success con todos los tickets
+  navigate('/success', {
+    state: {
+      tickets: ticketsResponse,
+      mail: buyerDetails?.email,
+      name: `${buyerDetails?.firstName} ${buyerDetails?.lastName}`,
+      phone: buyerDetails?.phone,
+    },
+  });
+
+  setIsLoading(false);
+} catch (error) {
+  console.error("Error en la compra/venta:", error);
+  Swal.fire({
+    title: 'Error',
+    text: 'Hubo un error inesperado. Intenta nuevamente.',
+    icon: 'error',
+    confirmButtonText: 'Aceptar',
+  });
+  setIsLoading(false);
+}
   };
-
-  const showAdress = shows.find(show => show.id === ticket.showId)?.location|| "Show ";
-
-  // console.log(ticket,"Datos del tiket")
-  // console.log(showAdress,"Datos de la cosntante")
 
   if (loadingShows) {
     return <div className="loading">Cargando shows...</div>;
@@ -222,7 +212,10 @@ const TicketDetail = () => {
   if (errorShows) {
     return <div className="error">{errorShows}</div>;
   }
-   
+
+  
+
+
   if (isLoading) {
     return (
       <div className="loading-overlay">
@@ -230,77 +223,40 @@ const TicketDetail = () => {
         <div className="corner-img top-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
         <div className="corner-img bottom-left" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
         <div className="corner-img bottom-right" style={{ backgroundImage: 'url(/images/solticket.png)' }}></div>
-  
+
         <div className="spinner"></div>
         <p>Procesando su compra...</p>
       </div>
     );
   }
+
+  // Mostrar todos los asientos seleccionados
   return (
     <div className="ticket-container">
-      <h1 className="ticket-title">Ticket de Evento</h1>
+      <h1 className="className='font-bold text-black'ticket-title">Ticket de Evento</h1>
 
       <div className="ticket-box">
-        <h2 className="event-name">{eventDetails.name}</h2>
-        <p>
-          <strong>Descripción:</strong> {eventDetails.description}
-        </p>
-        <p>
-          <strong>Dirección:</strong> {eventDetails.Direccion}
-        </p>
-        <p>
-          <strong>Fecha:</strong> {eventDetails.presentation?.date}
-        </p>
-        <p>
-          {/* <strong>Ubicación:</strong> Floresta */}
-        </p>
-        <p>
-          <strong>Hora de inicio:</strong> {eventDetails.presentation?.time?.start}
-        </p>
-        <p>
-          <strong>Hora de fin:</strong> {eventDetails.presentation?.time?.end}
-        </p>
+        <h2 className="className='font-bold text-black'">{eventDetails.name}</h2>
+        <p className='font-bold text-black'><strong>Descripción:</strong> {eventDetails.description}</p>
+        <p className='font-bold text-black'><strong>Dirección:</strong> {eventDetails.Direccion || eventDetails.location}</p>
+        <p className='font-bold text-black'><strong>Fecha:</strong> {eventDetails.presentation?.date}</p>
+        <p className='font-bold text-black'><strong>Hora de inicio:</strong> {eventDetails.presentation?.time?.start}</p>
+        <p className='font-bold text-black'><strong>Hora de fin:</strong> {eventDetails.presentation?.time?.end}</p>
         <hr />
 
-        {selectedSeat ? (
-          <>
-            <h3 className="seat-title">Detalles del Asiento:</h3>
-            <p>
-              <strong>División:</strong> {selectedSeat.division}
-            </p>
-            <p>
-              <strong>Asiento N°:</strong> {selectedSeat.id}
-            </p>
-            <p>
-              <strong>Fila N°:</strong> {selectedSeat.row}
-            </p>
-            <p>
-              <strong>Precio:</strong> ${selectedSeat.price}
-            </p>
-            <p style={{color:"red"}}>
-            <strong>Recargo de servicios:</strong> ${((selectedSeat.price * 0.20).toFixed(2))}
-            </p>
-          </>
-        ) : (
-          <>
-            <h3 className="seat-title">Detalles de la Selección:</h3>
-            <p>
-              <strong>División:</strong> {selectedGeneral.division}
-            </p>
-            <p>
-              <strong>Boletos seleccionados:</strong> {selectedGeneral.seatsCount}
-            </p>
-            <p>
-              <strong>Total a pagar:</strong> ${selectedGeneral.totalPrice}
-            </p>
-          </>
-        )}
+        <h3 className="seat-title">Detalles de los Asientos Seleccionados:</h3>
+        {tickets.map((ticket, i) => (
+          <div key={i} style={{ borderBottom: "1px solid #ccc", marginBottom: "10px" }}>
+            <p className='font-bold text-black'><strong>División:</strong> {ticket.selectedSeat.division}</p>
+            <p className='font-bold text-black'><strong>Asiento N°:</strong> {ticket.selectedSeat.id}</p>
+            <p className='font-bold text-black'><strong>Fila:</strong> {ticket.selectedSeat.row}</p>
+            <p className='font-bold text-black'><strong>Precio:</strong> ${ticket.selectedSeat.price}</p>
+          </div>
+        ))}
 
-        <div className="button-container">
-          <button onClick={handleOpenBuyerModal} className="buy-button">
-            {user?.cashier ? 'Vender Entrada' : 'Comprar Entrada'}
-          </button>
-        </div>
+        <button className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400" onClick={handleOpenBuyerModal}>
+          Confirmar Compra/Venta
+        </button>
       </div>
     </div>
   );

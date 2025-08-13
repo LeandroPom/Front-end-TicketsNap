@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../Pages/banner.css';  // Importa el archivo CSS aislado
+
 
 const Banner = () => {
   // Estados para manejar el modal, nombre, la imagen, y la paginación
@@ -12,7 +12,7 @@ const Banner = () => {
   const [currentPage, setCurrentPage] = useState(1);  // Página actual de la paginación
   const [totalPages, setTotalPages] = useState(1);  // Total de páginas disponibles
 
-  const itemsperpage =10;  // Limitar a 3 banners por página
+  const itemsperpage =3;  // Limitar a 3 banners por página
 
   // Abre el modal
   const openModal = () => {
@@ -113,93 +113,161 @@ const Banner = () => {
     return banners.slice(startIndex, endIndex);
   };
 
-  // Renderizar el componente
   return (
-    <div className="banner-container">
-      
-      <button className='boton-cargar' onClick={openModal}>Cargar imagen de banner</button>
+  <div
+    className="
+      min-h-screen
+      flex flex-col
+      items-center
+      pt-[200px] px-4 md:px-6
+      bg-[rgba(86,86,190,0.4)]
+      max-w-screen-xl
+      mx-auto
+      z-10
+    "
+    style={{
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+    }}
+  >
+    <button
+      onClick={openModal}
+      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-6"
+    >
+      Cargar imagen de banner
+    </button>
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="banner-modal">
-          <div className="banner-modal-content">
-            
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label>Nombre del Banner:</label>
-                <input 
-                  type="text" 
-                  value={bannerName} 
-                  onChange={(e) => setBannerName(e.target.value)} 
-                  required
-                />
-              </div>
-              <div>
-  <button type="button" onClick={handleImageUpload}>Cargar Imagen</button>
-  {imageUrl && (  // Aquí verificamos imageUrl
+    {/* Modal */}
+    {isModalOpen && (
+      <div
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        onClick={closeModal} // para cerrar modal clickeando fuera del contenido
+      >
+        <div
+          className="bg-[rgba(90,90,170,0.8)] p-6 rounded shadow-lg w-full max-w-md"
+          onClick={(e) => e.stopPropagation()} // evitar cerrar modal al click dentro
+        >
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-white font-semibold">
+            <div className="flex flex-col">
+              <label className="mb-1">Nombre del Banner:</label>
+              <input
+                type="text"
+                value={bannerName}
+                onChange={(e) => setBannerName(e.target.value)}
+                required
+                className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+            <div>
+              {/* <button
+                type="button"
+                onClick={handleImageUpload}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+              >
+                Cargar Imagen
+              </button> */}
+              {imageUrl && (
+                <p className="mt-2 text-green-400 font-semibold">
+                  Imagen cargada ¡¡¡EXITOSAMENTE!!!  
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-col font-semibold">
+              <label className="mb-1">Ingresa una URL de Imagen:</label>
+              <input
+                type="text"
+                value={imageUrlInput}
+                onChange={(e) => setImageUrlInput(e.target.value)}
+                placeholder="https://ejemplo.com/imagen.jpg"
+                className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+            <div className="flex gap-4 justify-end">
+              <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+              >
+                Enviar
+              </button>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+              >
+                Cerrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )}
+
+    {/* Contenedor que envuelve banners + paginado para alinear */}
     <div>
-      <p style={{color:"green"}}>Imagen cargada ¡¡¡EXITOSAMENTE!!!</p>
+      {/* Lista de banners */}
+     <div className="flex flex-wrap justify-center gap-6 mb-6">
+  {getCurrentPageBanners().map((banner, index) => (
+    <div
+      key={index}
+      className="bg-[rgba(90,90,170,0.7)] rounded shadow p-3 flex flex-col items-center text-white w-60"
+    >
+      <img
+        src={banner.url}
+        alt={banner.name}
+        className="w-full h-32 object-cover rounded mb-2"
+      />
+      <span className="font-semibold mb-2 text-center">{banner.name}</span>
+      <button
+        onClick={() => handleDelete(banner.name)}
+        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+      >
+        Eliminar
+      </button>
     </div>
-  )}
+  ))}
 </div>
 
-              {/* Agregar campo para cargar URL directamente */}
-              <div>
-                <label>O ingresa una URL de la imagen:</label>
-                <input 
-                  type="text" 
-                  value={imageUrlInput} 
-                  onChange={(e) => setImageUrlInput(e.target.value)} 
-                  placeholder="https://ejemplo.com/imagen.jpg"
-                />
-              </div>
-
-              
-
-              <div>
-                <button type="submit">Enviar</button>
-                <button type="button" onClick={closeModal}>Cerrar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Renderizar los banners */}
-      <div className="banner-list">
-        {getCurrentPageBanners().map((banner, index) => (
-          <div key={index} className="banner-item">
-            <img src={banner.url} alt={banner.name} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
-            <span>{banner.name}</span>
-            <button onClick={() => handleDelete(banner.name)} className="delete-button">Eliminar</button>
-          </div>
-        ))}
-      </div>
-
-      <div className="pagination">
-        <button 
-          onClick={() => changePage(currentPage - 1)} 
+      {/* Paginación */}
+      <div className="flex justify-center items-center gap-4 text-white">
+        <button
+          onClick={() => changePage(currentPage - 1)}
           disabled={currentPage === 1}
+          className={`px-4 py-2 rounded-full ${
+            currentPage === 1
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)]"
+          }`}
         >
           Anterior
         </button>
 
-        {/* Mostrar la página actual solo si totalPages es mayor a 0 */}
         {totalPages > 0 ? (
-          <span>Página {currentPage} de {totalPages}</span>
+          <span>
+            Página {currentPage} de {totalPages}
+          </span>
         ) : (
-          <span>Cargando...</span>  // Muestra "Cargando..." solo si no hay banners
+          <span>Cargando...</span>
         )}
 
-        <button 
-          onClick={() => changePage(currentPage + 1)} 
-          disabled={currentPage === totalPages || totalPages === 0}  // Deshabilitar el botón si estamos en la última página
+        <button
+          onClick={() => changePage(currentPage + 1)}
+          disabled={currentPage === totalPages || totalPages === 0}
+          className={`px-4 py-2 rounded-full ${
+            currentPage === totalPages || totalPages === 0
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)]"
+          }`}
         >
           Siguiente
         </button>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Banner;

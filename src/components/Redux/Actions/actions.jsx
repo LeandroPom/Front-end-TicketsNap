@@ -261,6 +261,22 @@ export const createShow = (showData) => async (dispatch) => {
   }
 };
 
+/// BORRAR SHOWS Y SUS DATOS ///
+
+export const deleteShow = (id) => async (dispatch) => {
+  try {
+    const response = await axios.delete(`/shows/delete/${id}`);
+    
+    // Si la solicitud fue exitosa, actualizamos los shows
+    dispatch(getShows());
+
+    return true; // ✅ Esto permite que el .then() se ejecute correctamente
+  } catch (error) {
+    console.error('Error al eliminar el show:', error);
+    throw error; // Esto hará que el .catch() se dispare si hay un error real
+  }
+};
+
 //TRAER TODOS LOS SHOWS ////
 
 export const getShows = () => async (dispatch) => {

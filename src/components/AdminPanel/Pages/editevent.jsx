@@ -100,6 +100,7 @@ const EditShow = () => {
       genre: selectedTags,
       description,
       coverImage,
+      presentation: presentations
     };
 
 
@@ -177,137 +178,249 @@ const EditShow = () => {
     widget.open(); // Abre el widget
   };
 
-  return (
+return (
+  <div
+    className="min-h-screen p-4 md:p-6 text-white max-w-screen-xl mx-auto relative"
+    style={{
+      background: "rgba(86, 86, 190, 0.4)",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+      top: "110px",
+      zIndex: 10,
+      // left: "160px",  // Lo removí para que no desplace a la izquierda
+    }}
+  >
+    <h1 className="text-3xl font-bold mb-6 text-center">Editar Evento</h1>
 
-    <div className="edit-show">
-      <h1>Edit Event</h1>
-      <form className='form-stile' onSubmit={handleSubmit}>
-        {/* Nombre del evento */}
-        <div className="form-group">
-          <label htmlFor="name">Nombre del evento:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
+    <form
+      className="flex flex-col gap-6 max-w-4xl mx-auto"
+      onSubmit={handleSubmit}
+    >
+      {/* Nombre del evento */}
+      <div className="form-group flex flex-col">
+        <label htmlFor="name" className="mb-1 font-semibold">
+          Nombre del evento:
+        </label>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
 
-        {/* Artistas */}
-        <div className="form-group">
-          <label htmlFor="artists">Artistas (separación con coma):</label>
-          <input
-            type="text"
-            id="artists"
-            value={artists}
-            onChange={(e) => setArtists(e.target.value)}
-            required
-          />
-        </div>
+      {/* Artistas */}
+      <div className="form-group flex flex-col">
+        <label htmlFor="artists" className="mb-1 font-semibold">
+          Artistas (separación con coma):
+        </label>
+        <input
+          type="text"
+          id="artists"
+          value={artists}
+          onChange={(e) => setArtists(e.target.value)}
+          required
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
 
-        {/* Géneros */}
-        <div className="form-group">
-          <label htmlFor="tags">Generos:</label>
-          <select
-            id="tags"
-            multiple
-            value={selectedTags}
-            onChange={(e) => {
-              const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-              setSelectedTags((prevTags) => [...new Set([...prevTags, ...selectedOptions])]); // Agregar sin duplicados
-            }}
-            required
-          >
-            {tags.map((tag) => (
-              <option key={tag.id} value={tag.name}>
-                {tag.name}
-              </option>
-            ))}
-          </select>
-        </div>
+      {/* Géneros */}
+      <div className="form-group flex flex-col">
+        <label htmlFor="tags" className="mb-1 font-semibold">
+          Generos:
+        </label>
+        <select
+          id="tags"
+          multiple
+          value={selectedTags}
+          onChange={(e) => {
+            const selectedOptions = Array.from(
+              e.target.selectedOptions,
+              (option) => option.value
+            );
+            setSelectedTags((prevTags) => [
+              ...new Set([...prevTags, ...selectedOptions]),
+            ]);
+          }}
+          required
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 h-32"
+        >
+          {tags.map((tag) => (
+            <option
+              key={tag.id}
+              value={tag.name}
+              className="bg-[rgba(50,50,110,0.8)] text-gray-500"
+            >
+              {tag.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-        {/* Mostrar los géneros seleccionados */}
-        <div className="selected-genres">
-          <h4>Selección de genero:</h4>
-          <ul>
-            {selectedTags.map((tag, index) => (
-              <li key={index}>
-                {tag}
-                <button className="botonremove" type="buttons" onClick={() => handleRemoveTag(tag)}>
-                  &times;
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* Mostrar los géneros seleccionados */}
+      <div className="selected-genres">
+        <h4 className="mb-2 font-semibold text-gray-500">Selección de genero:</h4>
+        <ul className="max-h-32 overflow-auto space-y-1">
+          {selectedTags.map((tag, index) => (
+            <li
+              key={index}
+              className="text-gray-500 flex justify-between items-center bg-[rgba(70,70,140,0.7)] rounded px-3 py-1"
+            >
+              <span>{tag}</span>
+              <button
+                type="button"
+                onClick={() => handleRemoveTag(tag)}
+                className="text-red-500 font-bold hover:text-red-700 ml-2"
+              >
+                &times;
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-        {/* Descripción */}
-        <div className="form-group">
-          <label htmlFor="description">Descripción:</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
+      {/* Descripción */}
+      <div className="form-group flex flex-col">
+        <label htmlFor="description" className="mb-1 font-semibold">
+          Descripción:
+        </label>
+        <textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+          rows={4}
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+        />
+      </div>
 
+      {/* Imagen de portada */}
+      <div className="form-group flex flex-col">
+        <label htmlFor="coverImage" className="mb-1 font-semibold">
+          Imagen del Show:
+        </label>
+        <input
+          type="text"
+          id="coverImage"
+          value={coverImage}
+          onChange={(e) => setCoverImage(e.target.value)}
+          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <button
+          type="button"
+          onClick={handleImageUpload}
+          className="mt-2 self-start bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        >
+          Cargar Imagen
+        </button>
+      </div>
 
-
-        {/* Imagen de portada */}
-        <div className="form-group">
-          <label htmlFor="coverImage-edit">Imagen del Show:</label>
-          <input
-           type="text"
-           id="coverImage"
-           value={coverImage}
-           onChange={(e) => setCoverImage(e.target.value)}
-           />
-           </div>
-           <button type="button" onClick={handleImageUpload}>Cargar Imagen</button>
-
-          {/* Mostrar un iframe si es un video de YouTube */}
-           {coverImage.includes('youtube.com') || coverImage.includes('youtu.be') ? (
-            <div className="video-preview">
-           <iframe
+      {/* Preview Video o Imagen */}
+      {coverImage.includes("youtube.com") || coverImage.includes("youtu.be") ? (
+        <div className="video-preview my-4 rounded overflow-hidden shadow-lg max-w-full aspect-video mx-auto">
+          <iframe
             src={coverImage.replace("watch?v=", "embed/")}
             title="Cover Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-           />
-            </div>
-          ) : (
-           <div className="imagen-preview">
-           <img src={coverImage} alt="Cover" />
-          </div>
-        )}
-
-
-
-        {/* Presentaciones */}
-        <div className="presentations">
-
-          {presentations.map((presentation, index) => (
-            <div key={index} className="presentation-form">
-              <div className="form-group">
-
-              </div>
-
-
-              {/* Botón para enviar el formulario */}
-              <button className='boton-enviar'>Modificar</button>
-              <button className="close-btn" onClick={handleClose}>Close</button> {/* Botón de cerrar */}
-
-
-            </div>
-          ))}
+            className="w-full h-full"
+          />
         </div>
+      ) : (
+        <div className="imagen-preview my-4 rounded overflow-hidden shadow-lg max-w-xs max-h-60 mx-auto">
+          <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
+        </div>
+      )}
 
-      </form>
-    </div>
-  );
+      {/* Presentaciones */}
+      <div className="presentations flex flex-col gap-6">
+        {presentations.map((presentation, index) => (
+          <div
+            key={index}
+            className="presentation-form bg-[rgba(70,70,140,0.7)] p-4 rounded flex flex-col md:flex-row gap-4"
+          >
+            <div className="form-group flex flex-col flex-1">
+              <label htmlFor={`date-${index}`} className="mb-1 font-semibold">
+                Fecha presentación {index + 1}:
+              </label>
+              <input
+                type="date"
+                id={`date-${index}`}
+                value={presentation.date || ""}
+                onChange={(e) => {
+                  const updated = [...presentations];
+                  updated[index].date = e.target.value;
+                  setPresentations(updated);
+                }}
+                required
+                className="p-2 rounded bg-[rgba(90,90,160,0.8)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+            <div className="form-group flex flex-col flex-1">
+              <label htmlFor={`start-${index}`} className="mb-1 font-semibold">
+                Hora inicio {index + 1}:
+              </label>
+              <input
+                type="time"
+                id={`start-${index}`}
+                value={presentation.time?.start || ""}
+                onChange={(e) => {
+                  const updated = [...presentations];
+                  if (!updated[index].time) updated[index].time = {};
+                  updated[index].time.start = e.target.value;
+                  setPresentations(updated);
+                }}
+                required
+                className="p-2 rounded bg-[rgba(90,90,160,0.8)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+            <div className="form-group flex flex-col flex-1">
+              <label htmlFor={`end-${index}`} className="mb-1 font-semibold">
+                Hora fin {index + 1}:
+              </label>
+              <input
+                type="time"
+                id={`end-${index}`}
+                value={presentation.time?.end || ""}
+                onChange={(e) => {
+                  const updated = [...presentations];
+                  if (!updated[index].time) updated[index].time = {};
+                  updated[index].time.end = e.target.value;
+                  setPresentations(updated);
+                }}
+                required
+                className="p-2 rounded bg-[rgba(90,90,160,0.8)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Botones Modificar y Cerrar */}
+      <div className="form-actions flex gap-4 mt-6 justify-center">
+        <button
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+          type="submit"
+        >
+          Modificar
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-900 text-white px-6 py-2 rounded"
+          type="button"
+          onClick={handleClose}
+        >
+          Salir
+        </button>
+      </div>
+    </form>
+  </div>
+);
+
 };
 
 export default EditShow;

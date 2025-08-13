@@ -5,13 +5,18 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #757272; /* Fondo gris claro */
+  background-color: #727275; /* Fondo gris claro */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   z-index: 9999; /* Asegúrate de que se muestre sobre otros elementos */
   overflow: hidden; /* Evitar que el contenido se desborde */
+}
+
+canvas {
+  all: unset; /* elimina el reset de Tailwind */
+  display: block;
 }
 
 /* Posición de las imágenes en las 4 esquinas */
@@ -216,23 +221,7 @@
   height: 250px; /* Establece un alto fijo para el contenedor */
   gap: 10px; /* Espacio entre los elementos dentro del contenedor */
   margin: 5px;
- 
-  
-}
-
-
-
-
-.dark p {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
-  color: #fffbfb;
-}
-
-.light p {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
-  color: #000000;
+   
 }
 
 .dark .box-contenedor {
@@ -311,8 +300,8 @@ background: #FFD166; /* Cambia el color al pasar el ratón */
 }
 
 .boton-adddata {
-background-color: #FFB74D; /* Verde llamativo */
-color: #000000;
+background-color: rgba(52, 52, 107, 0.7); /* Verde llamativo */
+color: #dddddd;
 padding: 10px 10px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
 border:0rem;
 border-radius: 10px;
@@ -323,7 +312,7 @@ margin-left: 10px; /* Añade espacio entre los botones */
 }
 
 .boton-adddata:hover{
-  background: #FFD166; /* Cambia el color al pasar el ratón */
+  background: rgba(43, 43, 105, 0.7); /* Cambia el color al pasar el ratón */
 }
 
 .Boton-inicio{
@@ -374,33 +363,8 @@ background: #FFD166; /* Cambia el color al pasar el ratón */
 
 
 
-/* Estilos responsivos */
-@media (max-width: 768px) {
-  .seating-chart {
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas más pequeñas */
-  }
 
-  .modal {
-    width: 90%;
-    padding: 1.5rem;
-  }
 
-  .event-detail h1 {
-    font-size: 2rem;
-  }
-
-  .event-detail p {
-    font-size: 1rem;
-  }
-
-  .warning-message {
-    padding: 1rem;
-  }
-
-  .back-home-btn {
-    width: 100%;
-  }
-}
 .countdown h2 {
   font-size: 24px;
   color: red;
@@ -458,163 +422,6 @@ max-width: 80%;
 box-shadow: 0 0 10px rgb(0, 0, 0);
 }
 
-
-@media (min-width: 320px) and (max-width: 350px) {
-  
-    .container .event-info,
-    .container .presentation-info {
-      flex-direction: row; /* Los elementos dentro de cada contenedor estarán en fila */
-      gap: 1rem; /* Espacio entre los elementos */
-      width: 100%;
-    }
-  
-    .container {
-      display: flex;
-      flex-direction: column; /* Coloca los bloques uno debajo del otro */
-      gap: 1rem; /* Espacio entre los bloques */
-    }
-
-    .event-image {
-      margin-bottom: 0;    /* Elimina margen inferior para que no haya espacio */
-      font-size: 2.5rem;
-      color: #333;
-      width: 100%;         /* Hace que la imagen ocupe todo el ancho disponible */
-      height: 100%;        /* Hace que la imagen ocupe todo el alto disponible */
-      object-fit: cover;   /* La imagen cubre el área sin distorsionarse */
-      margin-top: 0;       /* Elimina el margen superior para ocupar todo el espacio */
-      margin-left: -20px;     /* Elimina el margen derecho */
-      z-index: 0;
-      border: 1px solid #f8b34b; /* Borde de 2px de grosor y color #bd7202 */
-      border-radius: 5px;
-    }
-    
-    /* Estilos adicionales si es necesario */
-    .container .event-info-left, 
-    .container .event-info-right,
-    .container .presentation-left, 
-    .container .presentation-right {
-      flex: 1; /* Asegura que ambos elementos ocupen el mismo ancho */
-    }
-
-    .container .event-info-right{
-      margin-left: 127px;
-      margin-top: -70px;
-    }
-    .container .event-info-left{
-      margin-left: 5px;
-    }
-
-    .container .presentation-left{
-      margin-left: -24px;
-    }
-  
-
-  /* Estilos para el contenedor de la caja principal (si es necesario) */
-  .event-main-container {
-    box-shadow: 0px 4px 6px rgba(189, 114, 2, 0.5); /* Sombra */
-    border: 2px solid #bd7202; /* Borde de 2px */
-    padding: 20px; /* Espaciado dentro del borde */
-    display: flex;
-    flex-direction: column; /* Apilar los elementos dentro del contenedor */
-    align-items: flex-start;
-    /* gap: 1%; */
-    font-family: Arial, sans-serif;
-    width: 100%;
-    margin-left: 0;
-    margin-top: 0;
-  }
-
-}
-
-/* Media query para pantallas más grandes de 350px */
-@media (min-width: 350px) and (max-width: 1069px) {
-  .container .event-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1%;
-    padding: 0.3rem 1rem;
-    font-family: Arial, sans-serif;
-    width: 45px; /* Establecemos el ancho a un 48% en pantallas más grandes */
-    margin-left: 0;
-    margin-top: 0;
-  }
-
-  .event-image {
-    margin-bottom: 0;    /* Elimina margen inferior para que no haya espacio */
-    font-size: 2.5rem;
-    color: #333;
-    width: 130%;         /* Hace que la imagen ocupe todo el ancho disponible */
-    height: 100%;        /* Hace que la imagen ocupe todo el alto disponible */
-    object-fit: cover;   /* La imagen cubre el área sin distorsionarse */
-    margin-top: 0;       /* Elimina el margen superior para ocupar todo el espacio */
-    margin-right: 1px;     /* Elimina el margen derecho */
-    z-index: 0;
-    border: 1px solid #f8b34b; /* Borde de 2px de grosor y color #bd7202 */
-    border-radius: 5px;
-  }
-  .event-main-container {
-    box-shadow: 0px 4px 6px rgba(189, 114, 2, 0.5); /* Sombra (box-shadow) */
-    border: 2px solid #bd7202; /* Borde de 2px de grosor y color #bd7202 */
-    padding: 20px; /* Opcional, agrega espacio dentro del borde */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1%;
-    padding: 0.3rem 1rem;
-    font-family: Arial, sans-serif;
-    width: 120%;
-    height: 50%;
-    margin-left:-30px;
-    margin-top: 0;
-  }
-
-  .presentations-info {
-    display: flex;
-  flex-direction: column; /* Para colocar las filas en columna */
-  align-items: flex-start;
-  gap: 1%;
-  padding: 0.3rem 1rem;
-  font-family: Arial, sans-serif;
-  width: 100%;
-  margin-left: 0;
-  margin-top: 0;
-  }
-
-  .box-contenedor {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5%; /* Ajustamos el padding */
-    background-color: #ffffff;
-    border: 3% solid #ccc;
-    border-radius: 3%;
-    border-color: #f8b524;
-    box-shadow: 0px 4px 6px rgba(248, 176, 41, 0.1);
-    width: 180px; /* Establecemos el ancho a un 48% en pantallas más grandes */
-    height: auto; /* Permite que el alto sea automático */
-    margin: 2%;
-    margin-left: -100px;
-  }
-
-  .box-contenedor-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 23%;
-    background-color: #ffffff;
-    border: 3px solid #ccc;
-    border-radius: 8px;
-    border-color: #f8b524;
-    box-shadow: 0px 4px 6px rgba(248, 176, 41, 0.1);
-    width: 100px; /* Establecemos el ancho a un 48% en pantallas más grandes */
-    height: auto; /* Permite que el alto sea automático */
-    gap: 1%;
-    margin: 1%;
-   
-  }
-}
 
 
   

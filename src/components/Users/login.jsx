@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; // Importamos SweetAlert2
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import '../Users/login.css';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -177,81 +177,88 @@ const Login = () => {
   };
 
   return (
-    <div className="login-modal">
-      <div className="login-container">
-        <form onSubmit={handleSubmit} className="login-form">
-           {/* Insertamos la imagen debajo del título */}
-           <img 
-              src="/images/solticket.png" 
-              alt="KI Logo" 
-              className="Solticket-logo" 
-              // style={{ width: '100px', height: '100px', objectFit: 'contain' }} 
-            
+  <div className="mt-[90px] min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-[rgba(86,86,190,0.4)] to-[rgba(86,86,190,0.4)] backdrop-blur-md">
+    <div className="w-full max-w-md bg-[rgba(86,86,190,0.4)] backdrop-blur-md rounded-lg p-6 shadow-lg">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        
+        {/* Logo */}
+        <img
+          src="/images/solticket.png"
+          alt="Solticket Logo"
+          className="mx-auto w-24 h-24 object-contain"
+        />
+
+        {/* Título */}
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-white">
+          Iniciar sesión
+        </h2>
+
+        {/* Email */}
+        <div className="flex flex-col">
+          <label htmlFor="email" className="text-white font-semibold mb-1">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Ingresa tu email"
+            required
+            className="form-input p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+          />
+        </div>
+
+        {/* Contraseña */}
+        <div className="relative flex flex-col">
+          <label htmlFor="password" className="text-white font-semibold mb-1">Contraseña</label>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Ingresa tu contraseña"
+            required
+            className="form-input p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+          />
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-10 text-white cursor-pointer"
+          />
+        </div>
+
+        {/* Botones */}
+        <div className="flex flex-col gap-3">
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Ingresando...' : 'Ingresar'}
+          </button>
+          <button
+            type="button"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+            onClick={() => navigate('/register')}
+          >
+            Registrarse
+          </button>
+        </div>
+
+        {/* Login con Google */}
+        <div className="flex justify-center">
+          <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={(error) => console.log('Error al iniciar sesión con Google:', error)}
+              theme="outline"
+              size="medium"
             />
-
-          <h2 className='title'>iniciar sesion</h2>
-
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Ingresa tu email"
-              required
-            />
-          </div>
-
-          <div>
-            <div className="password-container">
-            <label htmlFor="password">Contraseña</label>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Ingresa tu contraseña"
-                required
-              />
-              <FontAwesomeIcon 
-                icon={showPassword ? faEyeSlash : faEye} 
-                onClick={() => setShowPassword(!showPassword)} 
-                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '52px'}}
-              />
-            </div>
-          </div>
-
-          <div>
-            <button className='form-buttons' disabled={isLoading}>
-              {isLoading ? 'Ingresando...' : 'Ingresar'}
-            </button>
-            <button 
-             className='form-buttons' 
-             onClick={() => navigate('/register')} // Usando navigate para redirigir
-             >
-             Registrarse
-            </button>
-          </div>
-            <div className="google-logins">
-             <GoogleOAuthProvider clientId= {process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-             <GoogleLogin className="google-logins"
-             onSuccess={handleGoogleLogin}
-             onError={(error) => console.log('Error al iniciar sesión con Google:', error)}
-             theme="outline"
-             size="medium"
-             />
-            </GoogleOAuthProvider>
-            </div>
-        
-        
-
-        
-        </form>
-
-      </div>
+          </GoogleOAuthProvider>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Login;

@@ -9,17 +9,7 @@
     --accent-color: #FFD166;
 }
 
-body {
-    background-color: var(--bg-light);
-    color: var(--text-light);
-    font-family: "Inter", sans-serif;
-    transition: background 0.3s, color 0.3s;
-}
 
-.dark-mode {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
-}
 
 /* Contenedor principal */
 .ticket-container {

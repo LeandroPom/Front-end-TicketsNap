@@ -4,7 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { getShows } from "../../Redux/Actions/actions"; // Importar la acción para traer los shows
 import * as XLSX from "xlsx";
-import "./soldtickets.css"; // Importa el archivo CSS
+
 
 const SoldTickets = () => {
   const dispatch = useDispatch();
@@ -268,17 +268,21 @@ const handleDownloadExcel = () => {
       const priceWithTax = ticket.price * 1.20;
       const user = users.find(user => user.id === ticket.userId);
       const userName = user ? user.name : "Sin Cajero";
-      const userType = user && user.cashier ? `Cajero: ${userName}` : `Usuario: ${userName}`;
+      const userEmail = user ? user.email : "Sin correo";
+      const userPhone = user ? user.phone : "Sin Celular";
+      const userType = user && user.cashier ? `Cajero: ${userName}` : `Nombre: ${userName}`;
 
       return {
         Show: shows.find(show => show.id === ticket.showId)?.name || "Cargando...",
         Division: ticket.division || "Desconocida",
-        Row: ticket.row || "Libre",
-        Seat: ticket.seat || "Libre",
+        Fila: ticket.row || "Libre",
+        Asiento: ticket.seat || "Libre",
         Price: priceWithTax.toFixed(2),
         Usuario: userType,
-        Date: ticket.date.split(" || ")[0] || "Fecha no disponible",
-        Time: ticket.date.split(" || ")[1] || "Hora no disponible",
+        Email: userEmail,
+        Telefono: userPhone,
+        Fecha: ticket.date.split(" || ")[0] || "Fecha no disponible",
+        Hora: ticket.date.split(" || ")[1] || "Hora no disponible",
       };
     });
   };
@@ -294,23 +298,23 @@ const handleDownloadExcel = () => {
   dataForCashiers.push({
     Show: "Total",
     Division: "",
-    Row: "",
-    Seat: "",
+    Fila: "",
+    Asiento: "",
     Price: totalPriceCashiers.toFixed(2),  // El total ya con el 20% incluido
     Usuario: "",
-    Date: "",
-    Time: "",
+    Fecha: "",
+    Hora: "",
   });
 
   dataForUsers.push({
     Show: "Total",
     Division: "",
-    Row: "",
-    Seat: "",
+    Fila: "",
+    Asiento: "",
     Price: totalPriceUsers.toFixed(2),  // El total ya con el 20% incluido
     Usuario: "",
-    Date: "",
-    Time: "",
+    Fecha: "",
+    Hora: "",
   });
 
   // Crear el libro de trabajo de Excel
@@ -388,28 +392,45 @@ const handleUserFilterChange = (e) => {
 };
 
 return (
-  <div className="container">
-    <h2>Detalles de Tickets</h2>
-    <h3>Nombre del Cajero: {user && user.name ? user.name : "Cargando..."}</h3>
+  <div
+  className="
+    min-h-screen p-4 md:p-6
+    w-full max-w-screen-xl
+    mx-auto
+    relative
+    top-[170px]
+    z-10
+  "
+  style={{
+    background: "rgba(86, 86, 190, 0.4)",
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)",
+  }}
+>
+    <h2 className="text-white text-2xl font-bold mb-6">Detalles de Tickets</h2>
+    <h3 className="text-white mb-4">
+      Nombre del Cajero: {user && user.name ? user.name : "Cargando..."}
+    </h3>
 
-    {/* Filtro por Nombre de Show */}
-    <div className="filter-container">
-      <label>Filtrar por Show:</label>
-      <input
-        type="text"
-        value={showFilter}
-        onChange={(e) => setShowFilter(e.target.value)}
-        placeholder="Buscar Show"
-      />
-    </div>
+    {/* Filtros */}
+    <div className="flex flex-wrap gap-6 mb-6">
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Filtrar por Show:</label>
+        <input
+          type="text"
+          value={showFilter}
+          onChange={(e) => setShowFilter(e.target.value)}
+          placeholder="Buscar Show"
+          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
 
-    <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
-      {/* Filtro de División */}
-      <div>
-        <label>Filtrar por División:</label>
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Filtrar por División:</label>
         <select
           value={divisionFilter}
           onChange={(e) => setDivisionFilter(e.target.value)}
+          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="">Todas las divisiones</option>
           {divisions.map((division, index) => (
@@ -420,12 +441,12 @@ return (
         </select>
       </div>
 
-      {/* Filtro de Fecha */}
-      <div>
-        <label>Filtrar por Fecha :</label>
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Filtrar por Fecha:</label>
         <select
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
+          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="">Todas las fechas y Horarios</option>
           {date.map((date, index) => (
@@ -436,230 +457,239 @@ return (
         </select>
       </div>
 
-      <div>
-  <label>Filtrar por Usuario:</label>
-  <select value={userFilter} onChange={(e) => setUserFilter(e.target.value ? Number(e.target.value) : "")}>
-  <option value="">Todos los usuarios</option>
-  {users.length > 0 ? (
-    users
-      .filter((user) => user.cashier === false) // Filtra solo los usuarios no cajeros
-      .map((user) => (
-        <option key={user.id} value={user.id}>
-          {user.name}(Usuario)
-        </option>
-      ))
-  ) : (
-    <option value="">No hay usuarios disponibles</option>
-  )}
-</select>
-</div>
-
-
-      {/* Filtro de Cajero */}
-      <div>
-        <label>Filtrar por Cajero:</label>
-        <select value={cashierFilter} onChange={(e) => setCashierFilter(e.target.value ? Number(e.target.value) : "")}>
-  <option value="">Todos los cajeros y usuarios</option>
-
-  {users.length > 0 ? (
-    users
-      .filter((user) => user.cashier === true) // Filtramos solo los usuarios con cashier en true
-      .map((user) => (
-        <option key={user.id} value={user.id}>
-          {user.name}
-        </option>
-      ))
-  ) : (
-    <option value="">No hay cajeros disponibles</option>
-  )}
-</select>
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Filtrar por Usuario:</label>
+        <select
+          value={userFilter}
+          onChange={(e) => setUserFilter(e.target.value ? Number(e.target.value) : "")}
+          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">Todos los usuarios</option>
+          {users.length > 0 ? (
+            users
+              .filter((user) => !user.cashier)
+              .map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name} (Usuario)
+                </option>
+              ))
+          ) : (
+            <option value="">No hay usuarios disponibles</option>
+          )}
+        </select>
       </div>
-    
 
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Filtrar por Cajero:</label>
+        <select
+          value={cashierFilter}
+          onChange={(e) => setCashierFilter(e.target.value ? Number(e.target.value) : "")}
+          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">Todos los cajeros y usuarios</option>
+          {users.length > 0 ? (
+            users
+              .filter((user) => user.cashier)
+              .map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))
+          ) : (
+            <option value="">No hay cajeros disponibles</option>
+          )}
+        </select>
+      </div>
 
-      {/* Filtro de Estado */}
-      <div>
-        <label>Filtrar/Estado:</label>
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Filtrar/Estado:</label>
         <select
           value={canceledFilter}
           onChange={(e) => setCanceledFilter(e.target.value === "null" ? null : e.target.value)}
+          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          <option value="true"> Activos</option>
+          <option value="true">Activos</option>
           <option value="false">Cancelados</option>
         </select>
-     
       </div>
-            {/* Botón para resetear los filtros */}
-  <div>
-    <button onClick={resetFilters} className="cancel-button">
-      Resetear Filtros
-    </button>
-  </div>
+
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Filtrar por Regalado:</label>
+        <select
+          value={giftedFilter}
+          onChange={(e) => setGiftedFilter(e.target.value === "null" ? null : e.target.value)}
+          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="null">Ninguno</option>
+          <option value="true">Regalados</option>
+        </select>
+      </div>
+
+      <div className="flex items-end">
+        <button
+          onClick={resetFilters}
+          className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded ml-2"
+          style={{ minHeight: '38px' }}
+        >
+          Resetear Filtros
+        </button>
+      </div>
     </div>
-    
-    
-      {/* Filtro de Tickets Regalados */}
-<div>
-  <label>Filtrar por Regalado:</label>
-  <select
-    value={giftedFilter}
-    onChange={(e) => setGiftedFilter(e.target.value === "null" ? null : e.target.value)}
-  >
-    <option value="null">Ninguno</option>
-    <option value="true">Regalados</option>
-    {/* <option value="false">No Regalados</option> */}
-    
-  </select>
-</div>
 
-    {/* Mostrar Tickets No Cancelados */}
-    <h3>Tickets totales:</h3>
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Show</th>
-          <th>División</th>
-          <th>Fila</th>
-          <th>Asiento</th>
-          <th>Cajero</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-      {currentTickets.map((ticket, index) => {
-    const show = shows.find((show) => show.id === ticket.showId);
-    const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
-    const isTribunaGeneral = !ticket.row && !ticket.seat;
-    return (
-      <tr key={ticket.id}>
-        <td>{show ? show.name : "Cargando..."}</td>
-        <td>{ticket.division}</td>
-        <td>{isTribunaGeneral ? "Libre" : ticket.row}</td>
-        <td>{isTribunaGeneral ? "Libre" : ticket.seat}</td>
-        <td>
-  {ticket.userId 
-    ? users.find(user => user.id === ticket.userId)
-        ? (
-            <>
-              {users.find(user => user.id === ticket.userId)?.name} 
-              {/* Comprobamos si el usuario no es cajero */}
-              {users.find(user => user.id === ticket.userId)?.cashier === false ? "(Usuario)" : ""}
-            </>
-          )
-        : "Cajero Desconocido"
-    : "Cajero Desconocido"}
-</td>
-        <td>{date}</td>
-        <td>{time}</td>
-              <td>
-                {/* Mostrar botones solo si el usuario es administrador */}
-            {user.isAdmin && (
-              <>
-                <button
-                  onClick={() => cancelTicket(ticket)}
-                  className="cancel-button"
-                >
-                  Cancelar Ticket
-                </button>
-
-                <button
-                  onClick={() => giftTicket(ticket)}
-                  className="cancel-button"
-                >
-                  Regalar Ticket
-                </button>
-              </>
-            )}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    {/* Tickets totales */}
+    <h3 className="text-white font-semibold mb-2">Tickets totales:</h3>
+    <div className="overflow-x-auto">
+      <table className="min-w-full text-white border border-white rounded-lg">
+        <thead className="bg-[rgba(70,70,140,0.8)]">
+          <tr>
+            {["Show", "División", "Fila", "Asiento", "Cajero", "Fecha", "Hora", "Acciones"].map((head) => (
+              <th key={head} className="p-3 border border-white text-gray-400 whitespace-nowrap">
+                {head}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {currentTickets.map((ticket) => {
+            const show = shows.find((show) => show.id === ticket.showId);
+            const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
+            const isTribunaGeneral = !ticket.row && !ticket.seat;
+            return (
+              <tr key={ticket.id} className="hover:bg-[rgba(90,90,170,0.3)] transition-colors">
+                <td className="p-2 border border-white">{show ? show.name : "Cargando..."}</td>
+                <td className="p-2 border border-white">{ticket.division}</td>
+                <td className="p-2 border border-white">{isTribunaGeneral ? "Libre" : ticket.row}</td>
+                <td className="p-2 border border-white">{isTribunaGeneral ? "Libre" : ticket.seat}</td>
+                <td className="p-2 border border-white">
+                  {ticket.userId
+                    ? users.find((u) => u.id === ticket.userId)
+                      ? `${users.find((u) => u.id === ticket.userId)?.name} ${
+                          users.find((u) => u.id === ticket.userId)?.cashier === false ? "(Usuario)" : ""
+                        }`
+                      : "Cajero Desconocido"
+                    : "Cajero Desconocido"}
+                </td>
+                <td className="p-2 border border-white">{date}</td>
+                <td className="p-2 border border-white">{time}</td>
+                <td className="p-2 border border-white">
+                  {user.isAdmin && (
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => cancelTicket(ticket)}
+                        className=" bg-blue-800 hover:bg-blue-900 text-white px-3 py-1 rounded"
+                      >
+                        Cancelar Ticket
+                      </button>
+                      <button
+                        onClick={() => giftTicket(ticket)}
+                        className=" bg-blue-800 hover:bg-blue-900 text-white px-3 py-1 rounded"
+                      >
+                        Regalar Ticket
+                      </button>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
 
     {/* Descargar Excel */}
-    <button onClick={handleDownloadExcel} className="download-button">
+    <button
+      onClick={handleDownloadExcel}
+      className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded mt-6"
+    >
       📥 Descargar Excel
     </button>
 
-    <div className="pagination">
-    {/* Botón para la página anterior */}
-    <button
-      onClick={() => handlePageChange(currentPage - 1)}
-      disabled={currentPage === 1}
-    >
-      ◀ Anterior
-    </button>
-
-    {/* Páginas visibles */}
-    {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
+    {/* Paginación */}
+    <div className="flex justify-center gap-2 mt-6 flex-wrap">
       <button
-        key={startPage + index}
-        onClick={() => handlePageChange(startPage + index)}
-        className={currentPage === startPage + index ? "active" : "inactive"}
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={`px-4 py-2 rounded-full ${
+          currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)] text-white"
+        }`}
       >
-        {startPage + index}
+        ◀ Anterior
       </button>
-    ))}
+      {Array.from({ length: endPage - startPage + 1 }, (_, i) => {
+        const page = startPage + i;
+        return (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={`px-4 py-2 rounded-full font-bold ${
+              page === currentPage
+                ? "bg-[rgba(110,110,190,0.9)] text-white"
+                : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)] text-white"
+            }`}
+          >
+            {page}
+          </button>
+        );
+      })}
+      <button
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={`px-4 py-2 rounded-full ${
+          currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)] text-white"
+        }`}
+      >
+        Siguiente ▶
+      </button>
+    </div>
 
-    {/* Botón para la página siguiente */}
-    <button
-      onClick={() => handlePageChange(currentPage + 1)}
-      disabled={currentPage === totalPages}
-    >
-      Siguiente ▶
-    </button>
-  </div>
-    {/* Mostrar Tickets Cancelados */}
+    {/* Tickets cancelados (solo si aplican) */}
     {canceledFilter !== "true" && canceledFilter !== null && (
-      <div>
-        <h3>Tickets Cancelados:</h3>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Show</th>
-              <th>División</th>
-              <th>Fila</th>
-              <th>Asiento</th>
-              <th>Cajero</th>
-              <th>Fecha</th>
-              <th>Hora</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cancelledTickets.map((ticket) => {
-              const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
-              const show = shows.find((show) => show.id === ticket.showId);
-              return (
-                <tr key={ticket.id}>
-                  <td>{show ? show.name : "Cargando..."}</td>
-                  <td>{ticket.division}</td>
-                  <td>{ticket.row}</td>
-                  <td>{ticket.seat}</td>
-                  <td>
-                  {ticket ? (
-                   <>
-                   {ticket.name} {ticket.cashier ? "" : "(Usuario)"}
-                  </>
-                    ) : (
-                    "Cajero Desconocido"
-                    )}
-                  </td>
-                  <td>{date}</td>
-                  <td>{time}</td>
-                  <td style={{ color: 'red' }}>Cancelado</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="mt-8">
+        <h3 className="text-white font-semibold mb-2">Tickets Cancelados:</h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-white border border-white rounded-lg">
+            <thead className="bg-[rgba(70,70,140,0.8)]">
+              <tr>
+                {["Show", "División", "Fila", "Asiento", "Cajero", "Fecha", "Hora", "Acciones"].map((head) => (
+                  <th key={head} className="p-3 border border-white text-white whitespace-nowrap">
+                    {head}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {cancelledTickets.map((ticket) => {
+                const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
+                const show = shows.find((show) => show.id === ticket.showId);
+                return (
+                  <tr key={ticket.id} className="hover:bg-[rgba(90,90,170,0.3)] transition-colors">
+                    <td className="p-2 border border-white">{show ? show.name : "Cargando..."}</td>
+                    <td className="p-2 border border-white">{ticket.division}</td>
+                    <td className="p-2 border border-white">{ticket.row}</td>
+                    <td className="p-2 border border-white">{ticket.seat}</td>
+                    <td className="p-2 border border-white">
+                      {ticket ? (
+                        <>
+                          {ticket.name} {ticket.cashier ? "" : "(Usuario)"}
+                        </>
+                      ) : (
+                        "Cajero Desconocido"
+                      )}
+                    </td>
+                    <td className="p-2 border border-white">{date}</td>
+                    <td className="p-2 border border-white">{time}</td>
+                    <td className="p-2 border border-white text-red-500 font-semibold">Cancelado</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     )}
   </div>
 );
+
 };
 
 export default SoldTickets;
