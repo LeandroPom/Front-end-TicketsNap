@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getShows } from '../Redux/Actions/actions'; 
-import '../Users/miscompras.css';
 import Swal from 'sweetalert2';  // Asegúrate de importar SweetAlert
 
 const MisCompras = () => {
@@ -86,80 +85,96 @@ const MisCompras = () => {
   const endIndex = startIndex + ticketsPerPage;
   const currentTickets = tickets.slice(startIndex, endIndex);
 
-  return (
-    <div className="mis-compras-container">
-      <h2 className='miscompras-title'>Mis Compras</h2>
-      <ul className="ticket-list">
-        {currentTickets.map(ticket => {
-          const showName = shows.find(show => show.id === ticket.showId)?.name || "Show desconocido";
+return (
+  <div className="mt-[160px] min-h-screen p-4 bg-gradient-to-b from-[rgba(27, 27, 235, 0.78)] to-[rgba(33, 33, 221, 0.4)] backdrop-blur-md">
+    <div className="max-w-6xl mx-auto text-white">
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Mis Compras</h2>
 
-          const dateTimeParts = ticket.date.split(" || ");
-          const eventDateStr = dateTimeParts[0]; 
-          const eventTimeStr = dateTimeParts[1]?.split(" - ")[1]; 
+      {/* Contenedor de tickets centrado */}
+      <div className="flex justify-center">
+        <ul className="grid gap-6 sm:grid-cols-2">
+          {currentTickets.map(ticket => {
+            const showName = shows.find(show => show.id === ticket.showId)?.name || "Show desconocido";
+            const dateTimeParts = ticket.date.split(" || ");
+            const eventDateStr = dateTimeParts[0]; 
+            const eventTimeStr = dateTimeParts[1]?.split(" - ")[1]; 
+            const eventDateTime = new Date(`${eventDateStr}T${eventTimeStr}:00`);
+            const isPastEvent = eventDateTime < currentDateTime;
 
-          const eventDateTime = new Date(`${eventDateStr}T${eventTimeStr}:00`);
-          const isPastEvent = eventDateTime < currentDateTime;
+            return (
+              <li key={ticket.id} className="bg-[rgba(86,86,190,0.4)] backdrop-blur-md rounded-lg p-4 shadow-md flex flex-col gap-1 max-w-sm">
+                <p><strong>Usuario:</strong> {ticket.name}</p>
+                <p><strong>Evento:</strong> {showName}</p>
+                <p><strong>Zona:</strong> {ticket.division}</p>
+                <p><strong>Fecha y Hora:</strong> {ticket.date}</p>
 
-          return (
-            <li key={ticket.id} className="ticket-item">
-              <p><strong>Usuario:</strong> {ticket.name}</p>
-              <p><strong>Evento:</strong> {showName}</p>
-              <p><strong>Zona:</strong> {ticket.division}</p>
-              <p><strong>Fecha y Hora:</strong> {ticket.date}</p>
+                {ticket.row && ticket.seat ? (
+                  <>
+                    <p><strong>Fila:</strong> {ticket.row}</p>
+                    <p><strong>Asiento:</strong> {ticket.seat}</p>
+                  </>
+                ) : (
+                  <>
+                    <p><strong>Fila:</strong> No corresponde</p>
+                    <p><strong>Asiento:</strong> No corresponde</p>
+                  </>
+                )}
 
-              {/* Mostrar Fila y Asiento solo si existen */}
-              {ticket.row && ticket.seat ? (
-                <>
-                  <p><strong>Fila:</strong> {ticket.row}</p>
-                  <p><strong>Asiento:</strong> {ticket.seat}</p>
-                </>
-              ) : (
-                <p>
-                  <p><strong>Fila:</strong> No corresponde </p>
-                  <p><strong>Asiento:</strong> No corresponde </p>
+                <p><strong>Precio:</strong> ${ticket.price}</p>
+
+                <p className={`font-bold ${isPastEvent ? "text-red-400" : "text-green-400"}`}>
+                  {isPastEvent ? "Evento Finalizado" : "Evento Activo"}
                 </p>
-              )}
 
-              <p><strong>Precio:</strong> ${ticket.price}</p>
+                {ticket.price === 0 && <p className="italic text-yellow-300">Ticket Regalado</p>}
 
-              {/* Estado del evento */}
-              <p className={`event-status ${isPastEvent ? "event-finalizado" : "event-activo"}`}>
-                {isPastEvent ? "Evento Finalizado" : "Evento Activo"}
-              </p>
+                {ticket.qrCode && (
+                  <img 
+                    src={ticket.qrCode} 
+                    alt="Código QR" 
+                    className="qr-code w-32 h-32 object-contain mt-2"
+                  />
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
 
-              {/* Si el precio es 0, mostramos "Ticket Regalado" */}
-              {ticket.price === 0 && <p className="ticket-regalado">Ticket Regalado</p>}
-
-              {ticket.qrCode && <img src={ticket.qrCode} alt="Código QR" className="qr-code" />}
-            </li>
-          );
-        })}
-      </ul>
-
-      {/* BOTONES DE PAGINACIÓN */}
-      <div className="pagination">
+      {/* PAGINACIÓN */}
+      <div className="flex items-center justify-center gap-4 mt-8 flex-wrap">
         <button 
-          className="page-button" 
-          disabled={currentPage === 1} 
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors disabled:opacity-50"
+          disabled={currentPage === 1}
           onClick={() => setCurrentPage(prev => prev - 1)}
         >
           Anterior
         </button>
 
-        <span className="page-info">Página {currentPage} de {Math.ceil(tickets.length / ticketsPerPage)}</span>
+        <span className="text-sm md:text-base">Página {currentPage} de {Math.ceil(tickets.length / ticketsPerPage)}</span>
 
         <button 
-          className="page-button" 
-          disabled={endIndex >= tickets.length} 
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors disabled:opacity-50"
+          disabled={endIndex >= tickets.length}
           onClick={() => setCurrentPage(prev => prev + 1)}
         >
           Siguiente
         </button>
       </div>
 
-      <button className="back-button" onClick={() => navigate('/profile')}>Regresar</button>
+      {/* BOTÓN REGRESAR */}
+      <div className="flex justify-center mt-6">
+        <button 
+          onClick={() => navigate('/profile')} 
+          className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors"
+        >
+          Regresar
+        </button>
+      </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default MisCompras;

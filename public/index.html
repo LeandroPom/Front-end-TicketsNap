@@ -9,73 +9,10 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>SolTicket</title>
-    <style>
-      /* Estilos generales */
-      body {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-      }
-     
-
-      /* Evitar desbordamientos en dispositivos móviles */
-      @media (max-width: 600px) {
-        body {
-          overflow-x: hidden;
-        }
-        .container {
-          padding: 0;
-        }
-  
-      }
-
-      
-    
-      /* Estilos para pantallas grandes */
-      @media (min-width: 601px) {
-              /* Estilos específicos para la imagen y los componentes */
-        .container {
-          padding: 0;
-        }
-      }
-    </style>
+   
   </head>
   <body>
-    <!-- Aquí empieza el código JavaScript que ajusta el tamaño según la ventana -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Función para ajustar el tamaño de la ventana
-        function ajustarTamano() {
-          const width = window.innerWidth;
-          const height = window.innerHeight;
-
-          // Ajustar meta viewport según el tamaño de la ventana
-          let viewportContent = 'width=device-width, initial-scale=1';
-
-          // Para dispositivos móviles con pantalla pequeña (menor a 600px)
-          if (width <= 650) {
-            viewportContent = 'width=device-width, initial-scale=1, maximum-scale=4, user-scalable=yes';
-            document.body.style.overflowX = 'visible'; // Evitar desbordamiento horizontal
-          } else if (width >= 1366) {
-            // Para pantallas medianas como 1366x768
-            viewportContent = 'width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes';
-            document.body.style.overflowX = 'hidden'; // Evitar desbordamiento horizontal
-           }
-          //   // Para pantallas grandes
-          //   viewportContent = 'width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes';
-          // }
-
-          // Cambiar el atributo meta viewport
-          document.querySelector('meta[name="viewport"]').setAttribute('content', viewportContent);
-        }
-
-        // Llamar a la función cuando se carga la página
-        ajustarTamano();
-
-        // Añadir un listener para cuando la ventana cambie de tamaño
-        window.addEventListener('resize', ajustarTamano);
-      });
+    
     </script>
 
     <!-- Scripts externos -->
@@ -85,7 +22,7 @@
     <noscript></noscript>
     <link rel="stylesheet" href="https://secure.mlstatic.com/mpt/checkout/v2/checkout.css" />
 
-    <div id="root" class="container">
+    <div id="root">
       
       
     </div>

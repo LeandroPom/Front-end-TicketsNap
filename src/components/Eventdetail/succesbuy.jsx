@@ -1,103 +1,115 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShows } from '../Redux/Actions/actions';
-import emailjs from 'emailjs-com'; // Importar emailjs
+import emailjs from 'emailjs-com';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import jsPDF from 'jspdf';
 import styles from './succesbuy.css';
-import Swal from 'sweetalert2'; // Importa SweetAlert2
-import jsPDF from 'jspdf'; // Importa jsPDF
 
 const SuccessPage = () => {
-  const { id } = useParams();  // Obtener el id de la URL (si existe)
   const location = useLocation();
-  const [ticket, setTicket] = useState(location.state || null); // Usamos location.state si existe
-  const [loading, setLoading] = useState(true); // Estado de carga
-  const [error, setError] = useState(null);  // Estado de error
-  const [sendTo, setSendTo] = useState(''); // Correo al que enviar el ticket
-  const [customEmail, setCustomEmail] = useState(''); // Correo personalizado
-  const [showCustomEmailInput, setShowCustomEmailInput] = useState(false); // Controlar el input
-  const user = useSelector((state) => state.user);  // Obtener el usuario actual del estado global de Redux
-  const navigate = useNavigate();
-  const priceWithTax = ticket?.price * 1.2;
-
   const dispatch = useDispatch();
-  const shows = useSelector((state) => state.shows);
+  const navigate = useNavigate();
 
-  // Cargar los shows si no están disponibles
+  const user = useSelector(state => state.user);
+  const shows = useSelector(state => state.shows);
+
+  const [tickets, setTickets] = useState(() => {
+    if (location.state && Array.isArray(location.state.tickets)) {
+      return location.state.tickets;
+    }
+    return [];
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [sendTo, setSendTo] = useState('');
+  const [customEmail, setCustomEmail] = useState('');
+  const [showCustomEmailInput, setShowCustomEmailInput] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const ticketsPerPage = 2;
+  const indexOfLastTicket = currentPage * ticketsPerPage;
+  const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
+  const currentTickets = tickets.slice(indexOfFirstTicket, indexOfLastTicket);
+  const totalPages = Math.ceil(tickets.length / ticketsPerPage);
+
+  // Ref para controlar que solo haga la llamada una vez
+  const didFetchTickets = useRef(false);
+
+  // Primer useEffect para cargar shows si no están
   useEffect(() => {
+    console.log('Dispatch getShows desde primer useEffect');
     if (shows.length === 0) {
       dispatch(getShows());
     }
-  }, [dispatch, shows]);
+  }, [dispatch, shows.length]);
 
-  // Si hay un id en la URL, obtener el ticket desde el backend
+  // Segundo useEffect para cargar tickets, cuando user y shows estén listos
   useEffect(() => {
-    // Función para mostrar la alerta
-    const showAlert = () => {
-      if (!id || !user || !user.id) {
-        setError('ID no disponible o usuario no válido');
-        setLoading(false);  // Detenemos la carga si no hay id o usuario
-        return; // Si no hay id o usuario, no mostrar la alerta ni ejecutar la acción
-      }
-  
-      Swal.fire({
-        title: '¡Felicidades por tu compra!',
-        text: 'Estamos procesando tu ticket. Gracias por elegirnos.',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      }).then(() => {
-       
-        fetchTicket();  // Llamamos a `fetchTicket` solo después de hacer clic en OK
-      });
-    };
-  
-    // Función para obtener los datos del ticket
-    const fetchTicket = async () => {
-      if (!id || !user || !user.id) {
-        setError('ID no disponible o usuario no válido');
-        setLoading(false);  // Detenemos la carga si no hay id o usuario
-        return;
-      }
-  
-      try {
-        setLoading(true); // Iniciamos la carga
-      
-        const response = await axios.get(`/tickets/${id}`);
-        const ticketData = response.data;
-    
-  
-        // Verificamos si el userId del ticket coincide con el userId actual
-        if (ticketData.userId !== user.id) {
-          setError('Acceso no autorizado');
-      
-          navigate('/');  // Redirige al inicio si el usuario no tiene acceso
-          return;
-        }
-  
-        setTicket(ticketData);  // Actualizamos el estado con los datos del ticket
-      
-      } catch (err) {
-        setError('Error al obtener los datos del ticket');
-        console.error(err);
-      } finally {
-        setLoading(false);  // Aseguramos que loading siempre se ponga en false
-      
-      }
-    };
-  
-    // Llamamos a `showAlert` solo si el `id` y `user` están disponibles
-    if (id && user) {
-      showAlert();  // Llama a la alerta solo si el `id` y `user` están disponibles
-    } else {
-      setLoading(false); // Si no hay id o usuario, aseguramos que `loading` se detiene
-    }
-  
-  }, [id, user, navigate]);  // Dependencias: ejecuta cuando `id`, `user` o `navigate` cambian
+  if (didFetchTickets.current) return;
+  if (!user || !user.id) return;
+  if (shows.length === 0) return;
 
-  const sendTicketEmail = () => {
+  if (location.state && Array.isArray(location.state.tickets) && location.state.tickets.length > 0) {
+    // Si ya tenemos tickets en location.state, los usamos, no hacemos fetch
+    setLoading(false);
+    didFetchTickets.current = true;
+    setTickets(location.state.tickets);
+    return;
+  }
+
+  didFetchTickets.current = true;
+
+  Swal.fire({
+    title: '¡Felicidades por tu compra!',
+    text: 'Procesando ticket...',
+    icon: 'success',
+    confirmButtonText: 'OK'
+  }).then(() => {
+    setLoading(true);
+    axios.get('/payments/tickets')
+      .then(response => {
+        let data = response.data;
+        if (data && data.tickets && Array.isArray(data.tickets)) {
+          data = data.tickets.flat();
+        } else if (Array.isArray(data)) {
+          data = data.flat();
+        } else {
+          data = [];
+        }
+        const filteredTickets = data.filter(ticket =>
+          ticket.userId === user.id ||
+          ticket.buyerId === user.id ||
+          ticket.user_id === user.id
+        );
+        setTickets(filteredTickets);
+        setError(null);
+      })
+      .catch(error => {
+        console.error('Error al obtener tickets:', error);
+        setError('Error al obtener tickets');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  });
+}, [user, shows, location.state]);
+
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const sendTicketEmail = (ticket) => {
     const templateParams = {
-      to_email: sendTo === 'custom' ? customEmail : sendTo,  // Usamos customEmail si se elige "Otro correo"
+      to_email: sendTo === 'custom' ? customEmail : sendTo,
       from_name: 'Tu Plataforma de Ventas',
       name: ticket.name,
       email: ticket.mail,
@@ -106,7 +118,7 @@ const SuccessPage = () => {
       division: ticket.division,
       seat: ticket.seat,
       row: ticket.row,
-      price: ticket?.price,
+      price: ticket.price,
       show: shows.find(show => show.id === ticket.showId)?.name || "Show desconocido",
       qrCode: ticket.qrCode,
       Direccion: ticket.location,
@@ -118,10 +130,8 @@ const SuccessPage = () => {
       templateParams,
       '5DeCesBmnqWIqrrla'
     )
-    .then((response) => {
-      alert('Correo enviado correctamente!');
-    })
-    .catch((error) => {
+    .then(() => alert('Correo enviado correctamente!'))
+    .catch(error => {
       console.error('Error al enviar el correo:', error);
       alert('Hubo un problema al enviar el correo.');
     });
@@ -133,13 +143,13 @@ const SuccessPage = () => {
 
   const handleSendToChange = (event) => {
     setSendTo(event.target.value);
-    setShowCustomEmailInput(event.target.value === 'custom'); // Mostrar input si se elige 'custom'
+    setShowCustomEmailInput(event.target.value === 'custom');
   };
 
-  const downloadPDF = () => {
+  const downloadPDF = (ticket) => {
+    const priceWithTax = ticket.price * 1.2;
     const doc = new jsPDF();
 
-    // Agregar contenido al PDF
     doc.setFontSize(16);
     doc.text(`Nombre: ${ticket.name}`, 10, 10);
     doc.text(`Email: ${ticket.mail || "Correo no disponible"}`, 10, 20);
@@ -152,17 +162,13 @@ const SuccessPage = () => {
     doc.text(`Evento: ${shows.find(show => show.id === ticket.showId)?.name || "Show desconocido"}`, 10, 90);
     doc.text(`Dirección: ${ticket.location}`, 10, 100);
 
-    // Agregar código QR si lo tienes
     const qrImg = new Image();
     qrImg.src = ticket.qrCode;
     qrImg.onload = function() {
-      doc.addImage(qrImg, 'JPEG', 10, 110, 80, 80);  // Ajusta las coordenadas y tamaño según sea necesario
-
-      // Después de agregar la imagen, descargar el archivo PDF
-      doc.save('ticket.pdf');
+      doc.addImage(qrImg, 'JPEG', 10, 110, 80, 80);
+      doc.save(`ticket_${ticket.id || 'download'}.pdf`);
     };
   };
-
 
   if (loading) {
     return <div className="loading">Cargando datos...</div>;
@@ -172,86 +178,113 @@ const SuccessPage = () => {
     return <div className="error">{error}</div>;
   }
 
-  if (!ticket || !ticket.mail) {
+  if (!tickets || tickets.length === 0) {
     return <p>Datos del ticket no disponibles.</p>;
   }
 
-  const showName = shows.find(show => show.id === ticket.showId)?.name || "Show desconocido";
-
   return (
-    <div className="ticket-container">
-      <h1 className="ticket-title">Compra Exitosa</h1>
-      <p><strong>Nombre:</strong> {ticket.name}</p>
-      <p><strong>Email:</strong> {ticket.mail || "Correo no disponible"}</p>
-      <p><strong>Teléfono:</strong> {ticket.phone}</p>
-      <p><strong>Fecha y Hora:</strong> {ticket.date}</p>
-      <p><strong>División:</strong> {ticket.division}</p>
-      {ticket.seat && <p><strong>Asiento:</strong> {ticket.seat}</p>}
-      {ticket.row && <p><strong>Fila:</strong> {ticket.row}</p>}
-      <p><strong>Precio:</strong> ${priceWithTax.toFixed(2)}</p> {/* Precio con el 20% añadido */}
+    <div className="p-6">
+      <h1 className=" mt-[180px] text-3xl font-bold mb-6 text-center">Compra Exitosa</h1>
 
-      <p><strong>Evento:</strong> {showName}</p>
-      <p><strong>Dirección:</strong> {ticket.location}</p>
-  
-      <div className="qr-container">
-        <img src={ticket.qrCode} alt="QR Code" className="qr-image" />
-      </div>
-  
-       {/* Solo mostrar el selector de correo y los botones si el usuario es cajero */}
-       {user.cashier === true && (
-        <>
-          {/* Selector de correo */}
-          <div className="email-select-container">
-            <label>
-              Enviar a:
-              <select value={sendTo} onChange={handleSendToChange} className="email-select">
-                <option value={ticket.mail || "Correo no disponible"}>
-                  Mi correo ({ticket.mail || "Correo no disponible"})
-                </option>
-                <option value="custom">Otro correo</option>
-              </select>
-            </label>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center mt-[90px]">
+        {currentTickets.map((ticket) => {
+          const priceWithTax = ticket.price * 1.2;
+          const showName = shows.find(show => show.id === ticket.showId)?.name || "Show desconocido";
 
-            {/* Input para correo personalizado */}
-            {showCustomEmailInput && (
-              <div className="custom-email-container">
-                <input 
-                  type="email" 
-                  value={customEmail} 
-                  onChange={handleEmailChange} 
-                  placeholder="Ingresa el correo"
-                  className="email-input"
+          return (
+            <div
+              key={ticket.id}
+              className="bg-white border border-gray-300 rounded-lg shadow-md p-4 w-full max-w-md flex flex-col justify-between"
+              style={{ minHeight: '320px'}}
+            >
+              <h3 className="text-lg font-semibold mb-4 text-center truncate">{showName}</h3>
+
+              <div className="grid grid-cols-3 gap-x-4 gap-y-2 text-sm flex-grow">
+                <p className='font-bold text-black'><strong>Nombre:</strong><br />{ticket.name}</p>
+                <p className='font-bold text-black'><strong>Teléfono:</strong><br />{ticket.phone}</p>
+                <p className='font-bold text-black'><strong>Fecha y Hora:</strong><br />{ticket.date}</p>
+                <p className='font-bold text-black'><strong>División:</strong><br />{ticket.division}</p>
+                <p className='font-bold text-black'><strong>Asiento:</strong><br />{ticket.seat || "No asignado"}</p>
+                <p className='font-bold text-black'><strong>Fila:</strong><br />{ticket.row || "No asignada"}</p>
+                <p className='font-bold text-black'><strong>Precio:</strong><br />${priceWithTax.toFixed(2)}</p>
+                <p className='font-bold text-black'><strong>Dirección:</strong><br />{ticket.location}</p>
+              </div>
+
+              <div className="mt-4 flex justify-center">
+                <img
+                  src={ticket.qrCode}
+                  alt="QR Code"
+                  className="w-24 h-24 object-contain"
                 />
               </div>
-            )}
-          </div>
-          
-          <button onClick={sendTicketEmail} className="btn-primary">Enviar Ticket por Email</button>
-          <button onClick={downloadPDF} className="btn-secondary">Descargar PDF</button>
-        </>
-      )}
-  
-    
-  
-      {/* Contenido a imprimir */}
-      <div id="ticket-info" className="print-ticket">
-        <h2>Detalles del Ticket</h2>
-        <p><strong>Nombre:</strong> {ticket.name}</p>
-        <p><strong>Email:</strong> {ticket.mail || "Correo no disponible"}</p>
-        <p><strong>Teléfono:</strong> {ticket.phone}</p>
-        <p><strong>Fecha y Hora:</strong> {ticket.date}</p>
-        <p><strong>División:</strong> {ticket.division}</p>
-        <p><strong>Asiento:</strong> {ticket.seat}</p>
-        <p><strong>Fila:</strong> {ticket.row}</p>
-        <p><strong>Precio:</strong> ${ticket.price}</p>
-        <p><strong>Evento:</strong> {showName}</p>
-        <p><strong>Dirección:</strong> {ticket.location}</p>
-        <div className="qr-container">
-          <img src={ticket.qrCode} alt="QR Code" className="qr-image" />
-        </div>
+              <p className='font-bold text-black'><strong>Email:</strong><br />{ticket.mail || "No disponible"}</p>
+
+              {user.cashier === true && (
+                <div className="space-y-3 mt-4">
+                  <label className="block text-sm font-medium">
+                    Enviar a:
+                    <select
+                      value={sendTo}
+                      onChange={handleSendToChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      <option value={ticket.mail || "Correo no disponible"}>
+                        Mi correo ({ticket.mail || "Correo no disponible"})
+                      </option>
+                      <option value="custom">Otro correo</option>
+                    </select>
+                  </label>
+
+                  {showCustomEmailInput && (
+                    <input
+                      type="email"
+                      value={customEmail}
+                      onChange={handleEmailChange}
+                      placeholder="Ingresa el correo"
+                      className="block w-full rounded-md border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  )}
+
+                  <button
+                    onClick={() => sendTicketEmail(ticket)}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition"
+                  >
+                    Enviar Ticket por Email
+                  </button>
+                  <button
+                    onClick={() => downloadPDF(ticket)}
+                    className="w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-md transition"
+                  >
+                    Descargar PDF
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-8 flex justify-center items-center space-x-6">
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 hover:bg-gray-400"
+        >
+          Anterior
+        </button>
+        <span className="font-medium">
+          Página {currentPage} de {totalPages}
+        </span>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 hover:bg-gray-400"
+        >
+          Siguiente
+        </button>
       </div>
     </div>
-  );  
+  );
 };
 
 export default SuccessPage;

@@ -8,7 +8,6 @@ import UsersManagement from './users';
 import SoldTickets from './SoldTickets';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
-import './estilospaneladm.css';
 import Banner from './banner';
 
 const AdminPanel = () => {
@@ -46,8 +45,8 @@ const AdminPanel = () => {
   }
 
   return (
-    <div className="admin-panel">
-      <div className="main-content">
+    <div>
+      <div>
         <Header />
         <Routes>
           <Route path="/admin/dashboard" element={<Dashboard />} />

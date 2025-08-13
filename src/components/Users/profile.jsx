@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import './profile.css';
+
 
 const Profile = () => {
   const user = useSelector((state) => state?.user);
@@ -84,65 +84,74 @@ const Profile = () => {
   }
 
   return (
-    <div className="profile-container">
-      <h2 className='profile-title'>Mi perfil</h2>
-      <div className="profile-info">
+  <div className="mt-[90px] min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-[rgba(86,86,190,0.4)] to-[rgba(86,86,190,0.4)] backdrop-blur-md">
+    <div className="w-full max-w-md bg-[rgba(86,86,190,0.4)] backdrop-blur-md rounded-lg p-6 shadow-lg text-white">
+      
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Mi perfil</h2>
+      
+      <div className="mb-6 space-y-2">
         <p><strong>Nombre:</strong> {user?.name}</p>
         <p><strong>Correo:</strong> {user?.email}</p>
       </div>
 
-      <button onClick={() => navigate('/profile/miscompras')} className="my-purchases-button">
+      <button
+        onClick={() => navigate('/profile/miscompras')}
+        className=" mb-6 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+      >
         Mis Compras
       </button>
 
       <div className="change-password">
-        <h3>Cambiar contraseña</h3>
-        <form onSubmit={handleChangePassword} className='form-profile'>
-          <div className="form-group">
-            <label htmlFor="newPassword">Nueva contraseña</label>
-            <div className="password-container">
-              <input
-                type={showNewPassword ? 'text' : 'password'}
-                id="newPassword"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-              />
-              <FontAwesomeIcon 
-                icon={showNewPassword ? faEyeSlash : faEye} 
-                onClick={() => setShowNewPassword(!showNewPassword)} 
-                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}
-              />
-            </div>
+        <h3 className="text-xl font-semibold mb-4">Cambiar contraseña</h3>
+        <form onSubmit={handleChangePassword} className="flex flex-col gap-6">
+          
+          <div className="flex flex-col relative">
+            <label htmlFor="newPassword" className="mb-1 font-semibold">Nueva contraseña</label>
+            <input
+              type={showNewPassword ? 'text' : 'password'}
+              id="newPassword"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+              className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+            />
+            <FontAwesomeIcon
+              icon={showNewPassword ? faEyeSlash : faEye}
+              onClick={() => setShowNewPassword(!showNewPassword)}
+              className="absolute right-3 top-10 text-white cursor-pointer"
+            />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirmar contraseña</label>
-            <div className="password-container">
-              <input
-                type={showConfirmPassword ? 'text' : 'password'}
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-              <FontAwesomeIcon 
-                icon={showConfirmPassword ? faEyeSlash : faEye} 
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
-                style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}
-              />
-            </div>
+          <div className="flex flex-col relative">
+            <label htmlFor="confirmPassword" className="mb-1 font-semibold">Confirmar contraseña</label>
+            <input
+              type={showConfirmPassword ? 'text' : 'password'}
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+            />
+            <FontAwesomeIcon
+              icon={showConfirmPassword ? faEyeSlash : faEye}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-10 text-white cursor-pointer"
+            />
           </div>
 
-          <div className="form-group">
-            <button type="submits" disabled={isLoading}>
-              {isLoading ? 'Cambiando...' : 'Cambiar Contraseña'}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+          >
+            {isLoading ? 'Cambiando...' : 'Cambiar Contraseña'}
+          </button>
         </form>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Profile;

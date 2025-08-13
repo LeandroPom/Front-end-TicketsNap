@@ -19,6 +19,7 @@ import GeneralShow from "./components/GeneralShows/generaldetail";
 import GeneralZoneForm from './components/GeneralShows/generalzoneform';
 import axios from "axios";
 import TicketGeneral from './components/GeneralShows/ticketgeneral';
+import { PaymentFailed } from './components/Eventdetail/Pagofallido';
 
 
 axios.defaults.baseURL = "https://solticket.com/api"; 
@@ -61,6 +62,7 @@ function App() {
         <Route path="/general/ticket/success" element={<TicketGeneral />} />
         <Route path="/general/ticket/success/:id" element={<TicketGeneral />} />
         <Route path="/tickets/useQR/:ticketId" element={<Ticketscan />} />
+        <Route path="/failure" element={<PaymentFailed />} />
         <Route path="/tickets/test" element={<h1>🚀 RUTA DETECTADA</h1>} />
         <Route path="*" element={<AdminPanel />} />
       </Routes>

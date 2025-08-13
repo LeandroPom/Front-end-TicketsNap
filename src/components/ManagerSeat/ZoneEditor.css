@@ -3,7 +3,7 @@
   max-width: 500px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: rgba(70,70,140,0.7);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -15,11 +15,11 @@
 .zone-editor-container h1 {
   text-align: center;
   font-size: 2rem;
-  color: #FFD166;
+  color: #525151;
 }
 
 .styled-title {
-  color: rgb(121, 118, 118);
+  color: rgb(212, 209, 209);
   font-size: 1.8rem;
   font-weight: bold;
   text-align: center;
@@ -30,7 +30,7 @@
 
 .zone-editor-container h3,
 .zone-editor-container h4 {
-  color: #d6a533;
+  color: #c2c1bf;
 }
 
 .zone-editor-container label {
@@ -44,7 +44,7 @@
   width: 100%;
   padding: 8px;
   margin-top: 5px;
-  border: 3px solid #FFD166;
+  border: 3px solid #0a0a0a;
   border-radius: 5px;
 }
 
@@ -54,6 +54,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  color: black
 }
 
 .zone-editor-container .input-group label {
@@ -71,8 +72,8 @@
 }
 
 .zone-editor-container button {
-  background-color: #FFD166;
-  color: rgb(0, 0, 0);
+  background-color: #2e2bf3;
+  color: rgb(221, 220, 220);
   padding: 12px 20px;
   border: none;
   border-radius: 15px;
@@ -83,5 +84,5 @@
 }
 
 .zone-editor-container button:hover {
-  background-color: rgb(207, 146, 32);
+  background-color: rgb(52, 95, 238);
 }

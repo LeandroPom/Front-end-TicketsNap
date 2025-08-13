@@ -273,95 +273,92 @@ const Detail = () => {
 
     const canvas = canvasRef.current;
     if (canvas) {
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-      const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+       const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+  const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
-      // Ajuste para tener en cuenta el zoom
-      const scaledX = x / zoom;
-      const scaledY = y / zoom;
+  const scaledX = x / zoom;
+  const scaledY = y / zoom;
 
-      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
-      // Redibuja los asientos si es necesario, excepto para Tribunas Generales
-      if (seatsDrawn && selectedZone !== "Tribunas Generales") {
-        drawSeats(ctx); // Asegúrate de que los asientos se dibujen con la escala correcta
+  if (seatsDrawn && selectedZone !== "Tribunas Generales") {
+    drawSeats(ctx);
+  }
+
+  const pixel = ctx.getImageData(scaledX, scaledY, 1, 1).data;
+  const rgb = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+
+  if (seatsDrawn) {
+    const clickedSeat = availableSeats.flatMap((seatRow) =>
+      seatRow.seats.filter((seat) => {
+        const { x: sx, y: sy, radius } = seat.drawingPosition;
+        const distance = Math.sqrt(Math.pow(scaledX - sx, 2) + Math.pow(scaledY - sy, 2));
+        return distance <= radius;
+      })
+    );
+
+    if (clickedSeat.length > 0) {
+      const seat = clickedSeat[0];
+
+      if (seat.taken) {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Asiento Ocupado!',
+          text: 'Este asiento ya está ocupado, selecciona otro.',
+        });
+        return;
       }
 
+      const seatRow = availableSeats.find((row) =>
+        row.seats.some((s) => s.uniqueId === seat.uniqueId)
+      );
 
+      const selectedZoneInfo = availablePresentations.find(p =>
+        p.divisionName === selectedZone &&
+        p.presentation.date === selectedPresentation.date &&
+        p.presentation.time.start === selectedPresentation.time.start
+      );
 
+      const selectedZoneId = selectedZoneInfo?.zoneId ?? null;
+      const price = selectedZoneInfo?.generalTicket
+        ? selectedZoneInfo.generalPrice
+        : seatRow?.rowPrice ?? 0;
 
-      const pixel = ctx.getImageData(scaledX, scaledY, 1, 1).data;
-      const rgb = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+      const seatInfo = {
+        ...seat,
+        row: seatRow?.row ?? null,
+        price,
+        division: selectedZone,
+        zoneId: selectedZoneId,
+        showId: event.id,
+      };
 
-      // Aquí se debe ajustar el código para detectar correctamente las zonas
-      if (seatsDrawn) {
-        const clickedSeat = availableSeats.flatMap((seatRow) =>
-          seatRow.seats.filter((seat) => {
-            const seatPosX = seat.drawingPosition.x;
-            const seatPosY = seat.drawingPosition.y;
-            const seatRadius = seat.drawingPosition.radius;
+      // Agregar o quitar el asiento de la lista seleccionada
+     setSelectedSeats((prev) => {
+  const alreadySelected = prev.some((s) => s.uniqueId === seatInfo.uniqueId);
+  const updated = alreadySelected
+    ? prev.filter((s) => s.uniqueId !== seatInfo.uniqueId)
+    : [...prev, seatInfo];
 
-            const distance = Math.sqrt(
-              Math.pow(scaledX - seatPosX, 2) + Math.pow(scaledY - seatPosY, 2)
-            );
+  // Redibujar asientos inmediatamente
+  const canvas = canvasRef.current;
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    drawSeats(ctx);
+  }
 
-            return distance <= seatRadius; // Filtra por cercanía, no por estado de ocupación
-          })
-        );
+  return updated;
+});
 
-        if (clickedSeat.length > 0) {
-          const seat = clickedSeat[0]; // Solo debe haber un asiento en el clic
-          if (seat.taken) {
-            // Si el asiento está ocupado, muestra la alerta
-            Swal.fire({
-              icon: 'error',
-              title: '¡Asiento Ocupado!',
-              text: 'Este asiento ya está ocupado, selecciona otro asiento.',
-            });
-            return; // Detiene la ejecución y no permite seleccionar otro asiento
-          }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Presiona sobre un asiento!',
+        text: 'Selección no válida.',
+      });
+    }
 
-          const seatRow = availableSeats.find((row) =>
-            row.seats.some((seat) => seat.uniqueId === clickedSeat[0].uniqueId)
-          );
-
-
-          const selectedZoneInfo = availablePresentations.find(p =>
-            p.divisionName === selectedZone &&
-            p.presentation.date === selectedPresentation.date &&
-            p.presentation.time.start === selectedPresentation.time.start
-          );
-
-          // Verifica que selectedZoneId esté correctamente asignado
-          const selectedZoneId = selectedZoneInfo ? selectedZoneInfo.zoneId : null;
-
-          // Asegúrate de obtener el precio adecuado
-          const price = selectedZoneInfo?.generalTicket
-            ? selectedZoneInfo.generalPrice  // Si es true, usar generalPrice para todos los asientos
-            : seatRow?.rowPrice;  // Si es false, usar rowPrice de la fila
-
-          // Crear el objeto seatInfo con zoneId corregido
-          const seatInfo = {
-            ...clickedSeat[0],
-            row: seatRow ? seatRow.row : null,
-            price: price ?? 0,
-            division: selectedZone,
-            zoneId: selectedZoneId, // Aquí asegúrate que zoneId no sea null
-            showId: event.id,
-          };
-
-          // console.log("ENVIAR A SEATS", seatInfo);
-          setSelectedSeats([seatInfo]);
-          setSelectedSeats([seatInfo]);
-          setIsSeatManagerOpen(true);
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: '¡Presiona sobre un asiento!',
-            text: 'Seleccion no permitida',
-          });
-        }
 
       } else {
         // Aquí va la lógica para detectar las zonas
@@ -404,6 +401,14 @@ const Detail = () => {
       }
     }
   };
+
+  useEffect(() => {
+  const canvas = canvasRef.current;
+  if (canvas && seatsDrawn) {
+    const ctx = canvas.getContext("2d");
+    drawSeats(ctx);
+  }
+}, [selectedSeats]); // <-- se ejecuta cada vez que seleccionás o deseleccionás un asiento
 
   const handleConfirmSelection = (presentation) => {
 
@@ -621,7 +626,16 @@ const Detail = () => {
             const scaledX = seat.x * scaleX * separationFactorX;
             const scaledY = seat.y * scaleY * separationFactorY;
 
-            const seatColor = seat.taken ? 'grey' : 'green';
+           const isSelected = selectedSeats.some(s => s.uniqueId === seat.uniqueId);
+let seatColor;
+
+if (seat.taken) {
+  seatColor = 'grey'; // Ocupado
+} else if (isSelected) {
+  seatColor = 'blue'; // Seleccionado
+} else {
+  seatColor = 'green'; // Disponible
+}
 
             ctx.beginPath();
             ctx.arc(scaledX, scaledY, pointRadius, 0, Math.PI * 2, false);
@@ -761,98 +775,100 @@ const Detail = () => {
 
   return (
     <div className="event-detail">
-      <h1>{event.name}</h1>
+      
 
-      {/* Contenedor único para la imagen y la información */}
-      <div className="event-main-container">
-        {/* Imagen o video */}
-        <div className="event-imagen">
-          {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
-            <iframe
-              className="event-video"
-              src={event.coverImage.replace("watch?v=", "embed/")}
-              title={event.name}
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          ) : (
-            <img className="event-image" src={event.coverImage} alt={event.name} />
-          )}
-        </div>
-
-        {/* Información del evento */}
-        <div className="event-info">
-          <div className="event-info-left">
-            <p>
-              <FaMusic style={{ color: 'black' }} /> <strong>Género:</strong> {event.genre.join(', ')}
-            </p>
-          </div>
-          <div className="event-info-right">
-            <p>
-              <FaMapMarkerAlt style={{ color: 'red' }} /> <strong>Dirección y Lugar:</strong> {event.location}
-            </p>
-          </div>
-        </div>
-
-        {event.presentation.map((presentation, index) => (
-          <div className="presentation-info" key={index}>
-            <div className="presentation-left">
-              <p>
-                <FaCalendarAlt style={{ color: 'green' }} /> <strong>Fecha:</strong> {presentation.date}
-              </p>
-            </div>
-            <div className="presentation-right">
-              <p>
-                <FaClock style={{ color: 'red' }} /> <strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}
-              </p>
-            </div>
-          </div>
-        ))}
+    <div className="max-w-4xl mx-auto p-4">
+  {/* Imagen o video arriba */}
+  <div className="w-full rounded-md overflow-hidden shadow-md">
+    <h1 className="flex items-center  font-semibold text-white">{event.name}</h1>
+    {event.coverImage.includes("youtube.com") || event.coverImage.includes("youtu.be") ? (
+      <div className="relative pt-[56.25%]">
+        <iframe
+          className="absolute top-0 left-0 w-full h-full rounded-md"
+          src={event.coverImage.replace("watch?v=", "embed/")}
+          title={event.name}
+          frameBorder="0"
+          allowFullScreen
+        ></iframe>
       </div>
+    ) : (
+      <img
+        className="w-full h-auto object-cover rounded-md"
+        src={event.coverImage}
+        alt={event.name}
+      />
+    )}
+  </div>
 
-      {/* Lógica para el countdown */}
+  {/* Información abajo */}
+  <div className="mt-6 space-y-4 text-gray-800 text-sm md:text-base">
+    <div className="flex items-center gap-2">
+      <FaMusic className="text-black" />
+      <p className='font-semibold text-gray-400'><strong>Género:</strong> {event.genre.join(', ')}</p>
+    </div>
+    <div className="flex items-center gap-2">
+      <FaMapMarkerAlt className="text-red-600" />
+      <p className='font-semibold text-gray-400'><strong>Dirección y Lugar:</strong> {event.location}</p>
+    </div>
+
+    {event.presentation.map((presentation, index) => (
+      <div key={index} className="flex flex-col md:flex-row md:justify-between gap-2 md:gap-6">
+        <div className="flex items-center gap-2">
+          <FaCalendarAlt className="text-green-600" />
+          <p className='font-semibold text-gray-400'><strong>Fecha:</strong> {presentation.date}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <FaClock className="text-red-500" />
+          <p className='font-semibold text-gray-400'><strong>Horarios:</strong> {presentation.time.start} - {presentation.time.end}</p>
+        </div>
+          {/* Lógica para el countdown */}
       {countdownStarted && (
-        <div className="time-count">
+        <div className="flex items-center gap-2 font-semibold text-white ">
           <h2>
             {Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}
           </h2>
         </div>
       )}
 
+      </div>
+    ))}
+  </div>
+</div>
+
       {/* Selector de zona y fecha/modal */}
       {isSelectorOpen && (
-        <div>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ color: "white", marginBottom: "300px", right: "500px" }}>
-              ....Selecciona una fecha y hora :
-            </h3>
-            <ul>
-              {availablePresentations.map((presentation, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleConfirmSelection(presentation)}
-                  style={{
-                    cursor: "pointer",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                    marginBottom: "-10px",
-                    left: "-150px",
-                    color: "black"
-                  }}
-                >
-                  <p style={{ color: "black" }}>
-                    Zona: {Array.isArray(presentation.divisionName) ? presentation.divisionName.join(", ") : presentation.divisionName}
-                  </p>
-                  <p style={{ color: "black" }}>Fecha: {presentation.presentation.date}</p>
-                  <p style={{ color: "black" }}>
-                    Hora: {presentation.presentation.time.start} - {presentation.presentation.time.end}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div
+      className="bg-purple w-[90%] max-w-md p-6 rounded-lg shadow-lg overflow-y-auto max-h-[80vh]"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h3 className="text-lg font-semibold mb-4 text-center text-white">
+        Selecciona una fecha y hora:
+      </h3>
+
+      <ul className="bg-purple-200 text-purple-700 font-semibold">
+        {availablePresentations.map((presentation, index) => (
+          <li
+            key={index}
+            onClick={() => handleConfirmSelection(presentation)}
+            className="bg-blue-400 cursor-pointer p-4 border rounded-md hover:bg-blue-500 transition"
+          >
+            <p className="text-white">
+              <strong>Zona:</strong>{" "}
+              {Array.isArray(presentation.divisionName)
+                ? presentation.divisionName.join(", ")
+                : presentation.divisionName}
+            </p>
+            <p className="text-white"><strong>Fecha:</strong> {presentation.presentation.date}</p>
+            <p className="text-white">
+              <strong>Hora:</strong> {presentation.presentation.time.start} - {presentation.presentation.time.end}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
 
       {/* Aquí el resto de la lógica de tu página */}
       <div>
@@ -860,8 +876,9 @@ const Detail = () => {
           <button
             onClick={handleChooseSeats}
             style={{
-              backgroundColor: '#FFD166',
-              color: 'black',
+              backgroundColor: 'rgba(55, 55, 107, 1)',
+              
+              color: 'rgba(167, 167, 167, 1)',
               padding: '12px 20px',
               borderRadius: '15px',
               fontWeight: 'bold',
@@ -875,7 +892,10 @@ const Detail = () => {
 
         {user?.isAdmin && (
           <>
-            <button className='boton-adddata' onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
+            <button 
+            className="mt-auto text-gray-400 font-semibold rounded py-2 hover:bg-purple-300 transition"
+            style={{ backgroundColor: 'rgba(55, 55, 107, 1)' }}
+            onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
 
             {isZoneEditorOpen && (
               <>
@@ -886,77 +906,71 @@ const Detail = () => {
           </>
         )}
 
-        {showMap && zoneImage && (
-          <div>
-            <canvas
-              ref={canvasRef}
-              onClick={handleCanvasClick}
-              width={canvasWidth}
-              height={canvasHeight}
-            />
-            {selectedZone && <p>Seleccionar Zona: {selectedZone}</p>}
-            <Link to="/">
-              <button className='Boton-inicio'>Ir a Inicio</button>
-            </Link>
-          </div>
-        )}
+      {showMap && zoneImage && (
+  <div className="flex flex-col items-center mt-6">
+    <canvas
+      ref={canvasRef}
+      onClick={handleCanvasClick}
+      width={canvasWidth}
+      height={canvasHeight}
+      className="border"
+      style={{ width: `${canvasWidth}px`, height: `${canvasHeight}px` }}
+    />
 
+    {selectedZone && <p className="mt-4 font-semibold">Seleccionar Zona: {selectedZone}</p>}
 
+    {selectedSeats.length > 0 && !isSeatManagerOpen && (
+      <button
+        className="bg-blue-900 text-gray-400 px-5 py-2 mt-4 rounded-lg text-base font-medium transition"
+        onClick={() => setIsSeatManagerOpen(true)}
+      >
+        Continuar con la compra de {selectedSeats.length} asiento(s)
+      </button>
+    )}
 
+    <Link to="/">
+      <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-700 transition">
+        Ir a Inicio
+      </button>
+    </Link>
+  </div>
+)}
 
-
-
-        {/* Aquí se muestra el select con los asientos */}
-        {/* <div>
-          <label htmlFor="seat-select">Selecciona un asiento:</label>
-          <select 
-            id="seat-select" 
-            value={selectedSeat?.id || ''} 
-            onChange={(e) => handleSeatSelection(e)} 
-          >
-            <option value="">Selecciona un asiento</option>
-            {availableSeats?.map(seat => (
-              <option key={seat.id} value={seat.id}>
-                Asiento {seat.id} - Fila {seat.row} {seat.taken ? "(Ocupado)" : "(Disponible)"}
-              </option>
-            ))}
-          </select>
-        </div> */}
-
-        {/* Mostrar el asiento seleccionado en el estado */}
-        {/* {selectedSeat && (
-          <div>
-            <p>Has seleccionado el asiento {selectedSeat.id} de la fila {selectedSeat.row}</p>
-          </div>
-        )}
-       */}
-
-
-
-      </div>
-
-
+</div>
       <div className="zoom-controls">
         {/* <button onClick={handleZoomOut}>-</button>
         <button onClick={handleZoomIn}>+</button> */}
       </div>
-      {isSeatManagerOpen && (
-        <div className="modal">
-          <div className="modal-overlay" onClick={() => setIsSeatManagerOpen(false)}></div>
+     {isSeatManagerOpen && (
+   <div
+    className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+    style={{ zIndex: 1050 }} // ⬅️ Aca el z-index alto
+  >
+    <div
+      className="bg-white w-[95%] max-w-3xl p-6 rounded-lg shadow-xl overflow-y-auto max-h-[90vh] relative"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Botón de cerrar */}
+      <button
+        onClick={() => setIsSeatManagerOpen(false)}
+        className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-xl font-bold"
+      >
+        ×
+      </button>
 
-          <Seatbuy
-            seats={selectedSeats[0]}  // Solo el primer asiento seleccionado
-            onSeatsSelected={handleSeatsSelected}
-            availableSeats={availableSeats}
-            isSelectable={true}
-            selectedSeats={selectedSeats}
-            eventDetails={event}
-            selectedPresentation={selectedPresentation}
-            zoneId={selectedSeats[0]?.zoneId}  // Asegúrate de pasar zoneId aquí
-          />
-
-        </div>
-      )}
+      <Seatbuy
+        seats={selectedSeats[0]}
+        onSeatsSelected={handleSeatsSelected}
+        availableSeats={availableSeats}
+        isSelectable={true}
+        selectedSeats={selectedSeats}
+        eventDetails={event}
+        selectedPresentation={selectedPresentation}
+        zoneId={selectedSeats[0]?.zoneId}
+      />
+    </div>
+  </div>
+)}
     </div>
   );
 };
