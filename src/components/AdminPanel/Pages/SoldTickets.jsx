@@ -148,36 +148,57 @@ const filterTickets = () => {
   const date = [...new Set(tickets.map(ticket => ticket.date))];
 
   // Lógica de cancelación de tickets
-  const cancelTicket = async (ticket) => {
-    const result = await Swal.fire({
-      title: '¿Estás seguro de cancelar este ticket?',
-      text: `El ticket con ID ${ticket.id} será cancelado y el asiento será liberado.`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, cancelar ticket',
-      cancelButtonText: 'No, volver',
-    });
+const cancelTicket = async (ticket) => {
+  console.log("Ticket que se quiere cancelar:", ticket);
+  console.log("Shows disponibles:", shows);
 
-    if (result.isConfirmed) {
-      try {
-        await axios.delete(`/tickets/cancel/${ticket.id}`);
-        Swal.fire({
-          icon: "success",
-          title: "Ticket Cancelado",
-          text: `El ticket con ID ${ticket.id} ha sido cancelado exitosamente.`,
-        });
-        fetchTickets();
-      } catch (error) {
-        console.error("Error al cancelar el ticket:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "No se pudo cancelar el ticket. Por favor, inténtalo de nuevo.",
-        });
+  const result = await Swal.fire({
+    title: '¿Estás seguro de cancelar este ticket?',
+    text: `El ticket con ID ${ticket.id} será cancelado y el asiento será liberado.`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, cancelar ticket',
+    cancelButtonText: 'No, volver',
+  });
+
+  if (result.isConfirmed) {
+    try {
+      // Buscar el show asociado al ticket
+      const show = shows.find(s => s.id === ticket.showId);
+      console.log("Show asociado al ticket:", show);
+
+      if (!show) {
+        throw new Error(`El show con ID ${ticket.showId} no existe.`);
       }
+
+      // Elegir endpoint según la propiedad isGeneral
+      if (show.isGeneral) {
+        console.log("Usando endpoint para tickets generales");
+        await axios.delete(`/tickets/cancel/general/${ticket.id}`);
+      } else {
+        console.log("Usando endpoint para tickets normales");
+        await axios.delete(`/tickets/cancel/${ticket.id}`);
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Ticket Cancelado",
+        text: `El ticket con ID ${ticket.id} ha sido cancelado exitosamente.`,
+      });
+
+      fetchTickets(); // Refrescar tickets después de cancelar
+    } catch (error) {
+      console.error("Error al cancelar el ticket:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo cancelar el ticket. Por favor, inténtalo de nuevo.",
+      });
     }
-    
-  };
+  }
+};
+
+
 // Paginación
 const [currentPage, setCurrentPage] = useState(1);
 const ticketsPerPage = 5;
