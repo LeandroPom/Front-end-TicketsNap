@@ -21,8 +21,10 @@ import axios from "axios";
 import TicketGeneral from './components/GeneralShows/ticketgeneral';
 import { PaymentFailed } from './components/Eventdetail/Pagofallido';
 
+
 axios.defaults.baseURL = "https://solticket.com/api"; 
 // axios.defaults.baseURL = "http://localhost:3001"; 
+
 
 function App() {
   Modal.setAppElement('#root');
@@ -68,4 +70,8 @@ function App() {
   );
 }
 
+
+
+
 export default App;
+
