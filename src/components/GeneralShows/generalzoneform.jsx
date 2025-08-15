@@ -66,7 +66,6 @@ const GeneralZoneForm = () => {
       }
     };
 
-    console.log(data, "Data enviada al backend");
 
     try {
       await axios.post('/zones/add/general', data);

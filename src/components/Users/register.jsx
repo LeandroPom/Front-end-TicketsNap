@@ -300,7 +300,7 @@ const Register = () => {
       const response = await axios.get('/users');
 
       // Muestra toda la respuesta
-      console.log('Respuesta del servidor:', response.data);
+      // console.log('Respuesta del servidor:', response.data);
 
       if (!Array.isArray(response.data)) {
         console.error('La respuesta no es un array:', response.data);
@@ -318,7 +318,7 @@ const Register = () => {
   const checkUsernameExists = async (name) => {
     try {
       const response = await axios.get('/users');  // Asegúrate de que esta URL sea la correcta
-      console.log('Respuesta del servidor:', response.data);
+      // console.log('Respuesta del servidor:', response.data);
 
       if (!Array.isArray(response.data)) {
         console.error('La respuesta no es un array:', response.data);

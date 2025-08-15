@@ -58,8 +58,13 @@ li {
   background: rgb(50, 50, 109);;
 }
 
+.react-calendar__tile {
+  /* color: rgb(10, 12, 116); */
+  background: rgb(50, 50, 109);;
+}
+
 .react-calendar {
-  background: rgb(85, 85, 194);;
+  background: rgb(50, 50, 109);;
   border: none;
 }
 

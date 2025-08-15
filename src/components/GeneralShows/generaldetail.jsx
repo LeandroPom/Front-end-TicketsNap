@@ -161,7 +161,6 @@ const GeneralDetail = () => {
   const zone = zones[selectedZoneIndex];
   const selectedLoc = zone.location.find((loc) => loc.division === selectedDivision);
 
-  // Generar un array de tickets (uno por cada entrada)
   const ticketsPayload = Array.from({ length: quantity }, () => ({
     showId,
     zoneId: zone.id,
@@ -176,39 +175,49 @@ const GeneralDetail = () => {
 
   const serviceType = paymentMethod === "sell" ? "CASH" : "MP";
 
-  console.log(ticketsPayload, " datos q mando al back")
-
   try {
     const response = await axios.post('/tickets/sales', {
       tickets: ticketsPayload,
       service: serviceType,
     });
 
-    console.log(serviceType, " datos q mando al back")
+    sessionStorage.setItem("ticketData", JSON.stringify({ tickets: response.data }));
 
-    const ticketsResponse = response.data;
-
-    sessionStorage.setItem("ticketData", JSON.stringify({ tickets: ticketsResponse }));
-
+    // Si es MercadoPago, mostrar alerta antes de redireccionar
     if (response.data.init_point && paymentMethod === "buy") {
+      await Swal.fire({
+        title: '⚠️ Atención',
+    html: `
+      Una vez que su pago con <strong>MercadoPago</strong> se procese correctamente,<br>
+      <b>debe esperar</b> la redirección automática para que su ticket se genere sin errores.<br><br>
+      <span style="color: red; font-weight: bold;">
+        Si interrumpe el proceso o cierra la ventana, perderá su ticket.
+      </span>
+    `,
+    icon: 'warning',
+    confirmButtonText: 'Entendido, Continuar al pago'
+      });
+
+      // Redireccionar a MercadoPago después de que confirma el alert
       window.location.href = response.data.init_point;
       return;
     }
 
+    // Para venta en efectivo o flujo normal
     Swal.fire({
       title: 'Venta confirmada',
       text: 'Se ha procesado correctamente.',
       icon: 'success',
       confirmButtonText: 'Aceptar',
-    });
-
-    navigate('/success', {
-      state: {
-        tickets: ticketsResponse,
-        mail: buyerDetails.email,
-        name: `${buyerDetails.firstName} ${buyerDetails.lastName}`,
-        phone: buyerDetails.phone,
-      },
+    }).then(() => {
+      navigate('/success', {
+        state: {
+          tickets: response.data,
+          mail: buyerDetails.email,
+          name: `${buyerDetails.firstName} ${buyerDetails.lastName}`,
+          phone: buyerDetails.phone,
+        },
+      });
     });
 
   } catch (error) {

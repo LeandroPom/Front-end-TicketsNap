@@ -58,19 +58,12 @@ const futureDates = show.presentation
   return { ...show, nearestDate };
 });
 
-console.log('Shows with nearestDate:', showsWithNearestDate.map(s => ({
-  name: s.name,
-  nearestDate: s.nearestDate ? s.nearestDate.toISOString().split('T')[0] : null,
-})));
 
 // Filtrar shows que sí tengan fecha próxima
 const showsFiltered = showsWithNearestDate.filter(show => show.nearestDate !== null);
 
 // Ordenar por nearestDate ascendente
 showsFiltered.sort((a, b) => a.nearestDate - b.nearestDate);
-
-// showsFiltered ahora está ordenado con los shows con fecha más próxima primero
-console.log(showsFiltered);
 
 
   // Filtrar shows
@@ -329,17 +322,20 @@ filtered.sort((a, b) => {
    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6 px-4">
   {currentShows && currentShows.length > 0 ? (
     currentShows.map((show) => (
-    <li
+   <li
   key={show.id}
-  onClick={() => handleViewDetails(show)}
-  className="
-    max-w-[320px] w-full mx-auto rounded-lg shadow overflow-hidden flex flex-col cursor-pointer hover:shadow-lg transition
-    bg-[rgba(55,55,107,0.4)] backdrop-blur-md border border-white/20
-  "
+  onClick={() => {
+    if (show.nearestDate !== null) handleViewDetails(show);
+  }}
+  className={`
+    max-w-[320px] w-full mx-auto rounded-lg shadow overflow-hidden flex flex-col
+    ${show.nearestDate === null ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:shadow-lg'}
+    transition bg-[rgba(55,55,107,0.4)] backdrop-blur-md border border-white/20
+  `}
   role="button"
   tabIndex={0}
   onKeyDown={(e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if ((e.key === 'Enter' || e.key === ' ') && show.nearestDate !== null) {
       handleViewDetails(show);
     }
   }}
@@ -359,7 +355,7 @@ filtered.sort((a, b) => {
       src={show.coverImage}
       alt={show.name}
     />
-     )}
+  )}
 
   {/* Overlay si el evento está finalizado */}
   {show.nearestDate === null && (
@@ -367,7 +363,6 @@ filtered.sort((a, b) => {
       <span className="text-white text-lg font-bold">Evento Finalizado</span>
     </div>
   )}
-
 
   {/* Contenido CON padding */}
   <div className="content p-4 flex flex-col flex-grow">
@@ -385,15 +380,18 @@ filtered.sort((a, b) => {
     <button
       onClick={(e) => {
         e.stopPropagation();
-        handleViewDetails(show);
+        if (show.nearestDate !== null) handleViewDetails(show);
       }}
-      className="mt-auto  text-gray-400 font-semibold rounded py-2 hover:bg-gray-200 transition"
+      disabled={show.nearestDate === null}
+      className={`mt-auto text-gray-400 font-semibold rounded py-2 transition 
+        ${show.nearestDate === null ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
       style={{ backgroundColor: 'rgba(72, 72, 128, 1)' }}
     >
       Comprar
     </button>
   </div>
 </li>
+
     ))
   ) : (
     <div className="col-span-full text-center text-red-600 font-semibold mt-6">

@@ -149,8 +149,7 @@ const filterTickets = () => {
 
   // Lógica de cancelación de tickets
 const cancelTicket = async (ticket) => {
-  console.log("Ticket que se quiere cancelar:", ticket);
-  console.log("Shows disponibles:", shows);
+  
 
   const result = await Swal.fire({
     title: '¿Estás seguro de cancelar este ticket?',
@@ -165,7 +164,7 @@ const cancelTicket = async (ticket) => {
     try {
       // Buscar el show asociado al ticket
       const show = shows.find(s => s.id === ticket.showId);
-      console.log("Show asociado al ticket:", show);
+     
 
       if (!show) {
         throw new Error(`El show con ID ${ticket.showId} no existe.`);
@@ -173,10 +172,10 @@ const cancelTicket = async (ticket) => {
 
       // Elegir endpoint según la propiedad isGeneral
       if (show.isGeneral) {
-        console.log("Usando endpoint para tickets generales");
+        
         await axios.delete(`/tickets/cancel/general/${ticket.id}`);
       } else {
-        console.log("Usando endpoint para tickets normales");
+        
         await axios.delete(`/tickets/cancel/${ticket.id}`);
       }
 
@@ -371,7 +370,7 @@ const giftTicket = async (ticket) => {
 
   if (result.isConfirmed) {
     // No es necesario usar params aquí, solo poner el ID directamente en la URL
-    console.log("Datos a enviar al backend para regalar el ticket:", ticket.id);
+    
 
     try {
       // Ahora pasamos el ticket ID directamente en la URL
@@ -409,7 +408,7 @@ const resetFilters = () => {
 const handleUserFilterChange = (e) => {
   const selectedUser = e.target.value;
   setUserFilter(selectedUser ? selectedUser : ""); // No necesitas parsear a número si estás pasando string
-  console.log("Usuario seleccionado:", selectedUser);
+  
 };
 
 return (
