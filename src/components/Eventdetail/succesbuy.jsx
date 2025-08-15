@@ -41,7 +41,6 @@ const SuccessPage = () => {
 
   // Primer useEffect para cargar shows si no están
   useEffect(() => {
-    console.log('Dispatch getShows desde primer useEffect');
     if (shows.length === 0) {
       dispatch(getShows());
     }

@@ -65,7 +65,7 @@ const Banner = () => {
         name: bannerName,
         url: finalImageUrl, // Usar la URL final aquí
       });
-      console.log('Banner creado exitosamente:', response.data);
+      
       fetchBanners(); // Refrescar los banners después de agregar uno
       closeModal(); // Cierra el modal al enviar
     } catch (error) {

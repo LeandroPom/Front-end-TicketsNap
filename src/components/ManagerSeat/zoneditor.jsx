@@ -68,7 +68,7 @@ const ZoneEditor = ({ showId }) => {
       ),
     });
   };
-  console.log(zoneData)
+  // console.log(zoneData)
   const saveChanges = async () => {
     try {
       const dataToSend = {
@@ -117,7 +117,7 @@ const ZoneEditor = ({ showId }) => {
         },
       };
   
-      console.log("Datos a enviar: ", dataToSend); // Verifica el objeto que estás enviando
+      // console.log("Datos a enviar: ", dataToSend);
   
       const response = await axios.post("/zones/add", dataToSend);
       if (response.status === 201) {

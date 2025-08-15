@@ -68,7 +68,7 @@ const TicketGeneral = () => {
       // Buscar el nombre del show desde Redux si ya está cargado
       const show = shows.find((show) => show.id === parseInt(showId));
       if (show) {
-        console.log('Show encontrado:', show.name); // Puedes guardar o usar el nombre del show como quieras
+        // console.log(); 
       }
     } catch (err) {
       setError('Error al obtener los datos del ticket');
@@ -80,7 +80,7 @@ const TicketGeneral = () => {
   // Función para mostrar la alerta
   const showAlert = () => {
     if (!id) {
-      console.log("No hay id en la URL, no se mostrará la alerta.");
+      
       return; // Si no hay id, no mostrar la alerta ni ejecutar la acción
     }
 

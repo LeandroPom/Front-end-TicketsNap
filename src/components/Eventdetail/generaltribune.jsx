@@ -95,31 +95,53 @@ const Generaltribunes = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        sessionStorage.setItem("buyerData", JSON.stringify(result.value));
-        setSelectedSpaces(validSpaces); // Asegurar valor actualizado
+  sessionStorage.setItem("buyerData", JSON.stringify(result.value));
+  setSelectedSpaces(validSpaces); // Asegurar valor actualizado
+  
+  if (paymentMethod === "buy") {
+    Swal.fire({
+      title: '⚠️ Atención',
+      html: `
+        Una vez que su pago con <strong>MercadoPago</strong> se procese correctamente,<br>
+        <b>debe esperar</b> la redirección automática para que su ticket se genere sin errores.<br><br>
+        <span style="color: red; font-weight: bold;">
+          Si interrumpe el proceso o cierra la ventana, perderá su ticket.
+        </span>
+      `,
+      icon: 'warning',
+      confirmButtonText: 'Entendido, Continuar al pago'
+    }).then((confirmResult) => {
+      if (confirmResult.isConfirmed) {
         handleConfirmPurchase(result.value, paymentMethod);
-      } else if (result.isDenied) {
-        const [firstName = "", lastName = ""] = (user?.name || "").split(" ");
-        const autoData = {
-          dni: "12345678",
-          firstName,
-          lastName,
-          email: user?.email || "",
-          phone: "123456789",
-        };
-        sessionStorage.setItem("buyerData", JSON.stringify(autoData));
-        handleOpenBuyerModal(paymentMethod);
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        sessionStorage.removeItem("buyerData");
-        Swal.fire({
-          title: "Datos borrados",
-          text: "Los datos se han borrado, puedes ingresar nuevos.",
-          icon: "info",
-          confirmButtonText: "Aceptar",
-        }).then(() => {
-          handleOpenBuyerModal(paymentMethod);
-        });
       }
+    });
+  } else {
+    handleConfirmPurchase(result.value, paymentMethod);
+  }
+
+} else if (result.isDenied) {
+  const [firstName = "", lastName = ""] = (user?.name || "").split(" ");
+  const autoData = {
+    dni: "12345678",
+    firstName,
+    lastName,
+    email: user?.email || "",
+    phone: "123456789",
+  };
+  sessionStorage.setItem("buyerData", JSON.stringify(autoData));
+  handleOpenBuyerModal(paymentMethod);
+
+} else if (result.dismiss === Swal.DismissReason.cancel) {
+  sessionStorage.removeItem("buyerData");
+  Swal.fire({
+    title: "Datos borrados",
+    text: "Los datos se han borrado, puedes ingresar nuevos.",
+    icon: "info",
+    confirmButtonText: "Aceptar",
+  }).then(() => {
+    handleOpenBuyerModal(paymentMethod);
+  });
+}
     });
   };
 

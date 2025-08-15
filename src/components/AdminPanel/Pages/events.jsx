@@ -16,7 +16,7 @@ const Events = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-console.log(shows, "datos del show")
+
 
   useEffect(() => {
     dispatch(getShows());

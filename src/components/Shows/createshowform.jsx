@@ -347,7 +347,7 @@ const handleDateChange = (date) => {
         // Si hay un error al crear el show, mostrar un mensaje de error
         setErrorMessage('Error creating the show. Please try again.');
       });
-    console.log('Datos enviados al backend:', formattedData);
+    // console.log('Datos enviados al backend:', formattedData);
 
   }
   return (
