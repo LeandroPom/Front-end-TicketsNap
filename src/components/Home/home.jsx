@@ -328,7 +328,7 @@ filtered.sort((a, b) => {
     if (show.nearestDate !== null) handleViewDetails(show);
   }}
   className={`
-    max-w-[320px] w-full mx-auto rounded-lg shadow overflow-hidden flex flex-col
+    max-w-[320px] w-full mx-auto rounded-lg shadow overflow-hidden flex flex-col 
     ${show.nearestDate === null ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:shadow-lg'}
     transition bg-[rgba(55,55,107,0.4)] backdrop-blur-md border border-white/20
   `}
@@ -359,15 +359,15 @@ filtered.sort((a, b) => {
 
   {/* Overlay si el evento está finalizado */}
   {show.nearestDate === null && (
-    <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+    <div className="absolute inset-0 bg-black bg-opacity-10 flex items-center justify-center">
       <span className="text-white text-lg font-bold">Evento Finalizado</span>
     </div>
   )}
 
   {/* Contenido CON padding */}
   <div className="content p-4 flex flex-col flex-grow">
-    <h3 className="text-xl font-semibold mb-2 text-gray-400">{show.name}</h3>
-    <h5 className="text-gray-400 flex items-center gap-2 text-black-200 mb-1">
+    <h3 className="text-xl font-semibold mb-2 text-white">{show.name}</h3>
+    <h5 className="text-gray-200 flex items-center gap-2 text-black-200 mb-1">
       <FaMapMarkerAlt /> Dirección: {show.location}
     </h5>
     <h5 className="text-gray-400 flex items-center gap-2 text-black-100 mb-1">
@@ -385,7 +385,7 @@ filtered.sort((a, b) => {
       disabled={show.nearestDate === null}
       className={`mt-auto text-gray-400 font-semibold rounded py-2 transition 
         ${show.nearestDate === null ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
-      style={{ backgroundColor: 'rgba(72, 72, 128, 1)' }}
+      style={{ backgroundColor: 'rgba(17, 17, 139, 1)' }}
     >
       Comprar
     </button>

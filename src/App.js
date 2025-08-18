@@ -20,13 +20,15 @@ import GeneralZoneForm from './components/GeneralShows/generalzoneform';
 import axios from "axios";
 import TicketGeneral from './components/GeneralShows/ticketgeneral';
 import { PaymentFailed } from './components/Eventdetail/Pagofallido';
+import { useStorageAutoClear } from "./components/Utils/storagecleaned";
 
 
-axios.defaults.baseURL = "https://solticket.com/api"; 
-// axios.defaults.baseURL = "http://localhost:3001"; 
+// axios.defaults.baseURL = "https://solticket.com/api"; 
+axios.defaults.baseURL = "http://localhost:3001"; 
 
 
 function App() {
+  useStorageAutoClear();
   Modal.setAppElement('#root');
 
   // Usar el hook useLocation para obtener la ruta actual

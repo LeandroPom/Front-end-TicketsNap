@@ -53,7 +53,7 @@ const Navbar = () => {
   className={`fixed top-[50px] left-0 w-full flex justify-center z-[1000] backdrop-blur-md shadow-md border-b border-white/20
     ${isDarkMode ? 'bg-gray-800/60 text-white' : 'bg-blue-500/40 text-white'}`}
   style={{
-    height: '85px',
+    height: '90px',
     background: 'rgba(86, 86, 190, 0.4)', // semi-transparente con color
     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
     borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
@@ -63,12 +63,12 @@ const Navbar = () => {
 >
   <div className="w-full flex items-center justify-between px-5 h-full">
     {/* Logo pequeño + toggle en flex */}
-    <div className="flex items-center space-x-4">
+    <div className="w-full flex items-center justify-center relative h-full">
       <a href="/" className="cursor-pointer">
         <img
           src="/images/solticket.png"
           alt="Sol Ticket"
-          className="w-[140px] h-auto max-h-[70px] object-contain"
+          className="w-[200px] h-auto max-h-[120px] object-contain"
         />
       </a>
           </div>
