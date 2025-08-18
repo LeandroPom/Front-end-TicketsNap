@@ -21,7 +21,7 @@ const SoldTickets = () => {
   const [users, setUsers] = useState([]); // Para almacenar todos los usuarios que son cajeros
   const [giftedFilter, setGiftedFilter] = useState(null); // Filtro para tickets regalados
   const [userFilter, setUserFilter] = useState("");
-
+  const [search, setSearch] = useState("");
   const user = useSelector((state) => state?.user);
 
   // Traer los shows desde Redux
@@ -114,11 +114,25 @@ const filterTickets = () => {
       filtered = filtered.filter(ticket => ticket.userId === cashierFilter);
     }
   
-    // Filtrar por usuario común si se selecciona un usuario (y no un cajero)
-    if (userFilter) {
-      filtered = filtered.filter(ticket => ticket.userId === userFilter);
-      
-    }
+   // Filtrar por usuario común si se ingresa un texto en el buscador
+if (userFilter && userFilter.trim() !== "") {
+  const filterLower = userFilter.toLowerCase();
+
+  filtered = filtered.filter(ticket => {
+    // Ignoramos tickets sin usuario asignado
+    if (!ticket.userId) return false;
+
+    // Buscamos el usuario correspondiente
+    const usuario = users.find(u => u.id === ticket.userId);
+    if (!usuario) return false;
+
+    // Retornamos true si el nombre o email incluye el texto buscado
+    return (
+      usuario.name.toLowerCase().includes(filterLower) ||
+      usuario.email.toLowerCase().includes(filterLower)
+    );
+  });
+}
 
   // Filtro por nombre del show
   if (showFilter) {
@@ -224,7 +238,15 @@ const ticketsFiltered = noCancelledTickets.filter(ticket => {
   if (cashierFilter && ticket.userId !== cashierFilter) return false;
 
   // Filtrar por usuario
-  if (userFilter && ticket.userId !== userFilter) return false;
+  if (userFilter && userFilter.trim() !== "") {
+  const filterLower = userFilter.toLowerCase();
+  const usuario = users.find(u => u.id === ticket.userId);
+  if (!usuario) return false;
+  if (
+    !usuario.name.toLowerCase().includes(filterLower) &&
+    !usuario.email.toLowerCase().includes(filterLower)
+  ) return false;
+}
 
   // Filtro por nombre del show
   if (showFilter && shows) {
@@ -478,25 +500,15 @@ return (
       </div>
 
       <div className="flex flex-col">
-        <label className="text-white mb-1">Filtrar por Usuario:</label>
-        <select
-          value={userFilter}
-          onChange={(e) => setUserFilter(e.target.value ? Number(e.target.value) : "")}
-          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-        >
-          <option value="">Todos los usuarios</option>
-          {users.length > 0 ? (
-            users
-              .filter((user) => !user.cashier)
-              .map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.name} (Usuario)
-                </option>
-              ))
-          ) : (
-            <option value="">No hay usuarios disponibles</option>
-          )}
-        </select>
+        
+         <label className="text-white mb-1">Buscar Usuario:</label>
+  <input
+    type="text"
+    value={userFilter}
+    onChange={(e) => setUserFilter(e.target.value)}
+    placeholder="Buscar por nombre o mail"
+    className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+  />
       </div>
 
       <div className="flex flex-col">
@@ -506,7 +518,7 @@ return (
           onChange={(e) => setCashierFilter(e.target.value ? Number(e.target.value) : "")}
           className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          <option value="">Todos los cajeros y usuarios</option>
+          <option value="">Todos los cajeros</option>
           {users.length > 0 ? (
             users
               .filter((user) => user.cashier)
