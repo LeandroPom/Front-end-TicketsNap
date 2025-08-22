@@ -300,7 +300,7 @@ background: #FFD166; /* Cambia el color al pasar el ratón */
 }
 
 .boton-adddata {
-background-color: rgba(52, 52, 107, 0.7); /* Verde llamativo */
+background-color: #608CC4;
 color: #dddddd;
 padding: 10px 10px; /* Ajusta el tamaño del padding para que los botones sean más grandes */
 border:0rem;
@@ -312,7 +312,8 @@ margin-left: 10px; /* Añade espacio entre los botones */
 }
 
 .boton-adddata:hover{
-  background: rgba(43, 43, 105, 0.7); /* Cambia el color al pasar el ratón */
+  background: #ADC8E6;
+  color:#0C2342;
 }
 
 .Boton-inicio{

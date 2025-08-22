@@ -96,7 +96,7 @@ const Seatbuy = ({ selectedSeats: initialSelectedSeats, eventDetails, zoneId, se
 
   return (
     <div className="w-full  min-h-screen py-8 px-4 text-white"
-    style={{ backgroundColor: 'rgba(55, 55, 107, 1)' }}
+    style={{ backgroundColor: 'rgb(18,51,95)' }}
     >
       <div className="flex flex-col items-center text-center space-y-4">
         <h1 className="text-2xl font-bold text-white">{eventDetails?.name}</h1>
@@ -126,11 +126,11 @@ const Seatbuy = ({ selectedSeats: initialSelectedSeats, eventDetails, zoneId, se
        
 
         <div className="w-full max-w-xl text-left space-y-2 mt-6"
-        style={{ backgroundColor: 'rgba(55, 55, 107, 1)' }}
+        style={{ backgroundColor: 'rgb(18,51,95)' }}
         >
           {eventDetails?.presentation?.map((presentation, index) => (
             <div key={index} className=" border rounded-md p-4"
-            style={{ backgroundColor: 'rgba(55, 55, 107, 1)' }}
+            style={{ backgroundColor: 'rgb(18,51,95)' }}
             >
               <p><strong>Presentación:</strong> {presentation.performance}</p>
               <p><strong>Fecha:</strong> {selectedPresentation?.date}</p>
@@ -146,7 +146,7 @@ const Seatbuy = ({ selectedSeats: initialSelectedSeats, eventDetails, zoneId, se
   const seatKey = seat.uniqueId || `${seat.row}-${seat.id}`;
   return (
     <li key={seatKey} className="text-white flex items-center justify-between"
-    style={{ backgroundColor: 'rgba(55, 55, 107, 1)' }}
+    style={{ backgroundColor: 'rgb(18,51,95)' }}
     >
       <span>
         Asiento {seat.id}, Fila {seat.row} — <span className="font-medium text-white-600">${seat.price}</span>
@@ -176,15 +176,15 @@ const Seatbuy = ({ selectedSeats: initialSelectedSeats, eventDetails, zoneId, se
         <div className="flex flex-col md:flex-row gap-4 mt-6">
           <button
             onClick={handleSeatSelection}
-            className="text-white px-6 py-3 rounded-md font-semibold hover:bg-purple-700 transition"
-            style={{ backgroundColor: 'rgba(68, 68, 109, 1)' }}
+            className="primary text-white px-6 py-3 rounded-md font-semibold transition"
+            
           >
             Confirmar compra de {selectedSeats.length} asiento(s)
           </button>
           <button
             onClick={handleClose}
-            className="text-white px-6 py-3 rounded-md font-semibold hover:bg-purple-600 transition"
-            style={{ backgroundColor: 'rgba(68, 68, 109, 1)' }}
+            className="primary text-white px-6 py-3 rounded-md font-semibold transition"
+            
           >
             Cerrar
           </button>

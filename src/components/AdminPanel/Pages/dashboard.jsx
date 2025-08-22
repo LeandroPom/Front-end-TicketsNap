@@ -153,11 +153,11 @@ const Dashboard = () => {
     w-full max-w-screen-xl
     mx-auto
     relative
-    top-[170px]
+    top-[230px]
     z-10
   "
   style={{
-    background: "rgba(86, 86, 190, 0.4)",
+    background: "rgb(18, 51, 95)",
     backdropFilter: "blur(10px)",
     WebkitBackdropFilter: "blur(10px)",
   }}

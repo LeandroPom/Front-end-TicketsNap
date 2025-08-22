@@ -227,7 +227,7 @@ filtered.sort((a, b) => {
       />
     </div>
 
-<div className=" bg-customBlue w-full max-w-5xl mx-auto px-4 py-4  rounded-md shadow-sm box-border space-y-4">
+<div className="bg-customBlue w-full max-w-5xl mx-auto px-4 py-4  rounded-md shadow-sm box-border space-y-4">
   
   {/* Input búsqueda */}
   <div className="bg-customBlue w-full text-black">
@@ -294,7 +294,7 @@ filtered.sort((a, b) => {
 
 {/* Calendario emergente como modal */}
 {showCalendar && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div className="top-[150px] fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
     <div className="relative bg-customBlue rounded shadow-lg p-4 w-full max-w-md mx-4 sm:mx-auto">
       
       {/* Botón de cerrar */}
@@ -351,10 +351,10 @@ filtered.sort((a, b) => {
     ></iframe>
   ) : (
     <img
-      className="w-full h-48 object-cover"
-      src={show.coverImage}
-      alt={show.name}
-    />
+    className="w-full h-full object-contain"
+    src={show.coverImage}
+    alt={show.name}
+  />
   )}
 
   {/* Overlay si el evento está finalizado */}
