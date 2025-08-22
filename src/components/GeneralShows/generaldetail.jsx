@@ -251,23 +251,23 @@ const GeneralDetail = () => {
     );
   }
 
-  return (
-  <div className="max-w-4xl mx-auto mt-28 p-6 bg-[rgb(50,50,109)] text-white rounded-lg shadow-md">
+ return (
+  <div className="max-w-4xl mx-auto mt-60 p-6 container-bg text-white rounded-lg shadow-md">
     <h1 className="text-2xl font-bold mb-4">{show.name}</h1>
     <img src={show.coverImage} alt={show.name} className="w-full rounded-lg mb-4" />
 
-    <p><span className="font-bold text-white">Género:</span > {show.genre.join(', ')}</p >
-    <p><span className="font-bold text-white">Artistas:</span> {show.artists.join(', ')}</p>
-    <p><span className="font-bold text-white">Descripción:</span> {show.description}</p>
-    <p><span className="font-bold text-white">Ubicación:</span> {show.location}</p>
+    <p><span className="font-bold">Género:</span> {show.genre.join(', ')}</p>
+    <p><span className="font-bold">Artistas:</span> {show.artists.join(', ')}</p>
+    <p><span className="font-bold">Descripción:</span> {show.description}</p>
+    <p><span className="font-bold">Ubicación:</span> {show.location}</p>
 
     {/* Select zona */}
     <div className="mt-4">
-      <label className="font-bold text-white">Selecciona una presentación:</label>
+      <label className="font-bold">Selecciona una presentación:</label>
       <select
         value={selectedZoneIndex}
         onChange={handleZoneChange}
-        className="w-full mt-1 p-2 rounded bg-[rgb(70,70,140)] text-white border border-white"
+        className="w-3/4 mt-1 p-2 rounded bg-[#0C2342] text-white border border-white"
       >
         {zones.map((zone, index) => (
           <option key={zone.id} value={index}>
@@ -279,30 +279,30 @@ const GeneralDetail = () => {
 
     {/* Info zona */}
     {zones[selectedZoneIndex] && (
-      <div className="mt-6 p-4 bg-[rgb(70,70,140)] rounded-lg">
-        <h3 className="text-lg font-bold text-white mb-2">Información de la Zona</h3>
-        <p><span className="font-semibold text-white">Fecha:</span> {zones[selectedZoneIndex].presentation.date}</p>
-        <p><span className="font-semibold text-white">Horario:</span> {zones[selectedZoneIndex].presentation.time.start} - {zones[selectedZoneIndex].presentation.time.end}</p>
+      <div className="mt-6 p-4 bg-[#0C2342] rounded-lg">
+        <h3 className="text-lg font-bold mb-2">Información de la Zona</h3>
+        <p><span className="font-semibold">Fecha:</span> {zones[selectedZoneIndex].presentation.date}</p>
+        <p><span className="font-semibold">Horario:</span> {zones[selectedZoneIndex].presentation.time.start} - {zones[selectedZoneIndex].presentation.time.end}</p>
 
         {zones[selectedZoneIndex].location.map((loc, index) => (
           <div key={index}>
             <p>
-              <span className="font-semibold text-white">{loc.division}:</span>
+              <span className="font-semibold">{loc.division}:</span>
               {(user?.isAdmin || user?.cashier) && (
                 <> Capacidad: {loc.space} | Disponible: {loc.space - loc.occupied} | </>
               )}
-              <span className="font-semibold text-white">Precio:</span> ${loc.price}
+              <span className="font-semibold">Precio:</span> ${loc.price}
             </p>
           </div>
         ))}
 
         {/* Select división */}
         <div className="mt-4">
-          <label className="block font-bold text-white">División:</label>
+          <label className="block font-bold">División:</label>
           <select
             value={selectedDivision}
             onChange={handleDivisionChange}
-            className="w-full mt-1 p-2 rounded bg-[rgb(90,90,170)] text-white border border-white"
+            className="w-3/4 mt-1 p-2 rounded bg-[#608CC4] text-white border border-white"
           >
             {zones[selectedZoneIndex].location.map((loc) => (
               <option key={loc.division} value={loc.division}>{loc.division}</option>
@@ -310,39 +310,39 @@ const GeneralDetail = () => {
           </select>
         </div>
 
+        {/* Cantidad entradas */}
         <div className="mt-4">
-  <label className="block font-bold text-white">Cantidad de Entradas:</label>
- <input
-  type="number"
-  min="1"
-  max={getAvailableTickets()}
-  value={quantity}
-  onChange={(e) => {
-    const value = e.target.value;
-    if (value === '') {
-      setQuantity(''); // Permitimos el campo vacío para que el usuario pueda borrar
-    } else {
-      const parsed = parseInt(value, 10);
-      if (!isNaN(parsed) && parsed >= 1) {
-        setQuantity(parsed);
-      }
-    }
-  }}
-  className="w-full mt-1 p-2 rounded bg-[rgb(90,90,170)] text-white border border-white"
-/>
-</div>
+          <label className="block font-bold">Cantidad de Entradas:</label>
+          <input
+            type="number"
+            min="1"
+            max={getAvailableTickets()}
+            value={quantity}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === '') {
+                setQuantity('');
+              } else {
+                const parsed = parseInt(value, 10);
+                if (!isNaN(parsed) && parsed >= 1) {
+                  setQuantity(parsed);
+                }
+              }
+            }}
+            className="w-3/4 mt-1 p-2 rounded bg-[#608CC4] text-white border border-white"
+          />
+        </div>
 
-        <p className="mt-2"><span className="font-semibold text-white">Precio:</span> ${selectedPrice}</p>
-        {/* <p className="text-red-400"><span className="font-semibold text-red">Recargo de servicios:</span> ${(selectedPrice * 0.2).toFixed(2)}</p> */}
-<p className="mt-2">
- <span className="font-semibold text-white">Valor Total:</span> ${selectedPrice * validQuantity}
-</p>
-<p className="text-red-400">
-  <span className="font-semibold text-red">Recargo de servicios:</span> ${(selectedPrice * validQuantity * 0.2).toFixed(2)}
-</p>
+        <p className="mt-2"><span className="font-semibold">Precio:</span> ${selectedPrice}</p>
+        <p className="mt-2"><span className="font-semibold">Valor Total:</span> ${selectedPrice * validQuantity}</p>
+        <p className="text-red-400">
+          <span className="font-semibold">Recargo de servicios:</span> ${(selectedPrice * validQuantity * 0.2).toFixed(2)}
+        </p>
+
+        {/* Botón compra/venta */}
         <button
           onClick={() => handleOpenBuyerModal(user?.cashier ? "sell" : "buy")}
-          className="mt-4 bg-[rgb(90,90,170)] text-white font-bold py-2 px-6 rounded hover:bg-[rgb(110,110,190)] transition mx-auto block"
+          className="secondary mt-4 mx-auto block"
         >
           {user?.cashier ? "Vender Entrada" : "Comprar con Mercado Pago"}
         </button>

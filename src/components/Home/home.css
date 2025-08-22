@@ -55,16 +55,16 @@ li {
 
 .react-calendar__tile--hasActive {
   color: rgb(15, 194, 15);
-  background: rgb(50, 50, 109);;
+  background: rgba(44, 44, 223, 0.281);;
 }
 
 .react-calendar__tile {
   /* color: rgb(10, 12, 116); */
-  background: rgb(50, 50, 109);;
+  background: rgba(44, 44, 223, 0.281);;
 }
 
 .react-calendar {
-  background: rgb(50, 50, 109);;
+  background: rgba(44, 44, 223, 0.281);;
   border: none;
 }
 

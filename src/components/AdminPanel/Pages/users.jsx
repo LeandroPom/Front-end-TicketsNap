@@ -34,13 +34,13 @@ const UsersManagement = () => {
     }
   };
 
-  // Actualización de usuario
+  // Actualizaci贸n de usuario
   const updateUser = async (id, updates) => {
     if (!user?.isAdmin) {
       Swal.fire({
         icon: "error",
         title: "Permiso Denegado",
-        text: "Solo los administradores pueden realizar esta acción.",
+        text: "Solo los administradores pueden realizar esta accion.",
       });
       return;
     }
@@ -49,7 +49,7 @@ const UsersManagement = () => {
       fetchUsers();
       Swal.fire({
         icon: "success",
-        title: "Actualización exitosa",
+        title: "Actualizacion exitosa",
         text: `El usuario ha sido actualizado correctamente.`,
       });
     } catch (error) {
@@ -81,7 +81,7 @@ const UsersManagement = () => {
     if (!newPassword || newPassword.trim().length < 6) {
       Swal.fire({
         icon: "warning",
-        title: "Contraseña inválida",
+        title: "Contraseña invalida",
         text: "La contraseña debe tener al menos 6 caracteres.",
       });
       return;
@@ -90,7 +90,7 @@ const UsersManagement = () => {
     setPasswordChanges((prev) => ({ ...prev, [userId]: "" }));
   };
 
-  // Búsqueda con debounce y reinicio de paginación
+  // B煤squeda con debounce y reinicio de paginaci贸n
   useEffect(() => {
     if (searchTimeout.current) clearTimeout(searchTimeout.current);
     searchTimeout.current = setTimeout(() => {
@@ -106,7 +106,7 @@ const UsersManagement = () => {
     }, 300);
   }, [search, allUsers]);
 
-  // Paginación
+  // Paginaci贸n
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
@@ -122,8 +122,8 @@ const UsersManagement = () => {
       Nombre: user.name,
       Email: user.email,
       Estado: user.disabled ? "Deshabilitado" : "Activo",
-      Administrador: user.isAdmin ? "Sí" : "No",
-      Cajero: user.cashier ? "Sí" : "No",
+      Administrador: user.isAdmin ? "S铆" : "No",
+      Cajero: user.cashier ? "S铆" : "No",
       Phone: user.phone,
     }));
 
@@ -134,37 +134,39 @@ const UsersManagement = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-6 w-full max-w-screen-xl mx-auto relative top-[170px] z-10"
-      style={{ background: "rgba(86, 86, 190, 0.4)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}>
+    <div
+      className="min-h-screen p-4 md:p-6 w-full max-w-screen-xl mx-auto relative top-[220px] z-10 container-bg backdrop-blur-sm"
+      style={{ background: "rgba(12,35,66,0.6)", WebkitBackdropFilter: "blur(10px)", backdropFilter: "blur(10px)" }}
+    >
       <h2 className="text-3xl font-bold mb-6 text-center w-full max-w-6xl px-4 text-white">
-        Gestión de Usuarios
+        Gestion de Usuarios
       </h2>
 
-      {/* Barra de búsqueda */}
+      {/* Barra de b煤squeda */}
       <div className="w-full max-w-6xl px-4 mb-4">
         <input
           type="text"
-          placeholder="Buscar por nombre, email o teléfono..."
+          placeholder="Buscar por nombre, email o telefono..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full sm:w-1/2 p-2 rounded bg-[rgb(90,90,170)] text-white border border-white"
+          className="w-full sm:w-1/2 p-2 rounded bg-[#608CC4] text-white border border-white"
           autoComplete="off"
         />
       </div>
 
       {/* Tabla */}
-      <div className="w-full max-w-6xl px-4 overflow-x-auto bg-[rgb(50,50,109)] rounded-lg shadow-md p-6">
+      <div className="w-full max-w-6xl px-4 overflow-x-auto rounded-lg shadow-md p-6 container-bg">
         <table className="min-w-full text-left border border-white text-sm sm:text-base">
-          <thead className="bg-[rgb(70,70,140)]">
+          <thead className="bg-[#608CC4]">
             <tr>
-              <th className="text-gray-400 p-3 border-b border-white">Nombre</th>
-              <th className="text-gray-400 p-3 border-b border-white">Email</th>
-              <th className="text-gray-400 p-3 border-b border-white">Teléfono</th>
-              <th className="text-gray-400 p-3 border-b border-white">Estado</th>
-              <th className="text-gray-400 p-3 border-b border-white">Administrador</th>
-              <th className="text-gray-400 p-3 border-b border-white">Cajero</th>
-              <th className="text-gray-400 p-3 border-b border-white">Acciones</th>
-              <th className="text-gray-400 p-3 border-b border-white">Contraseña</th>
+              <th className="text-white p-3 border-b border-white">Nombre</th>
+              <th className="text-white p-3 border-b border-white">Telefono</th>
+              <th className="text-white p-3 border-b border-white">Estado</th>
+              <th className="text-white p-3 border-b border-white">Administrador</th>
+              <th className="text-white p-3 border-b border-white">Email</th>
+              <th className="text-white p-3 border-b border-white">Cajero</th>
+              <th className="text-white p-3 border-b border-white">Acciones</th>
+              <th className="text-white p-3 border-b border-white">Contraseña</th>
             </tr>
           </thead>
           <tbody>
@@ -174,99 +176,124 @@ const UsersManagement = () => {
                   No se encontraron usuarios.
                 </td>
               </tr>
-            ) : currentUsers.map((user) => (
-              <tr key={user.id} className="hover:bg-[rgb(60,60,120)] transition">
-                <td className="p-3 border-b border-white">{user.name}</td>
-                <td className="p-3 border-b border-white">{user.email}</td>
-                <td className="p-3 border-b border-white">{user.phone || "No disponible"}</td>
-                <td className="p-3 border-b border-white">{user.disabled ? "Deshabilitado" : "Activo"}</td>
-                <td className="p-3 border-b border-white">
-                  <button
-                    className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] py-1 px-3 rounded text-white"
-                    onClick={() => handleRoleChange(user.id, "isAdmin")}
-                  >
-                    {user.isAdmin ? "Quitar Admin" : "Asignar Admin"}
-                  </button>
-                </td>
-                <td className="p-3 border-b border-white">
-                  <button
-                    className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] py-1 px-3 rounded text-white"
-                    onClick={() => handleRoleChange(user.id, "cashier")}
-                  >
-                    {user.cashier ? "Quitar Cajero" : "Asignar Cajero"}
-                  </button>
-                </td>
-                <td className="p-3 border-b border-white">
-                  <button
-                    className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] py-1 px-3 rounded text-white"
-                    onClick={() => handleDisableToggle(user.id)}
-                  >
-                    {user.disabled ? "Habilitar" : "Deshabilitar"}
-                  </button>
-                </td>
-                <td className="p-3 border-b border-white min-w-[220px]">
-                  <div className="flex flex-col gap-2">
-                    <input
-                      type="password"
-                      placeholder="Nueva contraseña"
-                      value={passwordChanges[user.id] || ""}
-                      onChange={(e) => handlePasswordInputChange(user.id, e.target.value)}
-                      className="p-2 rounded bg-[rgb(90,90,170)] text-white border border-white"
-                    />
+            ) : (
+              currentUsers.map((user) => (
+                <tr key={user.id} className="hover:bg-[#ADC8E6] transition">
+                  <td className="p-3 border-b border-white">{user.name}</td>
+                  <td className="p-3 border-b border-white">{user.email}</td>
+                  <td className="p-3 border-b border-white">{user.phone || "No disponible"}</td>
+                  <td className="p-3 border-b border-white">{user.disabled ? "Deshabilitado" : "Activo"}</td>
+                  <td className="p-3 border-b border-white">
                     <button
-                      className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] py-1 px-3 rounded text-white"
-                      onClick={() => handlePasswordUpdate(user.id)}
+                      className="secondary py-1 px-3"
+                      onClick={() => handleRoleChange(user.id, "isAdmin")}
                     >
-                      Cambiar
+                      {user.isAdmin ? "Quitar Admin" : "Asignar Admin"}
                     </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="p-3 border-b border-white">
+                    <button
+                      className="secondary py-1 px-3"
+                      onClick={() => handleRoleChange(user.id, "cashier")}
+                    >
+                      {user.cashier ? "Quitar Cajero" : "Asignar Cajero"}
+                    </button>
+                  </td>
+                  <td className="p-3 border-b border-white">
+                    <button
+                      className="secondary py-1 px-3"
+                      onClick={() => handleDisableToggle(user.id)}
+                    >
+                      {user.disabled ? "Habilitar" : "Deshabilitar"}
+                    </button>
+                  </td>
+                  <td className="p-3 border-b border-white min-w-[220px]">
+                    <div className="flex flex-col gap-2">
+                      <input
+                        type="password"
+                        placeholder="Nueva contraseña"
+                        value={passwordChanges[user.id] || ""}
+                        onChange={(e) => handlePasswordInputChange(user.id, e.target.value)}
+                        className="p-2 rounded bg-[#608CC4] text-white border border-white"
+                      />
+                      <button
+                        className="secondary py-1 px-3"
+                        onClick={() => handlePasswordUpdate(user.id)}
+                      >
+                        Cambiar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
 
-      {/* Botón de exportación */}
+      {/* Bot贸n de exportaci贸n */}
       <div className="w-full max-w-6xl px-4 flex justify-end mt-4">
-        <button
-          onClick={handleDownloadExcel}
-          className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] text-white py-2 px-4 rounded"
-        >
-          📥 Descargar Excel
+        <button onClick={handleDownloadExcel} className="secondary py-2 px-4">
+          Descargar Excel
         </button>
       </div>
 
-      {/* Paginación */}
+      {/* Paginaci贸n */}
       <div className="w-full max-w-6xl px-4 flex flex-wrap justify-center gap-2 mt-4">
         <button
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`px-4 py-2 rounded-full ${currentPage === 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)]'}`}
+          className={`px-4 py-2 rounded-full ${currentPage === 1 ? 'bg-gray-400 cursor-not-allowed' : 'secondary'}`}
         >
-          ◀ Anterior
+          Anterior
         </button>
 
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            onClick={() => paginate(page)}
-            className={`px-4 py-2 rounded-full font-bold ${page === currentPage ? 'bg-[rgb(110,110,190)]' : 'bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)]'}`}
-          >
-            {page}
+        {currentPage > 3 && (
+          <button onClick={() => paginate(1)} className="px-4 py-2 rounded-full secondary">
+            Primera
           </button>
-        ))}
+        )}
+
+        {(() => {
+          const pageNumbers = [];
+          const maxButtons = 5;
+          let startPage = Math.max(1, currentPage - 2);
+          let endPage = Math.min(totalPages, currentPage + 2);
+
+          if (currentPage <= 3) endPage = Math.min(totalPages, maxButtons);
+          if (currentPage >= totalPages - 2) startPage = Math.max(1, totalPages - maxButtons + 1);
+
+          for (let i = startPage; i <= endPage; i++) pageNumbers.push(i);
+
+          return pageNumbers.map((page) => (
+            <button
+              key={page}
+              onClick={() => paginate(page)}
+              className={`px-4 py-2 rounded-full font-bold ${page === currentPage ? 'pagina' : 'secondary'}`}
+            >
+              {page}
+            </button>
+          ));
+        })()}
+
+        {currentPage < totalPages - 2 && (
+          <button onClick={() => paginate(totalPages)} className="px-4 py-2 rounded-full secondary">
+          Ultima
+          </button>
+        )}
 
         <button
           onClick={() => paginate(currentPage + 1)}
           disabled={currentPage === totalPages || totalPages === 0}
-          className={`px-4 py-2 rounded-full ${currentPage === totalPages || totalPages === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)]'}`}
+          className={`px-4 py-2 rounded-full ${currentPage === totalPages || totalPages === 0 ? 'bg-gray-400 cursor-not-allowed' : 'secondary'}`}
         >
-          Siguiente ▶
+          Siguiente
         </button>
       </div>
     </div>
   );
+
+
 };
 
 export default UsersManagement;

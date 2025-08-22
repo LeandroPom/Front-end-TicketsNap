@@ -178,7 +178,7 @@ const Login = () => {
 
   return (
   <div className="mt-[90px] min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-[rgba(86,86,190,0.4)] to-[rgba(86,86,190,0.4)] backdrop-blur-md">
-    <div className="w-full max-w-md bg-[rgba(86,86,190,0.4)] backdrop-blur-md rounded-lg p-6 shadow-lg">
+    <div className="w-full max-w-md container-bg backdrop-blur-md rounded-lg p-6 shadow-lg">
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         
         {/* Logo */}
@@ -194,7 +194,7 @@ const Login = () => {
         </h2>
 
         {/* Email */}
-        <div className="flex flex-col">
+        <div className="w-5/6 flex flex-col">
           <label htmlFor="email" className="text-white font-semibold mb-1">Email</label>
           <input
             type="email"
@@ -203,12 +203,12 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Ingresa tu email"
             required
-            className="form-input p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+            className="w-auto form-input p-2 rounded bg-[rgba(55,55,248,0.25)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
           />
         </div>
 
         {/* Contraseña */}
-        <div className="relative flex flex-col">
+        <div className="w-5/6 relative flex flex-col">
           <label htmlFor="password" className="text-white font-semibold mb-1">Contraseña</label>
           <input
             type={showPassword ? 'text' : 'password'}
@@ -217,7 +217,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Ingresa tu contraseña"
             required
-            className="form-input p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+            className="w-auto form-input p-2 rounded bg-[rgba(55,55,248,0.25)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
           />
           <FontAwesomeIcon
             icon={showPassword ? faEyeSlash : faEye}
@@ -229,14 +229,14 @@ const Login = () => {
         {/* Botones */}
         <div className="flex flex-col gap-3">
           <button
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+            className="secondary text-white px-4 py-2 rounded transition-colors"
             disabled={isLoading}
           >
             {isLoading ? 'Ingresando...' : 'Ingresar'}
           </button>
           <button
             type="button"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+            className="secondary text-white px-4 py-2 rounded transition-colors"
             onClick={() => navigate('/register')}
           >
             Registrarse

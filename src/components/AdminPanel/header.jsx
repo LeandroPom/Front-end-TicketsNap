@@ -21,8 +21,8 @@ const Header = () => {
    <header
   className="fixed left-0 w-full backdrop-blur-md shadow-md border-b border-white/20"
   style={{
-    top: '135px', // 50px (banner) + 85px (navbar) + 1px
-    background: 'rgba(86, 86, 190, 0.4)',
+    top: '165px', // 50px (banner) + 85px (navbar) + 1px
+    background: 'rgba(21,60,112,1,0.4)',
     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
     borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
     backdropFilter: 'blur(10px)',
@@ -81,7 +81,7 @@ const Header = () => {
 
       {/* Menú móvil desplegable */}
       {menuOpen && (
-        <div className="md:hidden bg-[rgba(86,86,190,0.85)] backdrop-blur-lg text-white flex flex-col space-y-2 px-4 py-4">
+        <div className="md:hidden bg-[rgba(21,60,112,1)] backdrop-blur-lg text-white flex flex-col space-y-2 px-4 py-4">
           {user?.isAdmin && (
             <>
               <button onClick={() => { navigate('/admin/dashboard'); setMenuOpen(false); }} className="hover:bg-white/20 px-3 py-1 rounded">

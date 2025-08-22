@@ -60,7 +60,7 @@ const Carousel = () => {
   const isSingleImage = banners.length === 1;
 
   return (
-    <div className="relative top-[80px] left-0 w-screen h-auto overflow-hidden bg-gray-100 m-0 p-0 z-10">
+    <div className="relative top-[110px] left-0 w-screen h-auto overflow-hidden bg-gray-100 m-0 p-0 z-10">
       {/* Botón anterior */}
       <button
         onClick={goToPrevious}

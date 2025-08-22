@@ -770,7 +770,14 @@ if (seat.taken) {
     );
   }
 
+const scrollContainerRef = useRef(null);
 
+// opcional: que siempre arranque scrolleado a la izquierda
+useEffect(() => {
+  if (scrollContainerRef.current) {
+    scrollContainerRef.current.scrollLeft = 0;
+  }
+}, [showMap, zoneImage, canvasWidth]);
 
 
   return (
@@ -876,9 +883,9 @@ if (seat.taken) {
           <button
             onClick={handleChooseSeats}
             style={{
-              backgroundColor: 'rgba(55, 55, 107, 1)',
+              backgroundColor: '#608CC4',
               
-              color: 'rgba(167, 167, 167, 1)',
+              color: 'rgba(247, 244, 244, 1)',
               padding: '12px 20px',
               borderRadius: '15px',
               fontWeight: 'bold',
@@ -893,8 +900,8 @@ if (seat.taken) {
         {user?.isAdmin && (
           <>
             <button 
-            className="mt-auto text-gray-400 font-semibold rounded py-2 hover:bg-purple-300 transition"
-            style={{ backgroundColor: 'rgba(55, 55, 107, 1)' }}
+            className="secondary mt-auto text-gray-400 font-semibold rounded py-2 transition"
+            
             onClick={() => setIsZoneEditorOpen(true)}>Cargar datos</button>
 
             {isZoneEditorOpen && (
@@ -907,15 +914,25 @@ if (seat.taken) {
         )}
 
       {showMap && zoneImage && (
-  <div className="flex flex-col items-center mt-6">
-    <canvas
-      ref={canvasRef}
-      onClick={handleCanvasClick}
-      width={canvasWidth}
-      height={canvasHeight}
-      className="border"
-      style={{ width: `${canvasWidth}px`, height: `${canvasHeight}px` }}
-    />
+  <div className="flex flex-col items-center mt-6 w-full">
+    <div
+      ref={scrollContainerRef}
+      className="w-full overflow-x-auto"
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
+      <div className="w-fit mx-auto">
+        <canvas
+          ref={canvasRef}
+          onClick={handleCanvasClick}
+          width={canvasWidth}
+          height={canvasHeight}
+          className="border block" // block evita espacios inline
+          style={{
+            height: "auto" // deja que crezca a lo ancho sin distorsión
+          }}
+        />
+      </div>
+    </div>
 
     {selectedZone && <p className="mt-4 font-semibold">Seleccionar Zona: {selectedZone}</p>}
 

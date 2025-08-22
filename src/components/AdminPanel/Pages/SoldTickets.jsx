@@ -257,6 +257,11 @@ const ticketsFiltered = noCancelledTickets.filter(ticket => {
   return true;
 });
 
+useEffect(() => {
+  setCurrentPage(1);
+}, [userFilter, showFilter, divisionFilter, dateFilter, cashierFilter, giftedFilter, canceledFilter]);
+
+
 // Paginación sobre los tickets filtrados
 const totalPages = Math.ceil(ticketsFiltered.length / ticketsPerPage);
 const currentTickets = ticketsFiltered.slice((currentPage - 1) * ticketsPerPage, currentPage * ticketsPerPage);
@@ -292,7 +297,18 @@ const handleDownloadExcel = () => {
   if (canceledFilter !== null) filteredData = filteredData.filter(ticket => ticket.state === canceledFilter === "true");
   if (dateFilter) filteredData = filteredData.filter(ticket => ticket.date === dateFilter);
   if (cashierFilter) filteredData = filteredData.filter(ticket => ticket.userId === cashierFilter);
-  if (userFilter) filteredData = filteredData.filter(ticket => ticket.userId === userFilter);  // Filter by user
+  if (userFilter && userFilter.trim() !== "") {
+     const filterLower = userFilter.toLowerCase();
+     filteredData = filteredData.filter(ticket => {
+     if (!ticket.userId) return false;
+     const usuario = users.find(u => u.id === ticket.userId);
+     if (!usuario) return false;
+     return (
+      usuario.name.toLowerCase().includes(filterLower) ||
+      usuario.email.toLowerCase().includes(filterLower)
+    );
+  });
+}
 
   // Aplicar el filtro por nombre del show para generar el excel
   if (showFilter && shows) {
@@ -430,8 +446,9 @@ const resetFilters = () => {
 const handleUserFilterChange = (e) => {
   const selectedUser = e.target.value;
   setUserFilter(selectedUser ? selectedUser : ""); // No necesitas parsear a número si estás pasando string
-  
+  setCurrentPage(1); // <--- resetea la paginación al filtrar
 };
+
 
 return (
   <div
@@ -440,11 +457,11 @@ return (
     w-full max-w-screen-xl
     mx-auto
     relative
-    top-[170px]
+    top-[220px]
     z-10
+    container-bg
   "
   style={{
-    background: "rgba(86, 86, 190, 0.4)",
     backdropFilter: "blur(10px)",
     WebkitBackdropFilter: "blur(10px)",
   }}
@@ -463,7 +480,7 @@ return (
           value={showFilter}
           onChange={(e) => setShowFilter(e.target.value)}
           placeholder="Buscar Show"
-          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
 
@@ -472,7 +489,7 @@ return (
         <select
           value={divisionFilter}
           onChange={(e) => setDivisionFilter(e.target.value)}
-          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="">Todas las divisiones</option>
           {divisions.map((division, index) => (
@@ -488,7 +505,7 @@ return (
         <select
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
-          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="">Todas las fechas y Horarios</option>
           {date.map((date, index) => (
@@ -507,7 +524,7 @@ return (
     value={userFilter}
     onChange={(e) => setUserFilter(e.target.value)}
     placeholder="Buscar por nombre o mail"
-    className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+    className="p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
   />
       </div>
 
@@ -516,7 +533,7 @@ return (
         <select
           value={cashierFilter}
           onChange={(e) => setCashierFilter(e.target.value ? Number(e.target.value) : "")}
-          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="">Todos los cajeros</option>
           {users.length > 0 ? (
@@ -538,7 +555,7 @@ return (
         <select
           value={canceledFilter}
           onChange={(e) => setCanceledFilter(e.target.value === "null" ? null : e.target.value)}
-          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="true">Activos</option>
           <option value="false">Cancelados</option>
@@ -550,7 +567,7 @@ return (
         <select
           value={giftedFilter}
           onChange={(e) => setGiftedFilter(e.target.value === "null" ? null : e.target.value)}
-          className="p-2 rounded bg-[rgba(90,90,170,0.7)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="null">Ninguno</option>
           <option value="true">Regalados</option>
@@ -560,7 +577,7 @@ return (
       <div className="flex items-end">
         <button
           onClick={resetFilters}
-          className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded ml-2"
+          className="secondary text-white px-4 py-2 rounded ml-2"
           style={{ minHeight: '38px' }}
         >
           Resetear Filtros
@@ -572,10 +589,10 @@ return (
     <h3 className="text-white font-semibold mb-2">Tickets totales:</h3>
     <div className="overflow-x-auto">
       <table className="min-w-full text-white border border-white rounded-lg">
-        <thead className="bg-[rgba(70,70,140,0.8)]">
+        <thead className="bg-[#608CC4]">
           <tr>
             {["Show", "División", "Fila", "Asiento", "Cajero", "Fecha", "Hora", "Acciones"].map((head) => (
-              <th key={head} className="p-3 border border-white text-gray-400 whitespace-nowrap">
+              <th key={head} className="p-3 border border-white text-white whitespace-nowrap">
                 {head}
               </th>
             ))}
@@ -587,7 +604,7 @@ return (
             const [date, time] = ticket.date && ticket.date.includes(" || ") ? ticket.date.split(" || ") : ["", ""];
             const isTribunaGeneral = !ticket.row && !ticket.seat;
             return (
-              <tr key={ticket.id} className="hover:bg-[rgba(90,90,170,0.3)] transition-colors">
+              <tr key={ticket.id} className="hover:bg-[#ADC8E6] transition-colors">
                 <td className="p-2 border border-white">{show ? show.name : "Cargando..."}</td>
                 <td className="p-2 border border-white">{ticket.division}</td>
                 <td className="p-2 border border-white">{isTribunaGeneral ? "Libre" : ticket.row}</td>
@@ -608,13 +625,13 @@ return (
                     <div className="flex flex-col gap-2">
                       <button
                         onClick={() => cancelTicket(ticket)}
-                        className=" bg-blue-800 hover:bg-blue-900 text-white px-3 py-1 rounded"
+                        className="secondary text-white px-3 py-1 rounded"
                       >
                         Cancelar Ticket
                       </button>
                       <button
                         onClick={() => giftTicket(ticket)}
-                        className=" bg-blue-800 hover:bg-blue-900 text-white px-3 py-1 rounded"
+                        className="secondary text-white px-3 py-1 rounded"
                       >
                         Regalar Ticket
                       </button>
@@ -631,7 +648,7 @@ return (
     {/* Descargar Excel */}
     <button
       onClick={handleDownloadExcel}
-      className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded mt-6"
+      className="secondary text-white px-5 py-2 rounded mt-6"
     >
       📥 Descargar Excel
     </button>
@@ -642,7 +659,7 @@ return (
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={`px-4 py-2 rounded-full ${
-          currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)] text-white"
+          currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "secondary"
         }`}
       >
         ◀ Anterior
@@ -655,8 +672,8 @@ return (
             onClick={() => handlePageChange(page)}
             className={`px-4 py-2 rounded-full font-bold ${
               page === currentPage
-                ? "bg-[rgba(110,110,190,0.9)] text-white"
-                : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)] text-white"
+                ? "pagina"
+                : "secondary"
             }`}
           >
             {page}
@@ -667,7 +684,7 @@ return (
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={`px-4 py-2 rounded-full ${
-          currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)] text-white"
+          currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "secondary"
         }`}
       >
         Siguiente ▶

@@ -84,8 +84,8 @@ const Profile = () => {
   }
 
   return (
-  <div className="mt-[90px] min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-[rgba(86,86,190,0.4)] to-[rgba(86,86,190,0.4)] backdrop-blur-md">
-    <div className="w-full max-w-md bg-[rgba(86,86,190,0.4)] backdrop-blur-md rounded-lg p-6 shadow-lg text-white">
+  <div className="mt-[150px] min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-[#12335F] to-[#12335F] backdrop-blur-md">
+    <div className="w-full max-w-md container-bg backdrop-blur-md rounded-lg p-6 shadow-lg text-white">
       
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Mi perfil</h2>
       
@@ -96,7 +96,7 @@ const Profile = () => {
 
       <button
         onClick={() => navigate('/profile/miscompras')}
-        className=" mb-6 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+        className=" mb-6 secondary text-white px-4 py-2 rounded transition-colors"
       >
         Mis Compras
       </button>
@@ -105,7 +105,7 @@ const Profile = () => {
         <h3 className="text-xl font-semibold mb-4">Cambiar contraseña</h3>
         <form onSubmit={handleChangePassword} className="flex flex-col gap-6">
           
-          <div className="flex flex-col relative">
+          <div className="w-5/6 flex flex-col relative">
             <label htmlFor="newPassword" className="mb-1 font-semibold">Nueva contraseña</label>
             <input
               type={showNewPassword ? 'text' : 'password'}
@@ -113,7 +113,7 @@ const Profile = () => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
-              className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+              className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
             />
             <FontAwesomeIcon
               icon={showNewPassword ? faEyeSlash : faEye}
@@ -122,7 +122,7 @@ const Profile = () => {
             />
           </div>
 
-          <div className="flex flex-col relative">
+          <div className="w-5/6 flex flex-col relative">
             <label htmlFor="confirmPassword" className="mb-1 font-semibold">Confirmar contraseña</label>
             <input
               type={showConfirmPassword ? 'text' : 'password'}
@@ -130,7 +130,7 @@ const Profile = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+              className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
             />
             <FontAwesomeIcon
               icon={showConfirmPassword ? faEyeSlash : faEye}
@@ -142,7 +142,7 @@ const Profile = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+            className="w-1/2 mx-auto secondary text-white px-4 py-2 rounded transition-colors"
           >
             {isLoading ? 'Cambiando...' : 'Cambiar Contraseña'}
           </button>

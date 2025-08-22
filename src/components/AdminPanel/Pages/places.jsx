@@ -58,8 +58,8 @@ const Places = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-  <div
-    className="
+    <div
+      className="
       min-h-screen
       py-20
       px-4
@@ -68,13 +68,13 @@ const Places = () => {
       mx-auto
       lg:ml-[calc(50%-25vw+10px)]
     "
-  >
+    >
       {/* Botón Crear Lugar */}
       {!showCreateForm && (
-        <div className="mb-10 mt-12">
+        <div className="mb-10 mt-[100px]">
           <button
             onClick={() => setShowCreateForm(true)}
-            className=" bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] text-white font-bold py-3 px-8 rounded transition"
+            className="primary"
             style={{ minWidth: "180px" }}
           >
             Crear lugar
@@ -91,7 +91,7 @@ const Places = () => {
           setError={setError}
         />
       ) : (
-        <div className="bg-[rgb(50,50,109)] text-white p-6 rounded-lg shadow-md w-full max-w-lg">
+        <div className="container-bg text-white shadow-md w-full max-w-lg">
           <h3 className="text-xl font-bold mb-4">Lugares Disponibles</h3>
 
           {error && (
@@ -105,13 +105,13 @@ const Places = () => {
               currentPlaces.map((place) => (
                 <div
                   key={place.id}
-                  className="flex justify-between items-center bg-[rgb(70,70,140)] rounded p-3"
+                  className="flex justify-between items-center bg-[#608CC4] rounded p-3"
                 >
                   <span>
                     {place.name} {place.location}
                   </span>
                   <button
-                    className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] text-white font-bold py-1 px-3 rounded"
+                    className="secondary py-1 px-3"
                     onClick={() => handleDeletePlace(place.id)}
                   >
                     Borrar
@@ -125,7 +125,7 @@ const Places = () => {
             {currentPage > 1 && (
               <button
                 onClick={() => paginate(currentPage - 1)}
-                className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] text-white font-bold py-2 px-4 rounded"
+                className="secondary py-2 px-4"
               >
                 ◀ Anterior
               </button>
@@ -133,7 +133,7 @@ const Places = () => {
             {currentPage < Math.ceil(places.length / placesPerPage) && (
               <button
                 onClick={() => paginate(currentPage + 1)}
-                className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)] text-white font-bold py-2 px-4 rounded"
+                className="secondary py-2 px-4"
               >
                 Siguiente ▶
               </button>
@@ -176,62 +176,60 @@ const CreatePlaceForm = ({ handleCreatePlace, onCancel, error, setError }) => {
   };
 
   return (
-  <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center overflow-y-auto z-50">
-    <div className="mt-[200px] mb-10 px-4 w-full max-w-md">
-      <div className="bg-[rgb(50,50,109)] text-white p-6 rounded-lg shadow-md w-full">
-        <h2 className="text-2xl font-bold mb-6">Crear nuevo lugar</h2>
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center overflow-y-auto z-50">
+      <div className="mt-[250px] mb-10 px-4 w-full max-w-md">
+        <div className="container-bg text-white shadow-md w-full">
+          <h2 className="text-2xl font-bold mb-6">Crear nuevo lugar</h2>
 
-        {error && (
-          <div className="text-red-500 font-semibold mb-4">{error}</div>
-        )}
+          {error && (
+            <div className="text-red-500 font-semibold mb-4">{error}</div>
+          )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <label className="flex flex-col font-semibold text-white">
-            Nombre:
-            <input
-              type="text"
-              name="name"
-              value={placeData.name}
-              onChange={handleChange}
-              required
-              className="mt-1 p-2 rounded bg-[rgb(90,90,170)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </label>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <label className="flex flex-col font-semibold text-white">
+              Nombre:
+              <input
+                type="text"
+                name="name"
+                value={placeData.name}
+                onChange={handleChange}
+                required
+                className="mt-1 p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-[#ADC8E6]"
+              />
+            </label>
 
-          <label className="flex flex-col font-semibold text-white">
-            Dirección:
-            <input
-              type="text"
-              name="address"
-              value={placeData.address}
-              onChange={handleChange}
-              required
-              className="mt-1 p-2 rounded bg-[rgb(90,90,170)] text-white border border-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </label>
+            <label className="flex flex-col font-semibold text-white">
+              Dirección:
+              <input
+                type="text"
+                name="address"
+                value={placeData.address}
+                onChange={handleChange}
+                required
+                className="mt-1 p-2 rounded bg-[#608CC4] text-white border border-white focus:outline-none focus:ring-2 focus:ring-[#ADC8E6]"
+              />
+            </label>
 
-          <div className="flex justify-between items-center mt-4">
-            <button
-              type="submit"
-              className="bg-[rgb(90,90,170)] hover:bg-[rgb(110,110,190)]  transition font-bold py-2 px-6 rounded text-white"
-            >
-              Crear lugar
-            </button>
-            <button
-              type="button"
-              onClick={onCancel}
-              className="bg-[rgb(70,70,140)] hover:bg-[rgb(90,90,170)] transition font-bold py-2 px-6 rounded text-white"
-            >
-              Cancelar
-            </button>
-          </div>
-        </form>
+            <div className="flex justify-between items-center mt-4">
+              {/* Botón primario */}
+              <button type="submit" className="primary py-2 px-6">
+                Crear lugar
+              </button>
+
+              {/* Botón secundario */}
+              <button
+                type="button"
+                onClick={onCancel}
+                className="secondary py-2 px-6"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-);
-
-
+  );
 };
 
 export default Places;

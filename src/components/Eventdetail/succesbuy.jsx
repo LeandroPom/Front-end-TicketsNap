@@ -35,6 +35,8 @@ const SuccessPage = () => {
   const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
   const currentTickets = tickets.slice(indexOfFirstTicket, indexOfLastTicket);
   const totalPages = Math.ceil(tickets.length / ticketsPerPage);
+  const [sendToMap, setSendToMap] = useState({});
+  const [customEmailMap, setCustomEmailMap] = useState({});
 
   // Ref para controlar que solo haga la llamada una vez
   const didFetchTickets = useRef(false);
@@ -136,14 +138,13 @@ const SuccessPage = () => {
     });
   };
 
-  const handleEmailChange = (event) => {
-    setCustomEmail(event.target.value);
-  };
+  const handleSendToChange = (ticketId, value) => {
+  setSendToMap(prev => ({ ...prev, [ticketId]: value }));
+};
 
-  const handleSendToChange = (event) => {
-    setSendTo(event.target.value);
-    setShowCustomEmailInput(event.target.value === 'custom');
-  };
+const handleEmailChange = (ticketId, value) => {
+  setCustomEmailMap(prev => ({ ...prev, [ticketId]: value }));
+};
 
   const downloadPDF = (ticket) => {
     const priceWithTax = ticket.price * 1.2;
@@ -219,45 +220,59 @@ const SuccessPage = () => {
               <p className='font-bold text-black'><strong>Email:</strong><br />{ticket.mail || "No disponible"}</p>
 
               {user.cashier === true && (
-                <div className="space-y-3 mt-4">
-                  <label className="block text-sm font-medium">
-                    Enviar a:
-                    <select
-                      value={sendTo}
-                      onChange={handleSendToChange}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    >
-                      <option value={ticket.mail || "Correo no disponible"}>
-                        Mi correo ({ticket.mail || "Correo no disponible"})
-                      </option>
-                      <option value="custom">Otro correo</option>
-                    </select>
-                  </label>
+  <div className="space-y-3 mt-4 font-bold text-black">
+    <label className="block text-sm font-medium">
+      Enviar a:
+      <select
+  value={sendToMap[ticket.id] || ticket.mail || "Correo no disponible"}
+  onChange={(e) => handleSendToChange(ticket.id, e.target.value)}
+  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+>
+  <option value={ticket.mail || "Correo no disponible"}>
+    Mi correo ({ticket.mail || "Correo no disponible"})
+  </option>
+  <option value="custom">Otro correo</option>
+</select>
 
-                  {showCustomEmailInput && (
-                    <input
-                      type="email"
-                      value={customEmail}
-                      onChange={handleEmailChange}
-                      placeholder="Ingresa el correo"
-                      className="block w-full rounded-md border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  )}
+{sendToMap[ticket.id] === "custom" && (
+  <input
+    type="email"
+    value={customEmailMap[ticket.id] || ""}
+    onChange={(e) => handleEmailChange(ticket.id, e.target.value)}
+    placeholder="Ingresa el correo"
+    className="block w-full rounded-md border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500"
+  />
+)}
+    </label>
 
-                  <button
-                    onClick={() => sendTicketEmail(ticket)}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition"
-                  >
-                    Enviar Ticket por Email
-                  </button>
-                  <button
-                    onClick={() => downloadPDF(ticket)}
-                    className="w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-md transition"
-                  >
-                    Descargar PDF
-                  </button>
-                </div>
-              )}
+    {showCustomEmailInput && (
+      <input
+        type="email"
+        value={customEmail}
+        onChange={handleEmailChange}
+        placeholder="Ingresa el correo"
+        className="block w-full rounded-md border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+    )}
+
+    {/* Botones en fila */}
+    <div className="flex gap-3">
+      <button
+        onClick={() => sendTicketEmail(ticket)}
+        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition w-fit"
+      >
+        Enviar Ticket por Email
+      </button>
+      <button
+        onClick={() => downloadPDF(ticket)}
+        className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition w-fit"
+      >
+        Descargar PDF
+      </button>
+    </div>
+  </div>
+)}
+
             </div>
           );
         })}
