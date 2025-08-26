@@ -347,14 +347,13 @@ const handleDateChange = (date) => {
         // Si hay un error al crear el show, mostrar un mensaje de error
         setErrorMessage('Error creating the show. Please try again.');
       });
-    console.log('Datos enviados al backend:', formattedData);
+    // console.log('Datos enviados al backend:', formattedData);
 
   }
   return (
   <div
-    className="min-h-screen p-4 md:p-6 text-white max-w-3xl mx-auto relative rounded-md"
+    className="container-bg min-h-screen p-4 md:p-6 text-white max-w-3xl mx-auto relative rounded-md"
     style={{
-      background: "rgba(86, 86, 190, 0.4)",
       backdropFilter: "blur(10px)",
       WebkitBackdropFilter: "blur(10px)",
       top: "180px",
@@ -398,7 +397,7 @@ const handleDateChange = (date) => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </label>
 
@@ -410,7 +409,7 @@ const handleDateChange = (date) => {
           value={formData.artists}
           onChange={handleChange}
           required
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </label>
 
@@ -420,7 +419,7 @@ const handleDateChange = (date) => {
           name="genre"
           value={selectedTag}
           onChange={handleGenreSelect}
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="">Seleccionar genero</option>
           {loading ? (
@@ -430,7 +429,7 @@ const handleDateChange = (date) => {
               <option
                 key={tag.id}
                 value={tag.name}
-                className="bg-[rgba(50,50,110,0.8)] text-white"
+                className="bg-[#608CC4] text-white"
               >
                 {tag.name}
               </option>
@@ -446,10 +445,10 @@ const handleDateChange = (date) => {
             placeholder="Create a new tag"
             value={newTag}
             onChange={handleTagChange}
-            className="flex-1 p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex-1 p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            className="secondary text-white px-4 py-2 rounded"
             type="button"
             onClick={handleCreateTag}
           >
@@ -466,7 +465,7 @@ const handleDateChange = (date) => {
               {formData.genre.map((genre, index) => (
                 <div
                   key={index}
-                  className="flex items-center bg-[rgba(70,70,140,0.7)] text-white rounded px-3 py-1"
+                  className="flex items-center bg-[#608CC4] text-white rounded px-3 py-1"
                 >
                   {genre.name}
                   <button
@@ -489,7 +488,7 @@ const handleDateChange = (date) => {
           onChange={handleLocationSelect}
           value={formData.locationId || ""}
           required
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="" disabled>
             Dirección seleccionada
@@ -522,7 +521,7 @@ const handleDateChange = (date) => {
           onChange={handlePerformanceChange}
           required
           min="1"
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </label>
 
@@ -540,7 +539,7 @@ const handleDateChange = (date) => {
                       handlePresentationChange(index, "date", e.target.value)
                     }
                     required
-                    className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </label>
               )}
@@ -554,7 +553,7 @@ const handleDateChange = (date) => {
                     handlePresentationChange(index, "start", e.target.value)
                   }
                   required
-                  className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </label>
 
@@ -567,7 +566,7 @@ const handleDateChange = (date) => {
                     handlePresentationChange(index, "end", e.target.value)
                   }
                   required
-                  className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </label>
             </div>
@@ -581,7 +580,7 @@ const handleDateChange = (date) => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
         />
       </label>
 
@@ -593,14 +592,14 @@ const handleDateChange = (date) => {
           value={formData.coverImage}
           onChange={handleChange}
           placeholder="Enter cover image URL"
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </label>
 
       <button
         type="button"
         onClick={handleImageUpload}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mt-2 w-max"
+        className="secondary text-white px-4 py-2 rounded mt-2 w-max"
       >
         Cargar Imagen
       </button>
@@ -615,7 +614,7 @@ const handleDateChange = (date) => {
       )}
 
       <button
-        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded mt-6 self-center"
+        className="secondary text-white px-6 py-3 rounded mt-6 self-center"
         type="submit"
       >
         Finalizar

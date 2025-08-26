@@ -103,7 +103,30 @@ const TicketDetail = () => {
     if (result.isConfirmed) {
       setBuyerData(result.value);
       sessionStorage.setItem('buyerData', JSON.stringify(result.value));
-      handleConfirmPurchase(result.value, user?.cashier ? 'sell' : 'buy');
+
+      if (user?.cashier) {
+  // Si es venta por caja, sin advertencia de MP
+  handleConfirmPurchase(result.value, 'sell');
+} else {
+  // ⚠️ Solo mostrar si es compra con MP
+  Swal.fire({
+    title: '⚠️ Atención',
+    html: `
+      Una vez que su pago con <strong>MercadoPago</strong> se procese correctamente,<br>
+      <b>debe esperar</b> la redirección automática para que su ticket se genere sin errores.<br><br>
+      <span style="color: red; font-weight: bold;">
+        Si interrumpe el proceso o cierra la ventana, perderá su ticket.
+      </span>
+    `,
+    icon: 'warning',
+    confirmButtonText: 'Entendido, Continuar al pago'
+  }).then((confirmResult) => {
+    if (confirmResult.isConfirmed) {
+      handleConfirmPurchase(result.value, 'buy');
+    }
+  });
+}
+
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       sessionStorage.removeItem('buyerData');
       Swal.fire({
@@ -120,9 +143,7 @@ const TicketDetail = () => {
 
 
   const handleConfirmPurchase = async (buyerDetails = null, action = 'buy') => {
-    console.log("📦 Ejecutando handleConfirmPurchase con:");
-console.log("buyerDetails:", buyerDetails);
-console.log("action:", action);
+   
     setIsLoading(true);
 
     // Aquí armamos un array con los asientos que se compran o venden
@@ -162,7 +183,7 @@ console.log("action:", action);
   });
 
   const ticketsResponse = response.data; // array de tickets retornados por el backend
-console.log(response.data)
+
   // Guardamos en sessionStorage
   sessionStorage.setItem("ticketData", JSON.stringify({ tickets: ticketsResponse }));
 
@@ -255,7 +276,7 @@ console.log(response.data)
         ))}
 
         <button className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400" onClick={handleOpenBuyerModal}>
-          Confirmar Compra/Venta
+          Pagar compra
         </button>
       </div>
     </div>

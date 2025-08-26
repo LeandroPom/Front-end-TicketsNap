@@ -182,10 +182,10 @@ return (
   <div
     className="min-h-screen p-4 md:p-6 text-white max-w-screen-xl mx-auto relative"
     style={{
-      background: "rgba(86, 86, 190, 0.4)",
+      background: "rgba(29, 81, 150, 0.43)",
       backdropFilter: "blur(10px)",
       WebkitBackdropFilter: "blur(10px)",
-      top: "110px",
+      top: "220px",
       zIndex: 10,
       // left: "160px",  // Lo removí para que no desplace a la izquierda
     }}
@@ -207,7 +207,7 @@ return (
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
 
@@ -222,7 +222,7 @@ return (
           value={artists}
           onChange={(e) => setArtists(e.target.value)}
           required
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
 
@@ -245,13 +245,13 @@ return (
             ]);
           }}
           required
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 h-32"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 h-32"
         >
           {tags.map((tag) => (
             <option
               key={tag.id}
               value={tag.name}
-              className="bg-[rgba(50,50,110,0.8)] text-gray-500"
+              className="bg-[#608CC4] text-white"
             >
               {tag.name}
             </option>
@@ -261,12 +261,12 @@ return (
 
       {/* Mostrar los géneros seleccionados */}
       <div className="selected-genres">
-        <h4 className="mb-2 font-semibold text-gray-500">Selección de genero:</h4>
+        <h4 className="mb-2 font-semibold text-white">Selección de genero:</h4>
         <ul className="max-h-32 overflow-auto space-y-1">
           {selectedTags.map((tag, index) => (
             <li
               key={index}
-              className="text-gray-500 flex justify-between items-center bg-[rgba(70,70,140,0.7)] rounded px-3 py-1"
+              className="text-white flex justify-between items-center bg-[#608CC4] rounded px-3 py-1"
             >
               <span>{tag}</span>
               <button
@@ -292,7 +292,7 @@ return (
           onChange={(e) => setDescription(e.target.value)}
           required
           rows={4}
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
         />
       </div>
 
@@ -306,12 +306,12 @@ return (
           id="coverImage"
           value={coverImage}
           onChange={(e) => setCoverImage(e.target.value)}
-          className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <button
           type="button"
           onClick={handleImageUpload}
-          className="mt-2 self-start bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          className="mt-2 self-start secondary text-white px-4 py-2 rounded"
         >
           Cargar Imagen
         </button>
@@ -340,7 +340,7 @@ return (
         {presentations.map((presentation, index) => (
           <div
             key={index}
-            className="presentation-form bg-[rgba(70,70,140,0.7)] p-4 rounded flex flex-col md:flex-row gap-4"
+            className="presentation-form bg-[#608CC4] p-4 rounded flex flex-col md:flex-row gap-4"
           >
             <div className="form-group flex flex-col flex-1">
               <label htmlFor={`date-${index}`} className="mb-1 font-semibold">
@@ -356,7 +356,7 @@ return (
                   setPresentations(updated);
                 }}
                 required
-                className="p-2 rounded bg-[rgba(90,90,160,0.8)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
 
@@ -375,7 +375,7 @@ return (
                   setPresentations(updated);
                 }}
                 required
-                className="p-2 rounded bg-[rgba(90,90,160,0.8)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
 
@@ -394,7 +394,7 @@ return (
                   setPresentations(updated);
                 }}
                 required
-                className="p-2 rounded bg-[rgba(90,90,160,0.8)] border border-white text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="p-2 rounded bg-[#608CC4] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
           </div>
@@ -404,13 +404,13 @@ return (
       {/* Botones Modificar y Cerrar */}
       <div className="form-actions flex gap-4 mt-6 justify-center">
         <button
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+          className="secondary text-white px-6 py-2 rounded"
           type="submit"
         >
           Modificar
         </button>
         <button
-          className="bg-blue-500 hover:bg-blue-900 text-white px-6 py-2 rounded"
+          className="secondary text-white px-6 py-2 rounded"
           type="button"
           onClick={handleClose}
         >

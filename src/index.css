@@ -13,29 +13,68 @@ body {
   transition: background-color 0.3s, color 0.3s;
   background-attachment: fixed;
   background-size: cover;
+
+  /* Fondo global de la página */
+  background-color: #12335F;
+  color: #ffffff;
 }
 
-/* Temas claro y oscuro — sin !important */
-body.light {
-  background-color: rgb(80, 80, 161);
-  color: rgb(255, 255, 255);
-  background-repeat: repeat;
-  background-size: 100px 100px;
-  background-position: center;
+/* Fondo para divs generales */
+.container-bg {
+  background-color: #0C2342;
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
 
-body.dark {
-  background-color: #656565;
-  color: rgb(255, 255, 255);
+/* Botones globales */
+button {
+  all: unset;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Elimina cualquier herencia forzada o interferencia global */
-button,
+/* Botón primario */
+button.primary {
+  background-color: #0C2342;
+  color: #ffffff;
+}
+/* Marcado de pagina */
+button.pagina {
+  background-color: #215caa;
+  color: #ffffff;
+}
+
+button.primary:hover {
+  background-color: #1B4A8A;
+}
+
+/* Botón secundario */
+button.secondary {
+  background-color: #608CC4;
+  color: #ffffff;
+}
+
+button.secondary:hover {
+  background-color: #ADC8E6;
+  color: #0C2342; /* contraste extra en hover */
+}
+
+/* Enlaces */
 a {
   all: unset;
   font: inherit;
-  color: inherit;
+  color: #ADC8E6;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #ffffff;
 }
 
 /* Código (solo tipografía) */

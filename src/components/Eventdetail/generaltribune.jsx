@@ -95,31 +95,53 @@ const Generaltribunes = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        sessionStorage.setItem("buyerData", JSON.stringify(result.value));
-        setSelectedSpaces(validSpaces); // Asegurar valor actualizado
+  sessionStorage.setItem("buyerData", JSON.stringify(result.value));
+  setSelectedSpaces(validSpaces); // Asegurar valor actualizado
+  
+  if (paymentMethod === "buy") {
+    Swal.fire({
+      title: '⚠️ Atención',
+      html: `
+        Una vez que su pago con <strong>MercadoPago</strong> se procese correctamente,<br>
+        <b>debe esperar</b> la redirección automática para que su ticket se genere sin errores.<br><br>
+        <span style="color: red; font-weight: bold;">
+          Si interrumpe el proceso o cierra la ventana, perderá su ticket.
+        </span>
+      `,
+      icon: 'warning',
+      confirmButtonText: 'Entendido, Continuar al pago'
+    }).then((confirmResult) => {
+      if (confirmResult.isConfirmed) {
         handleConfirmPurchase(result.value, paymentMethod);
-      } else if (result.isDenied) {
-        const [firstName = "", lastName = ""] = (user?.name || "").split(" ");
-        const autoData = {
-          dni: "12345678",
-          firstName,
-          lastName,
-          email: user?.email || "",
-          phone: "123456789",
-        };
-        sessionStorage.setItem("buyerData", JSON.stringify(autoData));
-        handleOpenBuyerModal(paymentMethod);
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        sessionStorage.removeItem("buyerData");
-        Swal.fire({
-          title: "Datos borrados",
-          text: "Los datos se han borrado, puedes ingresar nuevos.",
-          icon: "info",
-          confirmButtonText: "Aceptar",
-        }).then(() => {
-          handleOpenBuyerModal(paymentMethod);
-        });
       }
+    });
+  } else {
+    handleConfirmPurchase(result.value, paymentMethod);
+  }
+
+} else if (result.isDenied) {
+  const [firstName = "", lastName = ""] = (user?.name || "").split(" ");
+  const autoData = {
+    dni: "12345678",
+    firstName,
+    lastName,
+    email: user?.email || "",
+    phone: "123456789",
+  };
+  sessionStorage.setItem("buyerData", JSON.stringify(autoData));
+  handleOpenBuyerModal(paymentMethod);
+
+} else if (result.dismiss === Swal.DismissReason.cancel) {
+  sessionStorage.removeItem("buyerData");
+  Swal.fire({
+    title: "Datos borrados",
+    text: "Los datos se han borrado, puedes ingresar nuevos.",
+    icon: "info",
+    confirmButtonText: "Aceptar",
+  }).then(() => {
+    handleOpenBuyerModal(paymentMethod);
+  });
+}
     });
   };
 
@@ -218,9 +240,9 @@ const Generaltribunes = () => {
 
   return (
   <div
-    className="min-h-screen flex flex-col items-center justify-start px-4 py-8 pt-[160px]"
+    className="min-h-screen flex flex-col items-center justify-start px-4 py-8 pt-[180px]"
     style={{
-      background: 'rgba(86, 86, 190, 0.4)',
+      
       backdropFilter: 'blur(10px)',
       WebkitBackdropFilter: 'blur(10px)',
     }}
@@ -229,7 +251,7 @@ const Generaltribunes = () => {
       Tribunas Generales
     </h1>
 
-    <div className="w-full max-w-lg bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-lg p-6 space-y-4 text-white">
+    <div className="container-bg w-full max-w-lg bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-lg p-6 space-y-4 text-white">
       <h2 className="text-xl font-semibold">{presentations}</h2>
       <p>
         <strong>Descripción:</strong> {eventdetail?.name}
@@ -276,7 +298,7 @@ const Generaltribunes = () => {
               setSelectedSpaces(value);
               setInputValue(String(value));
             }}
-            className="w-full p-2 rounded-lg bg-white/30 text-white placeholder-gray-200 border border-white/40 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="w-1/2 p-2 rounded-lg bg-white/30 text-white placeholder-gray-200 border border-white/40 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
 
           <p>
@@ -288,18 +310,18 @@ const Generaltribunes = () => {
         </div>
       )}
 
-      <div className="pt-4">
+      <div className="pt-4 flex justify-center">
         {user?.cashier ? (
           <button
             onClick={() => handleOpenBuyerModal('sell')}
-            className="py-2 px-4 bg-blue-500 hover:hover:bg-blue-600 text-white font-bold rounded-lg transition-colors duration-300"
+            className="py-2 px-4 secondary text-white font-bold rounded-lg transition-colors duration-300"
           >
             Vender Entrada
           </button>
         ) : (
           <button
             onClick={() => handleOpenBuyerModal('buy')}
-            className="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition-colors duration-300"
+            className="py-2 px-4 secondary text-white font-bold rounded-lg transition-colors duration-300"
           >
             Comprar con Mercado Pago
           </button>

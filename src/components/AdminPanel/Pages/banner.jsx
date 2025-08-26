@@ -65,7 +65,7 @@ const Banner = () => {
         name: bannerName,
         url: finalImageUrl, // Usar la URL final aquí
       });
-      console.log('Banner creado exitosamente:', response.data);
+      
       fetchBanners(); // Refrescar los banners después de agregar uno
       closeModal(); // Cierra el modal al enviar
     } catch (error) {
@@ -119,8 +119,7 @@ const Banner = () => {
       min-h-screen
       flex flex-col
       items-center
-      pt-[200px] px-4 md:px-6
-      bg-[rgba(86,86,190,0.4)]
+      pt-[250px] px-4 md:px-6
       max-w-screen-xl
       mx-auto
       z-10
@@ -132,7 +131,7 @@ const Banner = () => {
   >
     <button
       onClick={openModal}
-      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-6"
+      className="primary text-white px-4 py-2 rounded mb-6"
     >
       Cargar imagen de banner
     </button>
@@ -144,7 +143,7 @@ const Banner = () => {
         onClick={closeModal} // para cerrar modal clickeando fuera del contenido
       >
         <div
-          className="bg-[rgba(90,90,170,0.8)] p-6 rounded shadow-lg w-full max-w-md"
+          className="container-bg p-6 rounded shadow-lg w-full max-w-md"
           onClick={(e) => e.stopPropagation()} // evitar cerrar modal al click dentro
         >
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-white font-semibold">
@@ -155,7 +154,7 @@ const Banner = () => {
                 value={bannerName}
                 onChange={(e) => setBannerName(e.target.value)}
                 required
-                className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="p-2 rounded bg-[rgba(59,105,233,0.7)] border border-white text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
 
@@ -181,21 +180,21 @@ const Banner = () => {
                 value={imageUrlInput}
                 onChange={(e) => setImageUrlInput(e.target.value)}
                 placeholder="https://ejemplo.com/imagen.jpg"
-                className="p-2 rounded bg-[rgba(70,70,140,0.7)] border border-white text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="p-2 rounded bg-[rgba(59,105,233,0.7)] border border-white text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
 
             <div className="flex gap-4 justify-end">
               <button
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+                className="secondary text-white px-4 py-2 rounded"
               >
                 Enviar
               </button>
               <button
                 type="button"
                 onClick={closeModal}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                className="secondary text-white px-4 py-2 rounded"
               >
                 Cerrar
               </button>
@@ -212,7 +211,7 @@ const Banner = () => {
   {getCurrentPageBanners().map((banner, index) => (
     <div
       key={index}
-      className="bg-[rgba(90,90,170,0.7)] rounded shadow p-3 flex flex-col items-center text-white w-60"
+      className="container-bg rounded shadow p-3 flex flex-col items-center text-white w-60"
     >
       <img
         src={banner.url}
@@ -222,7 +221,7 @@ const Banner = () => {
       <span className="font-semibold mb-2 text-center">{banner.name}</span>
       <button
         onClick={() => handleDelete(banner.name)}
-        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+        className="secondary text-white px-3 py-1 rounded"
       >
         Eliminar
       </button>
@@ -237,8 +236,8 @@ const Banner = () => {
           disabled={currentPage === 1}
           className={`px-4 py-2 rounded-full ${
             currentPage === 1
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)]"
+              ? "secondary"
+              : "primary"
           }`}
         >
           Anterior
@@ -257,8 +256,8 @@ const Banner = () => {
           disabled={currentPage === totalPages || totalPages === 0}
           className={`px-4 py-2 rounded-full ${
             currentPage === totalPages || totalPages === 0
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-[rgba(90,90,170,0.7)] hover:bg-[rgba(110,110,190,0.9)]"
+              ? "secondary"
+              : "primary"
           }`}
         >
           Siguiente

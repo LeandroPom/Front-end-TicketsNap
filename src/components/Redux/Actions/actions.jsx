@@ -44,7 +44,7 @@ export const updateTicketStatus = (ticketId) => {
       // Aquí puedes despachar otra acción si lo deseas
       // dispatch({ type: UPDATE_TICKET_STATUS, payload: ticketId });
 
-      console.log(`Ticket con ID ${ticketId} marcado como usado`);
+      // console.log(`Ticket con ID ${ticketId} marcado como usado`);
       
       // Si quieres manejar alguna actualización en el estado, puedes despachar algo aquí
       // Ejemplo: dispatch({ type: 'UPDATE_TICKET_SUCCESS', payload: data });

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getShows } from '../Redux/Actions/actions'; 
 import Swal from 'sweetalert2';  // Asegúrate de importar SweetAlert
+import { jsPDF } from "jspdf";
 
 const MisCompras = () => {
   const dispatch = useDispatch();
@@ -85,6 +86,44 @@ const MisCompras = () => {
   const endIndex = startIndex + ticketsPerPage;
   const currentTickets = tickets.slice(startIndex, endIndex);
 
+  const downloadTicketPDF = (ticket) => {
+  const doc = new jsPDF();
+
+  const showName = shows.find(show => show.id === ticket.showId)?.name || "Show desconocido";
+  const dateTimeParts = ticket.date.split(" || ");
+  const eventDateStr = dateTimeParts[0]; 
+  const eventTimeStr = dateTimeParts[1]?.split(" - ")[1]; 
+
+  doc.setFontSize(16);
+  doc.text("Entrada", 105, 20, { align: "center" });
+
+  doc.setFontSize(12);
+  doc.text(`Usuario: ${ticket.name}`, 20, 40);
+  doc.text(`Evento: ${showName}`, 20, 50);
+  doc.text(`Zona: ${ticket.division}`, 20, 60);
+  doc.text(`Fecha y Hora: ${eventDateStr} ${eventTimeStr}`, 20, 70);
+  
+  if (ticket.row && ticket.seat) {
+    doc.text(`Fila: ${ticket.row}`, 20, 80);
+    doc.text(`Asiento: ${ticket.seat}`, 20, 90);
+  } else {
+    doc.text(`Fila: No corresponde`, 20, 80);
+    doc.text(`Asiento: No corresponde`, 20, 90);
+  }
+
+  doc.text(`Precio: $${ticket.price}`, 20, 100);
+
+  // Opcional: agregar QR si existe
+  if (ticket.qrCode) {
+    // Se puede cargar la imagen del QR en el PDF
+    doc.addImage(ticket.qrCode, "PNG", 150, 40, 40, 40);
+  }
+
+  doc.save(`Ticket_${ticket.id}.pdf`);
+};
+
+
+
 return (
   <div className="mt-[160px] min-h-screen p-4 bg-gradient-to-b from-[rgba(27, 27, 235, 0.78)] to-[rgba(33, 33, 221, 0.4)] backdrop-blur-md">
     <div className="max-w-6xl mx-auto text-white">
@@ -101,8 +140,10 @@ return (
             const eventDateTime = new Date(`${eventDateStr}T${eventTimeStr}:00`);
             const isPastEvent = eventDateTime < currentDateTime;
 
+ 
+
             return (
-              <li key={ticket.id} className="bg-[rgba(86,86,190,0.4)] backdrop-blur-md rounded-lg p-4 shadow-md flex flex-col gap-1 max-w-sm">
+              <li key={ticket.id} className="bg-[#0C2342] backdrop-blur-md rounded-lg p-4 shadow-md flex flex-col gap-1 max-w-sm">
                 <p><strong>Usuario:</strong> {ticket.name}</p>
                 <p><strong>Evento:</strong> {showName}</p>
                 <p><strong>Zona:</strong> {ticket.division}</p>
@@ -135,6 +176,13 @@ return (
                     className="qr-code w-32 h-32 object-contain mt-2"
                   />
                 )}
+
+                           <button
+                              onClick={() => downloadTicketPDF(ticket)}
+                              className="secondary text-white px-4 py-2 rounded mt-2"
+                            >
+                             Descargar Entrada
+                           </button>
               </li>
             );
           })}

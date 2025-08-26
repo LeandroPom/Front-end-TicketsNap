@@ -4,9 +4,10 @@ import { logoutUser } from '../Redux/Actions/actions';
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase/firebase.config';
 import { useNavigate } from 'react-router-dom';
-import { FaBars, FaSun, FaMoon } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import SeatManager from '../ManagerSeat/seatmanager';
 import { useTheme } from '../ThemeDark/themecontext';
+import axios from 'axios';
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
@@ -14,14 +15,35 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isSeatManagerOpen, setIsSeatManagerOpen] = useState(false);
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode } = useTheme();
 
+  // Función para actualizar el usuario logueado desde el backend
+  const fetchCurrentUser = async () => {
+    if (!user?.id) return;
+    try {
+      const response = await axios.get('/users'); // trae todos los usuarios
+      const currentUser = response.data.find(u => u.id === user.id); // filtra por id
+      if (currentUser) {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: currentUser });
+        localStorage.setItem('user', JSON.stringify(currentUser));
+      }
+    } catch (error) {
+      console.error('Error al actualizar usuario', error);
+    }
+  };
+
+  // Al montar el Navbar, cargamos user desde localStorage
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: JSON.parse(savedUser) });
     }
   }, [dispatch]);
+
+  // Refrescar usuario cuando cambie el id
+  useEffect(() => {
+    fetchCurrentUser();
+  }, [user?.id]);
 
   const handleLogout = async () => {
     try {
@@ -33,7 +55,7 @@ const Navbar = () => {
       console.error('Error al cerrar sesión', error);
     }
   };
-
+  
   return (
     <>
  {/* Banner fijo arriba */}
@@ -53,89 +75,93 @@ const Navbar = () => {
   className={`fixed top-[50px] left-0 w-full flex justify-center z-[1000] backdrop-blur-md shadow-md border-b border-white/20
     ${isDarkMode ? 'bg-gray-800/60 text-white' : 'bg-blue-500/40 text-white'}`}
   style={{
-    height: '85px',
-    background: 'rgba(86, 86, 190, 0.4)', // semi-transparente con color
+    height: '120px',
+    background: 'rgba(21,60,112,1,0.4)', // semi-transparente con color
     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
     borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
     backdropFilter: 'blur(10px)',
     WebkitBackdropFilter: 'blur(10px)',
   }}
 >
-  <div className="w-full flex items-center justify-between px-5 h-full">
-    {/* Logo pequeño + toggle en flex */}
-    <div className="flex items-center space-x-4">
-      <a href="/" className="cursor-pointer">
-        <img
-          src="/images/solticket.png"
-          alt="Sol Ticket"
-          className="w-[140px] h-auto max-h-[70px] object-contain"
-        />
-      </a>
-          </div>
+   <div className="relative w-full flex flex-col sm:flex-row items-center justify-between h-full px-5">
+  {/* Logo centrado */}
+  <div className="flex justify-center sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 mb-2 sm:mb-0">
+    <a href="/" className="cursor-pointer">
+      <img
+        src="/images/solticket.png"
+        alt="Sol Ticket"
+        className="w-[180px] sm:w-[200px] h-auto max-h-[95px] object-contain"
+      />
+    </a>
+  </div>
 
-          {/* Usuario y Dropdown */}
-          <div className="relative font-bold text-[0.9rem] flex items-center space-x-4">
-            {user?.name && (
-              <a
-                href="/profile"
-                className="text-sm font-bold truncate max-w-[150px] cursor-pointer"
-                title={user.email}
-              >
-                {user.email}
+  {/* Espacio vacío solo en desktop */}
+  <div className="hidden sm:block sm:w-1/3"></div>
+
+  {/* Usuario y Dropdown */}
+  <div className="relative font-bold text-[0.9rem] flex items-center space-x-4 mt-2 sm:mt-0">
+    {user?.name && (
+      <a
+        href="/profile"
+        className="text-sm font-bold truncate max-w-[150px] cursor-pointer"
+        title={user.email}
+      >
+        {user.email}
+      </a>
+    )}
+    <FaBars
+      onClick={() => setDropdownOpen(!dropdownOpen)}
+      className="cursor-pointer text-gray-500 text-2xl hover:text-gray-700 transition-colors duration-300"
+      title="Abrir menú"
+    />
+    {dropdownOpen && (
+      <div
+        className="absolute right-0 top-full mt-2 w-48 rounded shadow-lg flex flex-col p-4 space-y-2 z-50 text-black font-bold"
+        style={{
+          background: 'rgba(21,60,112,1)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.52)',
+          boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        {user ? (
+          <>
+            {user.cashier && (
+              <a href="/admin/tickets" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
+                Tickets
               </a>
             )}
-            <FaBars
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="cursor-pointer text-gray-500 text-2xl hover:text-gray-700 transition-colors duration-300"
-              title="Abrir menú"
-            />
-            {dropdownOpen && (
-  <div
-    className="absolute right-0 top-full mt-2 w-48 rounded shadow-lg flex flex-col p-4 space-y-2 z-50 text-black font-bold"
-    style={{
-      background: 'rgba(86, 86, 190, 0.93)',
-      backdropFilter: 'blur(10px)',
-      WebkitBackdropFilter: 'blur(10px)',
-      border: '1px solid rgba(255, 255, 255, 0.52)',
-      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-    }}
-  >
-    {user ? (
-      <>
-        {user.cashier && (
-          <a href="/admin/tickets" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
-            Tickets
-          </a>
+            {user.isAdmin && (
+              <a href="/admin" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
+                Panel de admin
+              </a>
+            )}
+            <a href="/profile" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
+              Mi perfil
+            </a>
+            <button
+              onClick={handleLogout}
+              className="hover:bg-blue-500 text-gray-400 hover:text-white px-2 py-1 rounded cursor-pointer text-left"
+            >
+              Salir
+            </button>
+          </>
+        ) : (
+          <>
+            <a href="/login" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
+              Entrar
+            </a>
+            <a href="/register" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
+              Registrarse
+            </a>
+          </>
         )}
-        {user.isAdmin && (
-          <a href="/admin" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
-            Panel de admin
-          </a>
-        )}
-        <a href="/profile" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
-          Mi perfil
-        </a>
-        <button
-          onClick={handleLogout}
-          className="hover:bg-blue-500 hover:text-white px-2 py-1 rounded cursor-pointer text-left"
-        >
-          Salir
-        </button>
-      </>
-    ) : (
-      <>
-        <a href="/login" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
-          Entrar
-        </a>
-        <a href="/register" className="hover:bg-blue-400/30 px-2 py-1 rounded cursor-pointer">
-          Registrarse
-        </a>
-      </>
+      </div>
     )}
   </div>
-)}
-          </div>
-        </div>
+</div>
+          
       </nav>
 
       {/* Modal SeatManager */}

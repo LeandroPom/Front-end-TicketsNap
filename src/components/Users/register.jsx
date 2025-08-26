@@ -300,7 +300,7 @@ const Register = () => {
       const response = await axios.get('/users');
 
       // Muestra toda la respuesta
-      console.log('Respuesta del servidor:', response.data);
+      // console.log('Respuesta del servidor:', response.data);
 
       if (!Array.isArray(response.data)) {
         console.error('La respuesta no es un array:', response.data);
@@ -318,7 +318,7 @@ const Register = () => {
   const checkUsernameExists = async (name) => {
     try {
       const response = await axios.get('/users');  // Asegúrate de que esta URL sea la correcta
-      console.log('Respuesta del servidor:', response.data);
+      // console.log('Respuesta del servidor:', response.data);
 
       if (!Array.isArray(response.data)) {
         console.error('La respuesta no es un array:', response.data);
@@ -408,8 +408,9 @@ const Register = () => {
 return (
   <div>
     {isModalOpen && (
-      <div className="mt-[90px] fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-[rgba(86,86,190,0.45)] backdrop-blur-lg rounded-2xl shadow-2xl p-6 w-full max-w-4xl max-h-[80vh] overflow-y-auto mt-[40px]">
+      <div className="mt-[170px] fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+       <div className="container-bg backdrop-blur-lg rounded-2xl shadow-2xl p-6 w-full max-w-4xl max-h-[60vh] overflow-y-auto">
+
           
           {/* Título */}
           <h2 className="text-3xl font-bold text-center text-white mb-6">
@@ -432,7 +433,7 @@ return (
                   value={formData.firstName}
                   onChange={handleInputChange}
                   required
-                  className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="w-full p-2 rounded-md rounded bg-[rgba(55,55,248,0.25)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
                 {errors.firstName && <small className="text-red-400">{errors.firstName}</small>}
               </div>
@@ -449,7 +450,7 @@ return (
                   onChange={handleInputChange}
                   placeholder="Coloca tu correo real"
                   required
-                  className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="w-full p-2 rounded-md rounded bg-[rgba(55,55,248,0.25)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
                 {errors.email && <small className="text-red-400">{errors.email}</small>}
               </div>
@@ -468,7 +469,7 @@ return (
                   value={formData.lastName}
                   onChange={handleInputChange}
                   required
-                  className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="w-full p-2 rounded-md rounded bg-[rgba(55,55,248,0.25)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
                 {errors.lastName && <small className="text-red-400">{errors.lastName}</small>}
               </div>
@@ -485,7 +486,7 @@ return (
                   onChange={handleInputChange}
                   placeholder="Ej: 38115403286"
                   maxLength="12"
-                  className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="w-full p-2 rounded-md rounded bg-[rgba(55,55,248,0.25)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
               </div>
             </div>
@@ -504,7 +505,7 @@ return (
                     value={formData.password}
                     onChange={handleInputChange}
                     required
-                    className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    className="w-full p-2 rounded-md rounded bg-[rgba(55,55,248,0.25)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   />
                   {errors.password && <small className="text-red-400">{errors.password}</small>}
                 </div>
@@ -530,7 +531,7 @@ return (
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
                     required
-                    className="w-full p-2 rounded-md bg-[rgba(70,70,140,0.7)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    className="w-full p-2 rounded-md rounded bg-[rgba(55,55,248,0.25)] border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   />
                   {errors.confirmPassword && <small className="text-red-400">{errors.confirmPassword}</small>}
                 </div>
@@ -549,14 +550,14 @@ return (
             <div className="flex flex-col md:flex-row gap-4 pt-4">
               <button
                 type="submit"
-                className="bg-blue-700 hover:bg-blue-900 text-white px-4 py-2 rounded-md font-semibold transition-colors"
+                className="secondary w-auto text-white px-4 py-2 rounded-md font-semibold transition-colors"
               >
                 Crear Cuenta
               </button>
               <button
                 type="button"
                 onClick={handleCancel}
-                className="bg-blue-700 hover:bg-blue-900 text-white px-4 py-2 rounded-md font-semibold transition-colors"
+                className="secondary w-auto text-white px-4 py-2 rounded-md font-semibold transition-colors"
               >
                 Cancelar
               </button>

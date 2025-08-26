@@ -3,7 +3,7 @@
   max-width: 500px;
   margin: 20px auto;
   padding: 20px;
-  background-color: rgba(70,70,140,0.7);
+  background-color: #0C2342;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -72,7 +72,7 @@
 }
 
 .zone-editor-container button {
-  background-color: #2e2bf3;
+  background-color: #608CC4;
   color: rgb(221, 220, 220);
   padding: 12px 20px;
   border: none;
@@ -84,5 +84,6 @@
 }
 
 .zone-editor-container button:hover {
-  background-color: rgb(52, 95, 238);
+  background-color: #ADC8E6;
+  color:#0C2342
 }
