@@ -23,8 +23,8 @@ import { PaymentFailed } from './components/Eventdetail/Pagofallido';
 import { useStorageAutoClear } from "./components/Utils/storagecleaned";
 
 
-// axios.defaults.baseURL = "https://solticket.com/api"; 
-axios.defaults.baseURL = "http://localhost:3001"; 
+axios.defaults.baseURL = "https://solticket.com/api"; 
+// axios.defaults.baseURL = "http://localhost:3001"; 
 
 
 function App() {
