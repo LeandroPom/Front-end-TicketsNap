@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal'; // Si usas React Modal
 import { FaMusic, FaMapMarkerAlt, FaCalendarAlt, FaTheaterMasks, FaClock, FaChair } from 'react-icons/fa';
+import { getShows } from '../Redux/Actions/actions';
 
 
 // import Generaltribunes from './generaltribune';
@@ -41,9 +42,7 @@ const Detail = () => {
   const [rows, setRows] = useState([]); // Para almacenar las filas disponibles de una zona
   const [seatsInRow, setSeatsInRow] = useState([]); // Para almacenar los asientos disponibles en la fila seleccionada
   const [isZoneEditorOpen, setIsZoneEditorOpen] = useState(false);
-
   const [selectedSeat, setSelectedSeat] = useState(null);  // El asiento seleccionado desde el select
-
   const [presentation, setPresentations] = useState([]); // Fechas y horarios obtenidos de la acción
   const [selectedPresentation, setSelectedPresentation] = useState({
     date: '',
@@ -58,10 +57,6 @@ const Detail = () => {
   const user = useSelector((state) => state.user);
   const [showMap, setShowMap] = useState(false); // El mapa está oculto por defecto
 
-
-
-
-
   const openModal = (data) => {
     setModalData(data);
     setIsModalOpen(true);
@@ -71,6 +66,7 @@ const Detail = () => {
     setIsModalOpen(false);
     setModalData(null);
   };
+  
 
   useEffect(() => {
     if (!showMap) return;  // Si showMap es falso, no hacer nada
@@ -99,8 +95,6 @@ const Detail = () => {
 
 
 
-
-
   useEffect(() => {
 
     if (!showMap) return; // Si showMap es false, no hacemos nada
@@ -109,9 +103,6 @@ const Detail = () => {
       console.error("id no está definido, no se puede cargar la imagen del mapa.");
       return;
     }
-
-
-
 
     const fetchZones = async () => {
       try {
@@ -150,6 +141,12 @@ const Detail = () => {
 
     fetchZones();
   }, [showMap, id]); // Se ejecuta solo cuando el id cambia
+
+   useEffect(() => {
+  if (!shows || shows.length === 0) {
+    dispatch(getShows());
+  }
+}, [dispatch, shows]);
 
   // Este efecto se ejecuta cuando zonesLoaded cambia, forzando la actualización del estado
   useEffect(() => {
@@ -670,12 +667,6 @@ if (seat.taken) {
   };
 
 
-
-
-
-
-
-
   useEffect(() => {
     if (canvasRef.current && availableSeats.length > 0) {
       const canvas = canvasRef.current;
@@ -683,8 +674,6 @@ if (seat.taken) {
       loadImage(ctx);
     }
   }, [availableSeats, zoneImage, selectedZone]); // Asegúrate de que el efecto se ejecute cuando cambian los asientos, la zona o la imagen
-
-
 
 
   const loadImage = () => {
@@ -705,8 +694,6 @@ if (seat.taken) {
         let width = img.width;
         let height = img.height;
 
-
-
         // Aquí se usa el tamaño original de la imagen
         // ya no es necesario el ajuste específico 130x130
 
@@ -723,8 +710,6 @@ if (seat.taken) {
     }
   };
 
-
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -733,13 +718,25 @@ if (seat.taken) {
     return <div>Error: {error}</div>;
   }
 
-  if (!event) {
-    return <div>Evento no encontrado</div>;
-  }
+  
 
   const handleChooseSeats = () => {
-    setShowMap(true); // Muestra el mapa cuando se hace clic en "Elegir asientos"
-  };
+  if (user) {
+    setShowMap(true);
+  } else {
+    Swal.fire({
+      icon: 'warning',
+      title: '¡Atención!',
+      text: 'Debes estar logueado para continuar con la compra.',
+      confirmButtonText: 'Iniciar sesión',
+      confirmButtonColor: '#3085d6'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login');
+      }
+    });
+  }
+};
 
   const handleCloseModal = () => {
     // Cierra el modal
@@ -754,6 +751,45 @@ if (seat.taken) {
     const selected = availableSeats.find(seat => seat.id === selectedSeatId);
     setSelectedSeat(selected);  // Actualiza el asiento seleccionado
   };
+
+  const handleShareClick = () => {
+  const currentUrl = window.location.href;
+
+  Swal.fire({
+    title: 'Compartir Evento',
+    html: `
+      <p>Copiá el enlace para compartir este evento:</p>
+      <input id="share-url" type="text" readonly value="${currentUrl}" style="width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc;" />
+      <button id="copy-button" style="margin-top: 10px; padding: 8px 16px; background-color: #3085d6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Copiar
+      </button>
+    `,
+    showConfirmButton: false,
+    didOpen: () => {
+      const copyBtn = document.getElementById('copy-button');
+      const input = document.getElementById('share-url');
+
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(input.value).then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Enlace copiado',
+            text: '¡Ya podés compartirlo!',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }).catch(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo copiar el enlace.',
+          });
+        });
+      });
+    }
+  });
+};
+
 
 
   if (isLoading) {
@@ -779,12 +815,14 @@ useEffect(() => {
   }
 }, [showMap, zoneImage, canvasWidth]);
 
+if (!event) return <div>Cargando evento...</div>
+
 
   return (
     <div className="event-detail">
       
 
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto mt-[90px]">
   {/* Imagen o video arriba */}
   <div className="w-full rounded-md overflow-hidden shadow-md">
     <h1 className="flex items-center  font-semibold text-white">{event.name}</h1>
@@ -809,6 +847,14 @@ useEffect(() => {
 
   {/* Información abajo */}
   <div className="mt-6 space-y-4 text-gray-800 text-sm md:text-base">
+     <div>
+    <a
+     onClick={handleShareClick}
+    className="primary text-white px-4 py-2 rounded hover:bg-blue-600"
+  >
+    Compartir 🔗
+    </a>
+  </div>
     <div className="flex items-center gap-2">
       <FaMusic className="text-black" />
       <p className='font-semibold text-gray-400'><strong>Género:</strong> {event.genre.join(', ')}</p>
@@ -882,16 +928,8 @@ useEffect(() => {
         {!showMap && (
           <button
             onClick={handleChooseSeats}
-            style={{
-              backgroundColor: '#608CC4',
-              
-              color: 'rgba(247, 244, 244, 1)',
-              padding: '12px 20px',
-              borderRadius: '15px',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              marginLeft: '100px'
-            }}
+           className="secondary mt-auto text-gray-400 font-semibold rounded py-2 transition"
+            
           >
             Elegir Asientos
           </button>
