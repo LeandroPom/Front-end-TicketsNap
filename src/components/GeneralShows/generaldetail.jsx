@@ -25,6 +25,65 @@ const GeneralDetail = () => {
   return loc ? loc.space - loc.occupied : 1;
 };
 
+const handleBuyClick = () => {
+  if (!user) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Debes iniciar sesión',
+      text: 'Tienes que estar logueado para continuar con la compra.',
+      confirmButtonText: 'Iniciar sesión',
+      confirmButtonColor: '#3085d6'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login');
+      }
+    });
+  } else {
+    handleOpenBuyerModal(user?.cashier ? "sell" : "buy");
+  }
+};
+
+
+///compartir evento ////
+
+const handleShareClick = () => {
+  const currentUrl = window.location.href;
+
+  Swal.fire({
+    title: 'Compartir Evento',
+    html: `
+      <p>Copiá el enlace para compartir este evento:</p>
+      <input id="share-url" type="text" readonly value="${currentUrl}" style="width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc;" />
+      <button id="copy-button" style="margin-top: 10px; padding: 8px 16px; background-color: #3085d6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Copiar
+      </button>
+    `,
+    showConfirmButton: false,
+    didOpen: () => {
+      const copyBtn = document.getElementById('copy-button');
+      const input = document.getElementById('share-url');
+
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(input.value).then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Enlace copiado',
+            text: '¡Ya podés compartirlo!',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }).catch(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo copiar el enlace.',
+          });
+        });
+      });
+    }
+  });
+};
+
 
   useEffect(() => {
     const fetchShowAndZones = async () => {
@@ -341,11 +400,18 @@ const GeneralDetail = () => {
 
         {/* Botón compra/venta */}
         <button
-          onClick={() => handleOpenBuyerModal(user?.cashier ? "sell" : "buy")}
+          onClick={() => handleBuyClick(user?.cashier ? "sell" : "buy")}
           className="secondary mt-4 mx-auto block"
         >
           {user?.cashier ? "Vender Entrada" : "Comprar con Mercado Pago"}
         </button>
+
+        <button
+    onClick={handleShareClick}
+    className="primary text-white px-4 py-2 rounded hover:bg-blue-600"
+  >
+    Compartir 🔗
+  </button>
       </div>
     )}
   </div>
