@@ -58,16 +58,28 @@ const Navbar = () => {
   
   return (
     <>
- {/* Banner fijo arriba */}
+{/* Banner fijo arriba */}
 <div
   className="fixed top-0 left-0 w-full z-[900] bg-white overflow-hidden"
   style={{ height: '50px' }}
 >
+  {/* Imagen de fondo */}
   <img
     src="/images/cabezadepaginasolticket.png"
     alt="Cabeza de página"
     className="w-full h-full object-fill"
   />
+
+  {/* Imagen superpuesta */}
+  <div className="absolute top-0 right-200 h-full flex items-center">
+    <a href="/" className="cursor-pointer">
+      <img
+        src="/images/solticketcompra.png"
+        alt="Sol Ticket Compra"
+        className="h-[150px] w-auto object-contain"
+      />
+    </a>
+  </div>
 </div>
 
 {/* Navbar justo debajo del banner */}
@@ -99,7 +111,7 @@ const Navbar = () => {
   <div className="hidden sm:block sm:w-1/3"></div>
 
   {/* Usuario y Dropdown */}
-  <div className="relative font-bold text-[0.9rem] flex items-center space-x-4 mt-2 sm:mt-0">
+  <div className="relative font-bold text-[0.9rem] flex items-center space-x-4 mt-1 sm:mt-0">
     {user?.name && (
       <a
         href="/profile"
@@ -115,16 +127,17 @@ const Navbar = () => {
       title="Abrir menú"
     />
     {dropdownOpen && (
-      <div
-        className="absolute right-0 top-full mt-2 w-48 rounded shadow-lg flex flex-col p-4 space-y-2 z-50 text-black font-bold"
-        style={{
-          background: 'rgba(21,60,112,1)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.52)',
-          boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-        }}
-      >
+  <div
+    className="absolute top-full mt-2 w-48 rounded shadow-lg flex flex-col p-4 space-y-2 z-50 text-black font-bold
+               left-1/2 -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0"
+    style={{
+      background: 'rgba(21,60,112,1)',
+      backdropFilter: 'blur(10px)',
+      WebkitBackdropFilter: 'blur(10px)',
+      border: '1px solid rgba(255, 255, 255, 0.52)',
+      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+    }}
+  >
         {user ? (
           <>
             {user.cashier && (
