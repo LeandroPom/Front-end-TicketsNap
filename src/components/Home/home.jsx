@@ -6,6 +6,7 @@ import 'react-calendar/dist/Calendar.css'; // Importar los estilos predeterminad
 import { FaSyncAlt } from 'react-icons/fa';
 import { getShows } from '../Redux/Actions/actions';
 import '../Home/home.css'; 
+// import { useStorageAutoClear } from '../Utils/storagecleaned'
 import { FaMusic, FaMapMarkerAlt, FaWhatsapp, FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 
 import Carousel from './carrousel'; // Importar el carrusel
@@ -13,6 +14,7 @@ import Carousel from './carrousel'; // Importar el carrusel
 import { FaCalendarAlt } from 'react-icons/fa'; // Ícono para el botón del calendario
 
 const ShowsList = () => {
+  // useStorageAutoClear();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -27,7 +29,7 @@ const ShowsList = () => {
   const [showCalendar, setShowCalendar] = useState(false); // Controla si se muestra el calendario
   const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Controlar si un video está activo
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [showsPerPage] = useState(3); // Número de shows por página
+  const [showsPerPage] = useState(6); // Número de shows por página
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
   const [modalContent, setModalContent] = useState(''); // Estado para el contenido del modal
 
@@ -119,11 +121,11 @@ filtered.sort((a, b) => {
   }
 
   const handleViewDetails = (show) => {
-    if (!user) {
-      navigate(`/login`);
+    // if (!user) {
+    //   navigate(`/login`);
 
-    }
-    else if (show.isGeneral) {
+    
+    if (show.isGeneral) {
       navigate(`/event/general/${show.id}`);
     } else {
       navigate(`/event/${show.id}`);
@@ -791,13 +793,3 @@ filtered.sort((a, b) => {
 );
 };
 export default ShowsList;
-
-
-
-
-
-
-
-
-
-
