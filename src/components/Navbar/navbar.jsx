@@ -65,7 +65,7 @@ const Navbar = () => {
 >
   {/* Imagen de fondo */}
   <img
-    src="/images/cabezadepaginasolticket.png"
+    src="/images/cabezadepaginasolticket2.png"
     alt="Cabeza de página"
     className="w-full h-full object-fill"
   />
