@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import { useEffect } from 'react'; // Asegúrate de importar esto
 import './generalzone.css';  // Asegúrate de importar el archivo CSS
 
 const GeneralZoneForm = () => {
@@ -12,7 +13,7 @@ const GeneralZoneForm = () => {
 
   const shows = useSelector((state) => state.shows);
   const show = shows.find((s) => s.id === showId);
-
+  const user = useSelector((state) => state.user); // Obtener el usuario desde Redux
   const [zoneName, setZoneName] = useState('');
   const [date, setDate] = useState('');
   const [performance, setPerformance] = useState('');
@@ -23,6 +24,20 @@ const GeneralZoneForm = () => {
   const [hasVip, setHasVip] = useState(false);
   const [priceVip, setPriceVip] = useState('');
   const [spaceVip, setSpaceVip] = useState('');
+
+
+  useEffect(() => {
+  if (!user?.isAdmin) {
+    Swal.fire({
+      title: 'Acceso denegado',
+      text: 'Este show todavía no está habilitado',
+      icon: 'warning',
+      confirmButtonText: 'Volver',
+    }).then(() => {
+      navigate('/'); // Redirige al home u otra página
+    });
+  }
+}, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,6 +100,10 @@ const GeneralZoneForm = () => {
       });
     }
   };
+
+  if (!user?.isAdmin) {
+  return null; // No renderiza nada mientras se espera la redirección
+}
 
   return (
     <div className="mt-[90px] min-h-screen flex items-center justify-center p-4 bg-[#12335F] backdrop-blur-md">
