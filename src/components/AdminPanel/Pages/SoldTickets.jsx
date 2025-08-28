@@ -646,13 +646,14 @@ return (
     </div>
 
     {/* Descargar Excel */}
-    <button
-      onClick={handleDownloadExcel}
-      className="secondary text-white px-5 py-2 rounded mt-6"
-    >
-      📥 Descargar Excel
-    </button>
-
+   {user?.isAdmin && (
+  <button
+    onClick={handleDownloadExcel}
+    className="secondary text-white px-5 py-2 rounded mt-6"
+  >
+    📥 Descargar Excel
+  </button>
+)}
     {/* Paginación */}
     <div className="flex justify-center gap-2 mt-6 flex-wrap">
       <button
