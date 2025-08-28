@@ -33,8 +33,8 @@ const EditShow = () => {
   const [generalZones, setGeneralZones] = useState([]);
 
 
-console.log('SHOWS EN REDUX:', shows);
-console.log('BUSCANDO ID:', parseInt(showId, 10));
+// console.log('SHOWS EN REDUX:', shows);
+// console.log('BUSCANDO ID:', parseInt(showId, 10));
   // Cargar los datos al inicio si es necesario
   useEffect(() => {
     if (shows?.length === 0) {
@@ -161,7 +161,7 @@ const zoneId = matchingZone?.id;
   }
 
  try {
-  console.log('📤 Enviando datos para actualizar SHOW:', dataToSend);
+  // console.log('📤 Enviando datos para actualizar SHOW:', dataToSend);
   await dispatch(updateShow(showId, dataToSend));
 
   const isGeneral = matchingZone?.isGeneral;
@@ -181,15 +181,15 @@ const zoneId = matchingZone?.id;
   },
 };
 
-  console.log('📤 Enviando datos para actualizar ZONA:', zoneUpdatePayload);
+  // console.log('📤 Enviando datos para actualizar ZONA:', zoneUpdatePayload);
 
   const General = selectedShow?.isGeneral === true || selectedShow?.isGeneral === "true";
 
 if (General) {
-  console.log("✅ Usando updateGeneralZone");
+  // console.log("✅ Usando updateGeneralZone");
   await dispatch(updateGeneralZone(zoneUpdatePayload));
 } else {
-  console.log("✅ Usando updateZone");
+  // console.log("✅ Usando updateZone");
   await dispatch(updateZone(zoneUpdatePayload));
 }
 
