@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShows, getTags, updateShow } from '../../Redux/Actions/actions';
+import { getShows, getTags, updateShow, updateZone, updateGeneralZone } from '../../Redux/Actions/actions';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import './editevent.css';
 
 const EditShow = () => {
@@ -28,9 +29,12 @@ const EditShow = () => {
   const [place, setPlace] = useState('');
   const [address, setAddress] = useState('');
   const [presentations, setPresentations] = useState([]);
+  const [zones, setZones] = useState([]);
+  const [generalZones, setGeneralZones] = useState([]);
 
 
-
+console.log('SHOWS EN REDUX:', shows);
+console.log('BUSCANDO ID:', parseInt(showId, 10));
   // Cargar los datos al inicio si es necesario
   useEffect(() => {
     if (shows?.length === 0) {
@@ -41,7 +45,28 @@ const EditShow = () => {
     }
   }, [dispatch, shows?.length, tags?.length]);
 
+useEffect(() => {
+  const fetchZones = async () => {
+    try {
+      const response = await axios.get('/zones');
+      if (response.data?.zones) setZones(response.data.zones);
+    } catch (error) {
+      console.error('❌ Error al cargar las zonas:', error);
+    }
+  };
 
+const fetchGeneralZones = async () => {
+  try {
+    const response = await axios.get('/zones/general');
+    if (response.data?.generalZones) setGeneralZones(response.data.generalZones);
+  } catch (error) {
+    console.error('❌ Error al cargar las zonas generales:', error);
+  }
+};
+
+  fetchZones();
+  fetchGeneralZones();
+}, []);
 
   // SweetAlert después de cargar los datos iniciales
   useEffect(() => {
@@ -91,52 +116,102 @@ const EditShow = () => {
 
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const selectedShow = shows.find((show) => show.id === parseInt(showId, 10)); // ✅ esta línea arregla el error
 
-    const updates = {
-      name,
-      artists: artists.split(',').map((artist) => artist.trim()), // Asegúrate de dividir correctamente los artistas
-      genre: selectedTags,
-      description,
-      coverImage,
-      presentation: presentations
-    };
+  const presentationData = presentations;
 
+  if (!presentationData.length) {
+    console.error('No hay datos de presentación para enviar');
+    return;
+  }
 
+  const { date, time, performance } = presentationData[0];
+  if (!date || !time || !performance) {
+    console.error('Datos de presentación incompletos (falta date, performance o time)');
+    return;
+  }
 
-    const dataToSend = {
-      id: showId, // El ID del show a actualizar
-      updates: updates, // Los datos a actualizar
-      user: {
-        "isAdmin": user?.isAdmin
-      },
-
-    };
-
-
-    try {
-      // Realiza la solicitud PUT enviando el ID en la URL y el objeto de actualizaciones en el cuerpo
-      await dispatch(updateShow(showId, dataToSend)); // Aquí pasamos los datos correctos al backend
-
-
-      // Mostrar SweetAlert antes de redirigir
-      await Swal.fire({
-        icon: 'success',
-        title: 'Evento Modificado',
-        text: 'El evento fue modificado correctamente!',
-        confirmButtonText: 'OK',
-        customClass: {
-          popup: 'custom-popup-success',  // Clase personalizada para el popup de éxito
-        }
-      });
-
-      navigate('/admin/events'); // Redirigir después de la actualización exitosa
-    } catch (error) {
-      console.error('Error al actualizar el evento:', error);
-
-    }
+  const updates = {
+    name,
+    artists: artists.split(',').map((artist) => artist.trim()),
+    genre: selectedTags,
+    description,
+    coverImage,
+    presentation: presentationData,
   };
+
+  const dataToSend = {
+    id: showId,
+    updates,
+    user: { isAdmin: user?.isAdmin },
+  };
+
+  
+const matchingZone = [...zones, ...generalZones].find(
+  (zone) => zone.showId === parseInt(showId, 10)
+);
+
+const zoneId = matchingZone?.id;
+
+  if (!zoneId) {
+    console.error('❌ No se encontró una zona asociada al show con showId:', showId);
+    return;
+  }
+
+ try {
+  console.log('📤 Enviando datos para actualizar SHOW:', dataToSend);
+  await dispatch(updateShow(showId, dataToSend));
+
+  const isGeneral = matchingZone?.isGeneral;
+
+ const zoneUpdatePayload = {
+  id: zoneId,
+  ...(isGeneral && { showId: parseInt(showId, 10) }), // ✅ Importante: showId debe enviarse si es general
+  updates: {
+    presentation: {
+      date,
+      performance,
+      time: {
+        start: time.start,
+        end: time.end,
+      },
+    },
+  },
+};
+
+  console.log('📤 Enviando datos para actualizar ZONA:', zoneUpdatePayload);
+
+  const General = selectedShow?.isGeneral === true || selectedShow?.isGeneral === "true";
+
+if (General) {
+  console.log("✅ Usando updateGeneralZone");
+  await dispatch(updateGeneralZone(zoneUpdatePayload));
+} else {
+  console.log("✅ Usando updateZone");
+  await dispatch(updateZone(zoneUpdatePayload));
+}
+
+  await Swal.fire({
+    icon: 'success',
+    title: 'Evento Modificado',
+    text: 'El evento fue modificado correctamente!',
+    confirmButtonText: 'OK',
+    customClass: {
+      popup: 'custom-popup-success',
+    },
+  });
+
+  navigate('/admin/events');
+} catch (error) {
+  if (error.response) {
+    console.error('Error al actualizar zona, respuesta del servidor:', error.response.data);
+  } else {
+    console.error('Error al actualizar la zona:', error.message);
+  }
+}
+};
 
 
 
