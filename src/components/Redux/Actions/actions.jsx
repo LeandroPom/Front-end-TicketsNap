@@ -348,6 +348,61 @@ export const updateShow = (id, updates) => async (dispatch) => {
   }
 };
 
+////UPDATE ZONE////
+
+export const updateZone = (identifier) => async (dispatch) => {
+  try {
+    const { id, zoneName, updates } = identifier; // ✅ CORRECTO
+
+    const response = await axios.put('/zones/edit', {
+      id,
+      updates, // ✅ Ahora sí se envía el objeto correcto
+    });
+
+    dispatch({
+      type: 'UPDATE_ZONE',
+      payload: response.data,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error al actualizar la zona:', error);
+    dispatch({
+      type: 'UPDATE_ZONE_ERROR',
+      payload: error.message,
+    });
+    throw error;
+  }
+};
+
+///UPDATE ZONE GENERAL ////
+
+export const updateGeneralZone = (identifier) => async (dispatch) => {
+  try {
+    const { id, showId, updates } = identifier;
+
+    const response = await axios.put('/zones/edit/general', {
+      id,
+      showId, // ✅ Agregar showId
+      updates,
+    });
+
+    dispatch({
+      type: 'UPDATE_ZONE',
+      payload: response.data,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error al actualizar la zona:', error);
+    dispatch({
+      type: 'UPDATE_ZONE_ERROR',
+      payload: error.message,
+    });
+    throw error;
+  }
+};
+
 /// BORRADO LOGICO AL SHOW ////////////
 
 export const disableShow = (showId) => async (dispatch) => {
